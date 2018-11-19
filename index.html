@@ -1,0 +1,2416 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <title>EZ-HST-CANADA</title>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top" id="main-nav">
+    <div class="container">
+      <p id="navUserLog" class="navbar-text d-none d-xl-inline ml-0 pr-3 pb-0"></p>
+      <a href="index.html" class="navbar-brand">
+        <img src="img/EZ-Tax-Logo64-2018.png" alt="" class="img-fluid mr-1">EZ-HST-CANADA</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item dropdown  mr-3">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fab fa-wpforms"></i> Entry Forms
+            </a>
+
+            <ul class="dropdown-menu">
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Expenses Entry</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayBusExpModal()">
+                      <i class="far fa-building"></i> Business Entry
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayCarExpModal()">
+                      <i class="fas fa-car"></i> Vehicle Entry
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayHomeExpModal()">
+                      <i class="fas fa-home"></i> Home Entry
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayOtherExpModal()">
+                      <i class="fas fa-hand-holding-usd"></i> Other Costs Entry
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayRentalExpModal()">
+                      <i class="fas fa-building"></i> Rental Entry
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-success">Income Entry</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-success" onclick="displayIncomeModal('Business')">
+                      <i class="far fa-building"></i> Business Entry
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-success" onclick="displayIncomeModal('Rental')">
+                      <i class="fas fa-building"></i> Rental Entry
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payment Entry</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger" onclick="generateTablePDF()">
+                      <i class="far fa-building"></i> PDF Print Test
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger">
+                      <i class="fas fa-car"></i> GST/HST Payment
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger">
+                      <i class="fas fa-home"></i> PST Payment
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+          </li>
+
+          <li class="nav-item dropdown  mr-3">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fab fa-wpforms"></i> Reports
+            </a>
+
+            <ul class="dropdown-menu">
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Expenses</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getBusinessExpenses()">
+                      <i class="far fa-building"></i> Business Exp Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getVehicleExpenses(1)">
+                      <i class="fas fa-car"></i> Vehicle 1 Exp Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getVehicleExpenses(2)">
+                      <i class="fas fa-car"></i> Vehicle 2 Exp Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getHomeExpenses()">
+                      <i class="fas fa-home"></i> Home Exp Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getOtherExpenses()">
+                      <i class="fas fa-hand-holding-usd"></i> Other Exp Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="getRentalExpenses()">
+                      <i class="fas fa-building"></i> Rental Exp Report
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-success">Income</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-success" onclick="getIncomeExpenses('Business')">
+                      <i class="far fa-building"></i> Business Inc Report
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-success" onclick="getIncomeExpenses('Rental')">
+                      <i class="fas fa-building"></i> Rental Inc Report
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+              <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-dark">Miscellaneous</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-dark" onclick="displayVLogArray()">
+                      <i class="fas fa-piggy-bank"></i> How Much Can I Keep
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-dark">
+                      <i class="fas fa-file-invoice"></i> GST/HST Return
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-dark">
+                      <i class="fas fa-home"></i> Account Summary
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-dark">
+                      <i class="fas fa-hand-holding-usd"></i> Income Statement
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+          </li>
+
+          <li class="nav-item dropdown  mr-3">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-car"></i> Vehicle Log
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item  text-danger" onclick="displayVehicleLogModal()">
+                <i class="fas fa-car"></i> Vehicle Log Entry
+              </a>
+              <a href="#" class="dropdown-item  text-danger" onclick="displayScreenSize()">
+                <i class="fas fa-car"></i> Vehicle Log Report
+              </a>
+              <a href="#" class="dropdown-item  text-danger" onclick="addVehicleCategory()">
+                <i class="fas fa-wrench"></i> Work in Progress
+              </a>
+            </div>
+
+          </li>
+
+          <li class="nav-item dropdown  mr-3">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-user"></i> User Register/Login
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item  text-primary" id="navRegister" onclick="displayUserSetupModal()">
+                <i class="fas fa-user-cog"></i> Registration
+              </a>
+              <a href="#" class="dropdown-item  text-primary" id="navLogin" onclick="displayLoginUser()">
+                <i class="fas fa-user-check"></i> User Login
+              </a>
+              <a href="#" class="dropdown-item  text-primary disabled" id="navLogout" onclick="userLogout(false)">
+                <i class="fas fa-user-times"></i> User Logout
+              </a>
+              <a href="#" class="dropdown-item text-primary" onclick="getUserMe()">
+                <i class="fas fa-user-times"></i> TEST
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container align-middle mt-5 pt-5" id="alertContainerMain">
+
+  </div>
+
+  <!-- JUST BELOW NAV ADDING FROM & TO DATE INPUTS ON RIGHT SIDE / LEFT SIDE WILL HAVE UPDATED TOTALS -->
+  <div class="container d-lg-inline-block">
+
+    <div class="form-group col-lg-2 float-left text-center align-items-center ml-0  d-lg-inline-block bg-primary">
+      <form id="mainLeftDisplay" class="ml-auto width-100">
+        <label class="control-label control-label-sm text-white" id="netRevDisplayLbl" for="netRevDisplay">Net Revenue</label>
+        <input class="form-control form-control-sm text-right" type="number" id="netRevDisplay" value="0" data-toggle="tooltip"
+          title="Displays your Net Revenue during the Time Period Selected.">
+        <label class="control-label control-label-sm text-white" id="netExpDisplayLbl" for="netExpDisplay">Net Expenses</label>
+        <input class="form-control form-control-sm text-right" type="number" id="netExpDisplay" value="0" data-toggle="tooltip"
+          title="Displays your Net Expenses during the Time Period Selected.">
+        <label class="control-label control-label-sm text-white" id="acctBalanceLbl" for="acctBalance">Account Balance</label>
+        <input class="form-control form-control-sm text-right" type="number" id="acctBalance" value="0" data-toggle="tooltip"
+          title="Displays your Account Balance corresponding to the Time Period selected.">
+        <label class="control-label control-label-sm text-white" id="lockDateLbl" for="lockDate">Lock Date</label>
+        <input class="form-control form-control-sm text-right" type="date" id="lockDate" value="2017-12-31" data-toggle="tooltip"
+          title="Select a Lock-Date which is used to protect any previously completed HST report from being altered.">
+      </form>
+    </div>
+
+
+    <div class="col-lg-8 text-center d-lg-inline-block">
+      <p>UNDER CONSTRUCTION</p>
+    </div>
+
+    <div id="timePeriodDiv" class="form-group col-lg-2 float-right d-lg-inline-block bg-primary">
+      <form id="mainRightDisplay" class="">
+        <label class="control-label text-white" id="startDateLbl" for="startDatePage">Start Date</label>
+        <input class="form-control form-control-sm text-center" type="date" id="startDatePage" value="2018-01-01"
+          data-toggle="tooltip" title="Displays/Edits the Time Period Start Date used to filter Reports by Date">
+        <label class="control-label text-white" id="endDateLbl" for="endDatePage">End Date</label>
+        <input class="form-control form-control-sm text-center" type="date" id="endDatePage" value="2018-12-31"
+          data-toggle="tooltip" title="Displays/Edits the Time Period End Date used to filter Reports by Date">
+        <label class="control-label text-white" id="timePeriodSelectLbl" for="endDate">Time Period</label>
+        <select class="form-control form-control-sm text-center" form="mainRightDisplay" id="timePeriodSelect" name="timePeriodSelect"
+          data-toggle="tooltip" title="Click down arrow to select Time Period" value="Year">
+          <option value="">Select Period</option>
+          <option value="Year" selected>Full Year</option>
+          <option value="1stQ">1st ¼</option>
+          <option value="2ndQ">2nd ¼</option>
+          <option value="3rdQ">3rd ¼</option>
+          <option value="4thQ">4th ¼</option>
+          <option value="1stH">1st ½</option>
+          <option value="2ndH">2nd ½</option>
+          <option value="Jan">January</option>
+          <option value="Feb">February</option>
+          <option value="Mar">March</option>
+          <option value="Apr">April</option>
+          <option value="May">May</option>
+          <option value="Jun">June</option>
+          <option value="Jul">July</option>
+          <option value="Aug">August</option>
+          <option value="Sep">September</option>
+          <option value="Oct">October</option>
+          <option value="Nov">November</option>
+          <option value="Dec">December</option>
+        </select>
+      </form>
+    </div>
+
+
+  </div>
+
+  <!-- MODALS -->
+  <!--BUSINESS and RENTAL INCOME ENTRY MODAL -->
+
+  <div class="modal fade" id="IncomeModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white" id="incomeModalHead">
+          <p class="modal-title" id="incomeTitle" style="font-size: 16px;">Business Revenue Entry Form</p>
+
+          <form class="ml-auto" id="incomeExpForm">
+            <select class="form-control bg-white text-success mySelect" id="incomeSelector" style="width: 120px; height: 24px; font-size: 16px;"
+              onchange="updateIncomeHeader()">
+              <option value="Business" selected>Business</option>
+              <option value="Rental">Rental</option>
+            </select>
+          </form>
+
+          <button class="close" onclick="hideIncomeModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerIncome">
+          </div>
+
+          <form id="formIncomeEntry" name="formIncomeEntry" method="POST" action="" target="#">
+            <div role="form" class="row text-center" oninput="updateIncomeFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="IncomeDateLbl" for="incomeDate">Date</label>
+                  <input id="incomeDate" form="formIncomeEntry" name="incomeDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="incomenetAmtLbl" for="incomenetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="incomeAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('income')">auto</span>
+                    </div>
+                    <input type="number" form="formIncomeEntry" step=".01" name="incomenetAmt" id="incomenetAmt" class="form-control text-right"
+                      value=0 onchange="totalUp('income')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="incomehstAmtLbl" for="incomehstAmt">HST Amount</label>
+                  <input type="number" form="formIncomeEntry" step=".01" id="incomehstAmt" name="incomehstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('income')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="incomepstAmtLbl" for="incomepstAmt">PST Amount</label>
+                  <input type="number" form="formIncomeEntry" step=".01" id="incomepstAmt" name="incomepstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('income')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="incomeTotalAmtLbl" for="incomeTotalAmt">Total</label>
+                  <input type="number" form="formIncomeEntry" step=".01" id="incomeTotalAmt" name="incomeTotalAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="This displays the total of your invoice and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="incomeExpIDLbl" for="incomeExpID">Revenue Status</label>
+                  <input type="text" form="formIncomeEntry" id="incomeExpID" name="incomeExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Revenue Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formIncomeEntry" id="incomeBlindExpID" name="incomeBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="incomeDescriptionLbl" for="incomeDescription">Description</label>
+                  <input type="text" form="formIncomeEntry" id="incomeDescription" name="incomeDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="incomeAddVendorLbl" for="vendorSelectIncome">Client / Customer</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="incomeAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Client/Customer" onclick="addIncomeVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="incomeDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Client/Customer" onclick="deleteSelectedIncomeVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formIncomeEntry" id="vendorSelectIncome" name="vendorSelectHome"
+                      data-toggle="tooltip" title="Click down arrow to select Client/Customer" required>
+                      <option value="">Select or Add Client/Customer</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="incomePartySelectLbl" for="incomePartySelect">Choose Party Represented</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="incomeAddParty"
+                        data-toggle="tooltip" title="Click to Add another Party Represented" onclick="addIncomeParty()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="incomeDeleteParty"
+                        data-toggle="tooltip" title="Click to Delete the Selected Party Represented" onclick="deleteSelectedIncomeParty()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formIncomeEntry" id="incomePartySelect" name="incomePartySelect"
+                      data-toggle="tooltip" title="Click down arrow to select the Party Represented" required>
+                      <option value="">Select Party Represented</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div id="incomeExpShowHideReceiptDiv" class="container d-md-inline" data-toggle="tooltip" title="Click to toggle Invoice Functions.">
+                    <button type="button" id="incomeExpShowHideReceipt" class="btn btn-sm btn-success mr-0 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapseIncome1" onclick="updateIncomeButtonText()">Show
+                      Invoice Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="incomeExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Invoice Image." onclick="displayFullSizeIncomeImage()">Show
+                      Invoice</button>
+                  </div>
+                </div>
+
+                <div id="collapseIncome1" class="collapse mt-2">
+
+
+                  <div class="text-dark mx-auto my-0" id="imgIncomeReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadIncomeForm' id='uploadIncomeForm' name="uploadIncomeForm" action='' method='post'
+                              encType="multipart/form-data">
+                              <div class="form-group mt-0 p-0">
+                                <label id="incomeFileInputLbl" class="mb-0" for="imgloadIncome" data-toggle="tooltip"
+                                  title="Click to Select Invoice Image.">Choose
+                                  Invoice
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgloadIncome" id="imgloadIncome"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline mt-0 pt-0" id="incomedivBelowFileInput">
+
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2 mt-0 pt-0" for="checkboxReceiptIncome"
+                                    id="checkboxReceiptIncomeLbl">Include
+                                    Invoice
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the invoice when you submit the form - If unchecked when you click Save Changes, this invoice, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceiptIncome">
+                                  <button id="btnRemoveImgIncome" data-toggle="tooltip" title="Click to remove image. To remove invoice image from database, the form must be submitted with Include Invoice UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-3" onclick="removeIncomeImage()">Remove
+                                    Image</button>
+                                </div>
+
+                              </div>
+                            </form>
+                            <div class="container" id="incomeImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImgIncome">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- onchange="updateBusinessFormStatus()" -->
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyIncomeLbl" class="d-md-inline-block" for="reoccuringIncome">Monthly</label>
+                    <div id="reoccuringIncome" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="incomeExpReoccurringYES" form="formIncomeEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyIncomeLblYES" for="incomeExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="incomeExpReoccurringNO" form="formIncomeEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyIncomeLblNO" for="incomeExpReoccurringNO">NO</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="incomeEntryformReset" form="formIncomeEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="incomeExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteIncomeExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Revenue"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="button" id="closeIncomeExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideIncomeModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="incomeExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing revenue - Revenue Status must be ALTERED!"
+                    onclick="updateIncome($('#incomeSelector').val())"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="incomeExpBtn" form="formIncomeEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Revenue"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        </form>
+      </div>
+      <!-- FOOTER IF REQUIRED -->
+    </div>
+  </div>
+  </div>
+
+  <!-- BUSINESS EXPENSE ENTRY MODAL -->
+
+  <div class="modal fade" id="BusExpenseModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="busModalHead">
+          <p class="modal-title" id="busTitle" style="font-size: 16px;">Business Expense Entry Form</p>
+          <button class="close" onclick="hideBusExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerBusiness">
+          </div>
+
+          <form id="formBusExpEntry" name="formBusExpEntry" method="POST" action="" target="#">
+            <div role="form" class="row text-center" oninput="updateBusinessFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="busDateLbl" for="busDate">Date</label>
+                  <input id="busDate" form="formBusExpEntry" name="busDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="busnetAmtLbl" for="busnetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="busAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('bus')">auto</span>
+                    </div>
+                    <input type="number" form="formBusExpEntry" step=".01" name="busnetAmt" id="busnetAmt" class="form-control text-right"
+                      value=0 onchange="totalUp('bus')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="bushstAmtLbl" for="bushstAmt">HST Amount</label>
+                  <input type="number" form="formBusExpEntry" step=".01" id="bushstAmt" name="bushstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('bus')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="buspstAmtLbl" for="buspstAmt">PST Amount</label>
+                  <input type="number" form="formBusExpEntry" step=".01" id="buspstAmt" name="buspstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('bus')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="busTotalAmtLbl" for="busTotalAmt">Total</label>
+                  <input type="number" form="formBusExpEntry" step=".01" id="busTotalAmt" name="busTotalAmt" class="form-control text-right"
+                    value=0 data-toggle="tooltip" title="This displays the total of your receipt and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="busExpIDLbl" for="busExpID">Expense Status</label>
+                  <input type="text" form="formBusExpEntry" id="busExpID" name="busExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Expense Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formBusExpEntry" id="busBlindExpID" name="busBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="busDescriptionLbl" for="busDescription">Description</label>
+                  <input type="text" form="formBusExpEntry" id="busDescription" name="busDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="busAddVendorLbl" for="vendorSelectBus">Vendor / Supplier</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="busAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Vendor/Supplier" onclick="addBusVehicleVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="busDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Vendor/Supplier" onclick="deleteSelectedBusinessVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formBusExpEntry" id="vendorSelectBus" name="vendorSelectBus"
+                      data-toggle="tooltip" title="Click down arrow to select Vendor/Supplier" required>
+                      <option value="">Select or Add Vendor/Supplier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="busExpCatSelectLbl" for="busExpCatSelect">Choose Expense Category</label>
+                  <select class="form-control mySelect" form="formBusExpEntry" id="busExpCatSelect" name="busExpCatSelect"
+                    data-toggle="tooltip" title="Click down arrow to select category" required>
+                    <option value="">Select Expense Category</option>
+                  </select>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div class="container d-md-inline" id="busExpShowHideReceiptDiv" data-toggle="tooltip" title="Click to toggle Receipt Controls.">
+                    <button type="button" id="busExpShowHideReceipt" class="btn btn-sm btn-success mr-1 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapseBus1" onclick="updateBusinessButtonText()">Show Receipt
+                      Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="busExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeBusinessImage()">Show
+                      Receipt</button>
+                  </div>
+                </div>
+
+                <div id="collapseBus1" class="collapse mt-2">
+
+
+                  <div class="text-dark mx-auto my-0" id="imgBusReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadBusForm' id='uploadBusForm' name="uploadBusForm" action='' method='post'
+                              encType="multipart/form-data">
+                              <div class="form-group mt-0">
+                                <label id="busFileInputLbl" class="mb-0" for="imgloadBus" data-toggle="tooltip" title="Click to Select Receipt Image.">Choose
+                                  Receipt
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgloadBus" id="imgloadBus"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline">
+
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2" for="checkboxReceiptBus" id="checkboxReceiptBusLbl">Include
+                                    Receipt
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the receipt when you submit the form - If unchecked when you click Save Changes, this expenses receipt, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceiptBus">
+                                  <button id="btnRemoveImgBus" data-toggle="tooltip" title="Click to remove image. To remove receipt image from database, the form must be submitted with Include Receipt UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-5" onclick="removeBusImage()">Remove
+                                    Image</button>
+                                </div>
+
+
+
+                              </div>
+                            </form>
+                            <div class="container" id="busImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImgBus">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- onchange="updateBusinessFormStatus()" -->
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyBusLbl" class="d-md-inline-block" for="reoccuringBus">Monthly</label>
+                    <div id="reoccuringBus" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="busExpReoccurringYES" form="formBusExpEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyBusLblYES" for="busExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="busExpReoccurringNO" form="formBusExpEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyBusLblNO" for="busExpReoccurringNO">NO</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="busEntryformReset" form="formBusExpEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="busExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteBusinessExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Expense"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="button" id="closeBusExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideBusExpModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="busExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing expense - Expense Status must be ALTERED!"
+                    onclick="updateBusinessExpense()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="busExpBtn" form="formBusExpEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Expense"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        </form>
+      </div>
+      <!-- FOOTER IF REQUIRED -->
+    </div>
+  </div>
+  </div>
+
+  <!-- HOME EXPENSE ENTRY MODAL -->
+
+  <div class="modal fade" id="HomeExpenseModal" data-backdrop="static" data-keyboard="false" onshow="setTooltips()">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="homeModalHead">
+          <p class="modal-title" id="homeTitle" style="font-size: 16px;">Home Expense Entry Form</p>
+          <button class="close" onclick="hideHomeExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerHome">
+          </div>
+
+          <form id="formHomeExpEntry" name="formHomeExpEntry" method="POST" action="" target="#">
+            <div role="form" class="row text-center" oninput="updateHomeFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="homeDateLbl" for="homeDate">Date</label>
+                  <input id="homeDate" form="formHomeExpEntry" name="homeDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="homenetAmtLbl" for="homenetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="homeAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('home')">auto</span>
+                    </div>
+                    <input type="number" form="formHomeExpEntry" step=".01" name="homenetAmt" id="homenetAmt" class="form-control text-right"
+                      value=0 onchange="totalUp('home')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="homehstAmtLbl" for="homehstAmt">HST Amount</label>
+                  <input type="number" form="formHomeExpEntry" step=".01" id="homehstAmt" name="homehstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('home')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="homepstAmtLbl" for="homepstAmt">PST Amount</label>
+                  <input type="number" form="formHomeExpEntry" step=".01" id="homepstAmt" name="homepstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('home')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="homeTotalAmtLbl" for="homeTotalAmt">Total</label>
+                  <input type="number" form="formHomeExpEntry" step=".01" id="homeTotalAmt" name="homeTotalAmt" class="form-control text-right"
+                    value=0 data-toggle="tooltip" title="This displays the total of your receipt and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="homeExpIDLbl" for="homeExpID">Expense Status</label>
+                  <input type="text" form="formHomeExpEntry" id="homeExpID" name="homeExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Expense Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formHomeExpEntry" id="homeBlindExpID" name="homeBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="homeDescriptionLbl" for="homeDescription">Description</label>
+                  <input type="text" form="formHomeExpEntry" id="homeDescription" name="homeDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="homeAddVendorLbl" for="vendorSelectHome">Vendor / Supplier</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="homeAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Vendor/Supplier" onclick="addHomeVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="homeDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Vendor/Supplier" onclick="deleteSelectedHomeVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formHomeExpEntry" id="vendorSelectHome" name="vendorSelectHome"
+                      data-toggle="tooltip" title="Click down arrow to select Vendor/Supplier" required>
+                      <option value="">Select or Add Vendor/Supplier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="homeExpCatSelectLbl" for="homeExpCatSelect">Choose Expense Category</label>
+                  <select class="form-control mySelect" form="formHomeExpEntry" id="homeExpCatSelect" name="homeExpCatSelect"
+                    data-toggle="tooltip" title="Click down arrow to select category" required>
+                    <option value="">Select Expense Category</option>
+                  </select>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div id="homeExpShowHideReceiptDiv" class="container d-md-inline" data-toggle="tooltip" title="Click to toggle Receipt Functions.">
+                    <button type="button" id="homeExpShowHideReceipt" class="btn btn-sm btn-success mr-0 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapseHome1" onclick="updateHomeButtonText()">Show
+                      Receipt Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="homeExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeHomeImage()">Show
+                      Receipt</button>
+                  </div>
+                </div>
+
+                <div id="collapseHome1" class="collapse mt-2">
+
+
+                  <div class="text-dark mx-auto my-0" id="imgHomeReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadHomeForm' id='uploadHomeForm' name="uploadHomeForm" action='' method='post'
+                              encType="multipart/form-data">
+                              <div class="form-group mt-0 p-0">
+                                <label id="homeFileInputLbl" class="mb-0" for="imgloadHome" data-toggle="tooltip" title="Click to Select Receipt Image.">Choose
+                                  Receipt
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgloadHome" id="imgloadHome"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline mt-0 pt-0" id="homedivBelowFileInput">
+
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2 mt-0 pt-0" for="checkboxReceiptHome"
+                                    id="checkboxReceiptHomeLbl">Include
+                                    Receipt
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the receipt when you submit the form - If unchecked when you click Save Changes, this expenses receipt, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceiptHome">
+                                  <button id="btnRemoveImgHome" data-toggle="tooltip" title="Click to remove image. To remove receipt image from database, the form must be submitted with Include Receipt UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-3" onclick="removeHomeImage()">Remove
+                                    Image</button>
+                                </div>
+
+                              </div>
+                            </form>
+                            <div class="container" id="homeImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImgHome">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- onchange="updateBusinessFormStatus()" -->
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyHomeLbl" class="d-md-inline-block" for="reoccuringHome">Monthly</label>
+                    <div id="reoccuringHome" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="homeExpReoccurringYES" form="formHomeExpEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyHomeLblYES" for="homeExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="homeExpReoccurringNO" form="formHomeExpEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyHomeLblNO" for="homeExpReoccurringNO">NO</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="homeEntryformReset" form="formHomeExpEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="homeExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteHomeExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Expense"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="button" id="closeHomeExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideHomeExpModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="homeExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing expense - Expense Status must be ALTERED!"
+                    onclick="updateHomeExpense()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="homeExpBtn" form="formHomeExpEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Expense"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        </form>
+      </div>
+      <!-- FOOTER IF REQUIRED -->
+    </div>
+  </div>
+  </div>
+
+
+  <!-- OTHER EXPENSE ENTRY MODAL -->
+
+  <div class="modal fade" id="OtherExpenseModal" data-backdrop="static" data-keyboard="false" onshow="setTooltips()">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="otherModalHead">
+          <p class="modal-title" id="otherTitle" style="font-size: 16px;">Other Expense Entry Form</p>
+          <button class="close" onclick="hideOtherExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerOther">
+          </div>
+
+          <form id="formOtherExpEntry" name="formOtherExpEntry" method="POST" action="" target="#">
+            <div role="form" class="row text-center" oninput="updateOtherFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="otherDateLbl" for="otherDate">Date</label>
+                  <input id="otherDate" form="formOtherExpEntry" name="otherDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="othernetAmtLbl" for="othernetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="otherAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('other')">auto</span>
+                    </div>
+                    <input type="number" form="formOtherExpEntry" step=".01" name="othernetAmt" id="othernetAmt" class="form-control text-right"
+                      value=0 onchange="totalUp('other')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="otherhstAmtLbl" for="otherhstAmt">HST Amount</label>
+                  <input type="number" form="formOtherExpEntry" step=".01" id="otherhstAmt" name="otherhstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('other')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="otherpstAmtLbl" for="otherpstAmt">PST Amount</label>
+                  <input type="number" form="formOtherExpEntry" step=".01" id="otherpstAmt" name="otherpstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('other')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="otherTotalAmtLbl" for="otherTotalAmt">Total</label>
+                  <input type="number" form="formOtherExpEntry" step=".01" id="otherTotalAmt" name="otherTotalAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="This displays the total of your receipt and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="otherExpIDLbl" for="otherExpID">Expense Status</label>
+                  <input type="text" form="formOtherExpEntry" id="otherExpID" name="otherExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Expense Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formOtherExpEntry" id="otherBlindExpID" name="otherBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="otherDescriptionLbl" for="otherDescription">Description</label>
+                  <input type="text" form="formOtherExpEntry" id="otherDescription" name="otherDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="otherAddVendorLbl" for="vendorSelectOther">Vendor / Supplier</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="otherAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Vendor/Supplier" onclick="addOtherVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="otherDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Vendor/Supplier" onclick="deleteSelectedOtherVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formOtherExpEntry" id="vendorSelectOther" name="vendorSelectOther"
+                      data-toggle="tooltip" title="Click down arrow to select Vendor/Supplier" required>
+                      <option value="">Select or Add Vendor/Supplier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="otherExpCatSelectLbl" for="otherExpCatSelect">Choose Expense Category</label>
+                  <select class="form-control mySelect" form="formOtherExpEntry" id="otherExpCatSelect" name="otherExpCatSelect"
+                    data-toggle="tooltip" title="Click down arrow to select category" required>
+                    <option value="">Select Expense Category</option>
+                  </select>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div id="otherExpShowHideReceiptDiv" class="container d-md-inline" data-toggle="tooltip" title="Click to toggle Receipt Functions.">
+                    <button type="button" id="otherExpShowHideReceipt" class="btn btn-sm btn-success mr-0 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapseOther1" onclick="updateOtherButtonText()">Show
+                      Receipt Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="otherExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeOtherImage()">Show
+                      Receipt</button>
+                  </div>
+                </div>
+
+                <div id="collapseOther1" class="collapse mt-2">
+
+                  <div class="text-dark mx-auto my-0" id="imgOtherReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadOtherForm' id='uploadOtherForm' name="uploadOtherForm" action='' method='post'
+                              encType="multipart/form-data">
+                              <div class="form-group mt-0 p-0">
+                                <label id="otherFileInputLbl" class="mb-0" for="imgloadOther" data-toggle="tooltip"
+                                  title="Click to Select Receipt Image.">Choose
+                                  Receipt
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgloadOther" id="imgloadOther"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline mt-0 pt-0" id="otherdivBelowFileInput">
+
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2 mt-0 pt-0" for="checkboxReceiptOther"
+                                    id="checkboxReceiptOtherLbl">Include
+                                    Receipt
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the receipt when you submit the form - If unchecked when you click Save Changes, this expenses receipt, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceiptOther">
+                                  <button id="btnRemoveImgOther" data-toggle="tooltip" title="Click to remove image. To remove receipt image from database, the form must be submitted with Include Receipt UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-3" onclick="removeOtherImage()">Remove
+                                    Image</button>
+                                </div>
+
+                              </div>
+                            </form>
+                            <div class="container" id="otherImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImgOther">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- onchange="updateBusinessFormStatus()" -->
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyOtherLbl" class="d-md-inline-block" for="reoccuringOther">Monthly</label>
+                    <div id="reoccuringOther" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="otherExpReoccurringYES" form="formOtherExpEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyOtherLblYES" for="otherExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="otherExpReoccurringNO" form="formOtherExpEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyOtherLblNO" for="otherExpReoccurringNO">NO</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="otherEntryformReset" form="formOtherExpEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="otherExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteOtherExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Expense"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="button" id="closeOtherExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideOtherExpModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="otherExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing expense - Expense Status must be ALTERED!"
+                    onclick="updateOtherExpense()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="otherExpBtn" form="formOtherExpEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Expense"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        </form>
+      </div>
+      <!-- FOOTER IF REQUIRED -->
+    </div>
+  </div>
+  </div>
+
+  <!-- RENTAL EXPENSE ENTRY MODAL -->
+
+  <div class="modal fade" id="RentalExpenseModal" data-backdrop="static" data-keyboard="false" onshow="setTooltips()">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="rentalModalHead">
+          <p class="modal-title" id="rentalTitle" style="font-size: 16px;">Rental Expense Entry Form</p>
+          <button class="close" onclick="hideRentalExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerRental">
+          </div>
+
+          <form id="formRentalExpEntry" name="formRentalExpEntry" method="POST" action="" target="#">
+            <div role="form" class="row text-center" oninput="updateRentalFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="rentalDateLbl" for="rentalDate">Date</label>
+                  <input id="rentalDate" form="formRentalExpEntry" name="rentalDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="rentalnetAmtLbl" for="rentalnetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="rentalAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('rental')">auto</span>
+                    </div>
+                    <input type="number" form="formRentalExpEntry" step=".01" name="rentalnetAmt" id="rentalnetAmt"
+                      class="form-control text-right" value=0 onchange="totalUp('rental')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="rentalhstAmtLbl" for="rentalhstAmt">HST Amount</label>
+                  <input type="number" form="formRentalExpEntry" step=".01" id="rentalhstAmt" name="rentalhstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('rental')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="rentalpstAmtLbl" for="rentalpstAmt">PST Amount</label>
+                  <input type="number" form="formRentalExpEntry" step=".01" id="rentalpstAmt" name="rentalpstAmt" class="form-control text-right"
+                    value=0 onchange="totalUp('rental')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="rentalTotalAmtLbl" for="rentalTotalAmt">Total</label>
+                  <input type="number" form="formRentalExpEntry" step=".01" id="rentalTotalAmt" name="rentalTotalAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="This displays the total of your receipt and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="rentalExpIDLbl" for="rentalExpID">Expense Status</label>
+                  <input type="text" form="formRentalExpEntry" id="rentalExpID" name="rentalExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Expense Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formRentalExpEntry" id="rentalBlindExpID" name="rentalBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="rentalDescriptionLbl" for="rentalDescription">Description</label>
+                  <input type="text" form="formRentalExpEntry" id="rentalDescription" name="rentalDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="rentalAddVendorLbl" for="vendorSelectRental">Vendor / Supplier</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="rentalAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Vendor/Supplier" onclick="addRentalVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="rentalDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Vendor/Supplier" onclick="deleteSelectedRentalVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formRentalExpEntry" id="vendorSelectRental" name="vendorSelectRental"
+                      data-toggle="tooltip" title="Click down arrow to select Vendor/Supplier" required>
+                      <option value="">Select or Add Vendor/Supplier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="rentalExpCatSelectLbl" for="rentalExpCatSelect">Choose Expense Category</label>
+                  <select class="form-control mySelect" form="formRentalExpEntry" id="rentalExpCatSelect" name="rentalExpCatSelect"
+                    data-toggle="tooltip" title="Click down arrow to select category" required>
+                    <option value="">Select Expense Category</option>
+                  </select>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div id="rentalExpShowHideReceiptDiv" class="container d-md-inline" data-toggle="tooltip" title="Click to toggle Receipt Functions.">
+                    <button type="button" id="rentalExpShowHideReceipt" class="btn btn-sm btn-success mr-0 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapseRental1" onclick="updateRentalButtonText()">Show
+                      Receipt Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="rentalExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeRentalImage()">Show
+                      Receipt</button>
+                  </div>
+                </div>
+
+                <div id="collapseRental1" class="collapse mt-2">
+
+
+                  <div class="text-dark mx-auto my-0" id="imgRentalReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadRentalForm' id='uploadRentalForm' name="uploadRentalForm" action='' method='post'
+                              encType="multipart/form-data">
+                              <div class="form-group mt-0 p-0">
+                                <label id="rentalFileInputLbl" class="mb-0" for="imgloadRental" data-toggle="tooltip"
+                                  title="Click to Select Receipt Image.">Choose
+                                  Receipt
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgloadRental" id="imgloadRental"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline mt-0 pt-0" id="rentaldivBelowFileInput">
+
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2 mt-0 pt-0" for="checkboxReceiptRental"
+                                    id="checkboxReceiptRentalLbl">Include
+                                    Receipt
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the receipt when you submit the form - If unchecked when you click Save Changes, this expenses receipt, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceiptRental">
+                                  <button id="btnRemoveImgRental" data-toggle="tooltip" title="Click to remove image. To remove receipt image from database, the form must be submitted with Include Receipt UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-3" onclick="removeRentalImage()">Remove
+                                    Image</button>
+                                </div>
+
+                              </div>
+                            </form>
+                            <div class="container" id="rentalImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImgRental">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- onchange="updateBusinessFormStatus()" -->
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyRentalLbl" class="d-md-inline-block" for="reoccuringRental">Monthly</label>
+                    <div id="reoccuringRental" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="rentalExpReoccurringYES" form="formRentalExpEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyRentalLblYES" for="rentalExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="rentalExpReoccurringNO" form="formRentalExpEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyRentalLblNO" for="rentalExpReoccurringNO">NO</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="rentalEntryformReset" form="formRentalExpEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="rentalExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteRentalExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Expense"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="button" id="closeRentalExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideRentalExpModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="rentalExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing expense - Expense Status must be ALTERED!"
+                    onclick="updateRentalExpense()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="rentalExpBtn" form="formRentalExpEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Expense"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        </form>
+      </div>
+      <!-- FOOTER IF REQUIRED -->
+    </div>
+  </div>
+  </div>
+
+  <!-- VEHICLE EXPENSE ENTRY MODAL -->
+
+  <div class="modal fade" id="addCarExpenseModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="modalHead">
+          <p class="modal-title" id="carTitle" style="font-size: 16px;">Vehicle 1 Expense Entry Form</p>
+          <form class="ml-auto" id="carExpForm">
+            <select class="form-control bg-primary text-white mySelect" id="carSelector" style="width: 110px; height: 24px; font-size: 16px;"
+              onchange="updateCarHeader()">
+              <option value="Vehicle 1" selected>Vehicle 1</option>
+              <option value="Vehicle 2">Vehicle 2</option>
+            </select>
+          </form>
+          <button class="close" onclick="hideCarExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainer">
+          </div>
+          <!-- method="POST" action="http://localhost:3000/carExpense" -->
+          <form id="formCarExpEntry" name="formCarExpEntry" method="POST" action="http://localhost:3000/carExpense"
+            target="#">
+            <div role="form" class="row text-center" oninput="updateVehicleFormStatus()">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="carDateLbl" for="carDate">Date</label>
+                  <input id="carDate" form="formCarExpEntry" name="carDate" type="date" min="2018-01-01" max="2018-12-31"
+                    class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="carnetAmtLbl" for="carnetAmt">Net Amount</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-left ml-0 pl-1 linkAppend form-control" id="carAutoAmount"
+                        data-toggle="tooltip" title="Click after entering total amount including taxes to fill the tax boxes below automatically"
+                        onclick="AutoFillTaxes('car')">auto</span>
+                    </div>
+                    <input type="number" data-validation="required" data-validation-error-msg="You did not enter a number in Net Amount"
+                      form="formCarExpEntry" step=".01" name="carnetAmt" id="carnetAmt" class="form-control text-right"
+                      onchange="totalUp('car')" data-toggle="tooltip" title="After entering total amount including taxes. Click auto to apply taxes in boxes below.">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label id="carhstAmtLbl" for="carhstAmt">HST Amount</label>
+                  <input type="number" form="formCarExpEntry" step=".01" id="carhstAmt" name="carhstAmt" class="form-control text-right"
+                    onchange="totalUp('car')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="carpstAmtLbl" for="carpstAmt">PST Amount</label>
+                  <input type="number" form="formCarExpEntry" step=".01" id="carpstAmt" name="carpstAmt" class="form-control text-right"
+                    onchange="totalUp('car')" data-toggle="tooltip" title="Use auto function above or if not a standard tax rate, enter it Manually"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="carTotalAmtLbl" for="carTotalAmt">Total</label>
+                  <input type="number" form="formCarExpEntry" step=".01" id="carTotalAmt" name="carTotalAmt" class="form-control text-right"
+                    data-toggle="tooltip" title="This displays the total of your receipt and is automatically calculated from entries above."
+                    readonly>
+                </div>
+                <div class="form-group">
+                  <label id="carExpIDLbl" for="carExpID">Expense Status</label>
+                  <input type="text" form="formCarExpEntry" id="carExpID" name="carExpID" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Expense Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formCarExpEntry" id="carBlindExpID" name="carBlindExpID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="carDescriptionLbl" for="carDescription">Description</label>
+                  <input type="text" form="formCarExpEntry" id="carDescription" name="carDescription" class="form-control text-center"
+                    placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label id="carAddVendorLbl" for="vendorSelect">Vendor / Supplier</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-dark text-white text-right pr-0 m-0 linkAppend form-control" id="carAddVendor"
+                        data-toggle="tooltip" title="Click to Add another Vendor/Supplier" onclick="addVehicleVendor()">add</span>
+                    </div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-danger text-white text-center linkAppend form-control" id="carDeleteVendor"
+                        data-toggle="tooltip" title="Click to Delete the Selected Vendor/Supplier" onclick="deleteSelectedVehicleVendor()">X</span>
+                    </div>
+                    <select class="form-control mySelect" form="formCarExpEntry" id="vendorSelect" name="vendorSelect"
+                      data-toggle="tooltip" title="Click down arrow to select Vendor/Supplier" required>
+                      <option value="">Select or Add Vendor/Supplier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group pb-0 mb-0">
+                  <label id="carExpCatSelectLbl" for="carExpCatSelect">Choose Expense Category</label>
+                  <select class="form-control mySelect" form="formCarExpEntry" id="carExpCatSelect" name="carExpCatSelect"
+                    data-toggle="tooltip" title="Click down arrow to select category" required>
+                    <option value="">Select
+                      Expense Category</option>
+                  </select>
+                </div>
+
+                <div class="text-center d-md-inline pt-0 pb-0">
+
+                  <div class="container d-md-inline" id="carExpShowHideReceiptDiv" data-toggle="tooltip" title="Click to toggle Receipt Controls.">
+                    <button type="button" id="carExpShowHideReceipt" class="btn btn-sm btn-success mr-0 mt-2 d-xs-block"
+                      data-toggle="collapse" href="#collapse1" onclick="updateButtonText()">Show Receipt Controls</button>
+                  </div>
+                  <div class="container d-md-inline">
+                    <button type="button" id="carExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
+                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeVehicleImage()">Show
+                      Receipt</button>
+                  </div>
+
+                </div>
+
+                <div id="collapse1" class="collapse mt-2">
+
+                  <div class="text-dark mx-auto my-0" id="imgReceiptCollapse">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="modal-body mt-0">
+                          <div class="container">
+                            <form ref='uploadForm' id='uploadForm' name="uploadForm" action='http://localhost:3000/carExpenseImg'
+                              method='post' encType="multipart/form-data">
+                              <div class="form-group mt-0">
+                                <label id="carFileInputLbl" class="mb-0" for="imgload" data-toggle="tooltip" title="Click to Select Receipt Image.">Choose
+                                  Receipt
+                                  images(PNG,JPG)</label>
+                                <input type="file" class="form-control-file mt-0 pt-0" name="imgload" id="imgload"
+                                  accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                              </div>
+                              <div class="form-group d-md-inline">
+                                <!-- <button id="myTestSubmit" class="btn btn-sm btn-success">Save Receipt Image</button> -->
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label d-md-inline mr-2" for="checkboxReceipt" id="checkboxReceiptLbl">Include
+                                    Receipt
+                                  </label>
+                                  <input type="checkbox" data-toggle="tooltip" title="Check this box to include the receipt when you submit the form - If unchecked when you click Save Changes, this expenses receipt, if present, will be removed."
+                                    class="form-check-input d-md-inline" id="checkboxReceipt">
+                                  <button id="btnRemoveImg" data-toggle="tooltip" title="Click to remove image. To remove receipt image from database, the form must be submitted with Include Receipt UNCHECKED"
+                                    form="someOtherForm" class="btn btn-sm btn-primary ml-5" onclick="removeImage()">Remove
+                                    Image</button>
+                                </div>
+
+                              </div>
+                            </form>
+                            <div class="container" id="vehicleImgContainer">
+                              <img src="" alt="" class="img-fluid w-1 h-1" id="myImg">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                  <div>
+                    <label id="monthlyLbl" class="d-md-inline-block" for="reoccuring">Monthly</label>
+                    <div id="reoccuring" class="border border-primary rounded d-md-inline pt-2 pl-2">
+
+                      <!-- <span class="border border-primary p-2 rounded radiobtn" id="monthlyToggle" data-toggle="tooltip"
+                        title="If you choose YES, EZ-HST will add the same expense for each month on the same day as your selected date going forward till December"> -->
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn mr-1" id="carExpReoccurringYES" form="formCarExpEntry"
+                          type="radio" name="yesno" value="YES" data-toggle="tooltip" title="When YES is selected, multiple entries will be saved on the same day of every Month of the year from the input date month till December.">
+                        <label class="form-check-label" id="monthlyLblYES" for="carExpReoccurringYES">YES</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input radiobtn ml-1 mr-1" id="carExpReoccurringNO" form="formCarExpEntry"
+                          type="radio" name="yesno" value="NO" data-toggle="tooltip" title="When NO is selected, only one entry will be saved on the input date."
+                          checked>
+                        <label class="form-check-label" id="monthlyLblNO" for="carExpReoccurringNO">NO</label>
+                      </div>
+                      <!-- </span> -->
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="carEntryformReset" form="formCarExpEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is CHANGED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="carExpDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteVehicleExpense()"
+                    data-toggle="tooltip" title="Click to Delete current Expense"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+
+                  <button type="close" id="closeCarExpModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close form." onclick="hideCarExpModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+
+                  <button type="button" id="carExpSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing expense - ID box must have a value!"
+                    onclick="updateVehicleExpense()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+
+                  <button type="button" id="carExpBtn" form="formCarExpEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Expense"><i class="far fa-save"></i> Submit</button>
+                </div>
+
+              </div>
+
+
+            </div>
+
+
+
+        </div>
+        </form>
+
+
+
+      </div>
+      <!-- <div class="modal-footer">
+          <input type="text" id="carExpEntryMsg" form="formCarExpEntry" class="form-control">
+        </div> -->
+    </div>
+  </div>
+  </div>
+
+  <!-- VEHICLE LOG ENTRY MODAL -->
+
+  <div class="modal fade" id="vehicleLogModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white" id="vehicleLogHead">
+          <p class="modal-title" id="vehicleLogTitle" style="font-size: 16px;">Vehicle 1 Log Entry Form</p>
+          <form class="ml-auto" id="vehicleLogSelectCarForm">
+            <select class="form-control bg-primary text-white mySelect" id="vehicleLogSelector" style="width: 110px; height: 24px; font-size: 16px;"
+              onchange="updateCarLogHeader()">
+              <option value="Vehicle 1" selected>Vehicle 1</option>
+              <option value="Vehicle 2">Vehicle 2</option>
+            </select>
+          </form>
+          <button class="close" onclick="hideVehicleLogExpModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div id="vLogModalBody" class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertVehicleLogContainer">
+          </div>
+          <div class="container">
+            <div class="col"></div>
+            <div class="col-lg-8 mx-auto order-2" id="navBtnsContainerVLog">
+              <div class="btn btn-sm btn-outline-primary" id="vLogBtnFirst" data-toggle="tooltip" title="Click to change Vehicle Log Date to the 1st day of the Year."><i
+                  class="fas fa-fast-backward"></i> First</div>
+              <div class="btn btn-sm btn-outline-primary" id="vLogBtnPrevious" data-toggle="tooltip" title="Click to change Vehicle Log Date to the Previous day of the Year."><i
+                  class="fas fa-step-backward"></i>
+                Previous</div>
+              <input id="vehicleLogDate" form="someOtherLofForm" name="vehicleLogDate" type="date" min="2018-01-01" max="2018-12-31"
+                class="p-0 mx-2 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day">
+              <div class="btn btn-sm btn-outline-primary" id="vLogBtnNext" data-toggle="tooltip" title="Click to change Vehicle Log Date to the Next day of the Year.">Next
+                <i class="fas fa-step-forward"></i></div>
+              <div class="btn btn-sm btn-outline-primary" id="vLogBtnLast" data-toggle="tooltip" title="Click to change Vehicle Log Date to the Last day of the Year.">Last
+                <i class="fas fa-fast-forward"></i></div>
+              <div class="btn btn-sm btn-outline-success text-right mt-1" id="vLogBtnSave" data-toggle="tooltip" title="Click to Save Changes to Business and Personal Kilometers"
+                onclick="postVehicleLog()"><i class="far fa-save"></i>
+                Save</div>
+              <div class="btn btn-sm btn-outline-danger text-right mt-1" id="vLogBtnDelete" data-toggle="tooltip" title="Click to Remove Every Vehicle Log Entry for Both Vehicle 1 and Vehicle 2."
+                onclick="deleteAllVehicleLog()"><i class="far fa-trash-alt"></i>
+                DELETE</div>
+            </div>
+
+
+            <div id="dayDisplayVLog" class="col-lg-2 offset-lg-5 d-none d-lg-block" data-toggle="tooltip" title="Displays current Day, Month, Quarter and Year of the Log Date.">
+              <p class="my-0" id="vLogDayDisplay">Day - 1</p>
+              <p class="my-0" id="vLogMonthDisplay">Month - 1</p>
+              <p class="my-0" id="vLogQuarterDisplay">Quarter - 1</p>
+              <p class="my-0" id="vLogYearDisplay">Year - 1</p>
+            </div>
+          </div>
+
+          <div id="vLogLowerBlocks" class="row align-items-center mt-2 ml-5">
+            <div id="vLogLowerBlocksLeft" class="col-lg-4  d-lg-inline-block m-0">
+              <label class="mb-0" for="vLogBusKMInput">Business KM</label>
+              <input type="number" step=".1" name="vLogBusKMInput" id="vLogBusKMInput" class="form-control" data-toggle="tooltip"
+                title="Enter your Business Kilometers here.">
+              <label class="mb-0 mt-1" for="vLogPerKMInput">Personal KM</label>
+              <input type="number" step=".1" name="vLogPerKMInput" id="vLogPerKMInput" class="form-control" data-toggle="tooltip"
+                title="Enter your Personal Kilometers here.">
+              <label class="mb-0  mt-1" for="vLogOdometer">Odometer Previous Year</label>
+              <input type="number" step=".1" name="vLogOdometer" id="vLogOdometer" class="form-control" data-toggle="tooltip"
+                title="Enter your Vehicle's Odometer at the end of previous year and click Save Odometer below to keep track of your vehicle's odometer.">
+              <button class="btn btn-sm btn-outline-secondary mt-1" id="vLogBtnSaveOdometer" onclick="saveOdometerInput()"
+                data-toggle="tooltip" title="Click to Save Vehicle's Odometer entered above."><i class="far fa-save"></i>
+                Save Odometer</button>
+            </div>
+            <div id="vLogLowerBlocksCenter" class="col-lg-4 d-lg-inline-block m-0">
+              <label class="mb-0" for="vLogBusKMTotal">Total Business KM</label>
+              <input type="number" name="vLogBusKMTotal" id="vLogBusKMTotal" class="form-control" data-toggle="tooltip"
+                title="Displays total Business KMs from 1st day of Year to selected Log Date." readonly>
+              <label class="mb-0  mt-1" for="vLogPerKMTotal">Total Personal KM</label>
+              <input type="number" name="vLogPerKMTotal" id="vLogPerKMTotal" class="form-control" data-toggle="tooltip"
+                title="Displays total Personal KMs from 1st day of Year to selected Log Date." readonly>
+              <label class="mb-0  mt-1" for="vLogOdometerTotal">Odometer</label>
+              <input type="text" name="vLogOdometerTotal" id="vLogOdometerTotal" class="form-control" data-toggle="tooltip"
+                title="Displays total Combined KMs and Vehicle Odometer from 1st day of Year to selected Log Date."
+                readonly>
+              <!-- <label for="vLogBtnResetLog">Odometer</label> -->
+              <button class="btn btn-sm btn-outline-primary mt-1" id="vLogBtnResetLog" data-toggle="tooltip" title="Click to Zero all entries of selected Vehicle."
+                onclick="zeroAllLogs(false)"><i class="far fa-save"></i>
+                Reset Log</button>
+            </div>
+            <div id="vLogLowerBlocksRight" class="col-lg-4 d-lg-inline-block m-0">
+              <label class="mb-0" for="vLogBusPercentYear">Business % Year</label>
+              <input type="text" name="vLogBusPercentYear" id="vLogBusPercentYear" class="form-control" data-toggle="tooltip"
+                title="Displays Business Percentage from 1st day of Year to selected Log Date." readonly>
+              <label class="mb-0  mt-1" for="vLogBusPercentQuarter">Business % ¼</label>
+              <input type="text" name="vLogBusPercentQuarter" id="vLogBusPercentQuarter" class="form-control"
+                data-toggle="tooltip" title="Displays Business Percentage from 1st day of the Quarter to selected Log Date."
+                readonly>
+              <label class="mb-0  mt-1" for="vLogBusPercentMonth">Business % Month</label>
+              <input type="text" name="vLogBusPercentMonth" id="vLogBusPercentMonth" class="form-control" data-toggle="tooltip"
+                title="Displays Business Percentage from 1st day of the Month to selected Log Date." readonly>
+              <!-- <label for="vLogQuickPercent">Quick Method Set %</label> -->
+              <button class="btn btn-sm btn-outline-success mt-1" id="vLogQuickPercent" onclick="quickLogInput()"><i
+                  class="far fa-save" data-toggle="tooltip" title="Click to Easily add wanted percentage for the Year and Total Amount of KMs for the Year."></i>
+                Quick Method Set %</button>
+            </div>
+
+          </div>
+          <!-- <div class="modal-footer">
+        <input type="text" id="carExpEntryMsg" form="formCarExpEntry" class="form-control">
+      </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER Registration MODAL -->
+
+  <div class="modal fade text-dark mx-auto" id="userSetupModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white">User Registration</h5>
+          <button class="close" id="topCloseRegisterUserModal" onclick="$('#userSetupModal').modal( 'hide' )"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerUser">
+
+          </div>
+          <form class="form" ref='userSetupForm' id='userSetupForm' name="userSetupForm" action='http://localhost:3000/users'
+            method='post' encType="multipart/form-data">
+
+            <div class="form-row">
+              <div class="col-md-6 mb-1">
+                <input type="text" name="userfirstName" id="userfirstName" class="form-control" placeholder="First name">
+              </div>
+              <div class="col-md-6 mb-1">
+                <input type="text" name="userlastName" id="userlastName" class="form-control" placeholder="Last name">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-6 mb-1">
+                <div class="form-group mb-1">
+                  <input type="email" name="useremail" id="useremail" class="form-control" placeholder="email" onchange="setEmailValidClass('first')">
+                  <div class="invalid-feedback" id="emailMessage">
+                    Email is not valid
+                  </div>
+                </div>
+                <div class="form-group mb-1">
+                  <input type="email" name="userConfirmEmail" id="userConfirmEmail" class="form-control" placeholder="confirm email"
+                    onchange="setEmailValidClass('confirm')">
+                  <div class="invalid-feedback" id="emailConfirmMessage">
+                    Email is not valid
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-1">
+                <div class="form-group mb-1">
+                  <input type="password" name="userpassword" id="userpassword" class="form-control" placeholder="password"
+                    onchange="setPasswordValidClass('first')">
+                  <div class="invalid-feedback" id="passwordValidMessage">
+                    Password not strong enough
+                  </div>
+                </div>
+
+                <div class="form-group mb-1">
+                  <input type="password" name="userpasswordconfirm" id="userpasswordconfirm" class="form-control"
+                    placeholder="confirm password" onchange="setPasswordValidClass('confirm')">
+                  <div class="invalid-feedback" id="confirmPasswordValidMessage">
+                    Password not strong enough
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="form-group text-right">
+              <button id="userSaveBtn" form="someOtherForm" class="btn btn-sm btn-outline-success" onclick="registerUser()"><i
+                  class="fas fa-user-plus"></i>
+                Add
+                User</button>
+            </div>
+          </form>
+
+        </div>
+        <!-- <div class="modal-footer">
+
+          <button id="btnCapture" class="btn btn-primary btn-block" onclick="removeImage()">Clear Image</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- USER LOGIN MODAL -->
+
+  <div class="modal fade text-dark mx-auto" id="userLoginModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white">User Login</h5>
+          <button class="close" id="topCloseUserLoginModal" onclick="$('#userLoginModal').modal( 'hide' )"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerUserLogin">
+
+          </div>
+          <form class="form" ref='userLoginForm' id='userLoginForm' name="userLoginForm" action='http://localhost:3000/users/login'
+            method='post' encType="multipart/form-data">
+
+            <div class="form-row">
+              <div class="col-md-6 mb-1">
+                <input type="text" name="userLoginfirstName" id="userLoginfirstName" class="form-control" placeholder="First name">
+              </div>
+              <div class="col-md-6 mb-1">
+                <input type="text" name="userLoginlastName" id="userLoginlastName" class="form-control" placeholder="Last name">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-6 mb-1">
+                <input type="email" name="userLoginemail" id="userLoginemail" class="form-control" placeholder="email">
+              </div>
+              <div class="col-md-6 mb-1">
+                <input type="password" name="userLoginPassword" id="userLoginPassword" class="form-control" placeholder="password">
+              </div>
+            </div>
+
+
+
+            <div class="form-group text-right mt-3">
+              <button id="userLoginSaveBtn" form="someOtherFormLogin" class="btn btn-sm btn-outline-success" onclick="loginUser()"><i
+                  class="fas fa-user-check"></i>
+                Login</button>
+            </div>
+          </form>
+
+        </div>
+        <!-- <div class="modal-footer">
+
+          <button id="btnCapture" class="btn btn-primary btn-block" onclick="removeImage()">Clear Image</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Viewing Receipt Image -->
+  <div class="modal fade text-dark mx-auto" id="ImageViewModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white" id="ImageViewTitle">Receipt Image</h5>
+          <button class="close" id="topCloseImageViewModal" onclick="$('#ImageViewModal').modal( 'hide' )"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+          <div class="container align-middle text-center mt-0 pt-0" id="alertContainerUserLogin">
+            <img src="" alt="" class="img-fluid w-1 h-1" id="ModalImageTag">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--  style="border: 2px solid red;" -->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.min.js"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
+  <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
+  <script type="text/javascript" src="./js/businessExpenses.js"></script>
+  <script type="text/javascript" src="./js/homeExpenses.js"></script>
+  <script type="text/javascript" src="./js/otherExpenses.js"></script>
+  <script type="text/javascript" src="./js/rentalExpenses.js"></script>
+  <script type="text/javascript" src="./js/income.js"></script>
+  <script type="text/javascript" src="./js/reports.js"></script>
+  <script type="text/javascript" src="./js/tables.js"></script>
+  <script type="text/javascript" src="./js/mainPageScript.js"></script>
+  <script type="text/javascript" src="./js/vehicleLog.js"></script>
+  <script type="text/javascript" src="./js/mainPageScript.js"></script>
+  <script type="text/javascript" src="./js/miscHardCoded.js"></script>
+
+  <script>
+    // Get the current year for the copyright
+    // $('#year').text(new Date().getFullYear());
+
+    // This code enables the drop-down submenu
+    $('.dropdown-submenu > a').on("click", function (e) {
+      var submenu = $(this);
+      $('.dropdown-submenu .dropdown-menu').removeClass('show');
+      submenu.next('.dropdown-menu').addClass('show');
+      e.stopPropagation();
+    });
+
+    $('.dropdown').on("hidden.bs.dropdown", function () {
+      // hide any open menus when parent closes
+      $('.dropdown-menu.show').removeClass('show');
+    });
+
+
+
+    // Tooltip enable code
+
+    $(document).ready(function () {
+      if (enableTooltip) {
+        $('[data-toggle="tooltip"]').tooltip();
+      }
+    });
+
+
+
+    //Display Image code
+
+    $('document').ready(function () {
+      $("#imgload").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImg').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+
+        }
+      });
+
+      $("#imgloadBus").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgBus').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadHome").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgHome').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadOther").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgOther').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadRental").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgRental').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+
+      $("#imgloadIncome").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgIncome').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+
+    });
+
+    //the following group of code is used to update the form status by catching the image src change and triggering the appropriate Update Status function
+
+    var elementIncome = document.getElementById('myImgIncome');
+    var elementVehicle = document.getElementById('myImg');
+    var elementBusiness = document.getElementById('myImgBus');
+    var elementHome = document.getElementById('myImgHome');
+    var elementOther = document.getElementById('myImgOther');
+    var elementRental = document.getElementById('myImgRental');
+
+    var xIncome = new MutationObserver(function (e) {
+      updateIncomeFormStatus();
+      disableEnableFullSizeIncomeImgBtn();
+    });
+    var xVehicle = new MutationObserver(function (e) {
+      updateVehicleFormStatus();
+      disableEnableFullSizeVehicleImgBtn();
+    });
+    var xBusiness = new MutationObserver(function (e) {
+      updateBusinessFormStatus();
+      disableEnableFullSizeBusinessImgBtn();
+    });
+    var xHome = new MutationObserver(function (e) {
+      updateHomeFormStatus();
+      disableEnableFullSizeHomeImgBtn();
+    });
+    var xOther = new MutationObserver(function (e) {
+      updateOtherFormStatus();
+      disableEnableFullSizeOtherImgBtn();
+    });
+    var xRental = new MutationObserver(function (e) {
+      updateRentalFormStatus();
+      disableEnableFullSizeRentalImgBtn();
+    });
+
+    xIncome.observe(elementIncome, {
+      attributes: true
+    });
+    xVehicle.observe(elementVehicle, {
+      attributes: true
+    });
+    xBusiness.observe(elementBusiness, {
+      attributes: true
+    });
+    xHome.observe(elementHome, {
+      attributes: true
+    });
+    xOther.observe(elementOther, {
+      attributes: true
+    });
+    xRental.observe(elementRental, {
+      attributes: true
+    });
+
+    // Display File Name in Receipt File Input
+
+    $('#imgload').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadBus').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadHome').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadOther').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadRental').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadIncome').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    // Code to Logout after set time
+
+    var idleTime = 0;
+    $(document).ready(function () {
+      //Increment the idle time counter every minute.
+      var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+      //Zero the idle timer on mouse movement.
+      $(this).mousemove(function (e) {
+        idleTime = 0;
+      });
+      $(this).keypress(function (e) {
+        idleTime = 0;
+      });
+      $(this).mousedown(function (e) {
+        idleTime = 0;
+      });
+      $(this).click(function (e) {
+        idleTime = 0;
+      });
+      $(this).scroll(function (e) {
+        idleTime = 0;
+      });
+    });
+
+    function timerIncrement() {
+      idleTime = idleTime + 1;
+      if (idleTime > 6) { // 7 minutes
+        // code to check if logged in and if so, logout
+        if ($("#navLogout").hasClass("disabled")) {
+        } else {
+          userLogout(true);
+        }
+
+      }
+    };
+
+    //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
+    $('document').ready(function () {
+
+      $('#addCarExpenseModal').on('shown.bs.modal', function () {
+        if ($('#carBlindExpID').val() !== "") {
+          if ($('#carExpBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpBtn').addClass("disabled");
+          }
+          if ($('#carExpDeleteBtn').hasClass("disabled")) {
+            $('#carExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+            $('#carExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#carExpBtn').hasClass("disabled")) {
+            $('#carExpBtn').removeClass("disabled");
+          }
+          if ($('#carExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#BusExpenseModal').on('shown.bs.modal', function () {
+        if ($('#busBlindExpID').val() !== "") {
+          if ($('#busExpBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpBtn').addClass("disabled");
+          }
+          if ($('#busExpDeleteBtn').hasClass("disabled")) {
+            $('#busExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+            $('#busExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#busExpBtn').hasClass("disabled")) {
+            $('#busExpBtn').removeClass("disabled");
+          }
+          if ($('#busExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+
+      $('#HomeExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#homeBlindExpID').val() !== "") {
+          if ($('#homeExpBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpBtn').addClass("disabled");
+          }
+          if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+            $('#homeExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+            $('#homeExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#homeExpBtn').hasClass("disabled")) {
+            $('#homeExpBtn').removeClass("disabled");
+          }
+          if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#OtherExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#otherBlindExpID').val() !== "") {
+          if ($('#otherExpBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpBtn').addClass("disabled");
+          }
+          if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+            $('#otherExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+            $('#otherExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#otherExpBtn').hasClass("disabled")) {
+            $('#otherExpBtn').removeClass("disabled");
+          }
+          if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#RentalExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#rentalBlindExpID').val() !== "") {
+          if ($('#rentalExpBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpBtn').addClass("disabled");
+          }
+          if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+            $('#rentalExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+            $('#rentalExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#rentalExpBtn').hasClass("disabled")) {
+            $('#rentalExpBtn').removeClass("disabled");
+          }
+          if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#IncomeModal').on('shown.bs.modal', function () {
+
+        if ($('#incomeBlindExpID').val() !== "") {
+          if ($('#incomeExpBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpBtn').addClass("disabled");
+          }
+          if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+            $('#incomeExpDeleteBtn').removeClass("disabled");
+          }
+          if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+            $('#incomeExpSaveChangesBtn').removeClass("disabled");
+          }
+        } else {
+          if ($('#incomeExpBtn').hasClass("disabled")) {
+            $('#incomeExpBtn').removeClass("disabled");
+          }
+          if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+
+    });
+
+  </script>
+
+
+
+
+</body>
+
+</html>

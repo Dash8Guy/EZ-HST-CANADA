@@ -1,0 +1,1404 @@
+let myToken;
+//Variable to keep track of populated category list
+let categoryCar = false;
+let vendorCar = false;
+//Holds Logged in User first name;
+let loggedIn;
+
+const myDOMs = {
+  randomData: {
+    appYear: 2018,
+    lockDate: document.getElementById('hiddenLockDate')
+  },
+  vehicleLog: {
+    Modal: document.getElementById('vehicleLogModal'),
+    Title: document.getElementById('vehicleLogTitle'),
+    SelectForm: document.getElementById('vehicleLogSelectCarForm'),
+    Selector: document.getElementById('vehicleLogSelector'),
+    DisplayDay: document.getElementById('vLogDayDisplay'),
+    DisplayMonth: document.getElementById('vLogMonthDisplay'),
+    DisplayQuarter: document.getElementById('vLogQuarterDisplay'),
+    DisplayYear: document.getElementById('vLogYearDisplay'),
+    FirstBtn: document.getElementById('vLogBtnFirst'),
+    PreviousBtn: document.getElementById('vLogBtnPrevious'),
+    NextBtn: document.getElementById('vLogBtnNext'),
+    LastBtn: document.getElementById('vLogBtnLast'),
+    SaveBtn: document.getElementById('vLogBtnSave'),
+    DeleteBtn: document.getElementById('vLogBtnDelete'),
+    SaveOdometerBtn: document.getElementById('vLogBtnSaveOdometer'),
+    ResetLogBtn: document.getElementById('vLogBtnResetLog'),
+    QuickPercentBtn: document.getElementById('vLogQuickPercent'),
+    DateLog: document.getElementById('vehicleLogDate'),
+    BusKMInput: document.getElementById('vLogBusKMInput'),
+    PerKMInput: document.getElementById('vLogPerKMInput'),
+    OdometerInput: document.getElementById('vLogOdometer'),
+    TotalBus: document.getElementById('vLogBusKMTotal'),
+    TotalPer: document.getElementById('vLogPerKMTotal'),
+    TotalOdometer: document.getElementById('vLogOdometerTotal'),
+    BusPercentYear: document.getElementById('vLogBusPercentYear'),
+    BusPercentQuarter: document.getElementById('vLogBusPercentQuarter'),
+    BusPercentMonth: document.getElementById('vLogBusPercentMonth'),
+    Alert: document.getElementById("alertVehicleLog"),
+    AlertContainer: document.getElementById("alertVehicleLogContainer"),
+    closeAlert: document.getElementById("VehicleLogCloseBtnAlert"),
+    DisplayDateArea: document.getElementById('dayDisplayVLog')
+  },
+  main_page: {
+    SelectPeriod: document.getElementById('timePeriodSelect'),
+    NetRevenue: document.getElementById('netRevDisplay'),
+    NetExpense: document.getElementById('netExpDisplay'),
+    AccountBalance: document.getElementById('acctBalance'),
+    LockDate: document.getElementById('lockDate'),
+    StartDate: document.getElementById('startDatePage'),
+    EndDate: document.getElementById('endDatePage'),
+  },
+  imageModal: {
+    Img: document.getElementById("ModalImageTag")
+  },
+  nav: {
+    Login: document.getElementById("navLogin"),
+    Logout: document.getElementById("navLogout"),
+    Register: document.getElementById("navRegister"),
+    UserLogName: document.getElementById("navUserLog")
+  },
+  main: {
+    Alert: document.getElementById("mainAlert"),
+    AlertContainer: document.getElementById("alertContainerMain"),
+    closeAlert: document.getElementById("closeBtnAlertMain")
+  },
+  income: {
+    EntryForm: document.getElementById("formIncomeEntry"),
+    EntryDate: document.getElementById("incomeDate"),
+    AutoAmount: document.getElementById("incomeAutoAmount"),
+    NetAmt: document.getElementById("incomenetAmt"),
+    HSTAmt: document.getElementById("incomehstAmt"),
+    PSTAmt: document.getElementById("incomepstAmt"),
+    TotalAmt: document.getElementById("incomeTotalAmt"),
+    Description: document.getElementById("incomeDescription"),
+    Vendor: document.getElementById("vendorSelectIncome"),
+    Party: document.getElementById("incomePartySelect"),
+    Title: document.getElementById("incomeTitle"),
+    Reset: document.getElementById("incomeEntryformReset"),
+    Img: document.getElementById("myImgIncome"),
+    FullSizeImgBtn: document.getElementById('incomeExpShowFullSize'),
+    FileSelector: document.getElementById("imgloadIncome"),
+    Checkbox: document.getElementById("checkboxReceiptIncome"),
+    ReoccurYES: document.getElementById("incomeExpReoccurringYES"),
+    ReoccurNO: document.getElementById("incomeExpReoccurringNO"),
+    Alert: document.getElementById("incomeExpAlert"),
+    AlertContainer: document.getElementById("alertContainerIncome"),
+    closeAlert: document.getElementById("incomeCloseBtnAlert"),
+    ExpID: document.getElementById("incomeExpID"),
+    BlindExpID: document.getElementById("incomeBlindExpID"),
+    SubmitButton: document.getElementById("incomeExpBtn"),
+    Modal: document.getElementById("IncomeModal"),
+    SaveChanges: document.getElementById("incomeExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("incomeExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('incomeExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('incomeAddVendor'),
+    DeleteVendor: document.getElementById('incomeDeleteVendor'),
+    AddParty: document.getElementById('incomeAddParty'),
+    DeleteParty: document.getElementById('incomeDeleteParty'),
+    FileSelectorButton: document.getElementById('incomeFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImgIncome'),
+    DeleteButton: document.getElementById('incomeExpDeleteBtn'),
+    CloseButton: document.getElementById('closeIncomeExpModal'),
+    Selector: document.getElementById('incomeSelector'),
+  },
+  carExp: {
+    EntryForm: document.getElementById("formCarExpEntry"),
+    EntryDate: document.getElementById("carDate"),
+    AutoAmount: document.getElementById("carAutoAmount"),
+    NetAmt: document.getElementById("carnetAmt"),
+    HSTAmt: document.getElementById("carhstAmt"),
+    PSTAmt: document.getElementById("carpstAmt"),
+    TotalAmt: document.getElementById("carTotalAmt"),
+    Description: document.getElementById("carDescription"),
+    Vendor: document.getElementById("vendorSelect"),
+    Category: document.getElementById("carExpCatSelect"),
+    Selector: document.getElementById("carSelector"),
+    Title: document.getElementById("carTitle"),
+    Reset: document.getElementById("carEntryformReset"),
+    Img: document.getElementById("myImg"),
+    FullSizeImgBtn: document.getElementById('carExpShowFullSize'),
+    FileSelector: document.getElementById("imgload"),
+    Checkbox: document.getElementById("checkboxReceipt"),
+    ReoccurYES: document.getElementById("carExpReoccurringYES"),
+    ReoccurNO: document.getElementById("carExpReoccurringNO"),
+    Alert: document.getElementById("carExpAlert"),
+    AlertContainer: document.getElementById("alertContainer"),
+    closeAlert: document.getElementById("closeBtnAlert"),
+    ExpID: document.getElementById("carExpID"),
+    BlindExpID: document.getElementById("carBlindExpID"),
+    SubmitButton: document.getElementById("carExpBtn"),
+    Modal: document.getElementById("addCarExpenseModal"),
+    SaveChanges: document.getElementById("carExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("carExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('carExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('carAddVendor'),
+    DeleteVendor: document.getElementById('carDeleteVendor'),
+    FileSelectorButton: document.getElementById('carFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImg'),
+    DeleteButton: document.getElementById('carExpDeleteBtn'),
+    CloseButton: document.getElementById('closeCarExpModal')
+  },
+  busExp: {
+    EntryForm: document.getElementById("formBusExpEntry"),
+    EntryDate: document.getElementById("busDate"),
+    AutoAmount: document.getElementById("busAutoAmount"),
+    NetAmt: document.getElementById("busnetAmt"),
+    HSTAmt: document.getElementById("bushstAmt"),
+    PSTAmt: document.getElementById("buspstAmt"),
+    TotalAmt: document.getElementById("busTotalAmt"),
+    Description: document.getElementById("busDescription"),
+    Vendor: document.getElementById("vendorSelectBus"),
+    Category: document.getElementById("busExpCatSelect"),
+    Title: document.getElementById("busTitle"),
+    Reset: document.getElementById("busEntryformReset"),
+    Img: document.getElementById("myImgBus"),
+    FullSizeImgBtn: document.getElementById('busExpShowFullSize'),
+    FileSelector: document.getElementById("imgloadBus"),
+    Checkbox: document.getElementById("checkboxReceiptBus"),
+    ReoccurYES: document.getElementById("busExpReoccurringYES"),
+    ReoccurNO: document.getElementById("busExpReoccurringNO"),
+    Alert: document.getElementById("busExpAlert"),
+    AlertContainer: document.getElementById("alertContainerBusiness"),
+    closeAlert: document.getElementById("busCloseBtnAlert"),
+    ExpID: document.getElementById("busExpID"),
+    BlindExpID: document.getElementById("busBlindExpID"),
+    SubmitButton: document.getElementById("busExpBtn"),
+    Modal: document.getElementById("BusExpenseModal"),
+    SaveChanges: document.getElementById("busExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("busExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('busExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('busAddVendor'),
+    DeleteVendor: document.getElementById('busDeleteVendor'),
+    FileSelectorButton: document.getElementById('busFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImgBus'),
+    DeleteButton: document.getElementById('busExpDeleteBtn'),
+    CloseButton: document.getElementById('closeBusExpModal')
+  },
+  homeExp: {
+    EntryForm: document.getElementById("formHomeExpEntry"),
+    EntryDate: document.getElementById("homeDate"),
+    AutoAmount: document.getElementById("homeAutoAmount"),
+    NetAmt: document.getElementById("homenetAmt"),
+    HSTAmt: document.getElementById("homehstAmt"),
+    PSTAmt: document.getElementById("homepstAmt"),
+    TotalAmt: document.getElementById("homeTotalAmt"),
+    Description: document.getElementById("homeDescription"),
+    Vendor: document.getElementById("vendorSelectHome"),
+    Category: document.getElementById("homeExpCatSelect"),
+    Title: document.getElementById("homeTitle"),
+    Reset: document.getElementById("homeEntryformReset"),
+    Img: document.getElementById("myImgHome"),
+    FullSizeImgBtn: document.getElementById('homeExpShowFullSize'),
+    FileSelector: document.getElementById("imgloadHome"),
+    Checkbox: document.getElementById("checkboxReceiptHome"),
+    ReoccurYES: document.getElementById("homeExpReoccurringYES"),
+    ReoccurNO: document.getElementById("homeExpReoccurringNO"),
+    Alert: document.getElementById("homeExpAlert"),
+    AlertContainer: document.getElementById("alertContainerHome"),
+    closeAlert: document.getElementById("homeCloseBtnAlert"),
+    ExpID: document.getElementById("homeExpID"),
+    BlindExpID: document.getElementById("homeBlindExpID"),
+    SubmitButton: document.getElementById("homeExpBtn"),
+    Modal: document.getElementById("HomeExpenseModal"),
+    SaveChanges: document.getElementById("homeExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("homeExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('homeExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('homeAddVendor'),
+    DeleteVendor: document.getElementById('homeDeleteVendor'),
+    FileSelectorButton: document.getElementById('homeFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImgHome'),
+    DeleteButton: document.getElementById('homeExpDeleteBtn'),
+    CloseButton: document.getElementById('closeHomeExpModal')
+  },
+  otherExp: {
+    EntryForm: document.getElementById("formOtherExpEntry"),
+    EntryDate: document.getElementById("otherDate"),
+    AutoAmount: document.getElementById("otherAutoAmount"),
+    NetAmt: document.getElementById("othernetAmt"),
+    HSTAmt: document.getElementById("otherhstAmt"),
+    PSTAmt: document.getElementById("otherpstAmt"),
+    TotalAmt: document.getElementById("otherTotalAmt"),
+    Description: document.getElementById("otherDescription"),
+    Vendor: document.getElementById("vendorSelectOther"),
+    Category: document.getElementById("otherExpCatSelect"),
+    Title: document.getElementById("otherTitle"),
+    Reset: document.getElementById("otherEntryformReset"),
+    Img: document.getElementById("myImgOther"),
+    FullSizeImgBtn: document.getElementById('otherExpShowFullSize'),
+    FileSelector: document.getElementById("imgloadOther"),
+    Checkbox: document.getElementById("checkboxReceiptOther"),
+    ReoccurYES: document.getElementById("otherExpReoccurringYES"),
+    ReoccurNO: document.getElementById("otherExpReoccurringNO"),
+    Alert: document.getElementById("otherExpAlert"),
+    AlertContainer: document.getElementById("alertContainerOther"),
+    closeAlert: document.getElementById("otherCloseBtnAlert"),
+    ExpID: document.getElementById("otherExpID"),
+    BlindExpID: document.getElementById("otherBlindExpID"),
+    SubmitButton: document.getElementById("otherExpBtn"),
+    Modal: document.getElementById("OtherExpenseModal"),
+    SaveChanges: document.getElementById("otherExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("otherExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('otherExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('otherAddVendor'),
+    DeleteVendor: document.getElementById('otherDeleteVendor'),
+    FileSelectorButton: document.getElementById('otherFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImgOther'),
+    DeleteButton: document.getElementById('otherExpDeleteBtn'),
+    CloseButton: document.getElementById('closeOtherExpModal')
+  },
+  rentalExp: {
+    EntryForm: document.getElementById("formRentalExpEntry"),
+    EntryDate: document.getElementById("rentalDate"),
+    AutoAmount: document.getElementById("rentalAutoAmount"),
+    NetAmt: document.getElementById("rentalnetAmt"),
+    HSTAmt: document.getElementById("rentalhstAmt"),
+    PSTAmt: document.getElementById("rentalpstAmt"),
+    TotalAmt: document.getElementById("rentalTotalAmt"),
+    Description: document.getElementById("rentalDescription"),
+    Vendor: document.getElementById("vendorSelectRental"),
+    Category: document.getElementById("rentalExpCatSelect"),
+    Title: document.getElementById("rentalTitle"),
+    Reset: document.getElementById("rentalEntryformReset"),
+    Img: document.getElementById("myImgRental"),
+    FullSizeImgBtn: document.getElementById('rentalExpShowFullSize'),
+    FileSelector: document.getElementById("imgloadRental"),
+    Checkbox: document.getElementById("checkboxReceiptRental"),
+    ReoccurYES: document.getElementById("rentalExpReoccurringYES"),
+    ReoccurNO: document.getElementById("rentalExpReoccurringNO"),
+    Alert: document.getElementById("rentalExpAlert"),
+    AlertContainer: document.getElementById("alertContainerRental"),
+    closeAlert: document.getElementById("rentalCloseBtnAlert"),
+    ExpID: document.getElementById("rentalExpID"),
+    BlindExpID: document.getElementById("rentalBlindExpID"),
+    SubmitButton: document.getElementById("rentalExpBtn"),
+    Modal: document.getElementById("RentalExpenseModal"),
+    SaveChanges: document.getElementById("rentalExpSaveChangesBtn"),
+    ShowHideReceipt: document.getElementById("rentalExpShowHideReceipt"),
+    ShowHideReceiptDiv: document.getElementById('rentalExpShowHideReceiptDiv'),
+    AddVendor: document.getElementById('rentalAddVendor'),
+    DeleteVendor: document.getElementById('rentalDeleteVendor'),
+    FileSelectorButton: document.getElementById('rentalFileInputLbl'),
+    RemoveImgButton: document.getElementById('btnRemoveImgRental'),
+    DeleteButton: document.getElementById('rentalExpDeleteBtn'),
+    CloseButton: document.getElementById('closeRentalExpModal')
+  },
+  userSetupModal: {
+    Form: document.getElementById("userSetupForm"),
+    FirstName: document.getElementById("userfirstName"),
+    LastName: document.getElementById("userlastName"),
+    Email: document.getElementById("useremail"),
+    EmailValidMessage: document.getElementById("emailMessage"),
+    EmailConfirm: document.getElementById("userConfirmEmail"),
+    EmailValidConfirmMessage: document.getElementById("emailConfirmMessage"),
+    Password: document.getElementById("userpassword"),
+    PasswordValidMessage: document.getElementById("passwordValidMessage"),
+    PasswordConfirm: document.getElementById("userpasswordconfirm"),
+    PasswordConfirmValidMessage: document.getElementById(
+      "confirmPasswordValidMessage"
+    ),
+    SaveBtn: document.getElementById("userSaveBtn"),
+    Alert: document.getElementById("carExpAlertUser"),
+    AlertContainer: document.getElementById("alertContainerUser"),
+    closeAlert: document.getElementById("closeBtnAlertUser")
+  },
+  userLoginModal: {
+    Form: document.getElementById("userLoginForm"),
+    FirstName: document.getElementById("userLoginfirstName"),
+    LastName: document.getElementById("userLoginlastName"),
+    Email: document.getElementById("userLoginemail"),
+    Password: document.getElementById("userLoginPassword"),
+    SaveBtn: document.getElementById("userLoginSaveBtn"),
+    Alert: document.getElementById("AlertUserLogin"),
+    AlertContainer: document.getElementById("alertContainerUserLogin"),
+    closeAlert: document.getElementById("closeBtnAlertUserLogin")
+  }
+};
+
+function getTodaysDate() {
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1; //January is 0!
+  let yyyy = today.getFullYear();
+
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+
+  today = mm + '-' + dd + '-' + yyyy;
+  return today;
+}
+
+function formatMyDate(date) {
+  let myDate = new Date(date);
+  let myDay = myDate.getDate();
+  let myMonth = myDate.getMonth() + 1;
+  let myYear = myDate.getFullYear();
+  // if (myDay < 10) {
+  //   myDay = `0${myDay}`;
+  // }
+  // if (myMonth < 10) {
+  //   myMonth = `0${myMonth}`;
+  // }
+
+  return myMonth + "/" + myDay + "/" + myYear;
+}
+
+function arrOfObjectToArrOfArrays() {
+  let netAmtSum = 0;
+  let hstAmtSum = 0;
+  let pstAmtSum = 0;
+  let totalAmtSum = 0;
+  let myTempData = [];
+  let myTemp2Arr = [];
+  curTableArray.forEach((el, index) => {
+    let myTempArr = [];
+    myTempArr.push(index + 1);
+    let myTempDate = formatMyDate(el.carDate);
+    myTempArr.push(myTempDate);
+    myTempArr.push(el.carnetAmt.toFixed(2));
+    myTempArr.push(el.carhstAmt.toFixed(2));
+    myTempArr.push(el.carpstAmt.toFixed(2));
+    myTempArr.push(el.carTotalAmt.toFixed(2));
+    myTempArr.push(el.carDescription);
+    myTempArr.push(el.vendorSelect);
+    myTempArr.push(el.carExpCatSelect);
+
+    myTempData.push(myTempArr);
+
+    netAmtSum = netAmtSum + el.carnetAmt;
+    hstAmtSum = hstAmtSum + el.carhstAmt;
+    pstAmtSum = pstAmtSum + el.carpstAmt;
+    totalAmtSum = totalAmtSum + el.carTotalAmt;
+  });
+  myTemp2Arr.push('');
+  myTemp2Arr.push('Totals:');
+  myTemp2Arr.push(formatNumber(netAmtSum.toFixed(2)));
+  myTemp2Arr.push(formatNumber(hstAmtSum.toFixed(2)));
+  myTemp2Arr.push(formatNumber(pstAmtSum.toFixed(2)));
+  myTemp2Arr.push(formatNumber(totalAmtSum.toFixed(2)));
+  myTemp2Arr.push('');
+  myTemp2Arr.push('');
+  myTemp2Arr.push('');
+
+  myTempData.push(myTemp2Arr);
+
+  return myTempData;
+}
+
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+
+function generateTablePDF(expGroup) {
+  let headText;
+  let fileSaveText;
+  let myTempDate = getTodaysDate();
+  let data = arrOfObjectToArrOfArrays();
+  let columns = ["  #  ", "DATE", "NET", "HST", "PST", "TOTAL", "DESCRIPTION", "SUPPLIER", "CATEGORY"];
+  let doc = new jsPDF('l', 'px', 'letter', true);
+  doc.setTextColor(41, 127, 186);
+  doc.setFontSize(12);
+  switch (expGroup) {
+    case 'Bus-Exp':
+      headText = `${curTableArray.length} Business Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      break;
+    case 'V1-Exp':
+      headText = `${curTableArray.length} Vehicle-1 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      break;
+    case 'V2-Exp':
+      headText = `${curTableArray.length} Vehicle-2 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'Home-Exp':
+      headText = `${curTableArray.length} Home Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'Other-Exp':
+      headText = `${curTableArray.length} Other Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'Rental-Exp':
+      headText = `${curTableArray.length} Rental Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'Bus-Inc':
+      headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'Rental-Inc':
+      headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+  }
+  doc.text(headText, 34, 22);
+  // if (data.column.dataKey === 'NET' || data.column.dataKey === 'HST' || data.column.dataKey === 'PST' || data.column.dataKey === 'TOTAL') {
+  //   cell.styles.halign = 'right';
+  // }
+  doc.autoTable(columns, data, {
+    tableWidth: 'auto',
+    columnWidth: 'auto',
+    styles: { cellPadding: 1, fontSize: 6.7 },
+    createdHeaderCell: function (cell, data) {
+      alignCol(cell, data);
+    },
+    createdCell: function (cell, data) {
+      alignCol(cell, data);
+    }
+    //columnStyles: { DATE: { halign: 'right' }, NET: { halign: 'right' }, HST: { halign: 'right' }, PST: { halign: 'right' }, TOTAL: { halign: 'right' } }
+  });
+
+  doc.save(fileSaveText);
+
+}
+
+function alignCol(cell, data) {
+  var col = data.column.index;
+  var row = data.row.index;
+  if (col == 1 || col == 2 || col == 3 || col == 4 || col == 5) {
+    cell.styles.halign = 'right';
+  } else {
+    cell.styles.halign = 'center';
+  }
+  if (row === curTableArray.length) {
+
+    cell.styles.fontStyle = 'bold';
+  }
+}
+
+function tableToJson(table) {
+  let data = [];
+
+  let headers = [];
+  for (let i = 0; i < table.rows[0].cells.length; i++) {
+    headers[i] = table.rows[0].cells[i].innerText;
+  }
+  data.push(headers);
+
+  for (let i = 1; i < table.rows.length; i++) {
+    let tableRow = table.rows[i];
+    let rowData = {};
+
+    for (let j = 0; j < tableRow.cells.length; j++) {
+      rowData[headers[j]] = tableRow.cells[j].innerText;
+      // console.log(tableRow.cells[j].innerHTML);
+    }
+
+    data.push(rowData);
+  }
+  return data;
+}
+
+// function PrintPDFTable() {
+//   let table = tableToJson($('#expReportTable').get(0));
+//   let doc = new jsPDF('l', 'px', 'letter', true);
+//   let counter = 0;
+//   doc.setFontSize(8);
+//   doc.cellInitialize();
+//   $.each(table, function (i, row) {
+//     //console.log(`i=${i} and row=${JSON.stringify(row, undefined, 2)}`);
+//     if (i === 0) {
+//       doc.setFontType('bold')
+//     } else {
+//       doc.setFontType('normal')
+//     }
+
+//     if (i === 26 || i === 51 || i === 76) {
+//       counter = 0;
+//       $.each(row, function (j, cell) {
+//         // console.log(`Column:${j}- has(${cell})`);
+
+//         if (counter === 0) {
+//           //Number
+//           doc.cell(2, 2, 14, 16.8, j, i);
+//         } else if (counter === 6) {
+//           //Description
+//           doc.cell(2, 2, 185, 16.8, j, i);
+//         } else if (counter === 7) {
+//           //Vendor
+//           doc.cell(2, 2, 90, 16.8, j, i);
+//         } else if (counter === 8) {
+//           //Category
+//           doc.cell(2, 2, 105, 16.8, j, i);
+//         } else if (counter === 9) {
+//           //Receipt
+//           doc.cell(2, 2, 31, 16.8, j, i);
+//         } else if (counter === 1) {
+//           //Date
+//           doc.cell(2, 2, 33, 16.8, j, i);
+//         } else if (counter === 2 || counter === 5) {
+//           //Net or Total
+//           doc.cell(2, 2, 36, 16.8, j, i);
+//         } else {
+//           //HST and PST
+//           doc.cell(2, 2, 28, 16.8, j, i);
+//         }
+//         counter = counter + 1;
+//       });
+//     }
+
+//     counter = 0;
+//     $.each(row, function (j, cell) {
+//       if (counter === 0) {
+//         //Number
+//         doc.cell(2, 2, 14, 16.8, cell, i);
+//       } else if (counter === 6) {
+//         //Description
+//         doc.cell(2, 2, 185, 16.8, cell, i);
+//       } else if (counter === 7) {
+//         //Vendor
+//         doc.cell(2, 2, 90, 16.8, cell, i);
+//       } else if (counter === 8) {
+//         //Category
+//         doc.cell(2, 2, 105, 16.8, cell, i);
+//       } else if (counter === 9) {
+//         //Receipt
+//         doc.cell(2, 2, 31, 16.8, cell, i);
+//       } else if (counter === 1) {
+//         //Date
+//         doc.cell(2, 2, 33, 16.8, cell, i);
+//       } else if (counter === 2 || counter === 5) {
+//         //Net or Total
+//         doc.cell(2, 2, 36, 16.8, cell, i);
+//       } else {
+//         //HST and PST
+//         doc.cell(2, 2, 28, 16.8, cell, i);
+//       }
+//       counter = counter + 1;
+//     });
+
+//   });
+
+//   doc.save('Test Table.pdf');
+// }
+
+function displayScreenSize() {
+  // alert(
+  //   `Your Screen is ${window.innerWidth} wide and \n your Screen is ${
+  //   window.innerHeight
+  //   } high.`
+  // );
+}
+
+function browserLogout() {
+  $.ajax({
+    url: "http://localhost:3000/users/me/token",
+    method: "DELETE",
+    async: false,
+    data: {
+      auth: myToken
+    }
+  })
+    .done(function (data) {
+      vendorCar = false;
+      categoryCar = false;
+    })
+    .fail(function (e) { });
+}
+
+function userLogout(autoGenerated) {
+  if ($("#navLogout").hasClass("disabled")) {
+    displayAlert(
+      myDOMs.main.AlertContainer,
+      "mainAlert",
+      "closeBtnAlertMain",
+      "You are NOT logged in! ",
+      "",
+      " ",
+      "RED",
+      6000
+    );
+    return;
+  }
+  $.ajax({
+    url: "http://localhost:3000/users/me/token",
+    method: "DELETE",
+    data: {
+      auth: myToken
+    }
+  })
+    .done(function (data) {
+      afterLogout();
+      if (autoGenerated) {
+        displayAlert(
+          myDOMs.main.AlertContainer,
+          "mainAlert",
+          "closeBtnAlertMain",
+          "EZ-HST-Canada has detected no activity for over 6 min and has Logged Out Successfully! ",
+          "",
+          " ",
+          "GREEN",
+          0
+        );
+      } else {
+        displayAlert(
+          myDOMs.main.AlertContainer,
+          "mainAlert",
+          "closeBtnAlertMain",
+          "Logged Out Successfully! ",
+          "",
+          " ",
+          "GREEN",
+          6000
+        );
+      }
+    })
+    .fail(function (e) { });
+}
+
+function afterLogout() {
+  myToken = "";
+  vendorCar = false;
+  categoryCar = false;
+  emptyVendorSelect();
+  emptyBusVendorSelect();
+  emptyHomeVendorSelect();
+  emptyOtherVendorSelect();
+  emptyRentalVendorSelect();
+  emptyCategorySelect();
+  emptyBusCategorySelect();
+  emptyHomeCategorySelect();
+  emptyOtherCategorySelect();
+  emptyRentalCategorySelect();
+  emptyIncomeVendorSelect();
+  var isDisabledLogin = $("#navLogin").hasClass("disabled");
+  if (isDisabledLogin) {
+    //console.log("Login is getting enabled");
+    myDOMs.nav.Login.classList.remove("disabled");
+  }
+
+  var isDisabledLogout = $("#navLogout").hasClass("disabled");
+  if (!isDisabledLogout) {
+    //console.log("Logout is getting disabled");
+    myDOMs.nav.Logout.classList.add("disabled");
+  }
+
+  myDOMs.nav.UserLogName.innerText = "";
+  loggedIn = "";
+}
+
+function afterLogin(userName) {
+  loggedIn = userName;
+  var isDisabledLogin = $("#navLogin").hasClass("disabled");
+  if (!isDisabledLogin) {
+    //console.log("Login is getting disabled");
+    myDOMs.nav.Login.classList.add("disabled");
+  }
+  var isDisabledLogout = $("#navLogout").hasClass("disabled");
+  if (isDisabledLogout) {
+    //console.log("Logout is getting enabled");
+    myDOMs.nav.Logout.classList.remove("disabled");
+  }
+
+  var isDisabledRegister = $("#navRegister").hasClass("disabled");
+  if (!isDisabledRegister) {
+    //console.log("Logout is getting enabled");
+    myDOMs.nav.Register.classList.add("disabled");
+  }
+
+  myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
+  populateVehicleVendors();
+  populateBusinessVendors();
+  populateHomeVendors();
+  populateOtherVendors();
+  populateRentalVendors();
+  populateIncomeVendors();
+  getMiscData();
+}
+
+function getUserMe() {
+  $.ajax({
+    method: "GET",
+    url: "http://localhost:3000/users/me",
+    data: {
+      auth: myToken
+    }
+  })
+    .done(function (myUser) {
+      let myFirst = myUser.firstName;
+      let myLast = myUser.lastName;
+      let myEmail = myUser.email;
+      let myID = myUser._id;
+      let myMsg = [
+        `Welcome ${myFirst} ${myLast}`,
+        `Your ID: ${myID}`,
+        `Your Email: ${myEmail}`
+      ];
+      displayAlert(
+        myDOMs.main.AlertContainer,
+        "mainAlert",
+        "closeBtnAlertMain",
+        "Authorized! ",
+        myMsg,
+        " ",
+        "GREEN",
+        6000
+      );
+    })
+    .fail(function (e) {
+      let myFailMsg = [`The Server was Unable to Authorize Login Credentials!`];
+      displayAlert(
+        myDOMs.main.AlertContainer,
+        "mainAlert",
+        "closeBtnAlertMain",
+        "Unauthorized! ",
+        myFailMsg,
+        " ",
+        "RED",
+        6000
+      );
+    });
+}
+
+function loginUser() {
+  let tempdata = {
+    firstName: myDOMs.userLoginModal.FirstName.value,
+    lastName: myDOMs.userLoginModal.LastName.value,
+    email: myDOMs.userLoginModal.Email.value,
+    password: myDOMs.userLoginModal.Password.value
+  };
+
+  $.ajax({
+    method: "POST",
+    url: "http://localhost:3000/users/login",
+    dataType: "json",
+    data: tempdata
+  })
+    .done(function (data) {
+      let myMsg = [
+        `Welcome ${data.firstName} ${data.lastName}`,
+        `Your ID: ${data._id}`,
+        `Your Email: ${data.email}`
+      ];
+
+      displayAlert(
+        myDOMs.userLoginModal.AlertContainer,
+        "AlertUserLogin",
+        "closeBtnAlertUserLogin",
+        "Successful Login! ",
+        myMsg,
+        " ",
+        "GREEN",
+        6000
+      );
+      myToken = data.token;
+      afterLogin(tempdata.firstName);
+      myDOMs.userLoginModal.Form.reset();
+    })
+    .fail(function (e) {
+      let myMsg = [e.responseText];
+      displayAlert(
+        myDOMs.userLoginModal.AlertContainer,
+        "AlertUserLogin",
+        "closeBtnAlertUserLogin",
+        "Login Error! ",
+        myMsg,
+        " ",
+        "RED",
+        6000
+      );
+    });
+}
+let myAlert;
+
+function displayAlert(
+  curAlertContainer,
+  curAlertID,
+  closeBtnID,
+  boldText,
+  moreText,
+  tempID,
+  alertType,
+  dismissTime
+) {
+  // this code checks for children nodes and removes if true
+
+  if (curAlertContainer.hasChildNodes()) {
+    while (curAlertContainer.firstChild) {
+      curAlertContainer.removeChild(curAlertContainer.firstChild);
+    }
+  }
+
+  if (alertType === "RED") {
+    myAlert = document.createElement("div");
+    myAlert.setAttribute(
+      "class",
+      "alert alert-danger alert-dismissible collapse"
+    );
+  } else if (alertType === "GREEN") {
+    myAlert = document.createElement("div");
+    myAlert.setAttribute(
+      "class",
+      "alert alert-success alert-dismissible collapse"
+    );
+  }
+  // } else if (alertType === "TABLE CAR GREEN") {
+  //   //this code calls the function on tables.js and builds the table structure and Pagination if required and is appended lower in this code
+  //   buildVehicleExpenseTable(alertType);
+  // }
+
+  myAlert.setAttribute("id", curAlertID);
+
+  let myBtn = document.createElement("button");
+  myBtn.setAttribute("class", "close");
+  myBtn.setAttribute("id", closeBtnID);
+  myBtn.setAttribute("data-toogle", "tooltip");
+  myBtn.setAttribute("title", "Close Message!");
+
+  if (curAlertID === "mainAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('mainAlert')");
+  } else if (curAlertID === "AlertUserLogin") {
+    myBtn.setAttribute("onclick", "hideAlert('AlertUserLogin')");
+  } else if (curAlertID === "carExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('carExpAlert')");
+  } else if (curAlertID === "carExpAlertUser") {
+    myBtn.setAttribute("onclick", "hideAlert('carExpAlertUser')");
+  } else if (curAlertID === "busExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('busExpAlert')");
+  } else if (curAlertID === "homeExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('homeExpAlert')");
+  } else if (curAlertID === "otherExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('otherExpAlert')");
+  } else if (curAlertID === "rentalExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('rentalExpAlert')");
+  } else if (curAlertID === "incomeExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('incomeExpAlert')");
+  } else if (curAlertID === "alertContainerVehicleLog") {
+    myBtn.setAttribute("onclick", "hideAlert('alertContainerVehicleLog')");
+  }
+
+
+
+  let btnText = document.createTextNode("x");
+  myBtn.appendChild(btnText);
+
+  let myStrongTag = document.createElement("strong");
+
+  let myStrongTextNode = document.createTextNode(boldText);
+  myStrongTag.appendChild(myStrongTextNode);
+  myAlert.appendChild(myStrongTag);
+
+  for (i = 0; i < moreText.length; i++) {
+    let myMoreText = document.createTextNode(moreText[i]);
+    let myBreakTag = document.createElement("br");
+    myAlert.appendChild(myBreakTag);
+    myAlert.appendChild(myMoreText);
+  }
+
+  let myIDText;
+  if (tempID !== " ") {
+    myIDText = document.createTextNode(`${tempID}`);
+    myAlert.appendChild(myIDText);
+  }
+
+  myAlert.appendChild(myBtn);
+
+  curAlertContainer.appendChild(myAlert);
+
+  $(`#${curAlertID}`).show("fade");
+
+  if (dismissTime === 0) {
+  } else {
+    setTimeout(function () {
+      $(`#${curAlertID}`).hide("fade");
+    }, dismissTime);
+  }
+}
+function hideAlert(AlertID) {
+  $(`#${AlertID}`).hide("fade");
+}
+
+function hideTableAlert() {
+  $("#mainTableAlert").hide();
+  lastReportPageRowCount = 0;
+  currentTablePage = 0;
+  currentTablePages = 0;
+  rowCountPerPage = rowCountPerPageDefault;
+  emptyReportArrays();
+  removeTblNavAlertChildNodes();
+}
+
+function removeTblNavAlertChildNodes() {
+  if (a !== undefined) {
+    if (a.hasChildNodes()) {
+      while (a.firstChild) {
+        a.removeChild(a.firstChild);
+      }
+    }
+  }
+
+  if (li !== undefined) {
+    if (li.hasChildNodes()) {
+      while (li.firstChild) {
+        li.removeChild(li.firstChild);
+      }
+    }
+  }
+
+  if (ul !== undefined) {
+    if (ul.hasChildNodes()) {
+      while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+      }
+    }
+  }
+
+  if (nav !== undefined) {
+    if (nav.hasChildNodes()) {
+      while (nav.firstChild) {
+        nav.removeChild(nav.firstChild);
+      }
+    }
+  }
+
+  if (myStrongTag !== undefined) {
+    if (myStrongTag.hasChildNodes()) {
+      while (myStrongTag.firstChild) {
+        myStrongTag.removeChild(myStrongTag.firstChild);
+      }
+    }
+  }
+
+  if (tbl !== undefined) {
+    if (tbl.hasChildNodes()) {
+      while (tbl.firstChild) {
+        tbl.removeChild(tbl.firstChild);
+      }
+    }
+  }
+
+  if (responsiveDiv !== undefined) {
+    if (responsiveDiv.hasChildNodes()) {
+      while (responsiveDiv.firstChild) {
+        responsiveDiv.removeChild(responsiveDiv.firstChild);
+      }
+    }
+  }
+
+  if (myTableAlert !== undefined) {
+    if (myTableAlert.hasChildNodes()) {
+      while (myTableAlert.firstChild) {
+        myTableAlert.removeChild(myTableAlert.firstChild);
+      }
+    }
+  }
+}
+
+function registerUser() {
+  mydata = {
+    firstName: myDOMs.userSetupModal.FirstName.value,
+    lastName: myDOMs.userSetupModal.LastName.value,
+    email: myDOMs.userSetupModal.Email.value,
+    password: myDOMs.userSetupModal.Password.value
+  };
+
+  $.ajax({
+    method: "POST",
+    url: "http://localhost:3000/users",
+    dataType: "json",
+    data: mydata,
+    success: function (data, textStatus, request) {
+      let myObjMsg = [`${data.firstName} ${data.lastName}`, `${data.email}`];
+
+      displayAlert(
+        myDOMs.userSetupModal.AlertContainer,
+        "carExpAlertUser",
+        "closeBtnAlertUser",
+        "New User added Successfully! ",
+        myObjMsg,
+        `User ID: ${data._id}`,
+        "RED",
+        6000
+      );
+      afterLogin(mydata.firstName);
+      myToken = data.token;
+      myDOMs.userSetupModal.Form.reset();
+    },
+    error: function (error) {
+      if (error.responseJSON === undefined) {
+        let myObjMsg;
+        if (error.readyState === 0) {
+          myObjMsg = ["Connection Refused"];
+        } else {
+          myObjMsg = ["Unknown Problem"];
+        }
+        displayAlert(
+          myDOMs.userSetupModal.AlertContainer,
+          "carExpAlertUser",
+          "closeBtnAlertUser",
+          "User Setup Error! ",
+          myObjMsg,
+          " ",
+          "RED",
+          6000
+        );
+      } else {
+        let myObjMsg = [error.responseJSON.body, error.responseJSON.fix];
+        displayAlert(
+          myDOMs.userSetupModal.AlertContainer,
+          "carExpAlertUser",
+          "closeBtnAlertUser",
+          `${error.responseJSON.title}! `,
+          myObjMsg,
+          " ",
+          "RED",
+          6000
+        );
+      }
+    }
+  });
+}
+
+function displayUserSetupModal() {
+  if ($("#navRegister").hasClass("disabled")) {
+    let myMsg = [
+      "Which means you have already registered!",
+      "If you are certain you have not registered",
+      "Refresh the page to enable the menu."
+    ];
+    displayAlert(
+      myDOMs.main.AlertContainer,
+      "mainAlert",
+      "closeBtnAlertMain",
+      "You ARE logged in! ",
+      myMsg,
+      " ",
+      "RED",
+      10000
+    );
+    return;
+  }
+  $("#userSetupModal").modal();
+}
+
+function displayLoginUser() {
+
+  if ($("#navLogin").hasClass("disabled")) {
+    displayAlert(
+      myDOMs.main.AlertContainer,
+      "mainAlert",
+      "closeBtnAlertMain",
+      "You ARE already logged in! ",
+      "",
+      " ",
+      "RED",
+      6000,
+      ""
+    );
+    return;
+  }
+  $("#userLoginModal").modal('show');
+}
+
+function setPasswordValidClass(myPassInput) {
+  if (myPassInput === "first") {
+    if (myDOMs.userSetupModal.Password.value.length >= 8) {
+      if (myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.remove("is-invalid");
+      }
+      if (
+        myDOMs.userSetupModal.PasswordConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.PasswordConfirm.classList.remove("is-invalid");
+      }
+    } else {
+      if (!myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.add("is-invalid");
+        myDOMs.userSetupModal.PasswordValidMessage.innerText =
+          "Your Password is not strong enough! (Min 8 character)";
+      }
+    }
+
+    if (
+      myDOMs.userSetupModal.Password.value ===
+      myDOMs.userSetupModal.PasswordConfirm.value
+    ) {
+      if (myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.remove("is-invalid");
+      }
+      if (
+        myDOMs.userSetupModal.PasswordConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.PasswordConfirm.classList.remove("is-invalid");
+      }
+    } else {
+      if (!myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.add("is-invalid");
+        myDOMs.userSetupModal.PasswordValidMessage.innerText =
+          "Your Passwords do not match!";
+      }
+    }
+  } else if (myPassInput === "confirm") {
+    if (
+      myDOMs.userSetupModal.Password.value ===
+      myDOMs.userSetupModal.PasswordConfirm.value &&
+      myDOMs.userSetupModal.PasswordConfirm.value.length >= 8
+    ) {
+      if (
+        myDOMs.userSetupModal.PasswordConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.PasswordConfirm.classList.remove("is-invalid");
+      }
+
+      if (myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.remove("is-invalid");
+      }
+    } else {
+      if (
+        !myDOMs.userSetupModal.PasswordConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.PasswordConfirm.classList.add("is-invalid");
+        myDOMs.userSetupModal.PasswordConfirmValidMessage.innerText =
+          "Your Passwords do not match!";
+      }
+      if (!myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Password.classList.add("is-invalid");
+        myDOMs.userSetupModal.PasswordValidMessage.innerText =
+          "Your Passwords do not match!";
+      }
+    }
+  }
+}
+
+function setEmailValidClass(myPassInput) {
+  if (myPassInput === "first") {
+    if (
+      myDOMs.userSetupModal.Email.value ===
+      myDOMs.userSetupModal.EmailConfirm.value
+    ) {
+      if (myDOMs.userSetupModal.Email.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Email.classList.remove("is-invalid");
+      }
+      if (myDOMs.userSetupModal.EmailConfirm.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.EmailConfirm.classList.remove("is-invalid");
+      }
+    } else {
+      if (!myDOMs.userSetupModal.Email.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Email.classList.add("is-invalid");
+        myDOMs.userSetupModal.EmailValidMessage.innerText =
+          "Your emails do not match!";
+      }
+
+      if (
+        !myDOMs.userSetupModal.EmailConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.EmailConfirm.classList.add("is-invalid");
+        myDOMs.userSetupModal.EmailValidConfirmMessage.innerText =
+          "Your Emails do not match!";
+      }
+    }
+  } else if (myPassInput === "confirm") {
+    if (
+      myDOMs.userSetupModal.Email.value ===
+      myDOMs.userSetupModal.EmailConfirm.value
+    ) {
+      if (myDOMs.userSetupModal.EmailConfirm.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.EmailConfirm.classList.remove("is-invalid");
+      }
+
+      if (myDOMs.userSetupModal.Email.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Email.classList.remove("is-invalid");
+      }
+    } else {
+      if (
+        !myDOMs.userSetupModal.EmailConfirm.classList.contains("is-invalid")
+      ) {
+        myDOMs.userSetupModal.EmailConfirm.classList.add("is-invalid");
+        myDOMs.userSetupModal.EmailValidConfirmMessage.innerText =
+          "Your Emails do not match!";
+      }
+      if (!myDOMs.userSetupModal.Email.classList.contains("is-invalid")) {
+        myDOMs.userSetupModal.Email.classList.add("is-invalid");
+        myDOMs.userSetupModal.EmailValidMessage.innerText =
+          "Your Emails do not match!";
+      }
+    }
+  }
+}
+
+$("#userSetupModal").on("hidden.bs.modal", function () {
+  myDOMs.userSetupModal.Form.reset();
+});
+
+$("#userLoginModal").on("hidden.bs.modal", function () {
+  myDOMs.userLoginModal.Form.reset();
+});
+
+// code to Logout when browser is closed
+window.addEventListener("beforeunload", function (event) {
+  if (myToken !== "") {
+    browserLogout();
+  }
+});
+
+function updateFormButtons(myForm) {
+  switch (myForm) {
+    case 'income':
+      alert('ID is present');
+      if ($('#incomeBlindExpID').val() !== "") {
+        if ($('#incomeExpBtn').hasClass("disabled")) {
+        } else {
+          $('#incomeExpBtn').addClass("disabled");
+        }
+        if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+          $('#incomeExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+          $('#incomeExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        alert('no ID');
+        if ($('#incomeExpBtn').hasClass("disabled")) {
+          $('#incomeExpBtn').removeClass("disabled");
+        }
+        if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#incomeExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#incomeExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+
+    case 'vehicle':
+      if ($('#carBlindExpID').val() !== "") {
+        if ($('#carExpBtn').hasClass("disabled")) {
+        } else {
+          $('#carExpBtn').addClass("disabled");
+        }
+        if ($('#carExpDeleteBtn').hasClass("disabled")) {
+          $('#carExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+          $('#carExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#carExpBtn').hasClass("disabled")) {
+          $('#carExpBtn').removeClass("disabled");
+        }
+        if ($('#carExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#carExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#carExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'business':
+      if ($('#busBlindExpID').val() !== "") {
+        if ($('#busExpBtn').hasClass("disabled")) {
+        } else {
+          $('#busExpBtn').addClass("disabled");
+        }
+        if ($('#busExpDeleteBtn').hasClass("disabled")) {
+          $('#busExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+          $('#busExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#busExpBtn').hasClass("disabled")) {
+          $('#busExpBtn').removeClass("disabled");
+        }
+        if ($('#busExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#busExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#busExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'home':
+      if ($('#homeBlindExpID').val() !== "") {
+        if ($('#homeExpBtn').hasClass("disabled")) {
+        } else {
+          $('#homeExpBtn').addClass("disabled");
+        }
+        if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+          $('#homeExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+          $('#homeExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#homeExpBtn').hasClass("disabled")) {
+          $('#homeExpBtn').removeClass("disabled");
+        }
+        if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#homeExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#homeExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'other':
+      if ($('#otherBlindExpID').val() !== "") {
+        if ($('#otherExpBtn').hasClass("disabled")) {
+        } else {
+          $('#otherExpBtn').addClass("disabled");
+        }
+        if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+          $('#otherExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+          $('#otherExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#otherExpBtn').hasClass("disabled")) {
+          $('#otherExpBtn').removeClass("disabled");
+        }
+        if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#otherExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#otherExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'rental':
+      if ($('#rentalBlindExpID').val() !== "") {
+        if ($('#rentalExpBtn').hasClass("disabled")) {
+        } else {
+          $('#rentalExpBtn').addClass("disabled");
+        }
+        if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+          $('#rentalExpDeleteBtn').removeClass("disabled");
+        }
+        if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+          $('#rentalExpSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#rentalExpBtn').hasClass("disabled")) {
+          $('#rentalExpBtn').removeClass("disabled");
+        }
+        if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#rentalExpDeleteBtn').addClass("disabled");
+        }
+        if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#rentalExpSaveChangesBtn').addClass("disabled");
+        }
+      }
+  }
+}
