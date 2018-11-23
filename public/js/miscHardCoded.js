@@ -47,7 +47,7 @@ function getMiscData() {
 
    $.ajax({
       method: "GET",
-      url: "http://localhost:3000/miscData",
+      url: `${serverURL}miscData`,
       data: tempData,
       enctype: "multipart/form-data"
    })
@@ -424,7 +424,7 @@ const miscData = {
 function postMiscData() {
    dbMiscData.auth = myToken;
    $.ajax({
-      url: "http://localhost:3000/miscData",
+      url: `${serverURL}miscData`,
       method: "POST",
       data: dbMiscData,
       enctype: "multipart/form-data",
@@ -454,7 +454,7 @@ function updateMiscData() {
 
    return new Promise((resolve, reject) => {
       $.ajax({
-         url: `http://localhost:3000/miscData/${MiscID}`,
+         url: `${serverURL}miscData/${MiscID}`,
          method: "PATCH",
          data: dbMiscData,
          enctype: "multipart/form-data",

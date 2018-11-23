@@ -88,7 +88,7 @@ function postmyIncomeVendor(myNewVendor) {
 
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/incomeClients",
+    url: `${serverURL}incomeClients`,
     data: mydata,
     enctype: "multipart/form-data"
   })
@@ -141,7 +141,7 @@ function deleteSelectedIncomeVendor() {
   if (confirm(`Are you sure you want to Delete ${selectedVendor}`)) {
     $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/incomeClients",
+      url: `${serverURL}incomeClients`,
       data: {
         text: selectedVendor,
         auth: myToken
@@ -182,7 +182,7 @@ function deleteSelectedIncomeVendor() {
 function populateIncomeVendors() {
   //This code retrieves the Income Clients from the Database and inserts them into the forms Clients dropdown list.
   $.ajax({
-    url: "http://localhost:3000/incomeClients",
+    url: `${serverURL}incomeClients`,
     method: "GET",
     data: {
       auth: myToken
@@ -205,7 +205,7 @@ function populateIncomeParty() {
   //This code retrieves the  Income Party Represented from the Database and inserts them into the forms Category dropdown list.
   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
   $.ajax({
-    url: "http://localhost:3000/incomeParty",
+    url: `${serverURL}incomeParty`,
     method: "GET"
   })
     .done(function (data) {
@@ -227,7 +227,7 @@ function populateIncomeParty() {
 function postmyIncomeParty(tempParty) {
 
   $.ajax({
-    url: "http://localhost:3000/incomeParty",
+    url: `${serverURL}incomeParty`,
     method: "POST",
     data: {
       text: tempParty,
@@ -283,7 +283,7 @@ function deleteSelectedIncomeParty() {
   if (confirm(`Are you sure you want to Delete ${selectedParty}`)) {
     $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/incomeParty",
+      url: `${serverURL}incomeParty`,
       data: {
         text: selectedParty,
         auth: myToken
@@ -422,7 +422,7 @@ function updateIncome(source) {
 
   $.ajax({
     method: "PATCH",
-    url: `http://localhost:3000/carExpense/${expID}`,
+    url: `${serverURL}carExpense/${expID}`,
     data: formData,
     enctype: "multipart/form-data",
     processData: false,
@@ -544,7 +544,7 @@ function deleteIncomeExpense(source) {
       source: source
     };
     $.ajax({
-      url: `http://localhost:3000/carExpense/${expID}`,
+      url: `${serverURL}carExpense/${expID}`,
       method: "DELETE",
       enctype: "multipart/form-data",
       data: tempData
@@ -661,7 +661,7 @@ function getIncomeExpenses(source) {
 
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/carExpense",
+    url: `${serverURL}carExpense`,
     data: tempData,
     enctype: "multipart/form-data"
   })
@@ -814,7 +814,7 @@ $("#incomeExpBtn").click(function () {
 
     $.ajax({
       method: "POST",
-      url: "http://localhost:3000/carExpenseRecur",
+      url: `${serverURL}carExpenseRecur`,
       dataType: "json",
       data: mydata
     })
@@ -941,7 +941,7 @@ $("#incomeExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: formData,
         enctype: "multipart/form-data",
         processData: false,
@@ -1010,7 +1010,7 @@ $("#incomeExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: mydata,
         enctype: "multipart/form-data"
       })

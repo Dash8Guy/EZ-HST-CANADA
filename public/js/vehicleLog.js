@@ -198,7 +198,7 @@ function postVehicleLog() {
 
    $.ajax({
       method: "POST",
-      url: "http://localhost:3000/vehicleLog",
+      url: `${serverURL}vehicleLog`,
       data: mydata,
       enctype: "multipart/form-data",
    })
@@ -294,7 +294,7 @@ function updateLogArrayAfterPost(editedDate, PersAmt, BusAmt, changedVehicle) {
 function getAllVehicleLogs() {
    return new Promise((resolve, reject) => {
       $.ajax({
-         url: "http://localhost:3000/vehicleLog",
+         url: `${serverURL}vehicleLog`,
          method: "GET",
          data: {
             auth: myToken
@@ -877,7 +877,7 @@ function zeroAllLogs(noMsg) {
    return new Promise((resolve, reject) => {
       $.ajax({
          method: "POST",
-         url: "http://localhost:3000/vehicleLogmulti",
+         url: `${serverURL}vehicleLogmulti`,
          data: mydata,
          enctype: "multipart/form-data",
       })
@@ -954,7 +954,7 @@ function deleteAllVehicleLog() {
    }
    $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/vehicleLog",
+      url: `${serverURL}vehicleLog`,
       data: mydata,
       enctype: "multipart/form-data",
    })
@@ -1125,7 +1125,7 @@ function PostmyQuickLogs(tempData) {
    return new Promise((resolve, reject) => {
       $.ajax({
          method: "POST",
-         url: "http://localhost:3000/vehicleLog",
+         url: `${serverURL}vehicleLog`,
          data: tempData,
          enctype: "multipart/form-data",
       }).done(function (data) {

@@ -1407,7 +1407,7 @@ const getImageData = (myTempID, vehicleNum) => {
   }
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: `http://localhost:3000/carExpenseImg/${myTempID}`,
+      url: `${serverURL}carExpenseImg/${myTempID}`,
       method: "GET",
       data: myTempData
     })

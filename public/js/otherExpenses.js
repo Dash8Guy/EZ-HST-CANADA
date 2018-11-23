@@ -54,7 +54,7 @@ function postmyOtherVendor(myNewVendor) {
 
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/otherVendors",
+    url: `${serverURL}otherVendors`,
     data: mydata,
     enctype: "multipart/form-data"
   })
@@ -107,7 +107,7 @@ function deleteSelectedOtherVendor() {
   if (confirm(`Are you sure you want to Delete ${selectedVendor}`)) {
     $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/otherVendors",
+      url: `${serverURL}otherVendors`,
       data: {
         text: selectedVendor,
         auth: myToken
@@ -148,7 +148,7 @@ function deleteSelectedOtherVendor() {
 function populateOtherVendors() {
   //This code retrieves the home expense Vendors from the Database and inserts them into the forms Vendor dropdown list.
   $.ajax({
-    url: "http://localhost:3000/otherVendors",
+    url: `${serverURL}otherVendors`,
     method: "GET",
     data: {
       auth: myToken
@@ -171,7 +171,7 @@ function populateOtherCategories() {
   //This code retrieves the Other expense Categories from the Database and inserts them into the forms Category dropdown list.
   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
   $.ajax({
-    url: "http://localhost:3000/otherCategorie",
+    url: `${serverURL}otherCategorie`,
     method: "GET"
   })
     .done(function (data) {
@@ -208,7 +208,7 @@ function addOtherCategory() {
   }
 
   $.ajax({
-    url: "http://localhost:3000/otherCategorie",
+    url: `${serverURL}otherCategorie`,
     method: "POST",
     data: {
       text: tempCat,
@@ -321,7 +321,7 @@ function updateOtherExpense() {
 
   $.ajax({
     method: "PATCH",
-    url: `http://localhost:3000/carExpense/${expID}`,
+    url: `${serverURL}carExpense/${expID}`,
     data: formData,
     enctype: "multipart/form-data",
     processData: false,
@@ -441,7 +441,7 @@ function deleteOtherExpense() {
       carNumber: 'Other'
     };
     $.ajax({
-      url: `http://localhost:3000/carExpense/${expID}`,
+      url: `${serverURL}carExpense/${expID}`,
       method: "DELETE",
       enctype: "multipart/form-data",
       data: tempData
@@ -551,7 +551,7 @@ function getOtherExpenses() {
 
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/carExpense",
+    url: `${serverURL}carExpense`,
     data: tempData,
     enctype: "multipart/form-data"
   })
@@ -683,7 +683,7 @@ $("#otherExpBtn").click(function () {
 
     $.ajax({
       method: "POST",
-      url: "http://localhost:3000/carExpenseRecur",
+      url: `${serverURL}carExpenseRecur`,
       dataType: "json",
       data: mydata
     })
@@ -809,7 +809,7 @@ $("#otherExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: formData,
         enctype: "multipart/form-data",
         processData: false,
@@ -877,7 +877,7 @@ $("#otherExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: mydata,
         enctype: "multipart/form-data"
       })

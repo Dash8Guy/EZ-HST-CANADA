@@ -54,7 +54,7 @@ function postmyBusVendor(myNewVendor) {
 
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/businessVendors",
+    url: `${serverURL}businessVendors`,
     data: mydata,
     enctype: "multipart/form-data"
   })
@@ -107,7 +107,7 @@ function deleteSelectedBusinessVendor() {
   if (confirm(`Are you sure you want to Delete ${selectedVendor}`)) {
     $.ajax({
       method: "DELETE",
-      url: "http://localhost:3000/businessVendors",
+      url: `${serverURL}businessVendors`,
       data: {
         text: selectedVendor,
         auth: myToken
@@ -148,7 +148,7 @@ function deleteSelectedBusinessVendor() {
 function populateBusinessVendors() {
   //This code retrieves the business expense Vendors from the Database and inserts them into the forms Vendor dropdown list.
   $.ajax({
-    url: "http://localhost:3000/businessVendors",
+    url: `${serverURL}businessVendors`,
     method: "GET",
     data: {
       auth: myToken
@@ -176,7 +176,7 @@ function populateBusinessCategories() {
   //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
   $.ajax({
-    url: "http://localhost:3000/businessCategorie",
+    url: `${serverURL}businessCategorie`,
     method: "GET"
   })
     .done(function (data) {
@@ -213,7 +213,7 @@ function addBusinessCategory() {
   }
 
   $.ajax({
-    url: "http://localhost:3000/businessCategorie",
+    url: `${serverURL}businessCategorie`,
     method: "POST",
     data: {
       text: tempCat,
@@ -327,7 +327,7 @@ function updateBusinessExpense() {
 
   $.ajax({
     method: "PATCH",
-    url: `http://localhost:3000/carExpense/${expID}`,
+    url: `${serverURL}carExpense/${expID}`,
     data: formData,
     enctype: "multipart/form-data",
     processData: false,
@@ -447,7 +447,7 @@ function deleteBusinessExpense() {
       carNumber: 'Bus'
     };
     $.ajax({
-      url: `http://localhost:3000/carExpense/${expID}`,
+      url: `${serverURL}carExpense/${expID}`,
       method: "DELETE",
       enctype: "multipart/form-data",
       data: tempData
@@ -557,7 +557,7 @@ function getBusinessExpenses(vehicleNum) {
 
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/carExpense",
+    url: `${serverURL}carExpense`,
     data: tempData,
     enctype: "multipart/form-data"
   })
@@ -689,7 +689,7 @@ $("#busExpBtn").click(function () {
 
     $.ajax({
       method: "POST",
-      url: "http://localhost:3000/carExpenseRecur",
+      url: `${serverURL}carExpenseRecur`,
       dataType: "json",
       data: mydata
     })
@@ -815,7 +815,7 @@ $("#busExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: formData,
         enctype: "multipart/form-data",
         processData: false,
@@ -883,7 +883,7 @@ $("#busExpBtn").click(function () {
 
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/carExpense",
+        url: `${serverURL}carExpense`,
         data: mydata,
         enctype: "multipart/form-data"
       })
