@@ -1,17 +1,17 @@
 let MiscID = null;
 let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-myTempHardCodeDate.setHours(36);
+myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
 
-let myHardCodeDate = new Date(
-   myTempHardCodeDate.getFullYear(),
-   myTempHardCodeDate.getMonth(),
-   myTempHardCodeDate.getDate()
-);
+// let myHardCodeDate = new Date(
+//    myTempHardCodeDate.getFullYear(),
+//    myTempHardCodeDate.getMonth(),
+//    myTempHardCodeDate.getDate()
+// );
 
 let dbMiscData = {
    odometerV1: 0,
    odometerV2: 0,
-   lockDate: myHardCodeDate,
+   lockDate: myTempHardCodeDate,
    homePercJan: 0,
    homePercFeb: 0,
    homePercMar: 0,
@@ -441,13 +441,13 @@ function postMiscData() {
 function updateMiscData() {
    if (dbMiscData.lockDate === null) {
       let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-      myTempHardCodeDate.setHours(36);
+      myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
 
-      let myHardCodeDate = new Date(
-         myTempHardCodeDate.getFullYear(),
-         myTempHardCodeDate.getMonth(),
-         myTempHardCodeDate.getDate()
-      );
+      // let myHardCodeDate = new Date(
+      //    myTempHardCodeDate.getFullYear(),
+      //    myTempHardCodeDate.getMonth(),
+      //    myTempHardCodeDate.getDate()
+      // );
       dbMiscData.lockDate = myHardCodeDate;
    }
    dbMiscData.auth = myToken;

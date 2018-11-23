@@ -414,3 +414,14 @@ option {
 }
 
 
+/* Income Statement */
+
+#revenueTab,
+#busExpTab,
+#homeExpTab,
+#vehicle1ExpTab,
+#vehicle2ExpTab,
+#otherCostExpTab,
+#rentalExpTab {
+  font-size: 16px;
+}

@@ -2,8 +2,8 @@
 
 startDate = new Date(myDOMs.main_page.StartDate.value);
 endDate = new Date(myDOMs.main_page.EndDate.value);
-startDate.setHours(36);
-endDate.setHours(36);
+startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
+endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 
 myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
 
@@ -86,30 +86,29 @@ myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
    }
    startDate = new Date(myDOMs.main_page.StartDate.value);
    endDate = new Date(myDOMs.main_page.EndDate.value);
-   startDate.setHours(36);
-   endDate.setHours(36);
+   startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
+   endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 
 });
 
 myDOMs.main_page.StartDate.addEventListener('change', function (e) {
    startDate = new Date(myDOMs.main_page.StartDate.value);
-   startDate.setHours(36);
+   startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.EndDate.addEventListener('change', function (e) {
    endDate = new Date(myDOMs.main_page.EndDate.value);
-   endDate.setHours(36);
+   endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.LockDate.addEventListener('change', function (e) {
    let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-   myTempHardCodeDate.setHours(36);
-
-   let myHardCodeDate = new Date(
-      myTempHardCodeDate.getFullYear(),
-      myTempHardCodeDate.getMonth(),
-      myTempHardCodeDate.getDate()
-   );
-   dbMiscData.lockDate = myHardCodeDate;
+   myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
+   // let myHardCodeDate = new Date(
+   //    myTempHardCodeDate.getFullYear(),
+   //    myTempHardCodeDate.getMonth(),
+   //    myTempHardCodeDate.getDate()
+   // );
+   dbMiscData.lockDate = myTempHardCodeDate;
    updateMiscData();
 });

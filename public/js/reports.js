@@ -580,16 +580,16 @@ function goToPage(page) {
     document.getElementById(`cellDate${index}`).innerHTML = tempDate;
     document.getElementById(
       `cellNetAmt${index}`
-    ).innerHTML = `$${el.carnetAmt.toFixed(2)}`;
+    ).innerHTML = `$${formatNumber(el.carnetAmt.toFixed(2))}`;
     document.getElementById(
       `cellHstAmt${index}`
-    ).innerHTML = `$${el.carhstAmt.toFixed(2)}`;
+    ).innerHTML = `$${formatNumber(el.carhstAmt.toFixed(2))}`;
     document.getElementById(
       `cellPstAmt${index}`
-    ).innerHTML = `$${el.carpstAmt.toFixed(2)}`;
+    ).innerHTML = `$${formatNumber(el.carpstAmt.toFixed(2))}`;
     document.getElementById(
       `cellTotalAmt${index}`
-    ).innerHTML = `$${el.carTotalAmt.toFixed(2)}`;
+    ).innerHTML = `$${formatNumber(el.carTotalAmt.toFixed(2))}`;
     document.getElementById(`cellDescription${index}`).innerHTML =
       el.carDescription;
     document.getElementById(`cellVendor${index}`).innerHTML = el.vendorSelect;

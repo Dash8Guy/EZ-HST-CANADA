@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const hbs = require('hbs');
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const { ObjectID } = require("mongodb");
@@ -46,9 +47,9 @@ EZ_ENV.secret_key = new ObjectID().toHexString();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//app.set("views", path.join(__dirname, "../views"));
-//app.use(express.static(__dirname + "/public/css"));
-//app.set("view engine", "ejs");
+app.set("views", path.join("views"));
+app.use(express.static(path.join('public')));
+app.set("view engine", "hbs");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -63,9 +64,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/", function(req, res) {
-//   res.render("index");
-// });
+app.get("/", function (req, res) {
+  res.render("index.hbs");
+});
 
 app.post("/carExpense", authenticate, (req, res) => {
   let myCarExpense;

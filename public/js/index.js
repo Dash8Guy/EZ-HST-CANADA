@@ -6,6 +6,29 @@ let vendorCar = false;
 let loggedIn;
 
 const myDOMs = {
+  incomeStatement: {
+    TabRevenue: document.getElementById('revenueTab'),
+    TabBusExp: document.getElementById('busExpTab'),
+    TabHomeExp: document.getElementById('homeExpTab'),
+    TabVehicleExp1: document.getElementById('vehicle1ExpTab'),
+    TabVehicleExp2: document.getElementById('vehicle2ExpTab'),
+    TabOtherCostExp: document.getElementById('otherCostExpTab'),
+    TabRentalExp: document.getElementById('rentalExpTab'),
+    LinkTabRevenue: document.getElementById('revenueTabLink'),
+    LinkTabBusExp: document.getElementById('busExpTabLink'),
+    LinkTabHomeExp: document.getElementById('homeExpTabLink'),
+    LinkTabVehicleExp1: document.getElementById('vehicle1ExpTabLink'),
+    LinkTabVehicleExp2: document.getElementById('vehicle2ExpTabLink'),
+    LinkTabOtherCostExp: document.getElementById('otherCostExpTabLink'),
+    LinkTabRentalExp: document.getElementById('rentalExpTabLink'),
+    BodyRevenue: document.getElementById('IncStatRevenue'),
+    BodyBusExp: document.getElementById('IncStatBusExpenses'),
+    BodyHomeExp: document.getElementById('IncStatHomeExpenses'),
+    BodyVehicleExp1: document.getElementById('IncStatVehicle1Expenses'),
+    BodyVehicleExp2: document.getElementById('IncStatVehicle2Expenses'),
+    BodyOtherCostExp: document.getElementById('IncStatOtherCostsExpenses'),
+    BodyRentalExp: document.getElementById('IncStatRentalExpenses'),
+  },
   randomData: {
     appYear: 2018,
     lockDate: document.getElementById('hiddenLockDate')
@@ -60,6 +83,10 @@ const myDOMs = {
     Logout: document.getElementById("navLogout"),
     Register: document.getElementById("navRegister"),
     UserLogName: document.getElementById("navUserLog")
+  },
+  vLogReport: {
+    Container: document.getElementById('vLogReportContainer'),
+    Modal: document.getElementById('VLogViewModal')
   },
   main: {
     Alert: document.getElementById("mainAlert"),
@@ -363,10 +390,10 @@ function arrOfObjectToArrOfArrays() {
     myTempArr.push(index + 1);
     let myTempDate = formatMyDate(el.carDate);
     myTempArr.push(myTempDate);
-    myTempArr.push(el.carnetAmt.toFixed(2));
-    myTempArr.push(el.carhstAmt.toFixed(2));
-    myTempArr.push(el.carpstAmt.toFixed(2));
-    myTempArr.push(el.carTotalAmt.toFixed(2));
+    myTempArr.push(formatNumber(el.carnetAmt.toFixed(2)));
+    myTempArr.push(formatNumber(el.carhstAmt.toFixed(2)));
+    myTempArr.push(formatNumber(el.carpstAmt.toFixed(2)));
+    myTempArr.push(formatNumber(el.carTotalAmt.toFixed(2)));
     myTempArr.push(el.carDescription);
     myTempArr.push(el.vendorSelect);
     myTempArr.push(el.carExpCatSelect);
@@ -439,6 +466,10 @@ function generateTablePDF(expGroup) {
     case 'Rental-Inc':
       headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
       fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      break;
+    case 'VLog':
+      headText = `${curTableArray.length} Log Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+      fileSaveText = `Vehicle Log(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
   }
   doc.text(headText, 34, 22);
   // if (data.column.dataKey === 'NET' || data.column.dataKey === 'HST' || data.column.dataKey === 'PST' || data.column.dataKey === 'TOTAL') {
@@ -918,13 +949,80 @@ function hideAlert(AlertID) {
 }
 
 function hideTableAlert() {
-  $("#mainTableAlert").hide();
+  $("#mainTableAlert").hide("fade");
   lastReportPageRowCount = 0;
   currentTablePage = 0;
   currentTablePages = 0;
   rowCountPerPage = rowCountPerPageDefault;
   emptyReportArrays();
   removeTblNavAlertChildNodes();
+  removeVlogTblNavAlertChildNodes();
+}
+
+function removeVlogTblNavAlertChildNodes() {
+  if (vLoga !== undefined) {
+    if (vLoga.hasChildNodes()) {
+      while (vLoga.firstChild) {
+        vLoga.removeChild(vLoga.firstChild);
+      }
+    }
+  }
+
+  if (vLogli !== undefined) {
+    if (vLogli.hasChildNodes()) {
+      while (vLogli.firstChild) {
+        vLogli.removeChild(vLogli.firstChild);
+      }
+    }
+  }
+
+  if (vLogul !== undefined) {
+    if (vLogul.hasChildNodes()) {
+      while (vLogul.firstChild) {
+        vLogul.removeChild(vLogul.firstChild);
+      }
+    }
+  }
+
+  if (vLognav !== undefined) {
+    if (vLognav.hasChildNodes()) {
+      while (vLognav.firstChild) {
+        vLognav.removeChild(vLognav.firstChild);
+      }
+    }
+  }
+
+  if (vLogStrongTag !== undefined) {
+    if (vLogStrongTag.hasChildNodes()) {
+      while (vLogStrongTag.firstChild) {
+        vLogStrongTag.removeChild(vLogStrongTag.firstChild);
+      }
+    }
+  }
+
+  if (vLogtbl !== undefined) {
+    if (vLogtbl.hasChildNodes()) {
+      while (vLogtbl.firstChild) {
+        vLogtbl.removeChild(vLogtbl.firstChild);
+      }
+    }
+  }
+
+  if (vLogresponsiveDiv !== undefined) {
+    if (vLogresponsiveDiv.hasChildNodes()) {
+      while (vLogresponsiveDiv.firstChild) {
+        vLogresponsiveDiv.removeChild(vLogresponsiveDiv.firstChild);
+      }
+    }
+  }
+
+  if (myvLogAlert !== undefined) {
+    if (myvLogAlert.hasChildNodes()) {
+      while (myvLogAlert.firstChild) {
+        myvLogAlert.removeChild(myvLogAlert.firstChild);
+      }
+    }
+  }
 }
 
 function removeTblNavAlertChildNodes() {

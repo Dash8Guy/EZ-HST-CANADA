@@ -83,7 +83,7 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payment Entry</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger" onclick="generateTablePDF()">
+                    <a href="#" class="dropdown-item  text-danger">
                       <i class="far fa-building"></i> PDF Print Test
                     </a>
                   </li>
@@ -182,7 +182,7 @@
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark">
+                    <a href="#" class="dropdown-item  text-dark" onclick="displayIncomeStatementModal()">
                       <i class="fas fa-hand-holding-usd"></i> Income Statement
                     </a>
                   </li>
@@ -200,7 +200,7 @@
               <a href="#" class="dropdown-item  text-danger" onclick="displayVehicleLogModal()">
                 <i class="fas fa-car"></i> Vehicle Log Entry
               </a>
-              <a href="#" class="dropdown-item  text-danger" onclick="displayScreenSize()">
+              <a href="#" class="dropdown-item  text-danger" onclick="getVlogReportData()">
                 <i class="fas fa-car"></i> Vehicle Log Report
               </a>
               <a href="#" class="dropdown-item  text-danger" onclick="addVehicleCategory()">
@@ -1907,6 +1907,111 @@
     </div>
   </div>
 
+  <!-- Modal for Viewing Vehicle Log Report Table -->
+  <div class="modal fade text-dark mx-auto" id="VLogViewModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white" id="ImageViewTitle">Vehicle Log Report</h5>
+          <button class="close" id="topCloseVlogViewModal" onclick="closevLogModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+          <div class="container align-middle text-center mt-0 pt-0" id="vLogReportContainer">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FOR INCOME STATEMENT -->
+
+  <div class="modal fade text-dark mx-auto" id="incStatementModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white" id="ImageViewTitle">Income Statement</h5>
+          <button class="close" id="topCloseincStatementModal" onclick="hideIncomeStatementModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+          <div class="card">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item" id="revenueTab" onclick="displayRevenueIncStat()">
+                  <a id="revenueTabLink" class="nav-link active" href="#">Revenue</a>
+                </li>
+                <li class="nav-item" id="busExpTab" onclick="displayBusExpIncStat()">
+                  <a id="busExpTabLink" class="nav-link" href="#">Business Expenses</a>
+                </li>
+                <li class="nav-item" id="homeExpTab" onclick="displayHomeExpIncStat()">
+                  <a id="homeExpTabLink" class="nav-link" href="#">Home Expenses</a>
+                </li>
+                <li class="nav-item" id="vehicle1ExpTab" onclick="displayVehicle1ExpIncStat()">
+                  <a id="vehicle1ExpTabLink" class="nav-link" href="#">Vehicle 1 Expenses</a>
+                </li>
+                <li class="nav-item" id="vehicle2ExpTab" onclick="displayVehicle2ExpIncStat()">
+                  <a id="vehicle2ExpTabLink" class="nav-link" href="#">Vehicle 2 Expenses</a>
+                </li>
+                <li class="nav-item" id="otherCostExpTab" onclick="displayOtherCostsExpIncStat()">
+                  <a id="otherCostExpTabLink" class="nav-link" href="#">Other Cost Expenses</a>
+                </li>
+                <li class="nav-item" id="rentalExpTab" onclick="displayRentalExpIncStat()">
+                  <a id="rentalExpTabLink" class="nav-link" href="#">Rental Expenses</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body" id="IncStatRevenue">
+              <h4 class="card-title">Revenue</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatBusExpenses">
+              <h4 class="card-title">Business Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatHomeExpenses">
+              <h4 class="card-title">Home Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatVehicle1Expenses">
+              <h4 class="card-title">Vehicle 1 Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatVehicle2Expenses">
+              <h4 class="card-title">Vehicle 2 Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatOtherCostsExpenses">
+              <h4 class="card-title">Other Costs Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+            <div class="card-body d-none" id="IncStatRentalExpenses">
+              <h4 class="card-title">Rental Expenses</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
+              <a class="btn btn-primary" href="#">Read More</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
 
   <!--  style="border: 2px solid red;" -->
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -1933,6 +2038,8 @@
   <script type="text/javascript" src="./js/vehicleLog.js"></script>
   <script type="text/javascript" src="./js/mainPageScript.js"></script>
   <script type="text/javascript" src="./js/miscHardCoded.js"></script>
+  <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
+  <script type="text/javascript" src="./js/incomeStatement.js"></script>
 
   <script>
     // Get the current year for the copyright
