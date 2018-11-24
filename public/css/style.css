@@ -416,6 +416,7 @@ option {
 
 /* Income Statement */
 
+
 #revenueTab,
 #busExpTab,
 #homeExpTab,
@@ -424,4 +425,12 @@ option {
 #otherCostExpTab,
 #rentalExpTab {
   font-size: 16px;
+}
+
+#busExpList {
+  font-size: 12px;
+}
+
+#busExpList li {
+  height: 12px;
 }

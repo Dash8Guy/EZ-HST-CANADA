@@ -1,5 +1,5 @@
 //This variable is set to False in order to disable the Tooltips
-let enableTooltip = false;
+let enableTooltip = true;
 
 //this line runs the tooltip function and displays or hides depending on system settings
 setTooltips();

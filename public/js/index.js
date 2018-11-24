@@ -8,6 +8,9 @@ let vendorCar = false;
 //Holds Logged in User first name;
 let loggedIn;
 
+
+
+
 const myDOMs = {
   incomeStatement: {
     TabRevenue: document.getElementById('revenueTab'),
@@ -26,6 +29,45 @@ const myDOMs = {
     LinkTabRentalExp: document.getElementById('rentalExpTabLink'),
     BodyRevenue: document.getElementById('IncStatRevenue'),
     BodyBusExp: document.getElementById('IncStatBusExpenses'),
+    BusBodyElement: {
+      Avdertising: document.getElementById('busAdvertisingLink'),
+      Dues: document.getElementById('busDuesLink'),
+      Meals: document.getElementById('busMealsLink'),
+      Office: document.getElementById('busOfficeLink'),
+      Supplies: document.getElementById('busSuppliesLink'),
+      Cell: document.getElementById('busCellLink'),
+      Other: document.getElementById('busOtherLink'),
+      Freight: document.getElementById('busFreightLink'),
+      Fuel: document.getElementById('busFuelLink'),
+      Insurance: document.getElementById('busInsuranceLink'),
+      Interest: document.getElementById('busInterestLink'),
+      Maintenance: document.getElementById('busMaintenanceLink'),
+      Admin: document.getElementById('busAdminLink'),
+      Legal: document.getElementById('busLegalLink'),
+      Property_Tax: document.getElementById('busPropertyTaxLink'),
+      Rent: document.getElementById('busRentLink'),
+      Wages: document.getElementById('busWagesLink'),
+      Travel: document.getElementById('busTravelLink'),
+      Variable1: document.getElementById('busVariable1Link'),
+      Variable2: document.getElementById('busVariable2Link'),
+      Variable3: document.getElementById('busVariable3Link'),
+      Variable4: document.getElementById('busVariable4Link'),
+      Variable5: document.getElementById('busVariable5Link'),
+      CCA: document.getElementById('busCCALink')
+    },
+    HomeBodyElement: {
+      Heat: document.getElementById('homeHeatLink'),
+      Electricity: document.getElementById('homeElectricityLink'),
+      Insurance: document.getElementById('homeInsuranceLink'),
+      Maintenance: document.getElementById('homeMaintenanceLink'),
+      Mortgage: document.getElementById('homeMortgageLink'),
+      PropertyTax: document.getElementById('homePropertyTaxLink'),
+      Other: document.getElementById('homeOtherLink'),
+      Water: document.getElementById('homeWaterLink'),
+      Variable1: document.getElementById('homeVariable1Link'),
+      Variable2: document.getElementById('homeVariable2Link'),
+      Variable3: document.getElementById('homeVariable3Link')
+    },
     BodyHomeExp: document.getElementById('IncStatHomeExpenses'),
     BodyVehicleExp1: document.getElementById('IncStatVehicle1Expenses'),
     BodyVehicleExp2: document.getElementById('IncStatVehicle2Expenses'),
@@ -348,6 +390,34 @@ const myDOMs = {
   }
 };
 
+function renameIncomeStatementElements() {
+  if (window.innerWidth < 992) {
+    myDOMs.incomeStatement.BusBodyElement.Dues.innerText = 'Fees & Dues';
+    myDOMs.incomeStatement.BusBodyElement.Freight.innerText = 'Delivery & Freight';
+    myDOMs.incomeStatement.BusBodyElement.Fuel.innerText = 'Fuel costs(expt vehicle)';
+    myDOMs.incomeStatement.BusBodyElement.Maintenance.innerText = 'Maintenance & Repair';
+    myDOMs.incomeStatement.BusBodyElement.Admin.innerText = 'Management & admin';
+    myDOMs.incomeStatement.BusBodyElement.Legal.innerText = 'Legal & Prof Fees';
+    myDOMs.incomeStatement.BusBodyElement.Wages.innerText = 'Wages & benefits';
+    myDOMs.incomeStatement.BusBodyElement.CCA.innerText = 'CCA/Fixed Asset Claim';
+  } else {
+    myDOMs.incomeStatement.BusBodyElement.Dues.innerText = 'Fees, licences, dues, memberships';
+    myDOMs.incomeStatement.BusBodyElement.Freight.innerText = 'Delivery, freight, and express';
+    myDOMs.incomeStatement.BusBodyElement.Fuel.innerText = 'Fuel costs (except vehicles)';
+    myDOMs.incomeStatement.BusBodyElement.Maintenance.innerText = 'Maintenance and Repairs';
+    myDOMs.incomeStatement.BusBodyElement.Admin.innerText = 'Management and administration fees';
+    myDOMs.incomeStatement.BusBodyElement.Legal.innerText = 'Legal, accounting, and other Prof. Fees';
+    myDOMs.incomeStatement.BusBodyElement.Wages.innerText = 'Salaries, wages, and benefits';
+    myDOMs.incomeStatement.BusBodyElement.CCA.innerText = 'Capital Cost Allowance (CCA)/Fixed Asset Depreciation Claim';
+  }
+}
+
+
+
+window.addEventListener('resize', function (e) {
+  renameIncomeStatementElements();
+});
+
 function getTodaysDate() {
   let today = new Date();
   let dd = today.getDate();
@@ -616,11 +686,11 @@ function tableToJson(table) {
 // }
 
 function displayScreenSize() {
-  // alert(
-  //   `Your Screen is ${window.innerWidth} wide and \n your Screen is ${
-  //   window.innerHeight
-  //   } high.`
-  // );
+  alert(
+    `Your Screen is ${window.innerWidth} wide and \n your Screen is ${
+    window.innerHeight
+    } high.`
+  );
 }
 
 function browserLogout() {

@@ -83,8 +83,8 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payment Entry</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger">
-                      <i class="far fa-building"></i> PDF Print Test
+                    <a href="#" class="dropdown-item  text-danger" onclick="displayScreenSize()">
+                      <i class="far fa-building"></i> Display Screen Size
                     </a>
                   </li>
                   <li class="dropdown-item">
@@ -1969,24 +1969,396 @@
               <a class="btn btn-primary" href="#">Read More</a>
             </div>
             <div class="card-body d-none" id="IncStatBusExpenses">
-              <h4 class="card-title">Business Expenses</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
-              <a class="btn btn-primary" href="#">Read More</a>
+              <h6 class="card-title">Business Expenses</h6>
+              <div class="container text-center" id="busExpList">
+                <ul class="list-group mb-5">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busAdvertisingLink"
+                      data-toggle="tooltip" title="Click to View report of all Advertising Expenses." onclick="displayAdvertisingReport()">Advertising</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Advertising">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8521</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busDuesLink"
+                      data-toggle="tooltip" title="Click to View report of all Fees,
+                      licences, dues, memberships Expenses."
+                      onclick="displayDuesReport()">Fees,
+                      licences, dues, memberships</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Fees,
+                      licences, dues, memberships">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8760</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busMealsLink"
+                      data-toggle="tooltip" title="Click to View report of all Meals and Entertainment Expenses."
+                      onclick="displayMealsReport()">Meals
+                      and Entertainment</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Meals and Entertainment">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8523</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busOfficeLink"
+                      data-toggle="tooltip" title="Click to View report of all Office Expenses Expenses." onclick="displayOfficeReport()">Office
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Office Expenses">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8810</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busSuppliesLink"
+                      data-toggle="tooltip" title="Click to View report of all Supplies Expenses." onclick="displaySuppliesReport()">Supplies</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Supplies">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8811</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busCellLink"
+                      data-toggle="tooltip" title="Click to View report of all Cell Phone Expenses." onclick="displayCellReport()">Cell
+                      Phone</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Cell Phone">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9220</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busOtherLink"
+                      data-toggle="tooltip" title="Click to View report of all Other Expenses Expenses." onclick="displayOtherReport()">Other
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Other Expenses">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busFreightLink"
+                      data-toggle="tooltip" title="Click to View report of all Delivery, freight, and express Expenses."
+                      onclick="displayFreightReport()">Delivery,
+                      freight, and express</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Delivery, freight, and express">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9275</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busFuelLink"
+                      data-toggle="tooltip" title="Click to View report of all Fuel costs (except vehicles) Expenses."
+                      onclick="displayFuelReport()">Fuel
+                      costs (except vehicles)</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Fuel costs (except vehicles)">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9224</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busInsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Insurance Expenses." onclick="displayInsuranceReport()">Insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Insurance">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8690</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busInterestLink"
+                      data-toggle="tooltip" title="Click to View report of all Interest Expenses." onclick="displayInterestReport()">Interest</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Interest">$1,058.37</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8710</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busMaintenanceLink"
+                      data-toggle="tooltip" title="Click to View report of all Maintenance and Repairs Expenses."
+                      onclick="displayMaintenanceReport()">Maintenance
+                      and Repairs</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Maintenance and Repairs">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8960</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busAdminLink"
+                      data-toggle="tooltip" title="Click to View report of all Management and administration fees Expenses."
+                      onclick="displayAdminReport()">Management
+                      and administration fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Management and administration fees">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8871</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busLegalLink"
+                      data-toggle="tooltip" title="Click to View report of all Legal, accounting, and other Prof. Fees Expenses."
+                      onclick="displayLegalReport()">Legal,
+                      accounting, and other Prof. Fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Legal, accounting, and other Prof. Fees">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8860</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busPropertyTaxLink"
+                      data-toggle="tooltip" title="Click to View report of all Property Taxes Expenses." onclick="displayPropertyTaxReport()">Property
+                      Taxes</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Property Taxes">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9180</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busRentLink"
+                      data-toggle="tooltip" title="Click to View report of all Rent Expenses." onclick="displayRentReport()">Rent</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rent">$7,575.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8910</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busWagesLink"
+                      data-toggle="tooltip" title="Click to View report of all Salaries, wages, and benefits Expenses."
+                      onclick="displayWagesReport()">Salaries,
+                      wages, and benefits</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Salaries, wages, and benefits">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9060</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busTravelLink"
+                      data-toggle="tooltip" title="Click to View report of all Travel Expenses." onclick="displayTravelReport()">Travel</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Travel">$2,309.50</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9200</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable1Link"
+                      data-toggle="tooltip" title="Click to View report of all Variable 1 Expenses." onclick="displayVariable1Report()">Variable
+                      1</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Variable 1">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable2Link"
+                      data-toggle="tooltip" title="Click to View report of all Variable 2 Expenses." onclick="displayVariable2Report()">Variable
+                      2</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Variable 2">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable3Link"
+                      data-toggle="tooltip" title="Click to View report of all Variable 3 Expenses." onclick="displayVariable3Report()">Variable
+                      3</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Variable 3">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable4Link"
+                      data-toggle="tooltip" title="Click to View report of all Variable 4 Expenses." onclick="displayVariable4Report()">Variable
+                      4</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Variable 4">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable5Link"
+                      data-toggle="tooltip" title="Click to View report of all Variable 5 Expenses." onclick="displayVariable5Report()">Variable
+                      5</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Variable 5">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busCCALink"
+                      data-toggle="tooltip" title="Click to View report of all (CCA) Expenses." onclick="displayCCAReport()">Capital
+                      Cost Allowance
+                      (CCA)/Fixed Asset Depreciation Claim</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net (CCA)">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9936</span></div>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatHomeExpenses">
-              <h4 class="card-title">Home Expenses</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
-              <a class="btn btn-primary" href="#">Read More</a>
+              <h6 class="card-title">Home Expenses</h6>
+              <div class="container text-center" id="busExpList">
+                <ul class="list-group mb-5">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeHeatLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Heat Expenses." onclick="displayHomeHeatReport()">Heat</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Heat">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">1st
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeElectricityLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Electricity Expenses." onclick="displayHomeElectricityReport()">Electricity</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Electricity">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">2nd
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeInsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Insurance Expenses." onclick="displayHomeInsuranceReport()">Insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Insurance">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">3rd
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeMaintenanceLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Maintenance Expenses." onclick="displayhomeMaintenanceReport()">Maintenance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Maintenance Expenses">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">4th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeMortgageLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Mortgage Interest Expenses."
+                      onclick="displayHomeMortgageReport()">Mortgage Interest</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Mortgage Interest">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">5th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homePropertyTaxLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Property Taxes Expenses." onclick="displayHomePropertyTaxesReport()">Property
+                      Taxes</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Property Taxes Expenses">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">6th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeOtherLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Other Expenses Expenses." onclick="displayHomeOtherReport()">Other
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Other Expenses">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeWaterLink"
+                      data-toggle="tooltip" title="Click to View report of all Home Water and Sewage Expenses." onclick="displayHomeWaterReport()">Water
+                      and Sewage</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Water and Sewage">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">6th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable1Link"
+                      data-toggle="tooltip" title="Click to View report of all Home Variable 1 Expenses." onclick="displayHomeVariable1Report()">Variable
+                      1</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 1">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable2Link"
+                      data-toggle="tooltip" title="Click to View report of all Home Variable 2 Expenses." onclick="displayHomeVariable2Report()">Variable
+                      2</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 2">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        Line</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable3Link"
+                      data-toggle="tooltip" title="Click to View report of all Home Variable 3 Expenses." onclick="displayHomeVariable3Report()">Variable
+                      3</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 3">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        Line</span></div>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatVehicle1Expenses">
-              <h4 class="card-title">Vehicle 1 Expenses</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
-              <a class="btn btn-primary" href="#">Read More</a>
+              <h6 class="card-title">Vehicle 1 Expenses</h6>
+              <div class="container text-center" id="busExpList">
+                <ul class="list-group mb-5">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1FuelLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Fuel and Oil Expenses."
+                      onclick="displayVehicle1FuelReport()">Fuel and Oil</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Fuel and Oil">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">3</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1InterestLoanLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Interest on Loan Expenses."
+                      onclick="displayVehicle1InterestLoanReport()">Interest on Loan</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Interest on Loan">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">4</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1InsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Insurance Expenses." onclick="displayVehicle1InsuranceReport()">Insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Insurance">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">5</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1RegistrationLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Licence and Registration Expenses."
+                      onclick="displayVehicle1RegistrationReport()">Licence and registration</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Licence and Registration">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">6</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1MaintenanceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Maintenance Expenses." onclick="displayVehicle1MaintenanceReport()">Maintenance
+                      and repairs</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Maintenance Expenses">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">7</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1LeasingLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Leasing Expenses." onclick="displayVehicle1LeasingReport()">Leasing</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Leasing">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">8</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1OtherLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Other Expenses Expenses."
+                      onclick="displayVehicle1OtherReport()">Other
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Other Expenses">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable1Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 1 Expenses." onclick="displayVehicle1Variable1Report()">Variable
+                      1</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Variable 1">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable2Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 2 Expenses." onclick="displayVehicle1Variable2Report()">Variable
+                      2</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Variable 2">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable3Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 3 Expenses." onclick="displayVehicle1Variable3Report()">Variable
+                      3</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Variable 3">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1BusParkMortgageLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Business parking fees Expenses."
+                      onclick="displayvehicle1BusParkReport()">Business parking fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Business parking fees">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">13</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1SuppInsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Supplementary business insurance Expenses."
+                      onclick="displayVehicle1SuppInsuranceReport()">Supplementary business insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Supplementary business insurance Expenses">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">14</span></div>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatVehicle2Expenses">
-              <h4 class="card-title">Vehicle 2 Expenses</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
-              <a class="btn btn-primary" href="#">Read More</a>
+              <h6 class="card-title">Vehicle 2 Expenses</h6>
+              <div class="container text-center" id="busExpList">
+                <ul class="list-group mb-5">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2FuelLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Fuel and Oil Expenses."
+                      onclick="displayVehicle2FuelReport()">Fuel and Oil</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Fuel and Oil">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">3</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2InterestLoanLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Interest on Loan Expenses."
+                      onclick="displayVehicle2InterestLoanReport()">Interest on Loan</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Interest on Loan">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">4</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2InsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Insurance Expenses." onclick="displayVehicle2InsuranceReport()">Insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Insurance">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">5</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2RegistrationLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Licence and Registration Expenses."
+                      onclick="displayVehicle2RegistrationReport()">Licence and registration</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Licence and Registration">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">6</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2MaintenanceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Maintenance Expenses." onclick="displayVehicle2MaintenanceReport()">Maintenance
+                      and repairs</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Maintenance Expenses">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">7</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2LeasingLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Leasing Expenses." onclick="displayVehicle2LeasingReport()">Leasing</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Leasing">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">8</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2OtherLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Other Expenses Expenses."
+                      onclick="displayVehicle2OtherReport()">Other
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Other Expenses">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable1Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 2 Expenses." onclick="displayVehicle2Variable1Report()">Variable
+                      1</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Variable 1">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable2Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Variable 2 Expenses." onclick="displayVehicle2Variable2Report()">Variable
+                      2</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Variable 2">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable3Link"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Variable 3 Expenses." onclick="displayVehicle2Variable3Report()">Variable
+                      3</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Variable 3">$0.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">9</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2BusParkMortgageLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Business parking fees Expenses."
+                      onclick="displayvehicle2BusParkReport()">Business parking fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Business parking fees">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">13</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2SuppInsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Vehicle 2 Supplementary business insurance Expenses."
+                      onclick="displayVehicle2SuppInsuranceReport()">Supplementary business insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Supplementary business insurance Expenses">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">14</span></div>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatOtherCostsExpenses">
               <h4 class="card-title">Other Costs Expenses</h4>
@@ -1994,9 +2366,97 @@
               <a class="btn btn-primary" href="#">Read More</a>
             </div>
             <div class="card-body d-none" id="IncStatRentalExpenses">
-              <h4 class="card-title">Rental Expenses</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, perspiciatis.</p>
-              <a class="btn btn-primary" href="#">Read More</a>
+              <h6 class="card-title">Rental Expenses</h6>
+              <div class="container text-center" id="busExpList">
+                <ul class="list-group mb-5">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalAdvertisingLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Advertising Expenses." onclick="displayRentalAdvertisingReport()">Advertising</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Advertising">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8521</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalInsuranceLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Insurance Expenses." onclick="displayRentalInsuranceReport()">Insurance</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Insurance">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8690</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalInterestLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Interest Expenses." onclick="displayRentalInterestReport()">Interest</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Interest">$1,058.37</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8710</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalMaintenanceLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Maintenance and Repairs Expenses."
+                      onclick="displayRentalMaintenanceReport()">Maintenance and Repairs</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Maintenance and Repairs">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8960</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalAdminLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Management and administration fees Expenses."
+                      onclick="displayRentalAdminReport()">Management and administration fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Management and administration fees">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8871</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalMotorLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Motor Vehicle Expenses." onclick="displayRentalMotorReport()">Motor
+                      Vehicle Expenses(not including CCA)</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Motor Vehicle Expenses.">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9281</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalOfficeLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Office Expenses." onclick="displayRentalOfficeReport()">Office
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Office Expenses">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8810</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalLegalLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Legal, accounting, and other Prof. Fees Expenses."
+                      onclick="displayRentalLegalReport()">Legal, accounting, and other Prof. Fees</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Legal, accounting, and other Prof. Fees">$926.33</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8860</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalPropertyTaxLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Property Taxes Expenses." onclick="displayRentalPropertyTaxReport()">Property
+                      Taxes</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Property Taxes">$6,180.90</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9180</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalWagesLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Salaries, wages, and benefits Expenses(incl employer's contribution)"
+                      onclick="displayRentalWagesReport()">Salaries,
+                      wages, and benefits(incl employer's contribution)</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Salaries, wages, and benefits(incl employer's contribution)">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9060</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalTravelLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Travel Expenses." onclick="displayRentalTravelReport()">Travel</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Travel">$2,309.50</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9200</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalUtilitiesLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Utility Expenses." onclick="displayRentalUtilitiesReport()">Utilities</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Utility">$3,400.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9220</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalOtherLink"
+                      data-toggle="tooltip" title="Click to View report of all Rental Other Expenses Expenses." onclick="displayRentalOtherReport()">Other
+                      Expenses</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Other Expenses">$1,745.00</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalVariable1Link"
+                      data-toggle="tooltip" title="Click to View report of all Rental Variable 1 Expenses." onclick="displayRentalVariable1Report()">Variable
+                      1</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Variable 1">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalVariable2Link"
+                      data-toggle="tooltip" title="Click to View report of all Rental Variable 2 Expenses." onclick="displayRentalVariable2Report()">Variable
+                      2</a>
+                    <div><span class="badge badge-primary mr-lg-5" data-toggle="tooltip" title="Total Net Rental Variable 2">$3,050.49</span><span
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
