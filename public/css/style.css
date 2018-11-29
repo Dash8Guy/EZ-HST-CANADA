@@ -148,7 +148,8 @@
 #homeModalHead,
 #otherModalHead,
 #rentalModalHead,
-#incomeModalHead {
+#incomeModalHead,
+#incomeStatementModalHead {
   height: 60px;
 }
 
@@ -427,10 +428,89 @@ option {
   font-size: 16px;
 }
 
-#busExpList {
+#busExpList,
+#revenueList,
+#homeExpList,
+#vehicle1ExpList,
+#vehicle2ExpList,
+#otherCostsExpList,
+#rentalExpList {
   font-size: 12px;
 }
 
-#busExpList li {
+#busExpList li,
+#revenueList li,
+#homeExpList li,
+#vehicle1ExpList li,
+#vehicle2ExpList li,
+#otherCostsExpList li,
+#rentalExpList li{
   height: 12px;
 }
+
+#incStHorLine,
+#incStHorLine2,
+#incStHorLineBusExp {
+  height: 4px;
+}
+
+#incStGdTtlRevenue,
+#incStGrTtlRevenue,
+#incStGrTtlExpenses {
+  font-size: 16px;
+  height: 22px;
+}
+
+#ImageViewTitle {
+  font-size: 18px;
+}
+
+#incStImportantBtn {
+  font-size: 12px;
+}
+
+#incStBusinessExpTotal,
+#incStHorLineHomeExp,
+#incStHorLineVehicle1Exp,
+#incStHorLineVehicle2Exp,
+#incStHorLineOtherCostsExp,
+#incStHorLineRentalExp,
+#incStHomePercentText,
+#incStHomePercentText2,
+#incStHomePercentDisplay,
+#incStVehicle1PercentText,
+#incStVehicle1PercentText2,
+#incStVehicle1PercentDisplay,
+#incStVehicle2PercentText,
+#incStVehicle2PercentText2,
+#incStVehicle2PercentDisplay {
+  font-size: 13px;
+}
+
+#incStHomePercentBtn {
+  font-size: 12px;
+  font-weight: bold;
+  width: 286px;
+}
+
+#incStVehicle1PercentBtn,
+#incStVehicle2PercentBtn {
+  font-size: 12px;
+  font-weight: bold;
+  width: 300px;
+}
+
+#revenueNavTab,
+#businessNavTab,
+#homeNavTab,
+#vehicle1NavTab,
+#vehicle2NavTab,
+#otherCostsNavTab,
+#rentalNavTab {
+  font-size: 12px;
+  font-weight: bolder;
+}
+
+/* #revenueTabLink {
+
+} */

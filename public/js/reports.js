@@ -374,6 +374,18 @@ let arrTablePage21 = [];
 let arrTablePage22 = [];
 let arrTablePage23 = [];
 let arrTablePage24 = [];
+//This variable will hold the Total Net, HST and PST for the Report Table being opened and is filled when Opening from Income Statement.
+let myReportTotal = {
+  totalNet: 0,
+  totalHST: 0,
+  totalPST: 0,
+  categoryNet: ''
+}
+
+
+//This Boolean is set to true when opening report table from Income Statement so that after closing the Report Table, the Income Statement opens.
+let reOpenIncomeStatement = false;
+
 //this variable will be set to 10, 25, 50 or 100 and is the amount of expenses per page
 //It can be set in settings by users
 let rowCountPerPage = 10;
@@ -631,6 +643,25 @@ function goToPage(page) {
     } else {
       OneExpenseOnLastPage = false;
     }
+  }
+
+  if (currentTablePage === currentTablePages || currentTablePages === 0) {
+    displayTotalsRow();
+  } else {
+    hideTotalsRow();
+  }
+}
+
+function hideTotalsRow() {
+  if (document.getElementById(`row${rowCountPerPage + 1}`).classList.contains('d-none')) {
+  } else {
+    document.getElementById(`row${rowCountPerPage + 1}`).classList.add('d-none');
+  }
+}
+
+function displayTotalsRow() {
+  if (document.getElementById(`row${rowCountPerPage + 1}`).classList.contains('d-none')) {
+    document.getElementById(`row${rowCountPerPage + 1}`).classList.remove('d-none');
   }
 }
 
@@ -1412,7 +1443,8 @@ const getImageData = (myTempID, vehicleNum) => {
       data: myTempData
     })
       .done(function (data) {
-        resolve(data.data.data);
+        // console.dir(JSON.stringify(data, undefined, 2));
+        resolve(data.myImg.Body.data);
       })
       .fail(function (e) {
         reject("Unable to get Receipt Image!");

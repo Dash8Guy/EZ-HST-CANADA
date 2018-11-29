@@ -327,7 +327,7 @@ function updateRentalExpense() {
     processData: false,
     contentType: false
   })
-    .done(function (data) {
+    .done(async function (data) {
       let myObjMsg = [""];
 
       displayAlert(
@@ -400,6 +400,10 @@ function updateRentalExpense() {
       myDOMs.rentalExp.ExpID.value = 'SAVED';
       setRentalStatusColor();
 
+      await getAllMainData();
+      fillMainDataFromArrays();
+
+      updateRentalExpTableTotals();
     })
     .fail(function (err) {
       let myObjMsg = ["Rental Expense Entry Failed to POST to the database"];
@@ -415,6 +419,108 @@ function updateRentalExpense() {
         6000
       );
     });
+};
+
+function updateRentalExpTableTotals() {
+  if (reOpenIncomeStatement) {
+    switch (myReportTotal.category) {
+      case 'Advertising':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Advertising).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.AdvertisingHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.AdvertisingPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Advertising + mainData.rentalExp.AdvertisingHST + mainData.rentalExp.AdvertisingPST).toFixed(2)))}`;
+        break;
+      case 'Insurance':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Insurance).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.InsuranceHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.InsurancePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Insurance + mainData.rentalExp.InsuranceHST + mainData.rentalExp.InsurancePST).toFixed(2)))}`;
+        break;
+      case 'Interest':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Interest).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.InterestHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.InterestPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Interest + mainData.rentalExp.InterestHST + mainData.rentalExp.InterestPST).toFixed(2)))}`;
+        break;
+      case 'Maintenance':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Maintenance).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.MaintenanceHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.MaintenancePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Maintenance + mainData.rentalExp.MaintenanceHST + mainData.rentalExp.MaintenancePST).toFixed(2)))}`;
+        break;
+      case 'Admin':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Admin).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.AdminHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.AdminPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Admin + mainData.rentalExp.AdminHST + mainData.rentalExp.AdminPST).toFixed(2)))}`;
+        break;
+      case 'MotorVehicle':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.MotorVehicle).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.MotorVehicleHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.MotorVehiclePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.MotorVehicle + mainData.rentalExp.MotorVehicleHST + mainData.rentalExp.MotorVehiclePST).toFixed(2)))}`;
+        break;
+      case 'Office':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Office).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.OfficeHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.OfficePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Office + mainData.rentalExp.OfficeHST + mainData.rentalExp.OfficePST).toFixed(2)))}`;
+        break;
+      case 'Legal':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Legal).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.LegalHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.LegalPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Legal + mainData.rentalExp.LegalHST + mainData.rentalExp.LegalPST).toFixed(2)))}`;
+        break;
+      case 'PropertyTax':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.PropertyTax).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.PropertyTaxHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.PropertyTaxPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.PropertyTax + mainData.rentalExp.PropertyTaxHST + mainData.rentalExp.PropertyTaxPST).toFixed(2)))}`;
+        break;
+      case 'Wages':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Wages).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.WagesHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.WagesPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Wages + mainData.rentalExp.WagesHST + mainData.rentalExp.WagesPST).toFixed(2)))}`;
+        break;
+      case 'Travel':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Travel).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.TravelHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.TravelPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Travel + mainData.rentalExp.TravelHST + mainData.rentalExp.TravelPST).toFixed(2)))}`;
+        break;
+      case 'Utilities':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Utilities).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.UtilitiesHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.UtilitiesPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Utilities + mainData.rentalExp.UtilitiesHST + mainData.rentalExp.UtilitiesPST).toFixed(2)))}`;
+        break;
+      case 'Other':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Other).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.OtherHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.OtherPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Other + mainData.rentalExp.OtherHST + mainData.rentalExp.OtherPST).toFixed(2)))}`;
+        break;
+      case 'Variable1':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable1).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable1HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable1PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable1 + mainData.rentalExp.Variable1HST + mainData.rentalExp.Variable1PST).toFixed(2)))}`;
+        break;
+      case 'Variable2':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable2).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable2HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable2PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.Variable2 + mainData.rentalExp.Variable2HST + mainData.rentalExp.Variable2PST).toFixed(2)))}`;
+        break;
+    }
+  } else {
+    document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.net).toFixed(2)))}`;
+    document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.hst).toFixed(2)))}`;
+    document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.rentalExp.pst).toFixed(2)))}`;
+    document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.rentalExp.pst + mainData.rentalExp.net + mainData.rentalExp.hst).toFixed(2)))}`;
+  }
 }
 
 function deleteRentalExpense() {
@@ -446,7 +552,7 @@ function deleteRentalExpense() {
       enctype: "multipart/form-data",
       data: tempData
     })
-      .done(function (data) {
+      .done(async function (data) {
         displayAlert(
           myDOMs.rentalExp.AlertContainer,
           "rentalExpAlert",
@@ -518,6 +624,10 @@ function deleteRentalExpense() {
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateRentalExpTableTotals();
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -535,7 +645,13 @@ function deleteRentalExpense() {
   }
 }
 
-function getRentalExpenses() {
+function getRentalExpenses(myFilter) {
+  if (!myFilter) {
+    myReportTotal.totalNet = mainData.rentalExp.net;
+    myReportTotal.totalHST = mainData.rentalExp.hst;
+    myReportTotal.totalPST = mainData.rentalExp.pst;
+  }
+
   let tempData;
 
   tempData = {
@@ -556,31 +672,40 @@ function getRentalExpenses() {
     enctype: "multipart/form-data"
   })
     .done(function (myExpenses) {
+      let tempTitle = 'Rental Expenses';
+      curTableArray = myExpenses.carexpense;
+
+      if (myFilter) {
+        tempTitle = `Rental Expenses (${myFilter})`;
+        curTableArray = curTableArray.filter((el, index) => {
+          return el.carExpCatSelect === myFilter;
+        });
+      }
+
       let tempPageCount;
-      if (myExpenses.carexpense.length > rowCountPerPageDefault * 24) {
+      if (curTableArray.length > rowCountPerPageDefault * 24) {
         if ((rowCountPerPageDefault = 10)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 25);
+          tempPageCount = Math.ceil(curTableArray.length / 25);
         } else if ((rowCountPerPageDefault = 25)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 50);
+          tempPageCount = Math.ceil(curTableArray.length / 50);
         } else if ((rowCountPerPageDefault = 50)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 100);
+          tempPageCount = Math.ceil(curTableArray.length / 100);
         } else if ((rowCountPerPageDefault = 100)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 500);
+          tempPageCount = Math.ceil(curTableArray.length / 500);
         }
       } else {
         tempPageCount = Math.ceil(
-          myExpenses.carexpense.length / rowCountPerPageDefault
+          curTableArray.length / rowCountPerPageDefault
         );
       }
-      curTableArray = myExpenses.carexpense;
 
       buildVehicleExpenseTable(
         myDOMs.main.AlertContainer,
         "mainTableAlert",
         "closeBtnAlertMain",
         `You have ${
-        myExpenses.carexpense.length
-        } Rental Expenses displayed on ${tempPageCount} pages.`,
+        curTableArray.length
+        } ${tempTitle} displayed on ${tempPageCount} pages.`,
         "TABLE CAR GREEN",
         0,
         0
@@ -687,7 +812,7 @@ $("#rentalExpBtn").click(function () {
       dataType: "json",
       data: mydata
     })
-      .done(function (data) {
+      .done(async function (data) {
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -707,6 +832,10 @@ $("#rentalExpBtn").click(function () {
         myDOMs.rentalExp.ReoccurYES.checked = false;
         myDOMs.rentalExp.ReoccurNO.checked = true;
         myDOMs.rentalExp.EntryDate.focus();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateRentalExpTableTotals();
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -815,7 +944,7 @@ $("#rentalExpBtn").click(function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(async function (data) {
           let myObjMsg = [""];
 
           displayAlert(
@@ -833,6 +962,10 @@ $("#rentalExpBtn").click(function () {
           myDOMs.rentalExp.ReoccurNO.checked = true;
           removeRentalImage();
           myDOMs.rentalExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateRentalExpTableTotals();
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -881,7 +1014,7 @@ $("#rentalExpBtn").click(function () {
         data: mydata,
         enctype: "multipart/form-data"
       })
-        .done(function (data) {
+        .done(async function (data) {
           displayAlert(
             myDOMs.rentalExp.AlertContainer,
             "rentalExpAlert",
@@ -896,6 +1029,10 @@ $("#rentalExpBtn").click(function () {
           myDOMs.rentalExp.ReoccurYES.checked = false;
           myDOMs.rentalExp.ReoccurNO.checked = true;
           myDOMs.rentalExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateRentalExpTableTotals();
         })
         .fail(function (err) {
           displayAlert(

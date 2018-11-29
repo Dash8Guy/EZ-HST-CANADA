@@ -31,9 +31,9 @@ function updateIncomeHeader() {
 function updateIncomeButtonText() {
   var isExpanded = $("#collapseIncome1").hasClass("show");
   if (isExpanded) {
-    myDOMs.income.ShowHideReceipt.innerText = "Show Receipt Controls";
+    myDOMs.income.ShowHideReceipt.innerText = "Show Invoice Controls";
   } else {
-    myDOMs.income.ShowHideReceipt.innerText = "Hide Receipt Controls";
+    myDOMs.income.ShowHideReceipt.innerText = "Hide Invoice Controls";
   }
 }
 function emptyIncomeVendorSelect() {
@@ -405,8 +405,6 @@ function updateIncome(source) {
     myDate.getDate()
   );
 
-  alert(myTempDate);
-
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.income.NetAmt.value);
   formData.append("carhstAmt", myDOMs.income.HSTAmt.value);
@@ -429,7 +427,6 @@ function updateIncome(source) {
     contentType: false
   })
     .done(function (data) {
-      //alert(JSON.stringify(data, undefined, 2));
       let myObjMsg = [""];
 
       displayAlert(
@@ -502,6 +499,8 @@ function updateIncome(source) {
       myDOMs.income.ExpID.value = 'SAVED';
       setIncomeStatusColor();
 
+      getAllMainData();
+      fillMainDataFromArrays();
     })
     .fail(function (err) {
       let myObjMsg = ["Revenue Entry Failed to POST to the database"];
@@ -627,6 +626,9 @@ function deleteIncomeExpense(source) {
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
+
+        getAllMainData();
+        fillMainDataFromArrays();
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -833,11 +835,13 @@ $("#incomeExpBtn").click(function () {
           "GREEN",
           0
         );
-        // alert(JSON.stringify(myDisplay, undefined, 2));
         myDOMs.income.EntryForm.reset();
         myDOMs.income.ReoccurYES.checked = false;
         myDOMs.income.ReoccurNO.checked = true;
         myDOMs.income.EntryDate.focus();
+
+        getAllMainData();
+        fillMainDataFromArrays();
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -965,6 +969,9 @@ $("#incomeExpBtn").click(function () {
           myDOMs.income.ReoccurNO.checked = true;
           removeIncomeImage();
           myDOMs.income.EntryDate.focus();
+
+          getAllMainData();
+          fillMainDataFromArrays();
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -1029,6 +1036,9 @@ $("#incomeExpBtn").click(function () {
           myDOMs.income.ReoccurYES.checked = false;
           myDOMs.income.ReoccurNO.checked = true;
           myDOMs.income.EntryDate.focus();
+
+          getAllMainData();
+          fillMainDataFromArrays();
         })
         .fail(function (err) {
           displayAlert(
@@ -1184,61 +1194,51 @@ function updateIncomeFormStatus() {
   let dataMatch = true;
   if (myOriginalData.Date === myDOMs.income.EntryDate.value) {
   } else {
-    // alert('Date');
     dataMatch = false;
   }
 
   if (myOriginalData.Net.toFixed(2) === myDOMs.income.NetAmt.value) {
   } else {
-    // alert('Net');
     dataMatch = false;
   }
 
   if (myOriginalData.Hst.toFixed(2) === myDOMs.income.HSTAmt.value) {
   } else {
-    // alert('HST');
     dataMatch = false;
   }
 
   if (myOriginalData.Pst.toFixed(2) === myDOMs.income.PSTAmt.value) {
   } else {
-    // alert('PST');
     dataMatch = false;
   }
 
   if (myOriginalData.Total.toFixed(2) === myDOMs.income.TotalAmt.value) {
   } else {
-    // alert('Total');
     dataMatch = false;
   }
 
   if (myOriginalData.Status === myDOMs.income.ExpID.value) {
   } else {
-    // alert('Status');
     dataMatch = false;
   }
 
   if (myOriginalData.Description === myDOMs.income.Description.value) {
   } else {
-    // alert('Description');
     dataMatch = false;
   }
 
   if (myOriginalData.Vendor === myDOMs.income.Vendor.value) {
   } else {
-    // alert('Vendor');
     dataMatch = false;
   }
 
   if (myOriginalData.Category === myDOMs.income.Party.value) {
   } else {
-    // alert('Category');
     dataMatch = false;
   }
 
   if (myDOMs.income.Checkbox.checked === myOriginalData.Checkbox) {
   } else {
-    // alert('checkbox');
     dataMatch = false;
   }
 
@@ -1290,7 +1290,6 @@ myDOMs.income.ReoccurYES.addEventListener('click', function (e) {
 })
 
 function disableEnableFullSizeIncomeImgBtn() {
-  // alert('Buttons Called');
   if (myDOMs.income.Img.src.length > 149) {
     if ($('#incomeExpShowFullSize').hasClass('disabled')) {
       $('#incomeExpShowFullSize').removeClass("disabled");

@@ -561,7 +561,7 @@ function updateVehicleExpense() {
     processData: false,
     contentType: false
   })
-    .done(function (data) {
+    .done(async function (data) {
       let myObjMsg = [""];
 
       displayAlert(
@@ -634,7 +634,13 @@ function updateVehicleExpense() {
       myDOMs.carExp.ExpID.value = 'SAVED';
       setVehicleStatusColor();
 
-
+      await getAllMainData();
+      fillMainDataFromArrays();
+      if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+        updateTableTotals('1');
+      } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+        updateTableTotals('2');
+      }
     })
     .fail(function (err) {
       let myObjMsg = ["Vehicle Expense Entry Failed to POST to the database"];
@@ -650,7 +656,177 @@ function updateVehicleExpense() {
         6000
       );
     });
+};
+
+function updateTableTotals(carNum) {
+  if (reOpenIncomeStatement) {
+    if (carNum === '1') {
+      switch (myReportTotal.category) {
+        case 'Fuel':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Fuel).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.FuelHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.FuelPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.FuelHST + mainData.vehicle1Exp.FuelPST).toFixed(2)))}`;
+          break;
+        case 'LoanInterest':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LoanInterest).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LoanInterestHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LoanInterestPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.LoanInterestHST + mainData.vehicle1Exp.LoanInterestPST).toFixed(2)))}`;
+          break;
+        case 'Insurance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Insurance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.InsuranceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.InsurancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.InsuranceHST + mainData.vehicle1Exp.InsurancePST).toFixed(2)))}`;
+          break;
+        case 'Registration':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Registration).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.RegistrationHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.RegistrationPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.RegistrationHST + mainData.vehicle1Exp.RegistrationPST).toFixed(2)))}`;
+          break;
+        case 'Maintenance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Maintenance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.MaintenanceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.MaintenancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.MaintenanceHST + mainData.vehicle1Exp.MaintenancePST).toFixed(2)))}`;
+          break;
+        case 'Leasing':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Leasing).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LeasingHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.LeasingPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LeasingHST + mainData.vehicle1Exp.LeasingPST).toFixed(2)))}`;
+          break;
+        case 'Other':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Other).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.OtherHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.OtherPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Other + mainData.vehicle1Exp.OtherHST + mainData.vehicle1Exp.OtherPST).toFixed(2)))}`;
+          break;
+        case 'Variable1':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable1).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable1HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable1PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable1HST + mainData.vehicle1Exp.Variable1PST).toFixed(2)))}`;
+          break;
+        case 'Variable2':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable2).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable2HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable2PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable2HST + mainData.vehicle1Exp.Variable2PST).toFixed(2)))}`;
+          break;
+        case 'Variable3':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable3).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable3HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable3PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Variable3 + mainData.vehicle1Exp.Variable3HST + mainData.vehicle1Exp.Variable3PST).toFixed(2)))}`;
+          break;
+        case 'Parking':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Parking).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.ParkingHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.ParkingPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.ParkingHST + mainData.vehicle1Exp.ParkingPST).toFixed(2)))}`;
+          break;
+        case 'SuppInsurance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.SuppInsurance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.SuppInsuranceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.SuppInsurancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.SuppInsurance + mainData.vehicle1Exp.SuppInsuranceHST + mainData.vehicle1Exp.SuppInsurancePST).toFixed(2)))}`;
+      }
+
+    } else if (carNum === '2') {
+
+      switch (myReportTotal.category) {
+        case 'Fuel':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Fuel).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.FuelHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.FuelPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.FuelHST + mainData.vehicle2Exp.FuelPST).toFixed(2)))}`;
+          break;
+        case 'LoanInterest':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LoanInterest).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LoanInterestHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LoanInterestPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.LoanInterestHST + mainData.vehicle2Exp.LoanInterestPST).toFixed(2)))}`;
+          break;
+        case 'Insurance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Insurance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.InsuranceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.InsurancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.InsuranceHST + mainData.vehicle2Exp.InsurancePST).toFixed(2)))}`;
+          break;
+        case 'Registration':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Registration).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.RegistrationHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.RegistrationPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.RegistrationHST + mainData.vehicle2Exp.RegistrationPST).toFixed(2)))}`;
+          break;
+        case 'Maintenance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Maintenance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.MaintenanceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.MaintenancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.MaintenanceHST + mainData.vehicle2Exp.MaintenancePST).toFixed(2)))}`;
+          break;
+        case 'Leasing':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Leasing).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LeasingHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.LeasingPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LeasingHST + mainData.vehicle2Exp.LeasingPST).toFixed(2)))}`;
+          break;
+        case 'Other':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Other).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.OtherHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.OtherPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Other + mainData.vehicle2Exp.OtherHST + mainData.vehicle2Exp.OtherPST).toFixed(2)))}`;
+          break;
+        case 'Variable1':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable1).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable1HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable1PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable1HST + mainData.vehicle2Exp.Variable1PST).toFixed(2)))}`;
+          break;
+        case 'Variable2':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable2).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable2HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable2PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable2HST + mainData.vehicle2Exp.Variable2PST).toFixed(2)))}`;
+          break;
+        case 'Variable3':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable3).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable3HST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable3PST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Variable3 + mainData.vehicle2Exp.Variable3HST + mainData.vehicle2Exp.Variable3PST).toFixed(2)))}`;
+          break;
+        case 'Parking':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Parking).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.ParkingHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.ParkingPST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.ParkingHST + mainData.vehicle2Exp.ParkingPST).toFixed(2)))}`;
+          break;
+        case 'SuppInsurance':
+          document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.SuppInsurance).toFixed(2)))}`;
+          document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.SuppInsuranceHST).toFixed(2)))}`;
+          document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.SuppInsurancePST).toFixed(2)))}`;
+          document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.SuppInsurance + mainData.vehicle2Exp.SuppInsuranceHST + mainData.vehicle2Exp.SuppInsurancePST).toFixed(2)))}`;
+      }
+    }
+
+  } else {
+    if (carNum === '1') {
+      document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.net).toFixed(2)))}`;
+      document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.hst).toFixed(2)))}`;
+      document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.pst).toFixed(2)))}`;
+      document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle1Exp.pst + mainData.vehicle1Exp.net + mainData.vehicle1Exp.hst).toFixed(2)))}`;
+    } else if (carNum === '2') {
+      document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.net).toFixed(2)))}`;
+      document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.hst).toFixed(2)))}`;
+      document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.pst).toFixed(2)))}`;
+      document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.vehicle2Exp.pst + mainData.vehicle2Exp.net + mainData.vehicle2Exp.hst).toFixed(2)))}`;
+    }
+  }
 }
+
 function deleteVehicleExpense() {
   let carNumValue;
   if (myDOMs.carExp.ExpID.value === 'NEW') {
@@ -685,7 +861,7 @@ function deleteVehicleExpense() {
       enctype: "multipart/form-data",
       data: tempData
     })
-      .done(function (data) {
+      .done(async function (data) {
         displayAlert(
           myDOMs.carExp.AlertContainer,
           "carExpAlert",
@@ -759,6 +935,14 @@ function deleteVehicleExpense() {
           } ${myTempVehicleText} Expenses displayed on ${tempPageCount} pages.`;
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        if (carNumValue === "1") {
+          updateTableTotals('1');
+        } else if (carNumValue === "2") {
+          updateTableTotals('2');
+        }
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -775,8 +959,20 @@ function deleteVehicleExpense() {
       });
   }
 }
-function getVehicleExpenses(vehicleNum) {
+function getVehicleExpenses(vehicleNum, myFilter) {
+  if (!myFilter) {
+    if (vehicleNum === 1) {
+      myReportTotal.totalNet = mainData.vehicle1Exp.net;
+      myReportTotal.totalHST = mainData.vehicle1Exp.hst;
+      myReportTotal.totalPST = mainData.vehicle1Exp.pst;
+    } else if (vehicleNum === 2) {
+      myReportTotal.totalNet = mainData.vehicle2Exp.net;
+      myReportTotal.totalHST = mainData.vehicle2Exp.hst;
+      myReportTotal.totalPST = mainData.vehicle2Exp.pst;
+    }
+  } let tempTitle;
   let tempData;
+
   if (vehicleNum === 1) {
     tempData = {
       carNumber: "1",
@@ -807,48 +1003,57 @@ function getVehicleExpenses(vehicleNum) {
     enctype: "multipart/form-data"
   })
     .done(function (myExpenses) {
+      let tempTitle;
+
+      curTableArray = myExpenses.carexpense;
+
+      if (myFilter) {
+        if (vehicleNum === 1) {
+          tempTitle = `Vehicle-1 Expenses (${myFilter})`;
+        } else if (vehicleNum === 2) {
+          tempTitle = `Vehicle-2 Expenses (${myFilter})`;
+        }
+        curTableArray = curTableArray.filter((el, index) => {
+          return el.carExpCatSelect === myFilter;
+        });
+      } else {
+        if (vehicleNum === 1) {
+          tempTitle = `Vehicle-1 Expenses`;
+        } else if (vehicleNum === 2) {
+          tempTitle = `Vehicle-2 Expenses`;
+        }
+      }
+
       let tempPageCount;
-      if (myExpenses.carexpense.length > rowCountPerPageDefault * 24) {
+
+      if (curTableArray.length > rowCountPerPageDefault * 24) {
         if ((rowCountPerPageDefault = 10)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 25);
+          tempPageCount = Math.ceil(curTableArray.length / 25);
         } else if ((rowCountPerPageDefault = 25)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 50);
+          tempPageCount = Math.ceil(curTableArray.length / 50);
         } else if ((rowCountPerPageDefault = 50)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 100);
+          tempPageCount = Math.ceil(curTableArray.length / 100);
         } else if ((rowCountPerPageDefault = 100)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 500);
+          tempPageCount = Math.ceil(curTableArray.length / 500);
         }
       } else {
         tempPageCount = Math.ceil(
-          myExpenses.carexpense.length / rowCountPerPageDefault
+          curTableArray.length / rowCountPerPageDefault
         );
       }
-      curTableArray = myExpenses.carexpense;
-      if (vehicleNum === 1) {
-        buildVehicleExpenseTable(
-          myDOMs.main.AlertContainer,
-          "mainTableAlert",
-          "closeBtnAlertMain",
-          `You have ${
-          myExpenses.carexpense.length
-          } Vehicle-1 Expenses displayed on ${tempPageCount} pages.`,
-          "TABLE CAR GREEN",
-          0,
-          0
-        );
-      } else if (vehicleNum === 2) {
-        buildVehicleExpenseTable(
-          myDOMs.main.AlertContainer,
-          "mainTableAlert",
-          "closeBtnAlertMain",
-          `You have ${
-          myExpenses.carexpense.length
-          } Vehicle-2 Expenses displayed on ${tempPageCount} pages.`,
-          "TABLE CAR GREEN",
-          0,
-          0
-        );
-      }
+
+      buildVehicleExpenseTable(
+        myDOMs.main.AlertContainer,
+        "mainTableAlert",
+        "closeBtnAlertMain",
+        `You have ${
+        curTableArray.length
+        } ${tempTitle} displayed on ${tempPageCount} pages.`,
+        "TABLE CAR GREEN",
+        0,
+        0
+      );
+
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {
@@ -966,7 +1171,7 @@ $("#carExpBtn").click(function () {
       dataType: "json",
       data: mydata
     })
-      .done(function (data) {
+      .done(async function (data) {
         //console.log(JSON.stringify(data, undefined, 2));
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
@@ -985,6 +1190,14 @@ $("#carExpBtn").click(function () {
         // alert(JSON.stringify(myDisplay, undefined, 2));
         myDOMs.carExp.EntryForm.reset();
         myDOMs.carExp.EntryDate.focus();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+          updateTableTotals('1');
+        } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+          updateTableTotals('2');
+        }
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -1097,7 +1310,7 @@ $("#carExpBtn").click(function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(async function (data) {
           let myObjMsg = [""];
 
           displayAlert(
@@ -1113,6 +1326,14 @@ $("#carExpBtn").click(function () {
           myDOMs.carExp.EntryForm.reset();
           removeImage();
           myDOMs.carExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+            updateTableTotals('1');
+          } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+            updateTableTotals('2');
+          }
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -1176,7 +1397,7 @@ $("#carExpBtn").click(function () {
         data: mydata,
         enctype: "multipart/form-data"
       })
-        .done(function (data) {
+        .done(async function (data) {
           displayAlert(
             myDOMs.carExp.AlertContainer,
             "carExpAlert",
@@ -1189,6 +1410,14 @@ $("#carExpBtn").click(function () {
           );
           myDOMs.carExp.EntryForm.reset();
           myDOMs.carExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+            updateTableTotals('1');
+          } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+            updateTableTotals('2');
+          }
         })
         .fail(function (err) {
           displayAlert(

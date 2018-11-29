@@ -175,6 +175,7 @@ function populateOtherCategories() {
     method: "GET"
   })
     .done(function (data) {
+      //alert(JSON.stringify(data, undefined, 2));
       for (i = 0; i < data.otherCategories.length; i++) {
         let optionOther = document.createElement("OPTION");
         txtOther = document.createTextNode(data.otherCategories[i].text);
@@ -327,7 +328,7 @@ function updateOtherExpense() {
     processData: false,
     contentType: false
   })
-    .done(function (data) {
+    .done(async function (data) {
       let myObjMsg = [""];
 
       displayAlert(
@@ -400,6 +401,10 @@ function updateOtherExpense() {
       myDOMs.otherExp.ExpID.value = 'SAVED';
       setHomeStatusColor();
 
+      await getAllMainData();
+      fillMainDataFromArrays();
+      updateOtherCostsTableTotals();
+
     })
     .fail(function (err) {
       let myObjMsg = ["Other Expense Entry Failed to POST to the database"];
@@ -417,8 +422,54 @@ function updateOtherExpense() {
     });
 }
 
-function deleteOtherExpense() {
+function updateOtherCostsTableTotals() {
+  if (reOpenIncomeStatement) {
+    switch (myReportTotal.category) {
+      case 'Goods':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Goods).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.GoodsHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.GoodsPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Goods + mainData.otherCostsExp.GoodsHST + mainData.otherCostsExp.GoodsPST).toFixed(2)))}`;
+        break;
+      case 'Subcontracts':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Subcontracts).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.SubcontractsHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.SubcontractsPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Subcontracts + mainData.otherCostsExp.SubcontractsHST + mainData.otherCostsExp.SubcontractsPST).toFixed(2)))}`;
+        break;
+      case 'Direct_Wage':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Direct_Wage).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Direct_WageHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Direct_WagePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Direct_Wage + mainData.otherCostsExp.Direct_WageHST + mainData.otherCostsExp.Direct_WagePST).toFixed(2)))}`;
+        break;
+      case 'Other_Costs':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Other_Costs).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Other_CostsHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Other_CostsPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Other_Costs + mainData.otherCostsExp.Other_CostsHST + mainData.otherCostsExp.Other_CostsPST).toFixed(2)))}`;
+        break;
+      case 'Variable1':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable1).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable1HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable1PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable1 + mainData.otherCostsExp.Variable1HST + mainData.otherCostsExp.Variable1PST).toFixed(2)))}`;
+        break;
+      case 'Variable2':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable2).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable2HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable2PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.Variable2 + mainData.otherCostsExp.Variable2HST + mainData.otherCostsExp.Variable2PST).toFixed(2)))}`;
+    }
+  } else {
+    document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.net).toFixed(2)))}`;
+    document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.hst).toFixed(2)))}`;
+    document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.pst).toFixed(2)))}`;
+    document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.otherCostsExp.pst + mainData.otherCostsExp.net + mainData.otherCostsExp.hst).toFixed(2)))}`;
+  }
+}
 
+function deleteOtherExpense() {
   if (myDOMs.otherExp.ExpID.value === 'NEW') {
     displayAlert(
       myDOMs.otherExp.AlertContainer,
@@ -446,7 +497,7 @@ function deleteOtherExpense() {
       enctype: "multipart/form-data",
       data: tempData
     })
-      .done(function (data) {
+      .done(async function (data) {
         displayAlert(
           myDOMs.otherExp.AlertContainer,
           "otherExpAlert",
@@ -518,6 +569,10 @@ function deleteOtherExpense() {
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateOtherCostsTableTotals();
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -535,7 +590,13 @@ function deleteOtherExpense() {
   }
 }
 
-function getOtherExpenses() {
+function getOtherExpenses(myFilter) {
+  if (!myFilter) {
+    myReportTotal.totalNet = mainData.otherCostsExp.net;
+    myReportTotal.totalHST = mainData.otherCostsExp.hst;
+    myReportTotal.totalPST = mainData.otherCostsExp.pst;
+  }
+
   let tempData;
 
   tempData = {
@@ -556,31 +617,42 @@ function getOtherExpenses() {
     enctype: "multipart/form-data"
   })
     .done(function (myExpenses) {
+      let tempTitle = 'Other Costs Expenses';
+      curTableArray = myExpenses.carexpense;
+
+      if (myFilter) {
+        tempTitle = `Other Costs Expenses (${myFilter})`;
+        curTableArray = curTableArray.filter((el, index) => {
+          return el.carExpCatSelect === myFilter;
+        });
+      }
+
       let tempPageCount;
-      if (myExpenses.carexpense.length > rowCountPerPageDefault * 24) {
+
+
+      if (curTableArray.length > rowCountPerPageDefault * 24) {
         if ((rowCountPerPageDefault = 10)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 25);
+          tempPageCount = Math.ceil(curTableArray.length / 25);
         } else if ((rowCountPerPageDefault = 25)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 50);
+          tempPageCount = Math.ceil(curTableArray.length / 50);
         } else if ((rowCountPerPageDefault = 50)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 100);
+          tempPageCount = Math.ceil(curTableArray.length / 100);
         } else if ((rowCountPerPageDefault = 100)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 500);
+          tempPageCount = Math.ceil(curTableArray.length / 500);
         }
       } else {
         tempPageCount = Math.ceil(
-          myExpenses.carexpense.length / rowCountPerPageDefault
+          curTableArray.length / rowCountPerPageDefault
         );
       }
-      curTableArray = myExpenses.carexpense;
 
       buildVehicleExpenseTable(
         myDOMs.main.AlertContainer,
         "mainTableAlert",
         "closeBtnAlertMain",
         `You have ${
-        myExpenses.carexpense.length
-        } Other Expenses displayed on ${tempPageCount} pages.`,
+        curTableArray.length
+        } ${tempTitle} displayed on ${tempPageCount} pages.`,
         "TABLE CAR GREEN",
         0,
         0
@@ -687,7 +759,7 @@ $("#otherExpBtn").click(function () {
       dataType: "json",
       data: mydata
     })
-      .done(function (data) {
+      .done(async function (data) {
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -707,6 +779,10 @@ $("#otherExpBtn").click(function () {
         myDOMs.otherExp.ReoccurYES.checked = false;
         myDOMs.otherExp.ReoccurNO.checked = true;
         myDOMs.otherExp.EntryDate.focus();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateOtherCostsTableTotals();
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -815,7 +891,7 @@ $("#otherExpBtn").click(function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(async function (data) {
           let myObjMsg = [""];
 
           displayAlert(
@@ -833,6 +909,10 @@ $("#otherExpBtn").click(function () {
           myDOMs.otherExp.ReoccurNO.checked = true;
           removeOtherImage();
           myDOMs.otherExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateOtherCostsTableTotals();
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -881,7 +961,7 @@ $("#otherExpBtn").click(function () {
         data: mydata,
         enctype: "multipart/form-data"
       })
-        .done(function (data) {
+        .done(async function (data) {
           displayAlert(
             myDOMs.otherExp.AlertContainer,
             "otherExpAlert",
@@ -896,6 +976,10 @@ $("#otherExpBtn").click(function () {
           myDOMs.otherExp.ReoccurYES.checked = false;
           myDOMs.otherExp.ReoccurNO.checked = true;
           myDOMs.otherExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateOtherCostsTableTotals();
         })
         .fail(function (err) {
           displayAlert(

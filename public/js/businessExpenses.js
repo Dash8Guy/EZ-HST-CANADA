@@ -333,7 +333,7 @@ function updateBusinessExpense() {
     processData: false,
     contentType: false
   })
-    .done(function (data) {
+    .done(async function (data) {
       let myObjMsg = [""];
 
       displayAlert(
@@ -406,6 +406,9 @@ function updateBusinessExpense() {
       myDOMs.busExp.ExpID.value = 'SAVED';
       setStatusColor();
 
+      await getAllMainData();
+      fillMainDataFromArrays();
+      updateBusinessExpTableTotals();
     })
     .fail(function (err) {
       let myObjMsg = ["Business Expense Entry Failed to POST to the database"];
@@ -421,6 +424,156 @@ function updateBusinessExpense() {
         6000
       );
     });
+}
+
+function updateBusinessExpTableTotals() {
+  if (reOpenIncomeStatement) {
+    switch (myReportTotal.category) {
+      case 'Advertising':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Advertising).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.AdvertisingHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.AdvertisingPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Advertising + mainData.busExp.AdvertisingHST + mainData.busExp.AdvertisingPST).toFixed(2)))}`;
+        break;
+      case 'Dues':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Dues).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.DuesHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.DuesPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Dues + mainData.busExp.DuesHST + mainData.busExp.DuesPST).toFixed(2)))}`;
+        break;
+      case 'Meals':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Meals).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.MealsHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.MealsPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Meals + mainData.busExp.MealsHST + mainData.busExp.MealsPST).toFixed(2)))}`;
+        break;
+      case 'Office':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Office).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.OfficeHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.OfficePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Office + mainData.busExp.OfficeHST + mainData.busExp.OfficePST).toFixed(2)))}`;
+        break;
+      case 'Supplies':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Supplies).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.SuppliesHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.SuppliesPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Supplies + mainData.busExp.SuppliesHST + mainData.busExp.SuppliesPST).toFixed(2)))}`;
+        break;
+      case 'Cell':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Cell).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.CellHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.CellPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Cell + mainData.busExp.CellHST + mainData.busExp.CellPST).toFixed(2)))}`;
+        break;
+      case 'Other':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Other).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.OtherHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.OtherPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Other + mainData.busExp.OtherHST + mainData.busExp.OtherPST).toFixed(2)))}`;
+        break;
+      case 'Freight':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Freight).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.FreightHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.FreightPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Freight + mainData.busExp.FreightHST + mainData.busExp.FreightPST).toFixed(2)))}`;
+        break;
+      case 'Fuel':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Fuel).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.FuelHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.FuelPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Fuel + mainData.busExp.FuelHST + mainData.busExp.FuelPST).toFixed(2)))}`;
+        break;
+      case 'Insurance':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Insurance).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.InsuranceHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.InsurancePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Insurance + mainData.busExp.InsuranceHST + mainData.busExp.InsurancePST).toFixed(2)))}`;
+        break;
+      case 'Interest':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Interest).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.InterestHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.InterestPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Interest + mainData.busExp.InterestHST + mainData.busExp.InterestPST).toFixed(2)))}`;
+        break;
+      case 'Maintenance':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Maintenance).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.MaintenanceHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.MaintenancePST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Maintenance + mainData.busExp.MaintenanceHST + mainData.busExp.MaintenancePST).toFixed(2)))}`;
+        break;
+      case 'Admin':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Admin).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.AdminHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.AdminPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Admin + mainData.busExp.AdminHST + mainData.busExp.AdminPST).toFixed(2)))}`;
+        break;
+      case 'Legal':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Legal).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.LegalHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.LegalPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Legal + mainData.busExp.LegalHST + mainData.busExp.LegalPST).toFixed(2)))}`;
+        break;
+      case 'Property_Tax':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Property_Tax).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Property_TaxHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Property_TaxPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Property_Tax + mainData.busExp.Property_TaxHST + mainData.busExp.Property_TaxPST).toFixed(2)))}`;
+        break;
+      case 'Rent':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Rent).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.RentHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.RentPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Rent + mainData.busExp.RentHST + mainData.busExp.RentPST).toFixed(2)))}`;
+        break;
+      case 'Wages':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Wages).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.WagesHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.WagesPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Wages + mainData.busExp.WagesHST + mainData.busExp.WagesPST).toFixed(2)))}`;
+        break;
+      case 'Travel':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Travel).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.TravelHST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.TravelPST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Travel + mainData.busExp.TravelHST + mainData.busExp.TravelPST).toFixed(2)))}`;
+        break;
+      case 'Variable1':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable1).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable1HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable1PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Variable1 + mainData.busExp.Variable1HST + mainData.busExp.Variable1PST).toFixed(2)))}`;
+        break;
+      case 'Variable2':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable2).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable2HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable2PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Variable2 + mainData.busExp.Variable2HST + mainData.busExp.Variable2PST).toFixed(2)))}`;
+        break;
+      case 'Variable3':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable3).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable3HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable3PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Variable3 + mainData.busExp.Variable3HST + mainData.busExp.Variable3PST).toFixed(2)))}`;
+        break;
+      case 'Variable4':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable4).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable4HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable4PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Variable4 + mainData.busExp.Variable4HST + mainData.busExp.Variable4PST).toFixed(2)))}`;
+        break;
+      case 'Variable5':
+        document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable5).toFixed(2)))}`;
+        document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable5HST).toFixed(2)))}`;
+        document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.Variable5PST).toFixed(2)))}`;
+        document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.Variable5 + mainData.busExp.Variable5HST + mainData.busExp.Variable5PST).toFixed(2)))}`;
+        break;
+    }
+  } else {
+    document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.busExp.net).toFixed(2)))}`;
+    document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.hst).toFixed(2)))}`;
+    document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.busExp.pst).toFixed(2)))}`;
+    document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.busExp.pst + mainData.busExp.net + mainData.busExp.hst).toFixed(2)))}`;
+  }
 }
 
 function deleteBusinessExpense() {
@@ -452,7 +605,7 @@ function deleteBusinessExpense() {
       enctype: "multipart/form-data",
       data: tempData
     })
-      .done(function (data) {
+      .done(async function (data) {
         displayAlert(
           myDOMs.busExp.AlertContainer,
           "busExpAlert",
@@ -524,6 +677,10 @@ function deleteBusinessExpense() {
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateBusinessExpTableTotals();
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -541,7 +698,14 @@ function deleteBusinessExpense() {
   }
 }
 
-function getBusinessExpenses(vehicleNum) {
+function getBusinessExpenses(myFilter) {
+
+  if (!myFilter) {
+    myReportTotal.totalNet = mainData.busExp.net;
+    myReportTotal.totalHST = mainData.busExp.hst;
+    myReportTotal.totalPST = mainData.busExp.pst;
+  }
+
   let tempData;
 
   tempData = {
@@ -562,31 +726,41 @@ function getBusinessExpenses(vehicleNum) {
     enctype: "multipart/form-data"
   })
     .done(function (myExpenses) {
+      let tempTitle = 'Business Expenses';
+      curTableArray = myExpenses.carexpense;
+
+      if (myFilter) {
+        tempTitle = `Business Expenses (${myFilter})`;
+        curTableArray = curTableArray.filter((el, index) => {
+          return el.carExpCatSelect === myFilter;
+        });
+      }
+
       let tempPageCount;
-      if (myExpenses.carexpense.length > rowCountPerPageDefault * 24) {
+
+      if (curTableArray.length > rowCountPerPageDefault * 24) {
         if ((rowCountPerPageDefault = 10)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 25);
+          tempPageCount = Math.ceil(curTableArray.length / 25);
         } else if ((rowCountPerPageDefault = 25)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 50);
+          tempPageCount = Math.ceil(curTableArray.length / 50);
         } else if ((rowCountPerPageDefault = 50)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 100);
+          tempPageCount = Math.ceil(curTableArray.length / 100);
         } else if ((rowCountPerPageDefault = 100)) {
-          tempPageCount = Math.ceil(myExpenses.carexpense.length / 500);
+          tempPageCount = Math.ceil(curTableArray.length / 500);
         }
       } else {
         tempPageCount = Math.ceil(
-          myExpenses.carexpense.length / rowCountPerPageDefault
+          curTableArray.length / rowCountPerPageDefault
         );
       }
-      curTableArray = myExpenses.carexpense;
 
       buildVehicleExpenseTable(
         myDOMs.main.AlertContainer,
         "mainTableAlert",
         "closeBtnAlertMain",
         `You have ${
-        myExpenses.carexpense.length
-        } Business Expenses displayed on ${tempPageCount} pages.`,
+        curTableArray.length
+        } ${tempTitle} displayed on ${tempPageCount} pages.`,
         "TABLE CAR GREEN",
         0,
         0
@@ -693,7 +867,7 @@ $("#busExpBtn").click(function () {
       dataType: "json",
       data: mydata
     })
-      .done(function (data) {
+      .done(async function (data) {
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -713,6 +887,10 @@ $("#busExpBtn").click(function () {
         myDOMs.busExp.ReoccurYES.checked = false;
         myDOMs.busExp.ReoccurNO.checked = true;
         myDOMs.busExp.EntryDate.focus();
+
+        await getAllMainData();
+        fillMainDataFromArrays();
+        updateBusinessExpTableTotals();
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -821,7 +999,7 @@ $("#busExpBtn").click(function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(async function (data) {
           let myObjMsg = [""];
 
           displayAlert(
@@ -839,6 +1017,10 @@ $("#busExpBtn").click(function () {
           myDOMs.busExp.ReoccurNO.checked = true;
           removeBusImage();
           myDOMs.busExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateBusinessExpTableTotals();
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -887,7 +1069,7 @@ $("#busExpBtn").click(function () {
         data: mydata,
         enctype: "multipart/form-data"
       })
-        .done(function (data) {
+        .done(async function (data) {
           displayAlert(
             myDOMs.busExp.AlertContainer,
             "busExpAlert",
@@ -902,6 +1084,10 @@ $("#busExpBtn").click(function () {
           myDOMs.busExp.ReoccurYES.checked = false;
           myDOMs.busExp.ReoccurNO.checked = true;
           myDOMs.busExp.EntryDate.focus();
+
+          await getAllMainData();
+          fillMainDataFromArrays();
+          updateBusinessExpTableTotals();
         })
         .fail(function (err) {
           displayAlert(

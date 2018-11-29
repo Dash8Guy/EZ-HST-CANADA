@@ -30,7 +30,7 @@ const myDOMs = {
     BodyRevenue: document.getElementById('IncStatRevenue'),
     BodyBusExp: document.getElementById('IncStatBusExpenses'),
     BusBodyElement: {
-      Avdertising: document.getElementById('busAdvertisingLink'),
+      Advertising: document.getElementById('busAdvertisingLink'),
       Dues: document.getElementById('busDuesLink'),
       Meals: document.getElementById('busMealsLink'),
       Office: document.getElementById('busOfficeLink'),
@@ -53,7 +53,33 @@ const myDOMs = {
       Variable3: document.getElementById('busVariable3Link'),
       Variable4: document.getElementById('busVariable4Link'),
       Variable5: document.getElementById('busVariable5Link'),
-      CCA: document.getElementById('busCCALink')
+      CCA: document.getElementById('busCCALink'),
+      Total: document.getElementById('incStBusinessExpTotal'),
+      AdvertisingSpan: document.getElementById('busAdvertisingSpan'),
+      DuesSpan: document.getElementById('busDuesSpan'),
+      MealsSpan: document.getElementById('busMealsSpan'),
+      OfficeSpan: document.getElementById('busOfficeSpan'),
+      SuppliesSpan: document.getElementById('busSuppliesSpan'),
+      CellSpan: document.getElementById('busCellSpan'),
+      OtherSpan: document.getElementById('busOtherSpan'),
+      FreightSpan: document.getElementById('busFreightSpan'),
+      FuelSpan: document.getElementById('busFuelSpan'),
+      InsuranceSpan: document.getElementById('busInsuranceSpan'),
+      InterestSpan: document.getElementById('busInterestSpan'),
+      MaintenanceSpan: document.getElementById('busMaintenanceSpan'),
+      AdminSpan: document.getElementById('busAdminSpan'),
+      LegalSpan: document.getElementById('busLegalSpan'),
+      Property_TaxSpan: document.getElementById('busPropertyTaxSpan'),
+      RentSpan: document.getElementById('busRentSpan'),
+      WagesSpan: document.getElementById('busWagesSpan'),
+      TravelSpan: document.getElementById('busTravelSpan'),
+      Variable1Span: document.getElementById('busVariable1Span'),
+      Variable2Span: document.getElementById('busVariable2Span'),
+      Variable3Span: document.getElementById('busVariable3Span'),
+      Variable4Span: document.getElementById('busVariable4Span'),
+      Variable5Span: document.getElementById('busVariable5Span'),
+      CCASpan: document.getElementById('busCCASpan'),
+      TotalSpan: document.getElementById('busTotalExpensesSpan'),
     },
     HomeBodyElement: {
       Heat: document.getElementById('homeHeatLink'),
@@ -66,7 +92,150 @@ const myDOMs = {
       Water: document.getElementById('homeWaterLink'),
       Variable1: document.getElementById('homeVariable1Link'),
       Variable2: document.getElementById('homeVariable2Link'),
-      Variable3: document.getElementById('homeVariable3Link')
+      Variable3: document.getElementById('homeVariable3Link'),
+      PercentDisplay: document.getElementById('incStHomePercentDisplay'),
+      PercentButton: document.getElementById('incStHomePercentBtn'),
+      Variable3: document.getElementById('homeVariable3Link'),
+      Variable3: document.getElementById('homeVariable3Link'),
+      Variable3: document.getElementById('homeVariable3Link'),
+      Variable3: document.getElementById('homeVariable3Link'),
+      Total: document.getElementById('incStHomeExpTotal'),
+      HeatSpan: document.getElementById('homeHeatSpan'),
+      ElectricitySpan: document.getElementById('homeElectricitySpan'),
+      InsuranceSpan: document.getElementById('homeInsuranceSpan'),
+      MaintenanceSpan: document.getElementById('homeMaintenanceSpan'),
+      MortgageSpan: document.getElementById('homeMortgageSpan'),
+      PropertyTaxSpan: document.getElementById('homePropertyTaxSpan'),
+      OtherSpan: document.getElementById('homeOtherSpan'),
+      WaterSpan: document.getElementById('homeWaterSpan'),
+      Variable1Span: document.getElementById('homeVariable1Span'),
+      Variable2Span: document.getElementById('homeVariable2Span'),
+      Variable3Span: document.getElementById('homeVariable3Span'),
+      PercentDisplay: document.getElementById('incStHomePercentDisplay'),
+      PercentButton: document.getElementById('incStHomePercentBtn'),
+      TotalSpan: document.getElementById('homeTotalExpensesSpan'),
+    },
+    Vehicle1BodyElement: {
+      Fuel: document.getElementById('vehicle1FuelLink'),
+      LoanInterest: document.getElementById('vehicle1InterestLoanLink'),
+      Insurance: document.getElementById('vehicle1InsuranceLink'),
+      Maintenance: document.getElementById('vehicle1MaintenanceLink'),
+      Registration: document.getElementById('vehicle1RegistrationLink'),
+      Leasing: document.getElementById('vehicle1LeasingLink'),
+      Other: document.getElementById('vehicle1OtherLink'),
+      Parking: document.getElementById('vehicle1BusParkLink'),
+      SuppInsurance: document.getElementById('vehicle1SuppInsuranceLink'),
+      Variable1: document.getElementById('vehicle1Variable1Link'),
+      Variable2: document.getElementById('vehicle1Variable2Link'),
+      Variable3: document.getElementById('vehicle1Variable3Link'),
+      Total: document.getElementById('incStVehicle1ExpTotal'),
+      FuelSpan: document.getElementById('vehicle1FuelSpan'),
+      LoanInterestSpan: document.getElementById('vehicle1InterestLoanSpan'),
+      InsuranceSpan: document.getElementById('vehicle1InsuranceSpan'),
+      MaintenanceSpan: document.getElementById('vehicle1MaintenanceSpan'),
+      RegistrationSpan: document.getElementById('vehicle1RegistrationSpan'),
+      LeasingSpan: document.getElementById('vehicle1LeasingSpan'),
+      OtherSpan: document.getElementById('vehicle1OtherSpan'),
+      ParkingSpan: document.getElementById('vehicle1BusParkSpan'),
+      SuppInsuranceSpan: document.getElementById('vehicle1SuppInsuranceSpan'),
+      Variable1Span: document.getElementById('vehicle1Variable1Span'),
+      Variable2Span: document.getElementById('vehicle1Variable2Span'),
+      Variable3Span: document.getElementById('vehicle1Variable3Span'),
+      TotalSpan: document.getElementById('vehicle1TotalExpensesSpan'),
+      PercentDisplay: document.getElementById('incStVehicle1PercentDisplay'),
+      PercentButton: document.getElementById('incStVehicle1PercentBtn'),
+    },
+    Vehicle2BodyElement: {
+      Fuel: document.getElementById('vehicle2FuelLink'),
+      LoanInterest: document.getElementById('vehicle2InterestLoanLink'),
+      Insurance: document.getElementById('vehicle2InsuranceLink'),
+      Maintenance: document.getElementById('vehicle2MaintenanceLink'),
+      Registration: document.getElementById('vehicle2RegistrationLink'),
+      Leasing: document.getElementById('vehicle2LeasingLink'),
+      Other: document.getElementById('vehicle2OtherLink'),
+      Parking: document.getElementById('vehicle2BusParkLink'),
+      SuppInsurance: document.getElementById('vehicle2SuppInsuranceLink'),
+      Variable1: document.getElementById('vehicle2Variable1Link'),
+      Variable2: document.getElementById('vehicle2Variable2Link'),
+      Variable3: document.getElementById('vehicle2Variable3Link'),
+      Total: document.getElementById('incStVehicle2ExpTotal'),
+      FuelSpan: document.getElementById('vehicle2FuelSpan'),
+      LoanInterestSpan: document.getElementById('vehicle2InterestLoanSpan'),
+      InsuranceSpan: document.getElementById('vehicle2InsuranceSpan'),
+      MaintenanceSpan: document.getElementById('vehicle2MaintenanceSpan'),
+      RegistrationSpan: document.getElementById('vehicle2RegistrationSpan'),
+      LeasingSpan: document.getElementById('vehicle2LeasingSpan'),
+      OtherSpan: document.getElementById('vehicle2OtherSpan'),
+      ParkingSpan: document.getElementById('vehicle2BusParkSpan'),
+      SuppInsuranceSpan: document.getElementById('vehicle2SuppInsuranceSpan'),
+      Variable1Span: document.getElementById('vehicle2Variable1Span'),
+      Variable2Span: document.getElementById('vehicle2Variable2Span'),
+      Variable3Span: document.getElementById('vehicle2Variable3Span'),
+      TotalSpan: document.getElementById('vehicle2TotalExpensesSpan'),
+      PercentDisplay: document.getElementById('incStVehicle2PercentDisplay'),
+      PercentButton: document.getElementById('incStVehicle2PercentBtn'),
+    },
+    RentalBodyElement: {
+      Advertising: document.getElementById('rentalAdvertisingLink'),
+      Insurance: document.getElementById('rentalInsuranceLink'),
+      Interest: document.getElementById('rentalInterestLink'),
+      Maintenance: document.getElementById('rentalMaintenanceLink'),
+      Admin: document.getElementById('rentalAdminLink'),
+      MotorVehicle: document.getElementById('rentalMotorLink'),
+      Office: document.getElementById('rentalOfficeLink'),
+      Legal: document.getElementById('rentalLegalLink'),
+      PropertyTax: document.getElementById('rentalPropertyTaxLink'),
+      Wages: document.getElementById('rentalWagesLink'),
+      Travel: document.getElementById('rentalTravelLink'),
+      Utilities: document.getElementById('rentalUtilitiesLink'),
+      Other: document.getElementById('rentalOtherLink'),
+      Variable1: document.getElementById('rentalVariable1Link'),
+      Variable2: document.getElementById('rentalVariable2Link'),
+      Total: document.getElementById('incStRentalExpTotal'),
+      AdvertisingSpan: document.getElementById('rentalAdvertisingSpan'),
+      InsuranceSpan: document.getElementById('rentalInsuranceSpan'),
+      InterestSpan: document.getElementById('rentalInterestSpan'),
+      MaintenanceSpan: document.getElementById('rentalMaintenanceSpan'),
+      AdminSpan: document.getElementById('rentalAdminSpan'),
+      MotorVehicleSpan: document.getElementById('rentalMotorSpan'),
+      OfficeSpan: document.getElementById('rentalOfficeSpan'),
+      LegalSpan: document.getElementById('rentalLegalSpan'),
+      PropertyTaxSpan: document.getElementById('rentalPropertyTaxSpan'),
+      WagesSpan: document.getElementById('rentalWagesSpan'),
+      TravelSpan: document.getElementById('rentalTravelSpan'),
+      UtilitiesSpan: document.getElementById('rentalUtilitiesSpan'),
+      OtherSpan: document.getElementById('rentalOtherSpan'),
+      Variable1Span: document.getElementById('rentalVariable1Span'),
+      Variable2Span: document.getElementById('rentalVariable2Span'),
+      TotalSpan: document.getElementById('rentalTotalExpensesSpan'),
+    },
+    OtherCostsBodyElement: {
+      Goods: document.getElementById('otherGoodsLink'),
+      Subcontracts: document.getElementById('otherSubcontractsLink'),
+      Direct_Wage: document.getElementById('otherDirectWageCostLink'),
+      Other_Costs: document.getElementById('otherOtherCostsLink'),
+      Variable1: document.getElementById('otherVariable1Link'),
+      Variable2: document.getElementById('otherVariable2Link'),
+      Total: document.getElementById('incStOtherCostsExpTotal'),
+      GoodsSpan: document.getElementById('otherGoodsSpan'),
+      SubcontractsSpan: document.getElementById('otherSubcontractsSpan'),
+      Direct_WageSpan: document.getElementById('otherDirectWageCostSpan'),
+      Other_CostsSpan: document.getElementById('otherOtherCostsSpan'),
+      Variable1Span: document.getElementById('otherVariable1Span'),
+      Variable2Span: document.getElementById('otherVariable2Span'),
+      TotalSpan: document.getElementById('otherCostsTotalExpensesSpan')
+    },
+    RevenueBodyElement: {
+      BusinessRevenueSpan: document.getElementById('incomeBusinessSpan'),
+      RentalRevenueSpan: document.getElementById('incomeRentalSpan'),
+      BusinessRevenue: document.getElementById('incomeBusinessLink'),
+      RentalRevenue: document.getElementById('incomeRentalLink'),
+      GrandTotalRevenueSpan: document.getElementById('incStGdTtlRevenueSpan'),
+    },
+    bottomIncomeStatementTotals: {
+      btmTotalRevenue: document.getElementById('incStGrTtlRevenueSpan'),
+      btmTotalExpenses: document.getElementById('incStGrTtlExpensesSpan'),
+      btmNetIncome: document.getElementById('incStGrTtlNetIncomeSpan'),
     },
     BodyHomeExp: document.getElementById('IncStatHomeExpenses'),
     BodyVehicleExp1: document.getElementById('IncStatVehicle1Expenses'),
@@ -115,6 +284,7 @@ const myDOMs = {
     SelectPeriod: document.getElementById('timePeriodSelect'),
     NetRevenue: document.getElementById('netRevDisplay'),
     NetExpense: document.getElementById('netExpDisplay'),
+    NetIncome: document.getElementById('netIncomeDisplay'),
     AccountBalance: document.getElementById('acctBalance'),
     LockDate: document.getElementById('lockDate'),
     StartDate: document.getElementById('startDatePage'),
@@ -790,7 +960,7 @@ function afterLogout() {
   loggedIn = "";
 }
 
-function afterLogin(userName) {
+async function afterLogin(userName) {
   loggedIn = userName;
   var isDisabledLogin = $("#navLogin").hasClass("disabled");
   if (!isDisabledLogin) {
@@ -810,13 +980,16 @@ function afterLogin(userName) {
   }
 
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
-  populateVehicleVendors();
-  populateBusinessVendors();
-  populateHomeVendors();
-  populateOtherVendors();
-  populateRentalVendors();
-  populateIncomeVendors();
-  getMiscData();
+  await populateVehicleVendors();
+  await populateBusinessVendors();
+  await populateHomeVendors();
+  await populateOtherVendors();
+  await populateRentalVendors();
+  await populateIncomeVendors();
+  await getMiscData();
+
+  await getAllMainData();
+  fillMainDataFromArrays();
 }
 
 function getUserMe() {
@@ -1030,6 +1203,10 @@ function hideTableAlert() {
   emptyReportArrays();
   removeTblNavAlertChildNodes();
   removeVlogTblNavAlertChildNodes();
+  if (reOpenIncomeStatement) {
+    reOpenIncomeStatement = false;
+    displayIncomeStatementModal();
+  }
 }
 
 function removeVlogTblNavAlertChildNodes() {

@@ -277,93 +277,146 @@ function buildVehicleExpenseTable(
   } else {
     arrTablePage1 = curTableArray;
   }
-  arrTablePage1.forEach(function (el, index) {
+  for (i = 0; i < arrTablePage1.length; i++) {
     // creates a table row
     let row = document.createElement("tr");
-    row.setAttribute("id", `row${index}`);
+    row.setAttribute("id", `row${i}`);
 
     let cell = document.createElement("td");
     let alink = document.createElement("a");
-    let cellTxt = document.createTextNode(index + 1);
+    let cellTxt = document.createTextNode(i + 1);
     alink.appendChild(cellTxt);
     alink.setAttribute("href", "#");
     alink.setAttribute("data-toggle", "tooltip");
     alink.setAttribute("title", "Click to View/Edit this expense");
     alink.setAttribute("onclick", "getExpenseToEdit(this);");
-    alink.setAttribute("id", `cellNumber-${index}`);
+    alink.setAttribute("id", `cellNumber-${i}`);
     cell.appendChild(alink);
     cell.setAttribute("class", "text-center");
-    //cell.setAttribute("id", `cellNumber${index}`);
+    //cell.setAttribute("id", `cellNumber${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    myDate = new Date(el.carDate);
+    myDate = new Date(arrTablePage1[i].carDate);
     tempDate = myDate.toLocaleDateString();
     cellTxt = document.createTextNode(tempDate);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-center");
-    cell.setAttribute("id", `cellDate${index}`);
+    cell.setAttribute("id", `cellDate${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(`$${el.carnetAmt.toFixed(2)}`);
+    cellTxt = document.createTextNode(`$${arrTablePage1[i].carnetAmt.toFixed(2)}`);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-right");
-    cell.setAttribute("id", `cellNetAmt${index}`);
+    cell.setAttribute("id", `cellNetAmt${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(`$${el.carhstAmt.toFixed(2)}`);
+    cellTxt = document.createTextNode(`$${arrTablePage1[i].carhstAmt.toFixed(2)}`);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-right");
-    cell.setAttribute("id", `cellHstAmt${index}`);
+    cell.setAttribute("id", `cellHstAmt${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(`$${el.carpstAmt.toFixed(2)}`);
+    cellTxt = document.createTextNode(`$${arrTablePage1[i].carpstAmt.toFixed(2)}`);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-right");
-    cell.setAttribute("id", `cellPstAmt${index}`);
+    cell.setAttribute("id", `cellPstAmt${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(`$${el.carTotalAmt.toFixed(2)}`);
+    cellTxt = document.createTextNode(`$${arrTablePage1[i].carTotalAmt.toFixed(2)}`);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-right");
-    cell.setAttribute("id", `cellTotalAmt${index}`);
+    cell.setAttribute("id", `cellTotalAmt${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(el.carDescription);
+    cellTxt = document.createTextNode(arrTablePage1[i].carDescription);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-center");
-    cell.setAttribute("id", `cellDescription${index}`);
+    cell.setAttribute("id", `cellDescription${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(el.vendorSelect);
+    cellTxt = document.createTextNode(arrTablePage1[i].vendorSelect);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-center");
-    cell.setAttribute("id", `cellVendor${index}`);
+    cell.setAttribute("id", `cellVendor${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(el.carExpCatSelect);
+    cellTxt = document.createTextNode(arrTablePage1[i].carExpCatSelect);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-sm-center");
-    cell.setAttribute("id", `cellCategory${index}`);
+    cell.setAttribute("id", `cellCategory${i}`);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellTxt = document.createTextNode(el.receiptPath);
+    cellTxt = document.createTextNode(arrTablePage1[i].receiptPath);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-sm-center");
-    cell.setAttribute("id", `cellReceipt${index}`);
+    cell.setAttribute("id", `cellReceipt${i}`);
     row.appendChild(cell);
 
     // add the row to the end of the table body
     tblBody.appendChild(row);
-  });
+
+  };
+
+  addTotalsRow();
+  function addTotalsRow() {
+    let row = document.createElement("tr");
+    row.setAttribute("id", `row${rowCountPerPage + 1}`);
+
+    let cell = document.createElement("td");
+    let cellTxt = document.createTextNode('');
+
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-center");
+    //cell.setAttribute("id", `cellNumber${i}`);
+    row.appendChild(cell);
+
+    cell = document.createElement("td");
+    cellTxt = document.createTextNode('Totals:');
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-right font-weight-bold");
+    cell.setAttribute("id", `cellTotals`);
+    row.appendChild(cell);
+
+    cell = document.createElement("td");
+    cellTxt = document.createTextNode(`$${formatNumber(Number(myReportTotal.totalNet).toFixed(2))}`);
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-right font-weight-bold");
+    cell.setAttribute("id", `cellNetTotal`);
+    row.appendChild(cell);
+
+    cell = document.createElement("td");
+    cellTxt = document.createTextNode(`$${formatNumber(Number(myReportTotal.totalHST).toFixed(2))}`);
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-right font-weight-bold");
+    cell.setAttribute("id", `cellHstTotal`);
+    row.appendChild(cell);
+
+    cell = document.createElement("td");
+    cellTxt = document.createTextNode(`$${formatNumber(Number(myReportTotal.totalPST).toFixed(2))}`);
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-right font-weight-bold");
+    cell.setAttribute("id", `cellPstTotal`);
+    row.appendChild(cell);
+
+    cell = document.createElement("td");
+    cellTxt = document.createTextNode(`$${(formatNumber(Number(myReportTotal.totalNet + myReportTotal.totalHST + myReportTotal.totalPST).toFixed(2)))}`);
+    cell.appendChild(cellTxt);
+    cell.setAttribute("class", "text-right font-weight-bold");
+    cell.setAttribute("id", `cellGrandTotalAmt`);
+    row.appendChild(cell);
+
+    tblBody.appendChild(row);
+  }
+
 
   // put the <tbody> in the <table>
   tbl.appendChild(tblHeader);
