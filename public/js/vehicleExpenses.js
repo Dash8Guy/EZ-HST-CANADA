@@ -1008,6 +1008,7 @@ function getVehicleExpenses(vehicleNum, myFilter) {
       curTableArray = myExpenses.carexpense;
 
       if (myFilter) {
+        myReportTotal.categoryFull = myFilter;
         if (vehicleNum === 1) {
           tempTitle = `Vehicle-1 Expenses (${myFilter})`;
         } else if (vehicleNum === 2) {

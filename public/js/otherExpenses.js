@@ -423,6 +423,7 @@ function updateOtherExpense() {
 }
 
 function updateOtherCostsTableTotals() {
+  if (!TableOpen) return;
   if (reOpenIncomeStatement) {
     switch (myReportTotal.category) {
       case 'Goods':
@@ -562,10 +563,18 @@ function deleteOtherExpense() {
           addPagination();
           myTableAlert.insertBefore(nav, myTableAlert.childNodes[0]);
         }
-
-        let myUpdatedText = `You have ${
-          curTableArray.length
-          } Other Expenses displayed on ${tempPageCount} pages.`;
+        let tempTitle;
+        let myUpdatedText;
+        if (reOpenIncomeStatement) {
+          tempTitle = myReportTotal.categoryFull;
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Other Costs(${tempTitle}) expenses displayed on ${tempPageCount} pages.`;
+        } else {
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Other Costs Expenses displayed on ${tempPageCount} pages.`;
+        }
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
@@ -621,7 +630,8 @@ function getOtherExpenses(myFilter) {
       curTableArray = myExpenses.carexpense;
 
       if (myFilter) {
-        tempTitle = `Other Costs Expenses (${myFilter})`;
+        myReportTotal.categoryFull = myFilter;
+        tempTitle = `Other Costs(${myFilter}) Expenses`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;
         });

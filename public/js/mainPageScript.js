@@ -88,8 +88,14 @@ myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
    endDate = new Date(myDOMs.main_page.EndDate.value);
    startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
    endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
-
+   updateMainDataAfterTimePeriodChange();
 });
+
+async function updateMainDataAfterTimePeriodChange() {
+   await getAllMainData();
+   fillMainDataFromArrays();
+   updateMainPageDisplayAmounts();
+};
 
 myDOMs.main_page.StartDate.addEventListener('change', function (e) {
    startDate = new Date(myDOMs.main_page.StartDate.value);

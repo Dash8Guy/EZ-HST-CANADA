@@ -651,6 +651,7 @@ function getHomeExpenses(myFilter) {
       curTableArray = myExpenses.carexpense;
 
       if (myFilter) {
+        myReportTotal.categoryFull = myFilter;
         tempTitle = `Home Expenses (${myFilter})`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;

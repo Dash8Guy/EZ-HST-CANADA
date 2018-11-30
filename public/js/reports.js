@@ -379,9 +379,11 @@ let myReportTotal = {
   totalNet: 0,
   totalHST: 0,
   totalPST: 0,
-  categoryNet: ''
+  category: '',
+  categoryFull: ''
 }
-
+//This Variable is set to true when Table is opened and false when close and is used to stop the UpdateTableTotals from running when adding expenses or income.
+let TableOpen = false;
 
 //This Boolean is set to true when opening report table from Income Statement so that after closing the Report Table, the Income Statement opens.
 let reOpenIncomeStatement = false;

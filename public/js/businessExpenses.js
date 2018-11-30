@@ -730,6 +730,7 @@ function getBusinessExpenses(myFilter) {
       curTableArray = myExpenses.carexpense;
 
       if (myFilter) {
+        myReportTotal.categoryFull = myFilter;
         tempTitle = `Business Expenses (${myFilter})`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;

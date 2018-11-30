@@ -1203,6 +1203,7 @@ function hideTableAlert() {
   emptyReportArrays();
   removeTblNavAlertChildNodes();
   removeVlogTblNavAlertChildNodes();
+  TableOpen = false;
   if (reOpenIncomeStatement) {
     reOpenIncomeStatement = false;
     displayIncomeStatementModal();

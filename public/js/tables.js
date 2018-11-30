@@ -485,6 +485,7 @@ function buildVehicleExpenseTable(
   myDOMs.main.AlertContainer.appendChild(myTableAlert);
 
   $(`#${curAlertID}`).show("fade");
+  TableOpen = true;
 
   if (myPage > 0) {
     moveToOriginalPage(myPage);
