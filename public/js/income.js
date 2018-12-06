@@ -426,7 +426,7 @@ function updateIncome(source) {
     processData: false,
     contentType: false
   })
-    .done(function (data) {
+    .done(async function (data) {
       let myObjMsg = [""];
 
       displayAlert(
@@ -499,8 +499,9 @@ function updateIncome(source) {
       myDOMs.income.ExpID.value = 'SAVED';
       setIncomeStatusColor();
 
-      getAllMainData();
+      await getAllMainData(`${source} Income`);
       fillMainDataFromArrays();
+      updateHomeExpTableTotals(source);
     })
     .fail(function (err) {
       let myObjMsg = ["Revenue Entry Failed to POST to the database"];
@@ -518,8 +519,13 @@ function updateIncome(source) {
     });
 }
 
-function deleteIncomeExpense(source) {
-
+function deleteIncomeExpense() {
+  let source = '';
+  if (myDOMs.income.Selector.value === "Business") {
+    source = 'Business';
+  } else if (myDOMs.income.Selector.value === "Rental") {
+    source = 'Rental'
+  }
   if (myDOMs.income.ExpID.value === 'NEW') {
     displayAlert(
       myDOMs.deleteIncomeExpense.AlertContainer,
@@ -548,7 +554,7 @@ function deleteIncomeExpense(source) {
       enctype: "multipart/form-data",
       data: tempData
     })
-      .done(function (data) {
+      .done(async function (data) {
         displayAlert(
           myDOMs.income.AlertContainer,
           "incomeExpAlert",
@@ -627,8 +633,9 @@ function deleteIncomeExpense(source) {
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
 
-        getAllMainData();
+        await getAllMainData(`${source} Income`);
         fillMainDataFromArrays();
+        updateHomeExpTableTotals(source);
       })
       .fail(function (e) {
         let myMsg = [e.responseText];
@@ -647,6 +654,21 @@ function deleteIncomeExpense(source) {
 }
 
 function getIncomeExpenses(source) {
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
+  if (source === 'Rental') {
+    myReportTotal.totalNet = mainData.RevenueRental.net;
+    myReportTotal.totalHST = mainData.RevenueRental.hst;
+    myReportTotal.totalPST = mainData.RevenueRental.pst;
+  } else if (source === 'Business') {
+    myReportTotal.totalNet = mainData.RevenueBus.net;
+    myReportTotal.totalHST = mainData.RevenueBus.hst;
+    myReportTotal.totalPST = mainData.RevenueBus.pst;
+  }
   let tempData;
 
   tempData = {
@@ -711,6 +733,21 @@ function getIncomeExpenses(source) {
         alert(JSON.stringify(e.statusText, undefined, 2));
       }
     });
+}
+
+function updateHomeExpTableTotals(source) {
+  if (!TableOpen) return;
+  if (source === 'Business') {
+    document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.RevenueBus.net).toFixed(2)))}`;
+    document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.RevenueBus.hst).toFixed(2)))}`;
+    document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.RevenueBus.pst).toFixed(2)))}`;
+    document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.RevenueBus.pst + mainData.RevenueBus.net + mainData.RevenueBus.hst).toFixed(2)))}`;
+  } else {
+    document.getElementById('cellNetTotal').innerText = `$${(formatNumber(Number(mainData.RevenueRental.net).toFixed(2)))}`;
+    document.getElementById('cellHstTotal').innerText = `$${(formatNumber(Number(mainData.RevenueRental.hst).toFixed(2)))}`;
+    document.getElementById('cellPstTotal').innerText = `$${(formatNumber(Number(mainData.RevenueRental.pst).toFixed(2)))}`;
+    document.getElementById('cellGrandTotalAmt').innerText = `$${(formatNumber(Number(mainData.RevenueRental.pst + mainData.RevenueRental.net + mainData.RevenueRental.hst).toFixed(2)))}`;
+  }
 }
 
 
@@ -820,7 +857,7 @@ $("#incomeExpBtn").click(function () {
       dataType: "json",
       data: mydata
     })
-      .done(function (data) {
+      .done(async function (data) {
         let myDisplay = [`The following are all the new Revenue Entry ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -840,8 +877,9 @@ $("#incomeExpBtn").click(function () {
         myDOMs.income.ReoccurNO.checked = true;
         myDOMs.income.EntryDate.focus();
 
-        getAllMainData();
+        await getAllMainData(`${source} Income`);
         fillMainDataFromArrays();
+        updateHomeExpTableTotals(source);
       })
       .fail(function (e) {
         let myObjMsg = [
@@ -951,7 +989,7 @@ $("#incomeExpBtn").click(function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(async function (data) {
           let myObjMsg = [""];
 
           displayAlert(
@@ -970,8 +1008,9 @@ $("#incomeExpBtn").click(function () {
           removeIncomeImage();
           myDOMs.income.EntryDate.focus();
 
-          getAllMainData();
+          await getAllMainData(`${source} Income`);
           fillMainDataFromArrays();
+          updateHomeExpTableTotals(source);
         })
         .fail(function (err) {
           let myObjMsg = [
@@ -1021,7 +1060,7 @@ $("#incomeExpBtn").click(function () {
         data: mydata,
         enctype: "multipart/form-data"
       })
-        .done(function (data) {
+        .done(async function (data) {
           displayAlert(
             myDOMs.income.AlertContainer,
             "incomeExpAlert",
@@ -1037,8 +1076,9 @@ $("#incomeExpBtn").click(function () {
           myDOMs.income.ReoccurNO.checked = true;
           myDOMs.income.EntryDate.focus();
 
-          getAllMainData();
+          await getAllMainData(`${source} Income`);
           fillMainDataFromArrays();
+          updateHomeExpTableTotals(source);
         })
         .fail(function (err) {
           displayAlert(

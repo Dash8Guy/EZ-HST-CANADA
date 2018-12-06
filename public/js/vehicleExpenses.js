@@ -634,7 +634,12 @@ function updateVehicleExpense() {
       myDOMs.carExp.ExpID.value = 'SAVED';
       setVehicleStatusColor();
 
-      await getAllMainData();
+      if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+        await getAllMainData('Vehicle-1');
+      } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+        await getAllMainData('Vehicle-2');
+      }
+
       fillMainDataFromArrays();
       if (myDOMs.carExp.Selector.value === "Vehicle 1") {
         updateTableTotals('1');
@@ -659,6 +664,7 @@ function updateVehicleExpense() {
 };
 
 function updateTableTotals(carNum) {
+  if (!TableOpen) return;
   if (reOpenIncomeStatement) {
     if (carNum === '1') {
       switch (myReportTotal.category) {
@@ -924,19 +930,41 @@ function deleteVehicleExpense() {
           addPagination();
           myTableAlert.insertBefore(nav, myTableAlert.childNodes[0]);
         }
-        let myTempVehicleText;
-        if (carNumValue === "1") {
-          myTempVehicleText = "Vehicle-1";
-        } else if (carNumValue === "2") {
-          myTempVehicleText = "Vehicle-2";
+
+
+        let tempTitle;
+        let myUpdatedText;
+        if (reOpenIncomeStatement) {
+          tempTitle = myReportTotal.categoryFull;
+          if (carNumValue === "1") {
+            myUpdatedText = `You have ${
+              curTableArray.length
+              } Vehicle-1(${tempTitle}) Expenses displayed on ${tempPageCount} pages.`;
+          } else if (carNumValue === "2") {
+            myUpdatedText = `You have ${
+              curTableArray.length
+              } Vehicle-2(${tempTitle}) Expenses displayed on ${tempPageCount} pages.`;
+          }
+        } else {
+          if (carNumValue === "1") {
+            myUpdatedText = `You have ${
+              curTableArray.length
+              } Vehicle-1 Expenses displayed on ${tempPageCount} pages.`;
+          } else if (carNumValue === "2") {
+            myUpdatedText = `You have ${
+              curTableArray.length
+              } Vehicle-2 Expenses displayed on ${tempPageCount} pages.`;
+          }
         }
-        let myUpdatedText = `You have ${
-          curTableArray.length
-          } ${myTempVehicleText} Expenses displayed on ${tempPageCount} pages.`;
+
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
 
-        await getAllMainData();
+        if (carNumValue === "1") {
+          await getAllMainData('Vehicle-1');
+        } else if (carNumValue === "2") {
+          await getAllMainData('Vehicle-2');
+        }
         fillMainDataFromArrays();
         if (carNumValue === "1") {
           updateTableTotals('1');
@@ -960,6 +988,12 @@ function deleteVehicleExpense() {
   }
 }
 function getVehicleExpenses(vehicleNum, myFilter) {
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
   if (!myFilter) {
     if (vehicleNum === 1) {
       myReportTotal.totalNet = mainData.vehicle1Exp.net;
@@ -1010,9 +1044,9 @@ function getVehicleExpenses(vehicleNum, myFilter) {
       if (myFilter) {
         myReportTotal.categoryFull = myFilter;
         if (vehicleNum === 1) {
-          tempTitle = `Vehicle-1 Expenses (${myFilter})`;
+          tempTitle = `Vehicle-1(${myFilter}) Expenses`;
         } else if (vehicleNum === 2) {
-          tempTitle = `Vehicle-2 Expenses (${myFilter})`;
+          tempTitle = `Vehicle-2(${myFilter}) Expenses`;
         }
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;
@@ -1173,7 +1207,9 @@ $("#carExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
-        //console.log(JSON.stringify(data, undefined, 2));
+        if (TableOpen) {
+          alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+        }
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -1192,7 +1228,11 @@ $("#carExpBtn").click(function () {
         myDOMs.carExp.EntryForm.reset();
         myDOMs.carExp.EntryDate.focus();
 
-        await getAllMainData();
+        if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+          await getAllMainData('Vehicle-1');
+        } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+          await getAllMainData('Vehicle-2');
+        }
         fillMainDataFromArrays();
         if (myDOMs.carExp.Selector.value === "Vehicle 1") {
           updateTableTotals('1');
@@ -1312,6 +1352,9 @@ $("#carExpBtn").click(function () {
         contentType: false
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           let myObjMsg = [""];
 
           displayAlert(
@@ -1328,7 +1371,11 @@ $("#carExpBtn").click(function () {
           removeImage();
           myDOMs.carExp.EntryDate.focus();
 
-          await getAllMainData();
+          if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+            await getAllMainData('Vehicle-1');
+          } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+            await getAllMainData('Vehicle-2');
+          }
           fillMainDataFromArrays();
           if (myDOMs.carExp.Selector.value === "Vehicle 1") {
             updateTableTotals('1');
@@ -1399,6 +1446,9 @@ $("#carExpBtn").click(function () {
         enctype: "multipart/form-data"
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           displayAlert(
             myDOMs.carExp.AlertContainer,
             "carExpAlert",
@@ -1412,7 +1462,11 @@ $("#carExpBtn").click(function () {
           myDOMs.carExp.EntryForm.reset();
           myDOMs.carExp.EntryDate.focus();
 
-          await getAllMainData();
+          if (myDOMs.carExp.Selector.value === "Vehicle 1") {
+            await getAllMainData('Vehicle-1');
+          } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
+            await getAllMainData('Vehicle-2');
+          }
           fillMainDataFromArrays();
           if (myDOMs.carExp.Selector.value === "Vehicle 1") {
             updateTableTotals('1');

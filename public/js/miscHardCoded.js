@@ -461,7 +461,7 @@ function updateMiscData() {
       })
          .done(function (data) {
             resolve(data)
-            //alert(data);
+            return ('completed');
          })
          .fail(function (e) {
             reject(`Data Could Not Be saved - Error: ${JSON.stringify(e, undefined, 2)}`)

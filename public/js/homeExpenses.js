@@ -400,7 +400,7 @@ function updateHomeExpense() {
       myDOMs.homeExp.ExpID.value = 'SAVED';
       setHomeStatusColor();
 
-      await getAllMainData();
+      await getAllMainData('Home');
       fillMainDataFromArrays();
       updateHomeExpTableTotals();
     })
@@ -421,6 +421,7 @@ function updateHomeExpense() {
 }
 
 function updateHomeExpTableTotals() {
+  if (!TableOpen) return;
   if (reOpenIncomeStatement) {
     switch (myReportTotal.category) {
       case 'Heat':
@@ -593,14 +594,24 @@ function deleteHomeExpense() {
           myTableAlert.insertBefore(nav, myTableAlert.childNodes[0]);
         }
 
-        let myUpdatedText = `You have ${
-          curTableArray.length
-          } Home Expenses displayed on ${tempPageCount} pages.`;
+        let tempTitle;
+        let myUpdatedText;
+        if (reOpenIncomeStatement) {
+          tempTitle = myReportTotal.categoryFull;
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Home(${tempTitle}) Expenses displayed on ${tempPageCount} pages.`;
+        } else {
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Home Expenses displayed on ${tempPageCount} pages.`;
+        }
+
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
 
-        await getAllMainData();
+        await getAllMainData('Home');
         fillMainDataFromArrays();
         updateHomeExpTableTotals();
       })
@@ -621,6 +632,12 @@ function deleteHomeExpense() {
 }
 
 function getHomeExpenses(myFilter) {
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
   if (!myFilter) {
     myReportTotal.totalNet = mainData.homeExp.net;
     myReportTotal.totalHST = mainData.homeExp.hst;
@@ -652,7 +669,7 @@ function getHomeExpenses(myFilter) {
 
       if (myFilter) {
         myReportTotal.categoryFull = myFilter;
-        tempTitle = `Home Expenses (${myFilter})`;
+        tempTitle = `Home(${myFilter}) Expenses`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;
         });
@@ -790,6 +807,9 @@ $("#homeExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
+        if (TableOpen) {
+          alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+        }
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -810,7 +830,7 @@ $("#homeExpBtn").click(function () {
         myDOMs.homeExp.ReoccurNO.checked = true;
         myDOMs.homeExp.EntryDate.focus();
 
-        await getAllMainData();
+        await getAllMainData('Home');
         fillMainDataFromArrays();
         updateHomeExpTableTotals();
       })
@@ -922,6 +942,9 @@ $("#homeExpBtn").click(function () {
         contentType: false
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           let myObjMsg = [""];
 
           displayAlert(
@@ -940,7 +963,7 @@ $("#homeExpBtn").click(function () {
           removeHomeImage();
           myDOMs.homeExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Home');
           fillMainDataFromArrays();
           updateHomeExpTableTotals();
         })
@@ -992,6 +1015,9 @@ $("#homeExpBtn").click(function () {
         enctype: "multipart/form-data"
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           displayAlert(
             myDOMs.homeExp.AlertContainer,
             "homeExpAlert",
@@ -1007,7 +1033,7 @@ $("#homeExpBtn").click(function () {
           myDOMs.homeExp.ReoccurNO.checked = true;
           myDOMs.homeExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Home');
           fillMainDataFromArrays();
           updateHomeExpTableTotals();
         })
@@ -1327,3 +1353,26 @@ function displayFullSizeHomeImage() {
   container.setAttribute("src", img.src);
 
 }
+
+let imageAngle = 0;
+
+function rotatereceiptImage() {
+  let img = document.getElementById('DivFullImage');
+  switch (imageAngle) {
+    case 0:
+      img.setAttribute('style', 'transform:rotate(90deg)');
+      imageAngle = 90;
+      break;
+    case 90:
+      img.setAttribute('style', 'transform:rotate(180deg)');
+      imageAngle = 180;
+      break;
+    case 180:
+      img.setAttribute('style', 'transform:rotate(270deg)');
+      imageAngle = 270;
+      break;
+    case 270:
+      img.setAttribute('style', 'transform:rotate(0deg)');
+      imageAngle = 0;
+  }
+};

@@ -9,9 +9,30 @@ let vendorCar = false;
 let loggedIn;
 
 
+function closeFullViewImage() {
+  $('#ImageViewModal').modal('hide');
+  let img = document.getElementById('DivFullImage');
+  img.setAttribute('style', 'transform:rotate(0deg)');
+  imageAngle = 0;
+};
 
 
 const myDOMs = {
+  homePercentModal: {
+    hrsPerDay: document.getElementById('hoursPerDay'),
+    daysPerWeek: document.getElementById('daysPerWeek'),
+    businessArea: document.getElementById('businessArea'),
+    homeArea: document.getElementById('houseArea'),
+    BusinessHomePercent: document.getElementById('businessPercent'),
+    PeriodSelect: document.getElementById('timePeriodHomePercentSelect'),
+    applyPercentBtn: document.getElementById('btnApplyPercent'),
+    resetBtn: document.getElementById('btnPercentCalcReset')
+  },
+  settingsModal: {
+    TooltipBtnEnabled: document.getElementById('tooltipOn'),
+    TooltipBtnDisabled: document.getElementById('tooltipOFF'),
+    ExpensePerPageSelect: document.getElementById('countPerPageSelect'),
+  },
   incomeStatement: {
     TabRevenue: document.getElementById('revenueTab'),
     TabBusExp: document.getElementById('busExpTab'),
@@ -95,10 +116,6 @@ const myDOMs = {
       Variable3: document.getElementById('homeVariable3Link'),
       PercentDisplay: document.getElementById('incStHomePercentDisplay'),
       PercentButton: document.getElementById('incStHomePercentBtn'),
-      Variable3: document.getElementById('homeVariable3Link'),
-      Variable3: document.getElementById('homeVariable3Link'),
-      Variable3: document.getElementById('homeVariable3Link'),
-      Variable3: document.getElementById('homeVariable3Link'),
       Total: document.getElementById('incStHomeExpTotal'),
       HeatSpan: document.getElementById('homeHeatSpan'),
       ElectricitySpan: document.getElementById('homeElectricitySpan'),
@@ -143,6 +160,7 @@ const myDOMs = {
       Variable3Span: document.getElementById('vehicle1Variable3Span'),
       TotalSpan: document.getElementById('vehicle1TotalExpensesSpan'),
       PercentDisplay: document.getElementById('incStVehicle1PercentDisplay'),
+      PercentTextDisplay: document.getElementById('incStVehicle1PercentText'),
       PercentButton: document.getElementById('incStVehicle1PercentBtn'),
     },
     Vehicle2BodyElement: {
@@ -173,6 +191,7 @@ const myDOMs = {
       Variable3Span: document.getElementById('vehicle2Variable3Span'),
       TotalSpan: document.getElementById('vehicle2TotalExpensesSpan'),
       PercentDisplay: document.getElementById('incStVehicle2PercentDisplay'),
+      PercentTextDisplay: document.getElementById('incStVehicle2PercentText'),
       PercentButton: document.getElementById('incStVehicle2PercentBtn'),
     },
     RentalBodyElement: {
@@ -676,39 +695,79 @@ function generateTablePDF(expGroup) {
   let columns = ["  #  ", "DATE", "NET", "HST", "PST", "TOTAL", "DESCRIPTION", "SUPPLIER", "CATEGORY"];
   let doc = new jsPDF('l', 'px', 'letter', true);
   doc.setTextColor(41, 127, 186);
-  doc.setFontSize(12);
+  doc.setFontSize(9);
   switch (expGroup) {
     case 'Bus-Exp':
-      headText = `${curTableArray.length} Business Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Business(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      } else {
+        headText = `${curTableArray.length} Business Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      }
       break;
     case 'V1-Exp':
-      headText = `${curTableArray.length} Vehicle-1 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Vehicle-1(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      } else {
+        headText = `${curTableArray.length} Vehicle-1 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      }
       break;
     case 'V2-Exp':
-      headText = `${curTableArray.length} Vehicle-2 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Vehicle-2(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Vehicle-2 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'Home-Exp':
-      headText = `${curTableArray.length} Home Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Home(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Home Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'Other-Exp':
-      headText = `${curTableArray.length} Other Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Other(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Other Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'Rental-Exp':
-      headText = `${curTableArray.length} Rental Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Rental(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Rental Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'Bus-Inc':
-      headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'Rental-Inc':
-      headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      if (reOpenIncomeStatement) {
+        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      } else {
+        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+        fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      }
       break;
     case 'VLog':
       headText = `${curTableArray.length} Log Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
@@ -989,6 +1048,7 @@ async function afterLogin(userName) {
   await getMiscData();
 
   await getAllMainData();
+  await getVehiclePercentage();
   fillMainDataFromArrays();
 }
 
@@ -1592,7 +1652,6 @@ window.addEventListener("beforeunload", function (event) {
 function updateFormButtons(myForm) {
   switch (myForm) {
     case 'income':
-      alert('ID is present');
       if ($('#incomeBlindExpID').val() !== "") {
         if ($('#incomeExpBtn').hasClass("disabled")) {
         } else {
@@ -1605,7 +1664,6 @@ function updateFormButtons(myForm) {
           $('#incomeExpSaveChangesBtn').removeClass("disabled");
         }
       } else {
-        alert('no ID');
         if ($('#incomeExpBtn').hasClass("disabled")) {
           $('#incomeExpBtn').removeClass("disabled");
         }

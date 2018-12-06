@@ -406,7 +406,7 @@ function updateBusinessExpense() {
       myDOMs.busExp.ExpID.value = 'SAVED';
       setStatusColor();
 
-      await getAllMainData();
+      await getAllMainData('Business');
       fillMainDataFromArrays();
       updateBusinessExpTableTotals();
     })
@@ -427,6 +427,7 @@ function updateBusinessExpense() {
 }
 
 function updateBusinessExpTableTotals() {
+  if (!TableOpen) return;
   if (reOpenIncomeStatement) {
     switch (myReportTotal.category) {
       case 'Advertising':
@@ -671,14 +672,24 @@ function deleteBusinessExpense() {
           myTableAlert.insertBefore(nav, myTableAlert.childNodes[0]);
         }
 
-        let myUpdatedText = `You have ${
-          curTableArray.length
-          } Business Expenses displayed on ${tempPageCount} pages.`;
+        let tempTitle;
+        let myUpdatedText;
+        if (reOpenIncomeStatement) {
+          tempTitle = myReportTotal.categoryFull;
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Business(${tempTitle}) Expenses displayed on ${tempPageCount} pages.`;
+        } else {
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Business Expenses displayed on ${tempPageCount} pages.`;
+        }
+
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
 
-        await getAllMainData();
+        await getAllMainData('Business');
         fillMainDataFromArrays();
         updateBusinessExpTableTotals();
       })
@@ -699,7 +710,12 @@ function deleteBusinessExpense() {
 }
 
 function getBusinessExpenses(myFilter) {
-
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
   if (!myFilter) {
     myReportTotal.totalNet = mainData.busExp.net;
     myReportTotal.totalHST = mainData.busExp.hst;
@@ -731,7 +747,7 @@ function getBusinessExpenses(myFilter) {
 
       if (myFilter) {
         myReportTotal.categoryFull = myFilter;
-        tempTitle = `Business Expenses (${myFilter})`;
+        tempTitle = `Business(${myFilter}) Expenses`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;
         });
@@ -869,6 +885,9 @@ $("#busExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
+        if (TableOpen) {
+          alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+        }
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -889,7 +908,7 @@ $("#busExpBtn").click(function () {
         myDOMs.busExp.ReoccurNO.checked = true;
         myDOMs.busExp.EntryDate.focus();
 
-        await getAllMainData();
+        await getAllMainData('Business');
         fillMainDataFromArrays();
         updateBusinessExpTableTotals();
       })
@@ -1001,6 +1020,9 @@ $("#busExpBtn").click(function () {
         contentType: false
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           let myObjMsg = [""];
 
           displayAlert(
@@ -1019,7 +1041,7 @@ $("#busExpBtn").click(function () {
           removeBusImage();
           myDOMs.busExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Business');
           fillMainDataFromArrays();
           updateBusinessExpTableTotals();
         })
@@ -1071,6 +1093,9 @@ $("#busExpBtn").click(function () {
         enctype: "multipart/form-data"
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           displayAlert(
             myDOMs.busExp.AlertContainer,
             "busExpAlert",
@@ -1086,7 +1111,7 @@ $("#busExpBtn").click(function () {
           myDOMs.busExp.ReoccurNO.checked = true;
           myDOMs.busExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Business');
           fillMainDataFromArrays();
           updateBusinessExpTableTotals();
         })

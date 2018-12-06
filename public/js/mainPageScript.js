@@ -8,47 +8,47 @@ endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
 
    switch (myDOMs.main_page.SelectPeriod.value) {
-      case 'Year':
+      case 'Full Year':
          myDOMs.main_page.StartDate.value = '2018-01-01';
          myDOMs.main_page.EndDate.value = '2018-12-31';
          break;
-      case '1stQ':
+      case '1st ¼':
          myDOMs.main_page.StartDate.value = '2018-01-01';
          myDOMs.main_page.EndDate.value = '2018-03-31';
          break;
-      case '2ndQ':
+      case '2nd ¼':
          myDOMs.main_page.StartDate.value = '2018-04-01';
          myDOMs.main_page.EndDate.value = '2018-06-30';
          break;
-      case '3rdQ':
+      case '3rd ¼':
          myDOMs.main_page.StartDate.value = '2018-07-01';
          myDOMs.main_page.EndDate.value = '2018-09-30';
          break;
-      case '4thQ':
+      case '4th ¼':
          myDOMs.main_page.StartDate.value = '2018-10-01';
          myDOMs.main_page.EndDate.value = '2018-12-31';
          break;
-      case '1stH':
+      case '1st ½':
          myDOMs.main_page.StartDate.value = '2018-01-01';
          myDOMs.main_page.EndDate.value = '2018-06-30';
          break;
-      case '2ndH':
+      case '2nd ½':
          myDOMs.main_page.StartDate.value = '2018-07-01';
          myDOMs.main_page.EndDate.value = '2018-12-31';
          break;
-      case 'Jan':
+      case 'January':
          myDOMs.main_page.StartDate.value = '2018-01-01';
          myDOMs.main_page.EndDate.value = '2018-01-31';
          break;
-      case 'Feb':
+      case 'February':
          myDOMs.main_page.StartDate.value = '2018-02-01';
          myDOMs.main_page.EndDate.value = '2018-02-28';
          break;
-      case 'Mar':
+      case 'March':
          myDOMs.main_page.StartDate.value = '2018-03-01';
          myDOMs.main_page.EndDate.value = '2018-03-31';
          break;
-      case 'Apr':
+      case 'April':
          myDOMs.main_page.StartDate.value = '2018-04-01';
          myDOMs.main_page.EndDate.value = '2018-04-30';
          break;
@@ -56,31 +56,31 @@ myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
          myDOMs.main_page.StartDate.value = '2018-05-01';
          myDOMs.main_page.EndDate.value = '2018-05-31';
          break;
-      case 'Jun':
+      case 'June':
          myDOMs.main_page.StartDate.value = '2018-06-01';
          myDOMs.main_page.EndDate.value = '2018-06-30';
          break;
-      case 'Jul':
+      case 'July':
          myDOMs.main_page.StartDate.value = '2018-07-01';
          myDOMs.main_page.EndDate.value = '2018-07-31';
          break;
-      case 'Aug':
+      case 'August':
          myDOMs.main_page.StartDate.value = '2018-08-01';
          myDOMs.main_page.EndDate.value = '2018-08-31';
          break;
-      case 'Sep':
+      case 'September':
          myDOMs.main_page.StartDate.value = '2018-09-01';
          myDOMs.main_page.EndDate.value = '2018-09-30';
          break;
-      case 'Oct':
+      case 'October':
          myDOMs.main_page.StartDate.value = '2018-10-01';
          myDOMs.main_page.EndDate.value = '2018-10-31';
          break;
-      case 'Nov':
+      case 'November':
          myDOMs.main_page.StartDate.value = '2018-11-01';
          myDOMs.main_page.EndDate.value = '2018-11-30';
          break;
-      case 'Dec':
+      case 'December':
          myDOMs.main_page.StartDate.value = '2018-12-01';
          myDOMs.main_page.EndDate.value = '2018-12-31';
    }
@@ -93,6 +93,7 @@ myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
 
 async function updateMainDataAfterTimePeriodChange() {
    await getAllMainData();
+   await getVehiclePercentage();
    fillMainDataFromArrays();
    updateMainPageDisplayAmounts();
 };

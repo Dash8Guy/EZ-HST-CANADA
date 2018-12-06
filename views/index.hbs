@@ -15,7 +15,7 @@
 
   <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top" id="main-nav">
     <div class="container">
-      <p id="navUserLog" class="navbar-text d-none d-xl-inline ml-0 pr-3 pb-0"></p>
+      <p id="navUserLog" class="navbar-text text-white d-none d-xl-inline ml-0 pr-3 pb-0"></p>
       <a href="index.html" class="navbar-brand">
         <img src="img/EZ-Tax-Logo64-2018.png" alt="" class="img-fluid mr-1">EZ-HST-CANADA</a>
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -83,7 +83,7 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payment Entry</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger" onclick="displayScreenSize()">
+                    <a href="#" class="dropdown-item  text-danger" onclick="testLocalStorage()">
                       <i class="far fa-building"></i> Display Screen Size
                     </a>
                   </li>
@@ -105,7 +105,7 @@
 
           <li class="nav-item dropdown  mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fab fa-wpforms"></i> Reports
+              <i class="fab fa-wpforms"></i> Reports and more
             </a>
 
             <ul class="dropdown-menu">
@@ -167,7 +167,7 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-dark">Miscellaneous</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark" onclick="getAllMainData()">
+                    <a href="#" class="dropdown-item  text-dark" onclick="getCountPerPage()">
                       <i class="fas fa-piggy-bank"></i> How Much Can I Keep
                     </a>
                   </li>
@@ -178,12 +178,17 @@
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-dark">
-                      <i class="fas fa-home"></i> Account Summary
+                      <i class="fas fa-university"></i> Account Summary
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-dark" onclick="displayIncomeStatementModal()">
                       <i class="fas fa-hand-holding-usd"></i> Income Statement
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-dark" onclick="displayHomePercentModal()">
+                      <i class="fas fa-home"></i> Home Business % Entry Form
                     </a>
                   </li>
                 </ul>
@@ -203,7 +208,7 @@
               <a href="#" class="dropdown-item  text-danger" onclick="getVlogReportData()">
                 <i class="fas fa-car"></i> Vehicle Log Report
               </a>
-              <a href="#" class="dropdown-item  text-danger" onclick="addVehicleCategory()">
+              <a href="#" class="dropdown-item  text-danger" onclick="displayVLogArray()">
                 <i class="fas fa-wrench"></i> Work in Progress
               </a>
             </div>
@@ -248,32 +253,33 @@
         <label class="control-label text-white" id="endDateLbl" for="endDatePage">End Date</label>
         <input class="form-control form-control-sm text-center" type="date" id="endDatePage" value="2018-12-31"
           data-toggle="tooltip" title="Displays/Edits the Time Period End Date used to filter Reports by Date">
-        <label class="control-label text-white" id="timePeriodSelectLbl" for="endDate">Time Period</label>
+        <label class="control-label text-white" id="timePeriodSelectLbl" for="timePeriodSelect">Time Period</label>
         <select class="form-control form-control-sm text-center" form="mainRightDisplay" id="timePeriodSelect" name="timePeriodSelect"
           data-toggle="tooltip" title="Click down arrow to select Time Period" value="Year">
           <option value="">Select Period</option>
-          <option value="Year" selected>Full Year</option>
-          <option value="1stQ">1st ¼</option>
-          <option value="2ndQ">2nd ¼</option>
-          <option value="3rdQ">3rd ¼</option>
-          <option value="4thQ">4th ¼</option>
-          <option value="1stH">1st ½</option>
-          <option value="2ndH">2nd ½</option>
-          <option value="Jan">January</option>
-          <option value="Feb">February</option>
-          <option value="Mar">March</option>
-          <option value="Apr">April</option>
+          <option value="Full Year" selected>Full Year</option>
+          <option value="1st ¼">1st ¼</option>
+          <option value="2nd ¼">2nd ¼</option>
+          <option value="3rd ¼">3rd ¼</option>
+          <option value="4th ¼">4th ¼</option>
+          <option value="1st ½">1st ½</option>
+          <option value="2nd ½">2nd ½</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
           <option value="May">May</option>
-          <option value="Jun">June</option>
-          <option value="Jul">July</option>
-          <option value="Aug">August</option>
-          <option value="Sep">September</option>
-          <option value="Oct">October</option>
-          <option value="Nov">November</option>
-          <option value="Dec">December</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
         </select>
         <button type="button" id="mainSettings" form="mainRightDisplay" class="btn btn-light mt-3 w-100 text-primary"
-          data-toggle="tooltip" title="Click to Adjust all available settings"><i class="fas fa-cog"></i>
+          data-toggle="tooltip" title="Click to Adjust all available settings" onclick="displaySettingsModal()"><i
+            class="fas fa-cog"></i>
           Settings
         </button>
       </form>
@@ -291,11 +297,11 @@
           data-toggle="tooltip" title="Displays your Net Revenue during the Time Period Selected.">
         <label class="control-label control-label-sm text-white" id="netExpDisplayLbl" for="netExpDisplay">Net Expenses</label>
         <input class="form-control form-control-sm text-right text-danger" type="text" id="netExpDisplay" value="0"
-          data-toggle="tooltip" title="Displays your Net Expenses during the Time Period Selected.">
+          data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected.">
         <label class="control-label control-label-sm text-white" id="netIncomeDisplayLbl" for="netIncomeDisplay">Net
           Income</label>
         <input class="form-control form-control-sm text-right text-success" type="text" id="netIncomeDisplay" value="0"
-          data-toggle="tooltip" title="Displays your Net Expenses during the Time Period Selected.">
+          data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected.">
         <label class="control-label control-label-sm text-white" id="acctBalanceLbl" for="acctBalance">Account Balance</label>
         <input class="form-control form-control-sm text-right" type="text" id="acctBalance" value="0" data-toggle="tooltip"
           title="Displays your Account Balance corresponding to the Time Period selected.">
@@ -653,7 +659,7 @@
                   </div>
                   <div class="container d-md-inline">
                     <button type="button" id="busExpShowFullSize" class="btn btn-sm btn-warning mr-0 ml-0 mt-2 d-xs-block"
-                      data-toggle="tooltip" title="Click to View Full Size Receipt Image." onclick="displayFullSizeBusinessImage()">Show
+                      title="Click to View Full Size Receipt Image." onclick="displayFullSizeBusinessImage()">Show
                       Receipt</button>
                   </div>
                 </div>
@@ -1748,8 +1754,9 @@
               <input type="text" name="vLogBusPercentMonth" id="vLogBusPercentMonth" class="form-control" data-toggle="tooltip"
                 title="Displays Business Percentage from 1st day of the Month to selected Log Date." readonly>
               <!-- <label for="vLogQuickPercent">Quick Method Set %</label> -->
-              <button class="btn btn-sm btn-outline-success mt-1" id="vLogQuickPercent" onclick="quickLogInput()"><i
-                  class="far fa-save" data-toggle="tooltip" title="Click to Easily add wanted percentage for the Year and Total Amount of KMs for the Year."></i>
+              <button class="btn btn-sm btn-outline-success mt-1" id="vLogQuickPercent" onclick="quickLogInput()"
+                data-toggle="tooltip" title="Click to Easily add wanted percentage for the Year and Total Amount of KMs for the Year."><i
+                  class="far fa-save"></i>
                 Quick Method Set %</button>
             </div>
 
@@ -1901,13 +1908,15 @@
     <div class="modal-dialog  modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-primary">
-          <h5 class="modal-title text-white" id="ImageViewTitle">Receipt Image</h5>
-          <button class="close" id="topCloseImageViewModal" onclick="$('#ImageViewModal').modal( 'hide' )"></button>
+          <h5 class="modal-title text-white " id="ImageViewTitle">Receipt Image</h5>
+          <h6 class="text-white ml-auto" style="font-size: 12px;">----> Click Image to Rotate 90°
+            Clock-wise</h6>
+          <button class="close" id="topCloseImageViewModal" onclick="closeFullViewImage()"></button>
           <span class="text-white">&times;</span>
         </div>
-        <div class="modal-body text-center">
-          <div class="container align-middle text-center mt-0 pt-0" id="alertContainerUserLogin">
-            <img src="" alt="" class="img-fluid w-1 h-1" id="ModalImageTag">
+        <div class="modal-body text-center" id="DivFullImage">
+          <div class="container align-middle text-center mt-0 pt-0" id="ContainerFullImage">
+            <img src="" alt="" class="img-fluid w-1 h-1" id="ModalImageTag" onclick="rotatereceiptImage()">
           </div>
         </div>
 
@@ -2017,7 +2026,8 @@
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busAdvertisingLink"
                       data-toggle="tooltip" title="Click to View report of all Advertising Expenses." onclick="displayAdvertisingReport()">Advertising</a>
                     <div><span id="busAdvertisingSpan" class="badge badge-danger mr-lg-5 " data-toggle="tooltip" title="Total Net Advertising">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8521</span></div>
+                        id="busAdvertisingSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8521</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busDuesLink"
                       data-toggle="tooltip" title="Click to View report of all Fees,
@@ -2026,142 +2036,165 @@
                       licences, dues, memberships</a>
                     <div><span id="busDuesSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Fees,
                       licences, dues, memberships">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8760</span></div>
+                        id="busDuesSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8760</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busMealsLink"
                       data-toggle="tooltip" title="Click to View report of all Meals and Entertainment Expenses."
                       onclick="displayMealsReport()">Meals
                       and Entertainment</a>
                     <div><span id="busMealsSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Meals and Entertainment">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8523</span></div>
+                        id="busMealsSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8523</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busOfficeLink"
                       data-toggle="tooltip" title="Click to View report of all Office Expenses Expenses." onclick="displayOfficeReport()">Office
                       Expenses</a>
                     <div><span id="busOfficeSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Office Expenses">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8810</span></div>
+                        id="busOfficeSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8810</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busSuppliesLink"
                       data-toggle="tooltip" title="Click to View report of all Supplies Expenses." onclick="displaySuppliesReport()">Supplies</a>
                     <div><span id="busSuppliesSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Supplies">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8811</span></div>
+                        id="busSuppliesSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8811</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busCellLink"
                       data-toggle="tooltip" title="Click to View report of all Cell Phone Expenses." onclick="displayCellReport()">Cell
                       Phone</a>
                     <div><span id="busCellSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Cell Phone">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9220</span></div>
+                        id="busCellSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9220</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busOtherLink"
                       data-toggle="tooltip" title="Click to View report of all Other Expenses Expenses." onclick="displayOtherReport()">Other
                       Expenses</a>
                     <div><span id="busOtherSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Other Expenses">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busOtherSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busFreightLink"
                       data-toggle="tooltip" title="Click to View report of all Delivery, freight, and express Expenses."
                       onclick="displayFreightReport()">Delivery,
                       freight, and express</a>
                     <div><span id="busFreightSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Delivery, freight, and express">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9275</span></div>
+                        id="busFreightSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9275</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busFuelLink"
                       data-toggle="tooltip" title="Click to View report of all Fuel costs (except vehicles) Expenses."
                       onclick="displayFuelReport()">Fuel
                       costs (except vehicles)</a>
                     <div><span id="busFuelSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Fuel costs (except vehicles)">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9224</span></div>
+                        id="busFuelSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9224</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busInsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Insurance Expenses." onclick="displayInsuranceReport()">Insurance</a>
                     <div><span id="busInsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Insurance">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8690</span></div>
+                        id="busInsuranceSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8690</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busInterestLink"
                       data-toggle="tooltip" title="Click to View report of all Interest Expenses." onclick="displayInterestReport()">Interest</a>
                     <div><span id="busInterestSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Interest">$1,058.37</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8710</span></div>
+                        id="busInterestSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8710</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busMaintenanceLink"
                       data-toggle="tooltip" title="Click to View report of all Maintenance and Repairs Expenses."
                       onclick="displayMaintenanceReport()">Maintenance
                       and Repairs</a>
                     <div><span id="busMaintenanceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Maintenance and Repairs">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8960</span></div>
+                        id="busMaintenanceSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8960</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busAdminLink"
                       data-toggle="tooltip" title="Click to View report of all Management and administration fees Expenses."
                       onclick="displayAdminReport()">Management
                       and administration fees</a>
                     <div><span id="busAdminSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Management and administration fees">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8871</span></div>
+                        id="busAdminSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8871</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busLegalLink"
                       data-toggle="tooltip" title="Click to View report of all Legal, accounting, and other Prof. Fees Expenses."
                       onclick="displayLegalReport()">Legal,
                       accounting, and other Prof. Fees</a>
                     <div><span id="busLegalSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Legal, accounting, and other Prof. Fees">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8860</span></div>
+                        id="busLegalSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8860</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busPropertyTaxLink"
                       data-toggle="tooltip" title="Click to View report of all Property Taxes Expenses." onclick="displayPropertyTaxReport()">Property
                       Taxes</a>
                     <div><span id="busPropertyTaxSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Property Taxes">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9180</span></div>
+                        id="busPropertyTaxSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9180</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busRentLink"
                       data-toggle="tooltip" title="Click to View report of all Rent Expenses." onclick="displayRentReport()">Rent</a>
                     <div><span id="busRentSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rent">$7,575.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">8910</span></div>
+                        id="busRentSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">8910</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busWagesLink"
                       data-toggle="tooltip" title="Click to View report of all Salaries, wages, and benefits Expenses."
                       onclick="displayWagesReport()">Salaries,
                       wages, and benefits</a>
                     <div><span id="busWagesSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Salaries, wages, and benefits">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9060</span></div>
+                        id="busWagesSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9060</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busTravelLink"
                       data-toggle="tooltip" title="Click to View report of all Travel Expenses." onclick="displayTravelReport()">Travel</a>
                     <div><span id="busTravelSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Travel">$2,309.50</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9200</span></div>
+                        id="busTravelSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9200</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable1Link"
                       data-toggle="tooltip" title="Click to View report of all Variable 1 Expenses." onclick="displayVariable1Report()">Variable
                       1</a>
                     <div><span id="busVariable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Variable 1">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busVariable1SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable2Link"
                       data-toggle="tooltip" title="Click to View report of all Variable 2 Expenses." onclick="displayVariable2Report()">Variable
                       2</a>
                     <div><span id="busVariable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Variable 2">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busVariable2SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable3Link"
                       data-toggle="tooltip" title="Click to View report of all Variable 3 Expenses." onclick="displayVariable3Report()">Variable
                       3</a>
                     <div><span id="busVariable3Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Variable 3">$0.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busVariable3SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable4Link"
                       data-toggle="tooltip" title="Click to View report of all Variable 4 Expenses." onclick="displayVariable4Report()">Variable
                       4</a>
                     <div><span id="busVariable4Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Variable 4">$0.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busVariable4SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busVariable5Link"
                       data-toggle="tooltip" title="Click to View report of all Variable 5 Expenses." onclick="displayVariable5Report()">Variable
                       5</a>
                     <div><span id="busVariable5Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Variable 5">$0.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9270</span></div>
+                        id="busVariable5SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="busCCALink"
                       data-toggle="tooltip" title="Click to View report of all (CCA) Expenses." onclick="displayCCAReport()">Capital
                       Cost Allowance
                       (CCA)/Fixed Asset Depreciation Claim</a>
                     <div><span id="busCCASpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net (CCA)">$0.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 5 Line #">9936</span></div>
+                        id="busCCASpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 5 Line #">9936</span></div>
                   </li>
                 </ul>
                 <hr id="incStHorLineBusExp" class="bg-dark my-0">
@@ -2181,75 +2214,86 @@
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeHeatLink"
                       data-toggle="tooltip" title="Click to View report of all Home Heat Expenses." onclick="displayHomeHeatReport()">Heat</a>
                     <div><span id="homeHeatSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Heat">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">
+                        id="homeHeatSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">
                         1st
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeElectricityLink"
                       data-toggle="tooltip" title="Click to View report of all Home Electricity Expenses." onclick="displayHomeElectricityReport()">Electricity</a>
                     <div><span id="homeElectricitySpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Electricity">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">2nd
+                        id="homeElectricitySpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">2nd
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeInsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Home Insurance Expenses." onclick="displayHomeInsuranceReport()">Insurance</a>
                     <div><span id="homeInsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Insurance">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">3rd
+                        id="homeInsuranceSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">3rd
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeMaintenanceLink"
                       data-toggle="tooltip" title="Click to View report of all Home Maintenance Expenses." onclick="displayhomeMaintenanceReport()">Maintenance</a>
                     <div><span id="homeMaintenanceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Maintenance Expenses">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">4th
+                        id="homeMaintenanceSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">4th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeMortgageLink"
                       data-toggle="tooltip" title="Click to View report of all Home Mortgage Interest Expenses."
                       onclick="displayHomeMortgageReport()">Mortgage Interest</a>
                     <div><span id="homeMortgageSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Mortgage Interest">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">5th
+                        id="homeMortgageSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">5th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homePropertyTaxLink"
                       data-toggle="tooltip" title="Click to View report of all Home Property Taxes Expenses." onclick="displayHomePropertyTaxesReport()">Property
                       Taxes</a>
                     <div><span id="homePropertyTaxSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Property Taxes Expenses">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">6th
+                        id="homePropertyTaxSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">6th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeOtherLink"
                       data-toggle="tooltip" title="Click to View report of all Home Other Expenses Expenses." onclick="displayHomeOtherReport()">Other
                       Expenses</a>
                     <div><span id="homeOtherSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Other Expenses">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        id="homeOtherSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">7th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeWaterLink"
                       data-toggle="tooltip" title="Click to View report of all Home Water and Sewage Expenses." onclick="displayHomeWaterReport()">Water
                       and Sewage</a>
                     <div><span id="homeWaterSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Water and Sewage">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">6th
+                        id="homeWaterSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">6th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable1Link"
                       data-toggle="tooltip" title="Click to View report of all Home Variable 1 Expenses." onclick="displayHomeVariable1Report()">Variable
                       1</a>
                     <div><span id="homeVariable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 1">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        id="homeVariable1SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">7th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable2Link"
                       data-toggle="tooltip" title="Click to View report of all Home Variable 2 Expenses." onclick="displayHomeVariable2Report()">Variable
                       2</a>
                     <div><span id="homeVariable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 2">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        id="homeVariable2SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">7th
                         Line</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="homeVariable3Link"
                       data-toggle="tooltip" title="Click to View report of all Home Variable 3 Expenses." onclick="displayHomeVariable3Report()">Variable
                       3</a>
                     <div><span id="homeVariable3Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Home Variable 3">$0.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 4 1st Area">7th
+                        id="homeVariable3SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 4 1st Area">7th
                         Line</span></div>
                   </li>
                 </ul>
@@ -2286,44 +2330,46 @@
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Fuel and Oil Expenses."
                       onclick="displayVehicle1FuelReport()">Fuel and Oil</a>
                     <div><span id="vehicle1FuelSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Fuel and Oil">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle1FuelSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         3</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1InterestLoanLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Interest on Loan Expenses."
                       onclick="displayVehicle1InterestLoanReport()">Interest on Loan</a>
                     <div><span id="vehicle1InterestLoanSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Interest on Loan">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Interest on Loan">$3,050.49</span><span id="vehicle1InterestLoanSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         4</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1InsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Insurance Expenses." onclick="displayVehicle1InsuranceReport()">Insurance</a>
                     <div><span id="vehicle1InsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Insurance">$3,400.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Insurance">$3,400.00</span><span id="vehicle1InsuranceSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         5</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1RegistrationLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Licence and Registration Expenses."
                       onclick="displayVehicle1RegistrationReport()">Licence and registration</a>
                     <div><span id="vehicle1RegistrationSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Licence and Registration">$1,745.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Licence and Registration">$1,745.00</span><span id="vehicle1RegistrationSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         6</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1MaintenanceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Maintenance Expenses." onclick="displayVehicle1MaintenanceReport()">Maintenance
                       and repairs</a>
                     <div><span id="vehicle1MaintenanceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Maintenance Expenses">$926.33</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Maintenance Expenses">$926.33</span><span id="vehicle1MaintenanceSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         7</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1LeasingLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Leasing Expenses." onclick="displayVehicle1LeasingReport()">Leasing</a>
                     <div><span id="vehicle1LeasingSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Leasing">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle1LeasingSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         8</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1OtherLink"
@@ -2331,30 +2377,31 @@
                       onclick="displayVehicle1OtherReport()">Other
                       Expenses</a>
                     <div><span id="vehicle1OtherSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Other Expenses">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle1OtherSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable1Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 1 Expenses." onclick="displayVehicle1Variable1Report()">Variable
                       1</a>
                     <div><span id="vehicle1Variable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Variable 1">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Variable 1">$3,050.49</span><span id="vehicle1Variable1SpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable2Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 2 Expenses." onclick="displayVehicle1Variable2Report()">Variable
                       2</a>
                     <div><span id="vehicle1Variable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Variable 2">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 1 Variable 2">$3,050.49</span><span id="vehicle1Variable2SpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1Variable3Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 3 Expenses." onclick="displayVehicle1Variable3Report()">Variable
                       3</a>
                     <div><span id="vehicle1Variable3Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Variable 3">$0.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
+                        title="Total Net Vehicle 1 Variable 3">$0.00</span><span id="vehicle1Variable3SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline"
                         data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
@@ -2362,13 +2409,14 @@
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Business parking fees Expenses."
                       onclick="displayvehicle1BusParkReport()">Business parking fees</a>
                     <div><span id="vehicle1BusParkSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 1 Business parking fees">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">13</span></div>
+                        id="vehicle1BusParkSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">13</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle1SuppInsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Supplementary business insurance Expenses."
                       onclick="displayVehicle1SuppInsuranceReport()">Supplementary business insurance</a>
                     <div><span id="vehicle1SuppInsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 1 Supplementary business insurance Expenses">$1,745.00</span><span
+                        title="Total Net Vehicle 1 Supplementary business insurance Expenses">$1,745.00</span><span id="vehicle1SuppInsuranceSpanT2125"
                         class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">14</span></div>
                   </li>
                 </ul>
@@ -2383,9 +2431,11 @@
                 </ul>
               </div>
               <div class="container d-lg-inline-block mt-2">
-                <p class="font-weight-bold mb-1 float-right" id="incStVehicle1PercentText">Vehicle 1 % for Displayed
-                  Time Period
-                  is<span class="px-2 ml-2 font-weight-bold" id="incStVehicle1PercentDisplay" style="border: 2px solid rgb(47, 58, 211)">25%</span></p>
+                <span class="px-2 mr-0 ml-2 d-lg-inline-block font-weight-bold float-right" id="incStVehicle1PercentDisplay"
+                  style="border: 2px solid rgb(47, 58, 211)">25%</span>
+                <p class="font-weight-bold mb-1 ml-auto d-lg-inline-block float-right" id="incStVehicle1PercentText">Vehicle
+                  1 % for
+                  Displayed Time Period is</p>
               </div>
               <div class="container d-lg-inline-block mt-1">
                 <button id="incStVehicle1PercentBtn" class="btn btn-sm btn-outline-success mt-0 float-right" type="button"
@@ -2393,11 +2443,9 @@
                   %</button>
               </div>
               <p class="font-weight-bold mb-1 text-left" id="incStVehicle1PercentText2">When the Income Statement
-                opens,
-                Vehicle 1
-                Expenses are reduced by the percentage applied in the Vehicle Log.<br>
-                Each Expense is Reduced by the Vehicle 1 Business Use Percentage of the Month matching the Receipt
-                Date.
+                opens, Vehicle 1 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
+                Each Expense(except the bottom two) are Reduced by the Vehicle 1 Business Use Percentage of the
+                selected time period matching the Receipt Date.<br>
                 <br>Use the button to Switch back and forth from reduced Percentage to
                 100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
             </div>
@@ -2409,44 +2457,46 @@
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Fuel and Oil Expenses."
                       onclick="displayVehicle2FuelReport()">Fuel and Oil</a>
                     <div><span id="vehicle2FuelSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Fuel and Oil">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle2FuelSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         3</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2InterestLoanLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Interest on Loan Expenses."
                       onclick="displayVehicle2InterestLoanReport()">Interest on Loan</a>
                     <div><span id="vehicle2InterestLoanSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Interest on Loan">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Interest on Loan">$3,050.49</span><span id="vehicle2InterestLoanSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         4</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2InsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Insurance Expenses." onclick="displayVehicle2InsuranceReport()">Insurance</a>
                     <div><span id="vehicle2InsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Insurance">$3,400.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Insurance">$3,400.00</span><span id="vehicle2InsuranceSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         5</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2RegistrationLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Licence and Registration Expenses."
                       onclick="displayVehicle2RegistrationReport()">Licence and registration</a>
                     <div><span id="vehicle2RegistrationSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Licence and Registration">$1,745.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Licence and Registration">$1,745.00</span><span id="vehicle2RegistrationSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         6</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2MaintenanceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Maintenance Expenses." onclick="displayVehicle2MaintenanceReport()">Maintenance
                       and repairs</a>
                     <div><span id="vehicle2MaintenanceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Maintenance Expenses">$926.33</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Maintenance Expenses">$926.33</span><span id="vehicle2MaintenanceSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         7</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2LeasingLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Leasing Expenses." onclick="displayVehicle2LeasingReport()">Leasing</a>
                     <div><span id="vehicle2LeasingSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Leasing">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle2LeasingSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         8</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2OtherLink"
@@ -2454,44 +2504,46 @@
                       onclick="displayVehicle2OtherReport()">Other
                       Expenses</a>
                     <div><span id="vehicle2OtherSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Other Expenses">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        id="vehicle2OtherSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable1Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 1 Variable 2 Expenses." onclick="displayVehicle2Variable1Report()">Variable
                       1</a>
                     <div><span id="vehicle2Variable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Variable 1">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Variable 1">$3,050.49</span><span id="vehicle2Variable1SpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable2Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Variable 2 Expenses." onclick="displayVehicle2Variable2Report()">Variable
                       2</a>
                     <div><span id="vehicle2Variable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Variable 2">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
+                        title="Total Net Vehicle 2 Variable 2">$3,050.49</span><span id="vehicle2Variable2SpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2Variable3Link"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Variable 3 Expenses." onclick="displayVehicle2Variable3Report()">Variable
                       3</a>
                     <div><span id="vehicle2Variable3Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Variable 3">$0.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
+                        title="Total Net Vehicle 2 Variable 3">$0.00</span><span id="vehicle2Variable3SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline"
                         data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">
                         9</span></div>
                   </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2BusParkMortgageLink"
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2BusParkLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Business parking fees Expenses."
                       onclick="displayvehicle2BusParkReport()">Business parking fees</a>
                     <div><span id="vehicle2BusParkSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Vehicle 2 Business parking fees">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">13</span></div>
+                        id="vehicle2BusParkSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Page 6 Chart A Line #">13</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="vehicle2SuppInsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Vehicle 2 Supplementary business insurance Expenses."
                       onclick="displayVehicle2SuppInsuranceReport()">Supplementary business insurance</a>
                     <div><span id="vehicle2SuppInsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Vehicle 2 Supplementary business insurance Expenses">$1,745.00</span><span
+                        title="Total Net Vehicle 2 Supplementary business insurance Expenses">$1,745.00</span><span id="vehicle2SuppInsuranceSpanT2125"
                         class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Page 6 Chart A Line #">14</span></div>
                   </li>
                 </ul>
@@ -2506,9 +2558,11 @@
                 </ul>
               </div>
               <div class="container d-lg-inline-block mt-2">
-                <p class="font-weight-bold mb-1 float-right" id="incStVehicle2PercentText">Vehicle 2 % for Displayed
-                  Time Period
-                  is<span class="px-2 ml-2 font-weight-bold" id="incStVehicle2PercentDisplay" style="border: 2px solid rgb(47, 58, 211)">25%</span></p>
+                <span class="px-2 mr-0 ml-2 d-lg-inline-block font-weight-bold float-right" id="incStVehicle2PercentDisplay"
+                  style="border: 2px solid rgb(47, 58, 211)">25%</span>
+                <p class="font-weight-bold mb-1 ml-auto d-lg-inline-block float-right" id="incStVehicle2PercentText">Vehicle
+                  2 % for
+                  Displayed Time Period is</p>
               </div>
               <div class="container d-lg-inline-block mt-1">
                 <button id="incStVehicle2PercentBtn" class="btn btn-sm btn-outline-success mt-0 float-right" type="button"
@@ -2516,11 +2570,9 @@
                   %</button>
               </div>
               <p class="font-weight-bold mb-1 text-left" id="incStVehicle2PercentText2">When the Income Statement
-                opens,
-                Vehicle 2
-                Expenses are reduced by the percentage applied in the Vehicle Log.<br>
-                Each Expense is Reduced by the Vehicle 2 Business Use Percentage of the Month matching the Receipt
-                Date.
+                opens, Vehicle 2 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
+                Each Expense(except the bottom two) are Reduced by the Vehicle 2 Business Use Percentage of the
+                selected time period matching the Receipt Date.<br>
                 <br>Use the button to Switch back and forth from reduced Percentage to
                 100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
             </div>
@@ -2532,42 +2584,46 @@
                       data-toggle="tooltip" title="Click to View report of all Other Costs Goods Purchase during the Year Expenses."
                       onclick="displayotherGoodsReport()">Goods Purchased During the Year</a>
                     <div><span id="otherGoodsSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Other Costs Goods Purchase during the Year">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8320</span></div>
+                        id="otherGoodsSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 4 Line #">8320</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="otherSubcontractsLink"
                       data-toggle="tooltip" title="Click to View report of all Other Costs Subcontracts Expenses."
                       onclick="displayotherSubcontractsReport()">Subcontracts</a>
                     <div><span id="otherSubcontractsSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Other Costs Subcontracts">$1,745.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Part 4 Line #">8360</span></div>
+                        title="Total Net Other Costs Subcontracts">$1,745.00</span><span id="otherSubcontractsSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8360</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="otherDirectWageCostLink"
                       data-toggle="tooltip" title="Click to View report of all Other Costs Direct Wage Cost Expenses."
                       onclick="displayotherDirectWageCostReport()">Direct wage costs</a>
                     <div><span id="otherDirectWageCostSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Other Costs Direct Wage Cost">$3,400.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T2125 Part 4 Line #">8340</span></div>
+                        title="Total Net Other Costs Direct Wage Cost">$3,400.00</span><span id="otherDirectWageCostSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8340</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="otherOtherCostsLink"
                       data-toggle="tooltip" title="Click to View report of all Other Costs Other Costs Expenses."
                       onclick="displayOtherOtherCostsReport()">Other
                       Costs</a>
                     <div><span id="otherOtherCostsSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Other Costs Other Costs">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8450</span></div>
+                        id="otherOtherCostsSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 4 Line #">8450</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="otherVariable1Link"
                       data-toggle="tooltip" title="Click to View report of all Other Costs Variable 1 Expenses."
                       onclick="displayOtherVariable1Report()">Variable
                       1</a>
                     <div><span id="otherVariable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Other Costs Variable 1">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8450</span></div>
+                        id="otherVariable1SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 4 Line #">8450</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="otherVariable2Link"
                       data-toggle="tooltip" title="Click to View report of all Other Costs Variable 2 Expenses."
                       onclick="displayOtherVariable2Report()">Variable
                       2</a>
                     <div><span id="otherVariable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Other Costs Variable 2">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T2125 Part 4 Line #">8450</span></div>
+                        id="otherVariable2SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T2125 Part 4 Line #">8450</span></div>
                   </li>
                 </ul>
                 <hr id="incStHorLineOtherCostsExp" class="bg-dark my-0">
@@ -2588,91 +2644,103 @@
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalAdvertisingLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Advertising Expenses." onclick="displayRentalAdvertisingReport()">Advertising</a>
                     <div><span id="rentalAdvertisingSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Rental Advertising">$3,050.49</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T776 Line #">8521</span></div>
+                        title="Total Net Rental Advertising">$3,050.49</span><span id="rentalAdvertisingSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8521</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalInsuranceLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Insurance Expenses." onclick="displayRentalInsuranceReport()">Insurance</a>
                     <div><span id="rentalInsuranceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Insurance">$6,180.90</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8690</span></div>
+                        id="rentalInsuranceSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">8690</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalInterestLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Interest Expenses." onclick="displayRentalInterestReport()">Interest</a>
                     <div><span id="rentalInterestSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Interest">$1,058.37</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8710</span></div>
+                        id="rentalInterestSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">8710</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalMaintenanceLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Maintenance and Repairs Expenses."
                       onclick="displayRentalMaintenanceReport()">Maintenance and Repairs</a>
                     <div><span id="rentalMaintenanceSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Rental Maintenance and Repairs">$1,745.00</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T776 Line #">8960</span></div>
+                        title="Total Net Rental Maintenance and Repairs">$1,745.00</span><span id="rentalMaintenanceSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8960</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalAdminLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Management and administration fees Expenses."
                       onclick="displayRentalAdminReport()">Management and administration fees</a>
                     <div><span id="rentalAdminSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Management and administration fees">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8871</span></div>
+                        id="rentalAdminSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">8871</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalMotorLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Motor Vehicle Expenses." onclick="displayRentalMotorReport()">Motor
                       Vehicle Expenses(not including CCA)</a>
                     <div><span id="rentalMotorSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Motor Vehicle Expenses.">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9281</span></div>
+                        id="rentalMotorSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9281</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalOfficeLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Office Expenses." onclick="displayRentalOfficeReport()">Office
                       Expenses</a>
                     <div><span id="rentalOfficeSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Office Expenses">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8810</span></div>
+                        id="rentalOfficeSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">8810</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalLegalLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Legal, accounting, and other Prof. Fees Expenses."
                       onclick="displayRentalLegalReport()">Legal, accounting, and other Prof. Fees</a>
                     <div><span id="rentalLegalSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Legal, accounting, and other Prof. Fees">$926.33</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">8860</span></div>
+                        id="rentalLegalSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">8860</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalPropertyTaxLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Property Taxes Expenses." onclick="displayRentalPropertyTaxReport()">Property
                       Taxes</a>
                     <div><span id="rentalPropertyTaxSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip"
-                        title="Total Net Rental Property Taxes">$6,180.90</span><span class="badge badge-secondary px-2 d-none d-lg-inline"
-                        data-toggle="tooltip" title="Form T776 Line #">9180</span></div>
+                        title="Total Net Rental Property Taxes">$6,180.90</span><span id="rentalPropertyTaxSpanT2125"
+                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9180</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalWagesLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Salaries, wages, and benefits Expenses(incl employer's contribution)"
                       onclick="displayRentalWagesReport()">Salaries,
                       wages, and benefits(incl employer's contribution)</a>
                     <div><span id="rentalWagesSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Salaries, wages, and benefits(incl employer's contribution)">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9060</span></div>
+                        id="rentalWagesSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9060</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalTravelLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Travel Expenses." onclick="displayRentalTravelReport()">Travel</a>
                     <div><span id="rentalTravelSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Travel">$2,309.50</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9200</span></div>
+                        id="rentalTravelSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9200</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalUtilitiesLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Utility Expenses." onclick="displayRentalUtilitiesReport()">Utilities</a>
                     <div><span id="rentalUtilitiesSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Utility">$3,400.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9220</span></div>
+                        id="rentalUtilitiesSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9220</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalOtherLink"
                       data-toggle="tooltip" title="Click to View report of all Rental Other Expenses Expenses." onclick="displayRentalOtherReport()">Other
                       Expenses</a>
                     <div><span id="rentalOtherSpan" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Other Expenses">$1,745.00</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                        id="rentalOtherSpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalVariable1Link"
                       data-toggle="tooltip" title="Click to View report of all Rental Variable 1 Expenses." onclick="displayRentalVariable1Report()">Variable
                       1</a>
                     <div><span id="rentalVariable1Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Variable 1">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                        id="rentalVariable1SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9270</span></div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#" id="rentalVariable2Link"
                       data-toggle="tooltip" title="Click to View report of all Rental Variable 2 Expenses." onclick="displayRentalVariable2Report()">Variable
                       2</a>
                     <div><span id="rentalVariable2Span" class="badge badge-danger mr-lg-5" data-toggle="tooltip" title="Total Net Rental Variable 2">$3,050.49</span><span
-                        class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip" title="Form T776 Line #">9270</span></div>
+                        id="rentalVariable2SpanT2125" class="badge badge-secondary px-2 d-none d-lg-inline" data-toggle="tooltip"
+                        title="Form T776 Line #">9270</span></div>
                   </li>
                 </ul>
                 <hr id="incStHorLineRentalExp" class="bg-dark my-0">
@@ -2713,513 +2781,684 @@
   </div>
   </div>
 
+  <!-- Settings Modal -->
+
+  <div class="modal fade text-dark mx-auto" id="settingsModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-md">
+      <div class="modal-content">
+        <div id="settingModalHeader" class="modal-header bg-primary">
+          <h5 class="modal-title text-white">Settings</h5>
+          <button class="close" id="topCloseSettingsModal" onclick="$('#settingsModal').modal( 'hide' )"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          {{!-- <div class="container align-middle mt-0 pt-0" id="alertContainerUserLogin">
+
+          </div> --}}
+          <ul class="list-group mb-1">
+            <li id="settingsSelectLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Select
+              Amount
+              of Expenses to Display per Page on Reports
+              <select class="form-control form-control-sm text-center" id="countPerPageSelect" name="countPerPageSelect"
+                data-toggle="tooltip" title="Click down arrow to select Amount Per Page" value=10>
+                <option value="">Select Amount Per Page</option>
+                <option value=10 selected>10</option>
+                <option value=25>25</option>
+                <option value=50>50</option>
+                <option value=100>100</option>
+                <option value=500>500</option>
+              </select>
+            </li>
+            <li id="settingsTooltipLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Tooltips
+              <div class="form-check form-check-inline">
+                <input class="form-check-input radiobtn mr-1" id="tooltipOn" type="radio" name="tooltipOn" value="ON"
+                  data-toggle="tooltip" title="When ENABLED is selected, tooltips become enabled in every EZ-HST-CANADA Controls."
+                  checked>
+                <label class="form-check-label" id="tooltipOnLbl" for="tooltipOn">ENABLED</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input radiobtn ml-1 mr-1" id="tooltipOFF" type="radio" name="tooltipOFF" value="OFF"
+                  data-toggle="tooltip" title="When DISABLED is selected, tooltips become disabled in every EZ-HST-CANADA Controls.">
+                <label class="form-check-label" id="tooltipOFFLbl" for="tooltipOFF">DISABLED</label>
+              </div>
+        </div>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Home Business Percent Modal -->
+  <div class="modal fade text-dark mx-auto" id="homePercentModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div id="homePercentModalHeader" class="modal-header bg-primary">
+          <h5 class="modal-title text-white">Business Use of Home Entry Form</h5>
+          <button class="close" id="topClosehomePercentModal" onclick="$('#homePercentModal').modal( 'hide' )"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container text-center">
+            <h6>Fill in the Blanks to Calculate your Business Home Use Percentage for Displayed Time Period</h6>
+            <h6>...or simply enter the Perentage for Displayed Time Period if you know it</h6><br>
+            <h6 id="lastLineText">If the room(s) you use in your home is/are only for Business than enter 24 Hrs, 7
+              days and actual area.</h6>
+          </div>
+          <div class="row text-center mt-4">
+            <div class="col-lg-12 mx-0 px-0 text-center d-lg-inline-block">
+              <p id="leftBracketSign3" class="d-lg-inline mx-0">(</p>
+              <div class="group d-lg-inline-block mx-0 px-0">
+                <label class="text-center" for="hoursPerDay">Hours fo Work <br> Per Day</label><br>
+                <input class="text-center mx-0" max="24" min="0" step="0.1" id="hoursPerDay" type="number" data-toggle="tooltip"
+                  title="Enter Total Hours you Work for your Business per Day(Decimal amounts are acceptable)">
+              </div>
+              <p id="dividedbytwoFourSign" class="d-lg-inline mx-0">/24</p>
+              <p id="rightBracketSign3" class="d-lg-inline mx-0">)</p>
+
+              <p id="multiplySign" class="d-lg-inline-block">X</p>
+              <p id="leftBracketSign2" class="d-lg-inline mx-0">(</p>
+
+              <div class="group d-lg-inline-block text-center mx-0 px-0">
+                <label class="text-center" for="daysPerWeek">Days of Work <br> Per Week</label><br>
+                <input class="text-center" max="7" min="0" step="0.1" id="daysPerWeek" type="number" data-toggle="tooltip"
+                  title="Enter Total Days you Work for your Business per Week(Decimal amounts are acceptable)">
+              </div>
+
+              <p id="dividedbySevenSign" class="d-lg-inline">/7</p>
+              <p id="rightBracketSign2" class="d-lg-inline mx-0">)</p>
+              <p id="multiplySign2" class="d-lg-inline-block">X</p>
+
+              <p id="leftBracketSign" class="d-lg-inline">(</p>
+              <div class="group d-lg-inline-block text-center mx-0 px-0">
+                <label class="text-center" for="businessArea">Area for <br>Business</label><br>
+                <input class="text-center mx-0" min="0" step="1" id="businessArea" type="number" data-toggle="tooltip"
+                  title="Enter Total Square Footage/Meters of your Home Space used for Business.">
+              </div>
+              <p id="divisionSign" class="d-lg-inline">/</p>
+              <div class="group d-lg-inline-block text-center mx-0 px-0">
+                <label class="text-center" for="houseArea">Total Area<br>of House</label><br>
+                <input class="mx-0" id="houseArea" type="number" min="0" step="1" data-toggle="tooltip" title="Enter Total Square Footage/Meters of your Home.">
+              </div>
+              <p id="rightBracketSign" class="d-lg-inline">)</p>
+
+              <p id="equalSign" class="d-lg-inline-block">=</p>
+              <div class="group d-lg-inline-block text-center mx-0 px-0">
+                <label class="text-center" for="businessPercent">Business Home<br>Use Percentage</label><br>
+                <input class="text-center mx-0 font-weight-bold text-success" max="100" min="0" id="businessPercent"
+                  type="text" data-toggle="tooltip" title="Business Percentage of Displayed Time Period.">
+              </div>
+              <p id="percentSign" class="d-lg-inline-block">%</p>
+              <div class="group d-lg-inline-block mx-0 px-0">
+                <label class="text-center" for="timePeriodHomePercentSelect">Time<br>Period</label><br>
+                <select class="text-center" id="timePeriodHomePercentSelect" name="timePeriodHomePercentSelect"
+                  data-toggle="tooltip" title="Select Time Period to view Business % for that Period(unless all months within that period are not equal)"
+                  value="10">
+                  <option value="">Select Period</option>
+                  <option value="Year" selected>Full Year</option>
+                  <option value="1Q">1st ¼</option>
+                  <option value="2Q">2nd ¼</option>
+                  <option value="3Q">3rd ¼</option>
+                  <option value="4Q">4th ¼</option>
+                  <option value="Jan">January</option>
+                  <option value="Feb">February</option>
+                  <option value="Mar">March</option>
+                  <option value="Apr">April</option>
+                  <option value="May">May</option>
+                  <option value="Jun">June</option>
+                  <option value="Jul">July</option>
+                  <option value="Aug">August</option>
+                  <option value="Sep">September</option>
+                  <option value="Oct">October</option>
+                  <option value="Nov">November</option>
+                  <option value="Dec">December</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row text-center ml-4">
+            <div id="colorTextDiv" class="col-lg-7 text-center d-lg-inline-block text-success ml-3 mr-0">
+              <div id="colorTextContainerDiv" class="container border border-dark pt-2 pb-2">
+                <p class="text-left mb-0 pb-0">
+                  When Percentage is Green. Value is Saved for Displayed Time Period.
+                </p>
+                <p class="text-left text-danger mt-0 pt-0">
+                  When Percentage is Red. Value is NOT SAVED!.
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 text-center d-lg-inline-block ml-5">
+              <div class="group text-right">
+                <button id="btnApplyPercent" class="btn btn-sm btn-secondary mb-1" data-toggle="tooltip" title="Applies the Percentage Displayed to the Time Period Displayed.">Apply
+                  % Value to Time Period</button>
+                <button id="btnPercentCalcReset" class="btn btn-sm btn-secondary" data-toggle="tooltip" title="Resets Calculator Boxes to Blanks and Displays Saved Home Percentage of Time Period(if all months within time period are equal!)">Reset
+                  Calculations</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="bottomHomePercentTextDiv" class="row text-left ml-4 mt-3 border border-dark">
+            <p class="my-0">Note: Percentages are saved for each individual Month</p>
+            <p class="my-0 ml-3">When applying a percentage to a ¼ Period, the 3 Months that correspond will be given
+              the
+              displayed
+              Percentage.</p>
+            <p class="my-0 ml-3">When applying a percentage to the Full Year Period, All 12 Months will be given the
+              displayed
+              Percentage.</p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <!--  style="border: 2px solid red;" -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.min.js"></script>
+    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
+    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+    <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
+    <script type="text/javascript" src="./js/businessExpenses.js"></script>
+    <script type="text/javascript" src="./js/homeExpenses.js"></script>
+    <script type="text/javascript" src="./js/otherExpenses.js"></script>
+    <script type="text/javascript" src="./js/rentalExpenses.js"></script>
+    <script type="text/javascript" src="./js/income.js"></script>
+    <script type="text/javascript" src="./js/reports.js"></script>
+    <script type="text/javascript" src="./js/tables.js"></script>
+    <script type="text/javascript" src="./js/mainPageScript.js"></script>
+    <script type="text/javascript" src="./js/vehicleLog.js"></script>
+    <script type="text/javascript" src="./js/mainPageScript.js"></script>
+    <script type="text/javascript" src="./js/miscHardCoded.js"></script>
+    <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
+    <script type="text/javascript" src="./js/incomeStatement.js"></script>
+    <script type="text/javascript" src="./js/settings.js"></script>
+    <script type="text/javascript" src="./js/homePercent.js"></script>
+
+    <script>
+      // Get the current year for the copyright
+      // $('#year').text(new Date().getFullYear());
+
+      // This code enables the drop-down submenu
+      $('.dropdown-submenu > a').on("click", function (e) {
+        var submenu = $(this);
+        $('.dropdown-submenu .dropdown-menu').removeClass('show');
+        submenu.next('.dropdown-menu').addClass('show');
+        e.stopPropagation();
+      });
+
+      $('.dropdown').on("hidden.bs.dropdown", function () {
+        // hide any open menus when parent closes
+        $('.dropdown-menu.show').removeClass('show');
+      });
 
 
 
+      // Tooltip enable code
 
 
-
-  <!--  style="border: 2px solid red;" -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.min.js"></script>
-  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
-  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
-  <script type="text/javascript" src="./js/index.js"></script>
-  <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
-  <script type="text/javascript" src="./js/businessExpenses.js"></script>
-  <script type="text/javascript" src="./js/homeExpenses.js"></script>
-  <script type="text/javascript" src="./js/otherExpenses.js"></script>
-  <script type="text/javascript" src="./js/rentalExpenses.js"></script>
-  <script type="text/javascript" src="./js/income.js"></script>
-  <script type="text/javascript" src="./js/reports.js"></script>
-  <script type="text/javascript" src="./js/tables.js"></script>
-  <script type="text/javascript" src="./js/mainPageScript.js"></script>
-  <script type="text/javascript" src="./js/vehicleLog.js"></script>
-  <script type="text/javascript" src="./js/mainPageScript.js"></script>
-  <script type="text/javascript" src="./js/miscHardCoded.js"></script>
-  <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
-  <script type="text/javascript" src="./js/incomeStatement.js"></script>
-
-  <script>
-    // Get the current year for the copyright
-    // $('#year').text(new Date().getFullYear());
-
-    // This code enables the drop-down submenu
-    $('.dropdown-submenu > a').on("click", function (e) {
-      var submenu = $(this);
-      $('.dropdown-submenu .dropdown-menu').removeClass('show');
-      submenu.next('.dropdown-menu').addClass('show');
-      e.stopPropagation();
-    });
-
-    $('.dropdown').on("hidden.bs.dropdown", function () {
-      // hide any open menus when parent closes
-      $('.dropdown-menu.show').removeClass('show');
-    });
-
-
-
-    // Tooltip enable code
-
-    $(document).ready(function () {
-      if (enableTooltip) {
+      $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
-      }
-    });
-
-
-
-    //Display Image code
-
-    $('document').ready(function () {
-      $("#imgload").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
-
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImg').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
-
-        }
-      });
-
-      $("#imgloadBus").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
-
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImgBus').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      $("#imgloadHome").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
-
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImgHome').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      $("#imgloadOther").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
-
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImgOther').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
-        }
-      });
-
-      $("#imgloadRental").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
-
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImgRental').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
-        }
       });
 
 
-      $("#imgloadIncome").change(function () {
-        if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
+
+      //Display Image code
+
+      $('document').ready(function () {
+        $("#imgload").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImg').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+
+          }
+        });
+
+        $("#imgloadBus").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImgBus').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+        $("#imgloadHome").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImgHome').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+        $("#imgloadOther").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImgOther').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+        $("#imgloadRental").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImgRental').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+
+        $("#imgloadIncome").change(function () {
+          if (!this.files[0]) { return; }
+          const myFileSize = this.files[0].size;
+          if (myFileSize > 4112000) {
+            this.value = '';
+            return alert(
+              `The file size is ${
+              myFileSize
+              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+            );
+          }
+
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#myImgIncome').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+
+      });
+
+      //the following group of code is used to update the form status by catching the image src change and triggering the appropriate Update Status function
+
+      var elementIncome = document.getElementById('myImgIncome');
+      var elementVehicle = document.getElementById('myImg');
+      var elementBusiness = document.getElementById('myImgBus');
+      var elementHome = document.getElementById('myImgHome');
+      var elementOther = document.getElementById('myImgOther');
+      var elementRental = document.getElementById('myImgRental');
+
+      var xIncome = new MutationObserver(function (e) {
+        updateIncomeFormStatus();
+        disableEnableFullSizeIncomeImgBtn();
+      });
+      var xVehicle = new MutationObserver(function (e) {
+        updateVehicleFormStatus();
+        disableEnableFullSizeVehicleImgBtn();
+      });
+      var xBusiness = new MutationObserver(function (e) {
+        updateBusinessFormStatus();
+        disableEnableFullSizeBusinessImgBtn();
+      });
+      var xHome = new MutationObserver(function (e) {
+        updateHomeFormStatus();
+        disableEnableFullSizeHomeImgBtn();
+      });
+      var xOther = new MutationObserver(function (e) {
+        updateOtherFormStatus();
+        disableEnableFullSizeOtherImgBtn();
+      });
+      var xRental = new MutationObserver(function (e) {
+        updateRentalFormStatus();
+        disableEnableFullSizeRentalImgBtn();
+      });
+
+      xIncome.observe(elementIncome, {
+        attributes: true
+      });
+      xVehicle.observe(elementVehicle, {
+        attributes: true
+      });
+      xBusiness.observe(elementBusiness, {
+        attributes: true
+      });
+      xHome.observe(elementHome, {
+        attributes: true
+      });
+      xOther.observe(elementOther, {
+        attributes: true
+      });
+      xRental.observe(elementRental, {
+        attributes: true
+      });
+
+      // Display File Name in Receipt File Input
+
+      $('#imgload').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      $('#imgloadBus').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      $('#imgloadHome').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      $('#imgloadOther').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      $('#imgloadRental').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      $('#imgloadIncome').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+
+      // Code to Logout after set time
+
+      var idleTime = 0;
+      $(document).ready(function () {
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+          idleTime = 0;
+        });
+        $(this).keypress(function (e) {
+          idleTime = 0;
+        });
+        $(this).mousedown(function (e) {
+          idleTime = 0;
+        });
+        $(this).click(function (e) {
+          idleTime = 0;
+        });
+        $(this).scroll(function (e) {
+          idleTime = 0;
+        });
+      });
+
+      function timerIncrement() {
+        idleTime = idleTime + 1;
+        if (idleTime > 6) { // 7 minutes
+          // code to check if logged in and if so, logout
+          if ($("#navLogout").hasClass("disabled")) {
+          } else {
+            userLogout(true);
+          }
+
         }
+      };
 
-        if (this.files && this.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#myImgIncome').attr('src', e.target.result);
+      //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
+      $('document').ready(function () {
+
+        $('#addCarExpenseModal').on('shown.bs.modal', function () {
+          if ($('#carBlindExpID').val() !== "") {
+            if ($('#carExpBtn').hasClass("disabled")) {
+            } else {
+              $('#carExpBtn').addClass("disabled");
+            }
+            if ($('#carExpDeleteBtn').hasClass("disabled")) {
+              $('#carExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+              $('#carExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#carExpBtn').hasClass("disabled")) {
+              $('#carExpBtn').removeClass("disabled");
+            }
+            if ($('#carExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#carExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#carExpSaveChangesBtn').addClass("disabled");
+            }
           }
-          reader.readAsDataURL(this.files[0]);
-        }
+        });
+
+        $('#BusExpenseModal').on('shown.bs.modal', function () {
+          if ($('#busBlindExpID').val() !== "") {
+            if ($('#busExpBtn').hasClass("disabled")) {
+            } else {
+              $('#busExpBtn').addClass("disabled");
+            }
+            if ($('#busExpDeleteBtn').hasClass("disabled")) {
+              $('#busExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+              $('#busExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#busExpBtn').hasClass("disabled")) {
+              $('#busExpBtn').removeClass("disabled");
+            }
+            if ($('#busExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#busExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#busExpSaveChangesBtn').addClass("disabled");
+            }
+          }
+        });
+
+
+        $('#HomeExpenseModal').on('shown.bs.modal', function () {
+
+          if ($('#homeBlindExpID').val() !== "") {
+            if ($('#homeExpBtn').hasClass("disabled")) {
+            } else {
+              $('#homeExpBtn').addClass("disabled");
+            }
+            if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+              $('#homeExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+              $('#homeExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#homeExpBtn').hasClass("disabled")) {
+              $('#homeExpBtn').removeClass("disabled");
+            }
+            if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#homeExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#homeExpSaveChangesBtn').addClass("disabled");
+            }
+          }
+        });
+
+        $('#OtherExpenseModal').on('shown.bs.modal', function () {
+
+          if ($('#otherBlindExpID').val() !== "") {
+            if ($('#otherExpBtn').hasClass("disabled")) {
+            } else {
+              $('#otherExpBtn').addClass("disabled");
+            }
+            if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+              $('#otherExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+              $('#otherExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#otherExpBtn').hasClass("disabled")) {
+              $('#otherExpBtn').removeClass("disabled");
+            }
+            if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#otherExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#otherExpSaveChangesBtn').addClass("disabled");
+            }
+          }
+        });
+
+        $('#RentalExpenseModal').on('shown.bs.modal', function () {
+
+          if ($('#rentalBlindExpID').val() !== "") {
+            if ($('#rentalExpBtn').hasClass("disabled")) {
+            } else {
+              $('#rentalExpBtn').addClass("disabled");
+            }
+            if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+              $('#rentalExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+              $('#rentalExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#rentalExpBtn').hasClass("disabled")) {
+              $('#rentalExpBtn').removeClass("disabled");
+            }
+            if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#rentalExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#rentalExpSaveChangesBtn').addClass("disabled");
+            }
+          }
+        });
+
+        $('#IncomeModal').on('shown.bs.modal', function () {
+
+          if ($('#incomeBlindExpID').val() !== "") {
+            if ($('#incomeExpBtn').hasClass("disabled")) {
+            } else {
+              $('#incomeExpBtn').addClass("disabled");
+            }
+            if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+              $('#incomeExpDeleteBtn').removeClass("disabled");
+            }
+            if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+              $('#incomeExpSaveChangesBtn').removeClass("disabled");
+            }
+          } else {
+            if ($('#incomeExpBtn').hasClass("disabled")) {
+              $('#incomeExpBtn').removeClass("disabled");
+            }
+            if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#incomeExpDeleteBtn').addClass("disabled");
+            }
+            if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#incomeExpSaveChangesBtn').addClass("disabled");
+            }
+          }
+        });
+
+
       });
 
-
-    });
-
-    //the following group of code is used to update the form status by catching the image src change and triggering the appropriate Update Status function
-
-    var elementIncome = document.getElementById('myImgIncome');
-    var elementVehicle = document.getElementById('myImg');
-    var elementBusiness = document.getElementById('myImgBus');
-    var elementHome = document.getElementById('myImgHome');
-    var elementOther = document.getElementById('myImgOther');
-    var elementRental = document.getElementById('myImgRental');
-
-    var xIncome = new MutationObserver(function (e) {
-      updateIncomeFormStatus();
-      disableEnableFullSizeIncomeImgBtn();
-    });
-    var xVehicle = new MutationObserver(function (e) {
-      updateVehicleFormStatus();
-      disableEnableFullSizeVehicleImgBtn();
-    });
-    var xBusiness = new MutationObserver(function (e) {
-      updateBusinessFormStatus();
-      disableEnableFullSizeBusinessImgBtn();
-    });
-    var xHome = new MutationObserver(function (e) {
-      updateHomeFormStatus();
-      disableEnableFullSizeHomeImgBtn();
-    });
-    var xOther = new MutationObserver(function (e) {
-      updateOtherFormStatus();
-      disableEnableFullSizeOtherImgBtn();
-    });
-    var xRental = new MutationObserver(function (e) {
-      updateRentalFormStatus();
-      disableEnableFullSizeRentalImgBtn();
-    });
-
-    xIncome.observe(elementIncome, {
-      attributes: true
-    });
-    xVehicle.observe(elementVehicle, {
-      attributes: true
-    });
-    xBusiness.observe(elementBusiness, {
-      attributes: true
-    });
-    xHome.observe(elementHome, {
-      attributes: true
-    });
-    xOther.observe(elementOther, {
-      attributes: true
-    });
-    xRental.observe(elementRental, {
-      attributes: true
-    });
-
-    // Display File Name in Receipt File Input
-
-    $('#imgload').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    $('#imgloadBus').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    $('#imgloadHome').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    $('#imgloadOther').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    $('#imgloadRental').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    $('#imgloadIncome').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
-
-    // Code to Logout after set time
-
-    var idleTime = 0;
-    $(document).ready(function () {
-      //Increment the idle time counter every minute.
-      var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-      //Zero the idle timer on mouse movement.
-      $(this).mousemove(function (e) {
-        idleTime = 0;
-      });
-      $(this).keypress(function (e) {
-        idleTime = 0;
-      });
-      $(this).mousedown(function (e) {
-        idleTime = 0;
-      });
-      $(this).click(function (e) {
-        idleTime = 0;
-      });
-      $(this).scroll(function (e) {
-        idleTime = 0;
-      });
-    });
-
-    function timerIncrement() {
-      idleTime = idleTime + 1;
-      if (idleTime > 6) { // 7 minutes
-        // code to check if logged in and if so, logout
-        if ($("#navLogout").hasClass("disabled")) {
-        } else {
-          userLogout(true);
-        }
-
-      }
-    };
-
-    //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
-    $('document').ready(function () {
-
-      $('#addCarExpenseModal').on('shown.bs.modal', function () {
-        if ($('#carBlindExpID').val() !== "") {
-          if ($('#carExpBtn').hasClass("disabled")) {
-          } else {
-            $('#carExpBtn').addClass("disabled");
-          }
-          if ($('#carExpDeleteBtn').hasClass("disabled")) {
-            $('#carExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
-            $('#carExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#carExpBtn').hasClass("disabled")) {
-            $('#carExpBtn').removeClass("disabled");
-          }
-          if ($('#carExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#carExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#carExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-      $('#BusExpenseModal').on('shown.bs.modal', function () {
-        if ($('#busBlindExpID').val() !== "") {
-          if ($('#busExpBtn').hasClass("disabled")) {
-          } else {
-            $('#busExpBtn').addClass("disabled");
-          }
-          if ($('#busExpDeleteBtn').hasClass("disabled")) {
-            $('#busExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
-            $('#busExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#busExpBtn').hasClass("disabled")) {
-            $('#busExpBtn').removeClass("disabled");
-          }
-          if ($('#busExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#busExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#busExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-
-      $('#HomeExpenseModal').on('shown.bs.modal', function () {
-
-        if ($('#homeBlindExpID').val() !== "") {
-          if ($('#homeExpBtn').hasClass("disabled")) {
-          } else {
-            $('#homeExpBtn').addClass("disabled");
-          }
-          if ($('#homeExpDeleteBtn').hasClass("disabled")) {
-            $('#homeExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
-            $('#homeExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#homeExpBtn').hasClass("disabled")) {
-            $('#homeExpBtn').removeClass("disabled");
-          }
-          if ($('#homeExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#homeExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#homeExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-      $('#OtherExpenseModal').on('shown.bs.modal', function () {
-
-        if ($('#otherBlindExpID').val() !== "") {
-          if ($('#otherExpBtn').hasClass("disabled")) {
-          } else {
-            $('#otherExpBtn').addClass("disabled");
-          }
-          if ($('#otherExpDeleteBtn').hasClass("disabled")) {
-            $('#otherExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
-            $('#otherExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#otherExpBtn').hasClass("disabled")) {
-            $('#otherExpBtn').removeClass("disabled");
-          }
-          if ($('#otherExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#otherExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#otherExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-      $('#RentalExpenseModal').on('shown.bs.modal', function () {
-
-        if ($('#rentalBlindExpID').val() !== "") {
-          if ($('#rentalExpBtn').hasClass("disabled")) {
-          } else {
-            $('#rentalExpBtn').addClass("disabled");
-          }
-          if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
-            $('#rentalExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
-            $('#rentalExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#rentalExpBtn').hasClass("disabled")) {
-            $('#rentalExpBtn').removeClass("disabled");
-          }
-          if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#rentalExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#rentalExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-      $('#IncomeModal').on('shown.bs.modal', function () {
-
-        if ($('#incomeBlindExpID').val() !== "") {
-          if ($('#incomeExpBtn').hasClass("disabled")) {
-          } else {
-            $('#incomeExpBtn').addClass("disabled");
-          }
-          if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
-            $('#incomeExpDeleteBtn').removeClass("disabled");
-          }
-          if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
-            $('#incomeExpSaveChangesBtn').removeClass("disabled");
-          }
-        } else {
-          if ($('#incomeExpBtn').hasClass("disabled")) {
-            $('#incomeExpBtn').removeClass("disabled");
-          }
-          if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
-          } else {
-            $('#incomeExpDeleteBtn').addClass("disabled");
-          }
-          if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
-          } else {
-            $('#incomeExpSaveChangesBtn').addClass("disabled");
-          }
-        }
-      });
-
-
-    });
-
-  </script>
+    </script>
 
 
 

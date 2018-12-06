@@ -9,9 +9,8 @@ const busboyBodyParser = require('busboy-body-parser');
 const AWS = require('aws-sdk');
 const Busboy = require('busboy');
 const { ObjectID } = require("mongodb");
-//const multer = require("multer");
-// const uploadImg = multer({ dest: "./../expReceipts/" });
 const _ = require("lodash");
+
 
 const port = process.env.PORT || 3000;
 
@@ -40,7 +39,7 @@ const { RentalVendor } = require("./models/rentalVendor");
 const { IncomeClient } = require("./models/incomeClient");
 const { authenticate } = require("./middleware/authenticate");
 
-let { EZ_ENV } = require("./config");
+let { EZ_ENV } = require("./config/config");
 
 var app = express();
 app.use(fileUpload());
@@ -115,13 +114,7 @@ app.post("/carExpense", authenticate, async (req, res) => {
     }
   } else {
     sampleFile = req.files.imgload;
-    // sampleFile.mv("./server/imageUpload/myNewImg.jpg", function (err) {
-    //   if (err) {
-    //     return res.status(500).send(err);
-    //   }
-    // });
 
-    // to get the data from a file path use fs.readFileSync(path)
     let myCarExpObjectImg = {
       _user: req.user._id,
       carDate: req.body.carDate,
@@ -171,10 +164,17 @@ app.post("/carExpense", authenticate, async (req, res) => {
       }
 
       if (doc.receiptPath) {
-        let myImg;
+
+        // sampleFile.mv("./server/ImgUpload/myNewImg.jpg", function (err) {
+        //   if (err) {
+        //     return res.status(500).send(err);
+        //   }
+        // });
+
+
         uploadReceiptImage2S3(doc._user, doc._id, sampleFile);
-        //renameTheImage(doc._user, doc._id, sampleFile);
-        //myImg = await uploadToS3(sampleFile, `${doc._user}_${doc._id}.jpg`);
+
+
       }
       res.status(200).send(mypackage);
     },
@@ -185,66 +185,22 @@ app.post("/carExpense", authenticate, async (req, res) => {
 });
 
 async function uploadReceiptImage2S3(userID, expenseID, myFile) {
-  myImg = await uploadToS3(myFile, `${userID}_${expenseID}.jpg`);
+  // myImg = await uploadToS3(myFile, `${userID}_${expenseID}.jpg`);
 };
-
-// function renameTheImage(userID, expenseID, myImg) {
-//   fs.exists("./server/imageUpload/myNewImg.jpg", exists => {
-//     if (exists) {
-//       fs.rename(
-//         "./server/imageUpload/myNewImg.jpg",
-//         `./server/imageUpload/${userID}_${expenseID}.jpg`,
-//         function (err) {
-//           if (err) throw err;
-//           // console.log("File Renamed.");
-//         }
-//       );
-
-//     } else {
-//       return "Receipt was not found";
-//     }
-//   });
-// }
-
-// function deleteTheDefaultImage(userID, tempID) {
-//   fs.exists(`./server/imageUpload/myNewImg.jpg`, exists => {
-//     if (exists) {
-//       fs.unlink(`./server/imageUpload/myNewImg.jpg`, function (err) {
-//         if (err) throw err;
-//         // console.log("File Renamed.");
-//       });
-//     } else {
-//       return "Receipt was not found";
-//     }
-//   });
-// }
 
 async function deleteTheImage(userID, tempID) {
 
-  try {
-    let myImg;
-    myImg = await deleteImageFromS3(`${userID}_${tempID}.jpg`);
-    if (myImg) {
-      //console.log('Image Deleted!')
-    } else {
-      throw (error);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-
-
-  // fs.exists(`./server/imageUpload/${userID}_${tempID}.jpg`, exists => {
-  //   if (exists) {
-  //     fs.unlink(`./server/imageUpload/${userID}_${tempID}.jpg`, function (err) {
-  //       if (err) throw err;
-  //       // console.log("File Deleted.");
-  //     });
+  // try {
+  //   let myImg;
+  //   myImg = await deleteImageFromS3(`${userID}_${tempID}.jpg`);
+  //   if (myImg) {
+  //     //console.log('Image Deleted!')
   //   } else {
-  //     return "Receipt was not found";
+  //     throw (error);
   //   }
-  // });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 app.post("/carExpenseRecur", authenticate, (req, res) => {
@@ -422,18 +378,18 @@ app.get("/carExpense", authenticate, (req, res) => {
 app.get("/carExpenseImg/:_id", authenticate, async (req, res) => {
 
 
-  try {
-    let myImg;
-    const tempID = req.params._id;
-    myImg = await getImageFromS3(`${req.user._id}_${tempID}.jpg`);
-    if (myImg) {
-      res.send({ myImg });
-    } else {
-      throw (error);
-    }
-  } catch (error) {
-    return res.status(404).send(error);
-  }
+  // try {
+  //   let myImg;
+  //   const tempID = req.params._id;
+  //   myImg = await getImageFromS3(`${req.user._id}_${tempID}.jpg`);
+  //   if (myImg) {
+  //     res.send({ myImg });
+  //   } else {
+  //     throw (error);
+  //   }
+  // } catch (error) {
+  //   return res.status(404).send(error);
+  // }
 
 });
 
@@ -1806,3 +1762,52 @@ function deleteImageFromS3(fileName) {
 app.listen(port, () => {
   console.log(`Started on Port ${port}`);
 });
+
+
+
+// fs.exists(`./server/imageUpload/${userID}_${tempID}.jpg`, exists => {
+  //   if (exists) {
+  //     fs.unlink(`./server/imageUpload/${userID}_${tempID}.jpg`, function (err) {
+  //       if (err) throw err;
+  //       // console.log("File Deleted.");
+  //     });
+  //   } else {
+  //     return "Receipt was not found";
+  //   }
+  // });
+
+
+  // function renameTheImage(userID, expenseID, myImg) {
+//   fs.exists("./server/imageUpload/myNewImg.jpg", exists => {
+//     if (exists) {
+//       fs.rename(
+//         "./server/imageUpload/myNewImg.jpg",
+//         `./server/imageUpload/${userID}_${expenseID}.jpg`,
+//         function (err) {
+//           if (err) throw err;
+//           // console.log("File Renamed.");
+//         }
+//       );
+
+//     } else {
+//       return "Receipt was not found";
+//     }
+//   });
+// }
+
+// function deleteTheDefaultImage(userID, tempID) {
+//   fs.exists(`./server/imageUpload/myNewImg.jpg`, exists => {
+//     if (exists) {
+//       fs.unlink(`./server/imageUpload/myNewImg.jpg`, function (err) {
+//         if (err) throw err;
+//         // console.log("File Renamed.");
+//       });
+//     } else {
+//       return "Receipt was not found";
+//     }
+//   });
+// }
+
+
+
+    //to get the data from a file path use fs.readFileSync(path)

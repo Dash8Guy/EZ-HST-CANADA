@@ -10,9 +10,24 @@
 .form-control {
   font-size: 14px;
 }
+
+/* From Line 14 to 22 is used to remove the up/down arrows in input with number style */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
 /* Table with links */
 
-
+#titleNode,
+#sortString {
+  font-size: 14px;
+}
 
 #homeFileInputLbl,
 #carFileInputLbl,
@@ -511,6 +526,119 @@ option {
   font-weight: bolder;
 }
 
-/* #revenueTabLink {
+/* SETTINGS */
 
-} */
+#settingsModal h5 {
+  font-size: 18px;
+}
+
+#settingModalHeader,
+#homePercentModalHeader {
+  height: 50px;
+}
+
+#settingsSelectLbl,
+#settingsTooltipLbl {
+  font-size: 14px;
+}
+
+#tooltipOnLbl,
+#tooltipOffLbl {
+  font-size: 9px;
+}
+
+/* Home Percent */
+
+#homePercentModal h6 {
+  font-size: 14px;
+}
+
+#homePercentModal h5 {
+  font-size: 16px;
+}
+
+#lastLineText {
+  text-decoration: underline;
+  color: rgb(172, 15, 15)!important;
+}
+
+#homePercentModal label {
+  font-size: 10px;
+  font-weight: bolder;
+}
+
+#homePercentModal input {
+  width: 50px;
+  height: 26px;
+  font-size: 11px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#timePeriodHomePercentSelect {
+  height: 26px;
+  font-size: 11px;
+}
+
+#divisionSign,
+#leftBracketSign,
+#rightBracketSign,
+#leftBracketSign2,
+#rightBracketSign2,
+#leftBracketSign3,
+#rightBracketSign3 {
+  font-size: 18px;
+}
+
+#dividedbySevenSign,
+#dividedbytwoFourSign,
+#multiplySign,
+#multiplySign2,
+#equalSign,
+#percentSign {
+  font-size: 12px;
+}
+
+#percentSign {
+  margin-left: -9px;
+  margin-right: 16px;
+}
+
+#multiplySign {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+#multiplySign2 {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+#equalSign {
+  margin-right: 6px;
+  margin-left: 10px;
+}
+
+#dividedbySevenSign {
+  margin-left: 0px;
+}
+
+#colorTextDiv p {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+#bottomHomePercentTextDiv {
+  font-size: 11px;
+  font-weight: bold;
+  width: 85%;
+}
+
+#colorTextContainerDiv {
+  height: 58px;
+}
+
+#btnApplyPercent,
+#btnPercentCalcReset {
+  font-size: 10px;
+}

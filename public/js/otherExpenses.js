@@ -401,7 +401,7 @@ function updateOtherExpense() {
       myDOMs.otherExp.ExpID.value = 'SAVED';
       setHomeStatusColor();
 
-      await getAllMainData();
+      await getAllMainData('Other Costs');
       fillMainDataFromArrays();
       updateOtherCostsTableTotals();
 
@@ -579,7 +579,7 @@ function deleteOtherExpense() {
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
 
-        await getAllMainData();
+        await getAllMainData('Other Costs');
         fillMainDataFromArrays();
         updateOtherCostsTableTotals();
       })
@@ -600,6 +600,12 @@ function deleteOtherExpense() {
 }
 
 function getOtherExpenses(myFilter) {
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
   if (!myFilter) {
     myReportTotal.totalNet = mainData.otherCostsExp.net;
     myReportTotal.totalHST = mainData.otherCostsExp.hst;
@@ -770,6 +776,9 @@ $("#otherExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
+        if (TableOpen) {
+          alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+        }
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -790,7 +799,7 @@ $("#otherExpBtn").click(function () {
         myDOMs.otherExp.ReoccurNO.checked = true;
         myDOMs.otherExp.EntryDate.focus();
 
-        await getAllMainData();
+        await getAllMainData('Other Costs');
         fillMainDataFromArrays();
         updateOtherCostsTableTotals();
       })
@@ -902,6 +911,9 @@ $("#otherExpBtn").click(function () {
         contentType: false
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           let myObjMsg = [""];
 
           displayAlert(
@@ -920,7 +932,7 @@ $("#otherExpBtn").click(function () {
           removeOtherImage();
           myDOMs.otherExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Other Costs');
           fillMainDataFromArrays();
           updateOtherCostsTableTotals();
         })
@@ -972,6 +984,9 @@ $("#otherExpBtn").click(function () {
         enctype: "multipart/form-data"
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           displayAlert(
             myDOMs.otherExp.AlertContainer,
             "otherExpAlert",
@@ -987,7 +1002,7 @@ $("#otherExpBtn").click(function () {
           myDOMs.otherExp.ReoccurNO.checked = true;
           myDOMs.otherExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Other Costs');
           fillMainDataFromArrays();
           updateOtherCostsTableTotals();
         })

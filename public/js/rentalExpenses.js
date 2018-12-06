@@ -169,7 +169,7 @@ function populateRentalVendors() {
 
 function populateRentalCategories() {
   //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
-  //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
+  //alert('inside populate rental categories');
   $.ajax({
     url: `${serverURL}rentalCategorie`,
     method: "GET"
@@ -328,18 +328,20 @@ function updateRentalExpense() {
     contentType: false
   })
     .done(async function (data) {
-      let myObjMsg = [""];
+      let myObjMsg = [];
 
       displayAlert(
         myDOMs.rentalExp.AlertContainer,
         "rentalExpAlert",
         "rentalCloseBtnAlert",
-        `${data.message} `,
+        ``,
         myObjMsg,
         `Expense ID: ${data.NewExpense._id}`,
         "GREEN",
         6000
       );
+
+
       //Code to update report array
       let carDate = myTempDate;
       let carNetAmt = parseFloat(myDOMs.rentalExp.NetAmt.value);
@@ -400,7 +402,7 @@ function updateRentalExpense() {
       myDOMs.rentalExp.ExpID.value = 'SAVED';
       setRentalStatusColor();
 
-      await getAllMainData();
+      await getAllMainData('Rental');
       fillMainDataFromArrays();
 
       updateRentalExpTableTotals();
@@ -422,6 +424,7 @@ function updateRentalExpense() {
 };
 
 function updateRentalExpTableTotals() {
+  if (!TableOpen) return;
   if (reOpenIncomeStatement) {
     switch (myReportTotal.category) {
       case 'Advertising':
@@ -618,14 +621,24 @@ function deleteRentalExpense() {
           myTableAlert.insertBefore(nav, myTableAlert.childNodes[0]);
         }
 
-        let myUpdatedText = `You have ${
-          curTableArray.length
-          } Rental Expenses displayed on ${tempPageCount} pages.`;
+        let tempTitle;
+        let myUpdatedText;
+        if (reOpenIncomeStatement) {
+          tempTitle = myReportTotal.categoryFull;
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Rental(${tempTitle}) Expenses displayed on ${tempPageCount} pages.`;
+        } else {
+          myUpdatedText = `You have ${
+            curTableArray.length
+            } Rental Expenses displayed on ${tempPageCount} pages.`;
+        }
+
         resetText(myUpdatedText);
         moveToOriginalPage(currPageOnDelete);
         resetOriginalData();
 
-        await getAllMainData();
+        await getAllMainData('Rental');
         fillMainDataFromArrays();
         updateRentalExpTableTotals();
       })
@@ -646,6 +659,12 @@ function deleteRentalExpense() {
 }
 
 function getRentalExpenses(myFilter) {
+  if (TableOpen) {
+    if (reOpenIncomeStatement) {
+      reOpenIncomeStatement = false;
+    }
+    hideTableAlert();
+  }
   if (!myFilter) {
     myReportTotal.totalNet = mainData.rentalExp.net;
     myReportTotal.totalHST = mainData.rentalExp.hst;
@@ -677,7 +696,7 @@ function getRentalExpenses(myFilter) {
 
       if (myFilter) {
         myReportTotal.categoryFull = myFilter;
-        tempTitle = `Rental Expenses (${myFilter})`;
+        tempTitle = `Rental(${myFilter}) Expenses`;
         curTableArray = curTableArray.filter((el, index) => {
           return el.carExpCatSelect === myFilter;
         });
@@ -814,6 +833,9 @@ $("#rentalExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
+        if (TableOpen) {
+          alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+        }
         let myDisplay = [`The following are all the new expense ID's`];
         for (i = 0; i < data.insertedCount; i++) {
           myDisplay.push(data.insertedIds[i]);
@@ -834,7 +856,7 @@ $("#rentalExpBtn").click(function () {
         myDOMs.rentalExp.ReoccurNO.checked = true;
         myDOMs.rentalExp.EntryDate.focus();
 
-        await getAllMainData();
+        await getAllMainData('Rental');
         fillMainDataFromArrays();
         updateRentalExpTableTotals();
       })
@@ -946,6 +968,9 @@ $("#rentalExpBtn").click(function () {
         contentType: false
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           let myObjMsg = [""];
 
           displayAlert(
@@ -964,7 +989,7 @@ $("#rentalExpBtn").click(function () {
           removeRentalImage();
           myDOMs.rentalExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Rental');
           fillMainDataFromArrays();
           updateRentalExpTableTotals();
         })
@@ -1016,6 +1041,9 @@ $("#rentalExpBtn").click(function () {
         enctype: "multipart/form-data"
       })
         .done(async function (data) {
+          if (TableOpen) {
+            alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
+          }
           displayAlert(
             myDOMs.rentalExp.AlertContainer,
             "rentalExpAlert",
@@ -1031,7 +1059,7 @@ $("#rentalExpBtn").click(function () {
           myDOMs.rentalExp.ReoccurNO.checked = true;
           myDOMs.rentalExp.EntryDate.focus();
 
-          await getAllMainData();
+          await getAllMainData('Rental');
           fillMainDataFromArrays();
           updateRentalExpTableTotals();
         })

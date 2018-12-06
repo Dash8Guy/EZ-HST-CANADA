@@ -1,6 +1,103 @@
 
 let vLogArray = [];
 
+let amtPersJanV1 = 0;
+let amtPersFebV1 = 0;
+let amtPersMarV1 = 0;
+let amtPersAprV1 = 0;
+let amtPersMayV1 = 0;
+let amtPersJunV1 = 0;
+let amtPersJulV1 = 0;
+let amtPersAugV1 = 0;
+let amtPersSepV1 = 0;
+let amtPersOctV1 = 0;
+let amtPersNovV1 = 0;
+let amtPersDecV1 = 0;
+
+let amtPersJanV2 = 0;
+let amtPersFebV2 = 0;
+let amtPersMarV2 = 0;
+let amtPersAprV2 = 0;
+let amtPersMayV2 = 0;
+let amtPersJunV2 = 0;
+let amtPersJulV2 = 0;
+let amtPersAugV2 = 0;
+let amtPersSepV2 = 0;
+let amtPersOctV2 = 0;
+let amtPersNovV2 = 0;
+let amtPersDecV2 = 0;
+
+let amtBusJanV1 = 0;
+let amtBusFebV1 = 0;
+let amtBusMarV1 = 0;
+let amtBusAprV1 = 0;
+let amtBusMayV1 = 0;
+let amtBusJunV1 = 0;
+let amtBusJulV1 = 0;
+let amtBusAugV1 = 0;
+let amtBusSepV1 = 0;
+let amtBusOctV1 = 0;
+let amtBusNovV1 = 0;
+let amtBusDecV1 = 0;
+
+let amtBusJanV2 = 0;
+let amtBusFebV2 = 0;
+let amtBusMarV2 = 0;
+let amtBusAprV2 = 0;
+let amtBusMayV2 = 0;
+let amtBusJunV2 = 0;
+let amtBusJulV2 = 0;
+let amtBusAugV2 = 0;
+let amtBusSepV2 = 0;
+let amtBusOctV2 = 0;
+let amtBusNovV2 = 0;
+let amtBusDecV2 = 0;
+
+let BusPercJanV1 = 0;
+let BusPercFebV1 = 0;
+let BusPercMarV1 = 0;
+let BusPercAprV1 = 0;
+let BusPercMayV1 = 0;
+let BusPercJunV1 = 0;
+let BusPercJulV1 = 0;
+let BusPercAugV1 = 0;
+let BusPercSepV1 = 0;
+let BusPercOctV1 = 0;
+let BusPercNovV1 = 0;
+let BusPercDecV1 = 0;
+
+let BusPercJanV2 = 0;
+let BusPercFebV2 = 0;
+let BusPercMarV2 = 0;
+let BusPercAprV2 = 0;
+let BusPercMayV2 = 0;
+let BusPercJunV2 = 0;
+let BusPercJulV2 = 0;
+let BusPercAugV2 = 0;
+let BusPercSepV2 = 0;
+let BusPercOctV2 = 0;
+let BusPercNovV2 = 0;
+let BusPercDecV2 = 0;
+
+
+let BusinessPercentYearV1 = 0;
+let BusinessPercentQ1V1 = 0;
+let BusinessPercentQ2V1 = 0;
+let BusinessPercentQ3V1 = 0;
+let BusinessPercentQ4V1 = 0;
+let BusinessTotalV1 = 0;
+let PersonalTotalV1 = 0;
+let TotalV1 = 0;
+
+let BusinessPercentYearV2 = 0;
+let BusinessPercentQ1V2 = 0;
+let BusinessPercentQ2V2 = 0;
+let BusinessPercentQ3V2 = 0;
+let BusinessPercentQ4V2 = 0;
+let BusinessTotalV2 = 0;
+let PersonalTotalV2 = 0;
+let TotalV2 = 0;
+
 async function displayVehicleLogModal() {
    let tempZero = 0;
    $("#vehicleLogModal").modal("show");
@@ -202,7 +299,7 @@ function postVehicleLog() {
       data: mydata,
       enctype: "multipart/form-data",
    })
-      .done(function (data) {
+      .done(async function (data) {
          displayAlert(
             myDOMs.vehicleLog.AlertContainer,
             "alertContainerVehicleLog",
@@ -214,6 +311,8 @@ function postVehicleLog() {
             6000
          );
          updateLogArrayAfterPost(myDate, PersAmt, BusAmt, changedVehicle)
+         await getVehiclePercentage();
+         fillMainDataFromArrays();
          let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
          PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
          calculateBusinessPercentage(PercentsendDate);
@@ -377,107 +476,11 @@ function updateLogData(searchDate) {
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
    PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
    calculateBusinessPercentage(PercentsendDate);
-
 };
 
-function calculateBusinessPercentage(selectDate) {
+function calculateBusinessPercentage(selectDate, myReturn) {
+   zeroCalcVariables();
    let tempDayOfYear = getDayofYear(selectDate);
-   let amtPersJanV1 = 0;
-   let amtPersFebV1 = 0;
-   let amtPersMarV1 = 0;
-   let amtPersAprV1 = 0;
-   let amtPersMayV1 = 0;
-   let amtPersJunV1 = 0;
-   let amtPersJulV1 = 0;
-   let amtPersAugV1 = 0;
-   let amtPersSepV1 = 0;
-   let amtPersOctV1 = 0;
-   let amtPersNovV1 = 0;
-   let amtPersDecV1 = 0;
-
-   let amtPersJanV2 = 0;
-   let amtPersFebV2 = 0;
-   let amtPersMarV2 = 0;
-   let amtPersAprV2 = 0;
-   let amtPersMayV2 = 0;
-   let amtPersJunV2 = 0;
-   let amtPersJulV2 = 0;
-   let amtPersAugV2 = 0;
-   let amtPersSepV2 = 0;
-   let amtPersOctV2 = 0;
-   let amtPersNovV2 = 0;
-   let amtPersDecV2 = 0;
-
-   let amtBusJanV1 = 0;
-   let amtBusFebV1 = 0;
-   let amtBusMarV1 = 0;
-   let amtBusAprV1 = 0;
-   let amtBusMayV1 = 0;
-   let amtBusJunV1 = 0;
-   let amtBusJulV1 = 0;
-   let amtBusAugV1 = 0;
-   let amtBusSepV1 = 0;
-   let amtBusOctV1 = 0;
-   let amtBusNovV1 = 0;
-   let amtBusDecV1 = 0;
-
-   let amtBusJanV2 = 0;
-   let amtBusFebV2 = 0;
-   let amtBusMarV2 = 0;
-   let amtBusAprV2 = 0;
-   let amtBusMayV2 = 0;
-   let amtBusJunV2 = 0;
-   let amtBusJulV2 = 0;
-   let amtBusAugV2 = 0;
-   let amtBusSepV2 = 0;
-   let amtBusOctV2 = 0;
-   let amtBusNovV2 = 0;
-   let amtBusDecV2 = 0;
-
-   let BusPercJanV1 = 0;
-   let BusPercFebV1 = 0;
-   let BusPercMarV1 = 0;
-   let BusPercAprV1 = 0;
-   let BusPercMayV1 = 0;
-   let BusPercJunV1 = 0;
-   let BusPercJulV1 = 0;
-   let BusPercAugV1 = 0;
-   let BusPercSepV1 = 0;
-   let BusPercOctV1 = 0;
-   let BusPercNovV1 = 0;
-   let BusPercDecV1 = 0;
-
-   let BusPercJanV2 = 0;
-   let BusPercFebV2 = 0;
-   let BusPercMarV2 = 0;
-   let BusPercAprV2 = 0;
-   let BusPercMayV2 = 0;
-   let BusPercJunV2 = 0;
-   let BusPercJulV2 = 0;
-   let BusPercAugV2 = 0;
-   let BusPercSepV2 = 0;
-   let BusPercOctV2 = 0;
-   let BusPercNovV2 = 0;
-   let BusPercDecV2 = 0;
-
-
-   let BusinessPercentYearV1 = 0;
-   let BusinessPercentQ1V1 = 0;
-   let BusinessPercentQ2V1 = 0;
-   let BusinessPercentQ3V1 = 0;
-   let BusinessPercentQ4V1 = 0;
-   let BusinessTotalV1 = 0;
-   let PersonalTotalV1 = 0;
-   let TotalV1 = 0;
-
-   let BusinessPercentYearV2 = 0;
-   let BusinessPercentQ1V2 = 0;
-   let BusinessPercentQ2V2 = 0;
-   let BusinessPercentQ3V2 = 0;
-   let BusinessPercentQ4V2 = 0;
-   let BusinessTotalV2 = 0;
-   let PersonalTotalV2 = 0;
-   let TotalV2 = 0;
 
    vLogArray.forEach((el, index) => {
       let loopMonth = new Date(el.logDate).getMonth();
@@ -559,48 +562,233 @@ function calculateBusinessPercentage(selectDate) {
 
    })
 
+   let myZeroVal = 0;
+
    BusinessTotalV1 = amtBusJanV1 + amtBusFebV1 + amtBusMarV1 + amtBusAprV1 + amtBusMayV1 + amtBusJunV1 + amtBusJulV1 + amtBusAugV1 + amtBusSepV1 + amtBusOctV1 + amtBusNovV1 + amtBusDecV1;
    PersonalTotalV1 = amtPersJanV1 + amtPersFebV1 + amtPersMarV1 + amtPersAprV1 + amtPersMayV1 + amtPersJunV1 + amtPersJulV1 + amtPersAugV1 + amtPersSepV1 + amtPersOctV1 + amtPersNovV1 + amtPersDecV1;
    TotalV1 = BusinessTotalV1 + PersonalTotalV1;
-   BusinessPercentYearV1 = Number((BusinessTotalV1 / TotalV1) * 100).toFixed(2);
-   BusinessPercentQ1V1 = Number((amtBusJanV1 + amtBusFebV1 + amtBusMarV1) / (amtBusJanV1 + amtBusFebV1 + amtBusMarV1 + amtPersJanV1 + amtPersFebV1 + amtPersMarV1) * 100).toFixed(2);
-   BusinessPercentQ2V1 = Number((amtBusAprV1 + amtBusMayV1 + amtBusJunV1) / (amtBusAprV1 + amtBusMayV1 + amtBusJunV1 + amtPersAprV1 + amtPersMayV1 + amtPersJunV1) * 100).toFixed(2);
-   BusinessPercentQ3V1 = Number((amtBusJulV1 + amtBusAugV1 + amtBusSepV1) / (amtBusJulV1 + amtBusAugV1 + amtBusSepV1 + amtPersJulV1 + amtPersAugV1 + amtPersSepV1) * 100).toFixed(2);
-   BusinessPercentQ4V1 = Number((amtBusOctV1 + amtBusNovV1 + amtBusDecV1) / (amtBusOctV1 + amtBusNovV1 + amtBusDecV1 + amtPersOctV1 + amtPersNovV1 + amtPersDecV1) * 100).toFixed(2);
-   BusPercJanV1 = Number(amtBusJanV1 / (amtBusJanV1 + amtPersJanV1) * 100).toFixed(2);
-   BusPercFebV1 = Number(amtBusFebV1 / (amtBusFebV1 + amtPersFebV1) * 100).toFixed(2);
-   BusPercMarV1 = Number(amtBusMarV1 / (amtBusMarV1 + amtPersMarV1) * 100).toFixed(2);
-   BusPercAprV1 = Number(amtBusAprV1 / (amtBusAprV1 + amtPersAprV1) * 100).toFixed(2);
-   BusPercMayV1 = Number(amtBusMayV1 / (amtBusMayV1 + amtPersMayV1) * 100).toFixed(2);
-   BusPercJunV1 = Number(amtBusJunV1 / (amtBusJunV1 + amtPersJunV1) * 100).toFixed(2);
-   BusPercJulV1 = Number(amtBusJulV1 / (amtBusJulV1 + amtPersJulV1) * 100).toFixed(2);
-   BusPercAugV1 = Number(amtBusAugV1 / (amtBusAugV1 + amtPersAugV1) * 100).toFixed(2);
-   BusPercSepV1 = Number(amtBusSepV1 / (amtBusSepV1 + amtPersSepV1) * 100).toFixed(2);
-   BusPercOctV1 = Number(amtBusOctV1 / (amtBusOctV1 + amtPersOctV1) * 100).toFixed(2);
-   BusPercNovV1 = Number(amtBusNovV1 / (amtBusNovV1 + amtPersNovV1) * 100).toFixed(2);
-   BusPercDecV1 = Number(amtBusDecV1 / (amtBusDecV1 + amtPersDecV1) * 100).toFixed(2);
+
+   if (TotalV1 === 0) {
+      BusinessPercentYearV1 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentYearV1 = Number((BusinessTotalV1 / TotalV1) * 100).toFixed(2);
+   }
+
+   if (amtBusJanV1 + amtBusFebV1 + amtBusMarV1 + amtPersJanV1 + amtPersFebV1 + amtPersMarV1 === 0) {
+      BusinessPercentQ1V1 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ1V1 = Number((amtBusJanV1 + amtBusFebV1 + amtBusMarV1) / (amtBusJanV1 + amtBusFebV1 + amtBusMarV1 + amtPersJanV1 + amtPersFebV1 + amtPersMarV1) * 100).toFixed(2);
+   }
+
+   if (amtBusAprV1 + amtBusMayV1 + amtBusJunV1 + amtPersAprV1 + amtPersMayV1 + amtPersJunV1 === 0) {
+      BusinessPercentQ2V1 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ2V1 = Number((amtBusAprV1 + amtBusMayV1 + amtBusJunV1) / (amtBusAprV1 + amtBusMayV1 + amtBusJunV1 + amtPersAprV1 + amtPersMayV1 + amtPersJunV1) * 100).toFixed(2);
+   }
+
+   if (amtBusJulV1 + amtBusAugV1 + amtBusSepV1 + amtPersJulV1 + amtPersAugV1 + amtPersSepV1 === 0) {
+      BusinessPercentQ3V1 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ3V1 = Number((amtBusJulV1 + amtBusAugV1 + amtBusSepV1) / (amtBusJulV1 + amtBusAugV1 + amtBusSepV1 + amtPersJulV1 + amtPersAugV1 + amtPersSepV1) * 100).toFixed(2);
+   }
+
+   if (amtBusOctV1 + amtBusNovV1 + amtBusDecV1 + amtPersOctV1 + amtPersNovV1 + amtPersDecV1 === 0) {
+      BusinessPercentQ4V1 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ4V1 = Number((amtBusOctV1 + amtBusNovV1 + amtBusDecV1) / (amtBusOctV1 + amtBusNovV1 + amtBusDecV1 + amtPersOctV1 + amtPersNovV1 + amtPersDecV1) * 100).toFixed(2);
+   }
+
+   if (amtBusJanV1 + amtPersJanV1 === 0) {
+      BusPercJanV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJanV1 = Number(amtBusJanV1 / (amtBusJanV1 + amtPersJanV1) * 100).toFixed(2);
+   }
+
+   if (amtBusFebV1 + amtPersFebV1 === 0) {
+      BusPercFebV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercFebV1 = Number(amtBusFebV1 / (amtBusFebV1 + amtPersFebV1) * 100).toFixed(2);
+   }
+
+   if (amtBusMarV1 + amtPersMarV1 === 0) {
+      BusPercMarV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercMarV1 = Number(amtBusMarV1 / (amtBusMarV1 + amtPersMarV1) * 100).toFixed(2);
+   }
+
+   if (amtBusAprV1 + amtPersAprV1 === 0) {
+      BusPercAprV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercAprV1 = Number(amtBusAprV1 / (amtBusAprV1 + amtPersAprV1) * 100).toFixed(2);
+   }
+
+   if (amtBusMayV1 + amtPersMayV1 === 0) {
+      BusPercMayV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercMayV1 = Number(amtBusMayV1 / (amtBusMayV1 + amtPersMayV1) * 100).toFixed(2);
+   }
+
+   if (amtBusJunV1 + amtPersJunV1 === 0) {
+      BusPercJunV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJunV1 = Number(amtBusJunV1 / (amtBusJunV1 + amtPersJunV1) * 100).toFixed(2);
+   }
+
+   if (amtBusJulV1 + amtPersJulV1 === 0) {
+      BusPercJulV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJulV1 = Number(amtBusJulV1 / (amtBusJulV1 + amtPersJulV1) * 100).toFixed(2);
+   }
+
+   if (amtBusAugV1 + amtPersAugV1 === 0) {
+      BusPercAugV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercAugV1 = Number(amtBusAugV1 / (amtBusAugV1 + amtPersAugV1) * 100).toFixed(2);
+   }
+
+   if (amtBusSepV1 + amtPersSepV1 === 0) {
+      BusPercSepV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercSepV1 = Number(amtBusSepV1 / (amtBusSepV1 + amtPersSepV1) * 100).toFixed(2);
+   }
+
+   if (amtBusOctV1 + amtPersOctV1 === 0) {
+      BusPercOctV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercOctV1 = Number(amtBusOctV1 / (amtBusOctV1 + amtPersOctV1) * 100).toFixed(2);
+   }
+
+   if (amtBusNovV1 + amtPersNovV1 === 0) {
+      BusPercNovV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercNovV1 = Number(amtBusNovV1 / (amtBusNovV1 + amtPersNovV1) * 100).toFixed(2);
+   }
+
+   if (amtBusDecV1 + amtPersDecV1 === 0) {
+      BusPercDecV1 = myZeroVal.toFixed(2);
+   } else {
+      BusPercDecV1 = Number(amtBusDecV1 / (amtBusDecV1 + amtPersDecV1) * 100).toFixed(2);
+   }
+
 
    BusinessTotalV2 = amtBusJanV2 + amtBusFebV2 + amtBusMarV2 + amtBusAprV2 + amtBusMayV2 + amtBusJunV2 + amtBusJulV2 + amtBusAugV2 + amtBusSepV2 + amtBusOctV2 + amtBusNovV2 + amtBusDecV2;
    PersonalTotalV2 = amtPersJanV2 + amtPersFebV2 + amtPersMarV2 + amtPersAprV2 + amtPersMayV2 + amtPersJunV2 + amtPersJulV2 + amtPersAugV2 + amtPersSepV2 + amtPersOctV2 + amtPersNovV2 + amtPersDecV2;
    TotalV2 = BusinessTotalV2 + PersonalTotalV2
-   BusinessPercentYearV2 = Number((BusinessTotalV2 / TotalV2) * 100).toFixed(2);
-   BusinessPercentQ1V2 = Number((amtBusJanV2 + amtBusFebV2 + amtBusMarV2) / (amtBusJanV2 + amtBusFebV2 + amtBusMarV2 + amtPersJanV2 + amtPersFebV2 + amtPersMarV2) * 100).toFixed(2);
-   BusinessPercentQ2V2 = Number((amtBusAprV2 + amtBusMayV2 + amtBusJunV2) / (amtBusAprV2 + amtBusMayV2 + amtBusJunV2 + amtPersAprV2 + amtPersMayV2 + amtPersJunV2) * 100).toFixed(2);
-   BusinessPercentQ3V2 = Number((amtBusJulV2 + amtBusAugV2 + amtBusSepV2) / (amtBusJulV2 + amtBusAugV2 + amtBusSepV2 + amtPersJulV2 + amtPersAugV2 + amtPersSepV2) * 100).toFixed(2);
-   BusinessPercentQ4V2 = Number((amtBusOctV2 + amtBusNovV2 + amtBusDecV2) / (amtBusOctV2 + amtBusNovV2 + amtBusDecV2 + amtPersOctV2 + amtPersNovV2 + amtPersDecV2) * 100).toFixed(2);
-   BusPercJanV2 = Number(amtBusJanV2 / (amtBusJanV2 + amtPersJanV2) * 100).toFixed(2);
-   BusPercFebV2 = Number(amtBusFebV2 / (amtBusFebV2 + amtPersFebV2) * 100).toFixed(2);
-   BusPercMarV2 = Number(amtBusMarV2 / (amtBusMarV2 + amtPersMarV2) * 100).toFixed(2);
-   BusPercAprV2 = Number(amtBusAprV2 / (amtBusAprV2 + amtPersAprV2) * 100).toFixed(2);
-   BusPercMayV2 = Number(amtBusMayV2 / (amtBusMayV2 + amtPersMayV2) * 100).toFixed(2);
-   BusPercJunV2 = Number(amtBusJunV2 / (amtBusJunV2 + amtPersJunV2) * 100).toFixed(2);
-   BusPercJulV2 = Number(amtBusJulV2 / (amtBusJulV2 + amtPersJulV2) * 100).toFixed(2);
-   BusPercAugV2 = Number(amtBusAugV2 / (amtBusAugV2 + amtPersAugV2) * 100).toFixed(2);
-   BusPercSepV2 = Number(amtBusSepV2 / (amtBusSepV2 + amtPersSepV2) * 100).toFixed(2);
-   BusPercOctV2 = Number(amtBusOctV2 / (amtBusOctV2 + amtPersOctV2) * 100).toFixed(2);
-   BusPercNovV2 = Number(amtBusNovV2 / (amtBusNovV2 + amtPersNovV2) * 100).toFixed(2);
-   BusPercDecV2 = Number(amtBusDecV2 / (amtBusDecV2 + amtPersDecV2) * 100).toFixed(2);
 
+   if (TotalV2 === 0) {
+      BusinessPercentYearV2 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentYearV2 = Number((BusinessTotalV2 / TotalV2) * 100).toFixed(2);
+   }
+
+   if (amtBusJanV2 + amtBusFebV2 + amtBusMarV2 + amtPersJanV2 + amtPersFebV2 + amtPersMarV2 === 0) {
+      BusinessPercentQ1V2 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ1V2 = Number((amtBusJanV2 + amtBusFebV2 + amtBusMarV2) / (amtBusJanV2 + amtBusFebV2 + amtBusMarV2 + amtPersJanV2 + amtPersFebV2 + amtPersMarV2) * 100).toFixed(2);
+   }
+
+   if (amtBusAprV2 + amtBusMayV2 + amtBusJunV2 + amtPersAprV2 + amtPersMayV2 + amtPersJunV2 === 0) {
+      BusinessPercentQ2V2 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ2V2 = Number((amtBusAprV2 + amtBusMayV2 + amtBusJunV2) / (amtBusAprV2 + amtBusMayV2 + amtBusJunV2 + amtPersAprV2 + amtPersMayV2 + amtPersJunV2) * 100).toFixed(2);
+   }
+
+   if (amtBusJulV2 + amtBusAugV2 + amtBusSepV2 + amtPersJulV2 + amtPersAugV2 + amtPersSepV2 === 0) {
+      BusinessPercentQ3V2 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ3V2 = Number((amtBusJulV2 + amtBusAugV2 + amtBusSepV2) / (amtBusJulV2 + amtBusAugV2 + amtBusSepV2 + amtPersJulV2 + amtPersAugV2 + amtPersSepV2) * 100).toFixed(2);
+   }
+
+   if (amtBusOctV2 + amtBusNovV2 + amtBusDecV2 + amtPersOctV2 + amtPersNovV2 + amtPersDecV2 === 0) {
+      BusinessPercentQ4V2 = myZeroVal.toFixed(2);
+   } else {
+      BusinessPercentQ4V2 = Number((amtBusOctV2 + amtBusNovV2 + amtBusDecV2) / (amtBusOctV2 + amtBusNovV2 + amtBusDecV2 + amtPersOctV2 + amtPersNovV2 + amtPersDecV2) * 100).toFixed(2);
+   }
+
+   if (amtBusJanV2 + amtPersJanV2 === 0) {
+      BusPercJanV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJanV2 = Number(amtBusJanV2 / (amtBusJanV2 + amtPersJanV2) * 100).toFixed(2);
+   }
+
+   if (amtBusFebV2 + amtPersFebV2 === 0) {
+      BusPercFebV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercFebV2 = Number(amtBusFebV2 / (amtBusFebV2 + amtPersFebV2) * 100).toFixed(2);
+   }
+
+   if (amtBusMarV2 + amtPersMarV2 === 0) {
+      BusPercMarV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercMarV2 = Number(amtBusMarV2 / (amtBusMarV2 + amtPersMarV2) * 100).toFixed(2);
+   }
+
+   if (amtBusAprV2 + amtPersAprV2 === 0) {
+      BusPercAprV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercAprV2 = Number(amtBusAprV2 / (amtBusAprV2 + amtPersAprV2) * 100).toFixed(2);
+   }
+
+   if (amtBusMayV2 + amtPersMayV2 === 0) {
+      BusPercMayV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercMayV2 = Number(amtBusMayV2 / (amtBusMayV2 + amtPersMayV2) * 100).toFixed(2);
+   }
+
+   if (amtBusJunV2 + amtPersJunV2 === 0) {
+      BusPercJunV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJunV2 = Number(amtBusJunV2 / (amtBusJunV2 + amtPersJunV2) * 100).toFixed(2);
+   }
+
+   if (amtBusJulV2 + amtPersJulV2 === 0) {
+      BusPercJulV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercJulV2 = Number(amtBusJulV2 / (amtBusJulV2 + amtPersJulV2) * 100).toFixed(2);
+   }
+
+   if (amtBusAugV2 + amtPersAugV2 === 0) {
+      BusPercAugV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercAugV2 = Number(amtBusAugV2 / (amtBusAugV2 + amtPersAugV2) * 100).toFixed(2);
+   }
+
+   if (amtBusSepV2 + amtPersSepV2 === 0) {
+      BusPercSepV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercSepV2 = Number(amtBusSepV2 / (amtBusSepV2 + amtPersSepV2) * 100).toFixed(2);
+   }
+
+   if (amtBusOctV2 + amtPersOctV2 === 0) {
+      BusPercOctV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercOctV2 = Number(amtBusOctV2 / (amtBusOctV2 + amtPersOctV2) * 100).toFixed(2);
+   }
+
+   if (amtBusNovV2 + amtPersNovV2 === 0) {
+      BusPercNovV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercNovV2 = Number(amtBusNovV2 / (amtBusNovV2 + amtPersNovV2) * 100).toFixed(2);
+   }
+
+   if (amtBusDecV2 + amtPersDecV2 === 0) {
+      BusPercDecV2 = myZeroVal.toFixed(2);
+   } else {
+      BusPercDecV2 = Number(amtBusDecV2 / (amtBusDecV2 + amtPersDecV2) * 100).toFixed(2);
+   }
+
+   if (myReturn) {
+      return;
+   }
+
+   applyPercentCalculationsToDOM(selectDate);
+   zeroCalcVariables();
+
+
+
+}
+
+function applyPercentCalculationsToDOM(selectDate) {
    let currentMonth = selectDate.getMonth();
 
    if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
@@ -737,14 +925,112 @@ function calculateBusinessPercentage(selectDate) {
       let myTotalOdometerV2 = Number(+BusinessTotalV2 + +PersonalTotalV2 + +myDOMs.vehicleLog.OdometerInput.value);
       myDOMs.vehicleLog.TotalOdometer.value = formatNumber(myTotalOdometerV2.toFixed(1));
    }
+}
 
+function zeroCalcVariables() {
+   amtPersJanV1 = 0
+   amtPersFebV1 = 0
+   amtPersMarV1 = 0
+   amtPersAprV1 = 0
+   amtPersMayV1 = 0
+   amtPersJunV1 = 0
+   amtPersJulV1 = 0
+   amtPersAugV1 = 0
+   amtPersSepV1 = 0
+   amtPersOctV1 = 0
+   amtPersNovV1 = 0
+   amtPersDecV1 = 0
+
+   amtPersJanV2 = 0
+   amtPersFebV2 = 0
+   amtPersMarV2 = 0
+   amtPersAprV2 = 0
+   amtPersMayV2 = 0
+   amtPersJunV2 = 0
+   amtPersJulV2 = 0
+   amtPersAugV2 = 0
+   amtPersSepV2 = 0
+   amtPersOctV2 = 0
+   amtPersNovV2 = 0
+   amtPersDecV2 = 0
+
+   amtBusJanV1 = 0
+   amtBusFebV1 = 0
+   amtBusMarV1 = 0
+   amtBusAprV1 = 0
+   amtBusMayV1 = 0
+   amtBusJunV1 = 0
+   amtBusJulV1 = 0
+   amtBusAugV1 = 0
+   amtBusSepV1 = 0
+   amtBusOctV1 = 0
+   amtBusNovV1 = 0
+   amtBusDecV1 = 0
+
+   amtBusJanV2 = 0
+   amtBusFebV2 = 0
+   amtBusMarV2 = 0
+   amtBusAprV2 = 0
+   amtBusMayV2 = 0
+   amtBusJunV2 = 0
+   amtBusJulV2 = 0
+   amtBusAugV2 = 0
+   amtBusSepV2 = 0
+   amtBusOctV2 = 0
+   amtBusNovV2 = 0
+   amtBusDecV2 = 0
+
+   BusPercJanV1 = 0
+   BusPercFebV1 = 0
+   BusPercMarV1 = 0
+   BusPercAprV1 = 0
+   BusPercMayV1 = 0
+   BusPercJunV1 = 0
+   BusPercJulV1 = 0
+   BusPercAugV1 = 0
+   BusPercSepV1 = 0
+   BusPercOctV1 = 0
+   BusPercNovV1 = 0
+   BusPercDecV1 = 0
+
+   BusPercJanV2 = 0
+   BusPercFebV2 = 0
+   BusPercMarV2 = 0
+   BusPercAprV2 = 0
+   BusPercMayV2 = 0
+   BusPercJunV2 = 0
+   BusPercJulV2 = 0
+   BusPercAugV2 = 0
+   BusPercSepV2 = 0
+   BusPercOctV2 = 0
+   BusPercNovV2 = 0
+   BusPercDecV2 = 0
+
+
+   BusinessPercentYearV1 = 0
+   BusinessPercentQ1V1 = 0
+   BusinessPercentQ2V1 = 0
+   BusinessPercentQ3V1 = 0
+   BusinessPercentQ4V1 = 0
+   BusinessTotalV1 = 0
+   PersonalTotalV1 = 0
+   TotalV1 = 0
+
+   BusinessPercentYearV2 = 0
+   BusinessPercentQ1V2 = 0
+   BusinessPercentQ2V2 = 0
+   BusinessPercentQ3V2 = 0
+   BusinessPercentQ4V2 = 0
+   BusinessTotalV2 = 0
+   PersonalTotalV2 = 0
+   TotalV2 = 0
 }
 
 async function saveOdometerInput() {
    if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
-      dbMiscData.odometerV1 = myDOMs.vehicleLog.OdometerInput.value;
+      dbMiscData.odometerV1 = Number(myDOMs.vehicleLog.OdometerInput.value);
    } else if (myDOMs.vehicleLog.Selector.value === "Vehicle 2") {
-      dbMiscData.odometerV2 = myDOMs.vehicleLog.OdometerInput.value;
+      dbMiscData.odometerV2 = Number(myDOMs.vehicleLog.OdometerInput.value);
    }
    await updateMiscData();
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
@@ -881,7 +1167,7 @@ function zeroAllLogs(noMsg) {
          data: mydata,
          enctype: "multipart/form-data",
       })
-         .done(function (data) {
+         .done(async function (data) {
             resolve(data)
             if (noMsg) {
             } else {
@@ -897,6 +1183,8 @@ function zeroAllLogs(noMsg) {
                );
             }
             zeroLogArray(carNum);
+            await getVehiclePercentage();
+            fillMainDataFromArrays();
             let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
             PercentsendDate.setHours(24);
             calculateBusinessPercentage(PercentsendDate);
@@ -958,7 +1246,7 @@ function deleteAllVehicleLog() {
       data: mydata,
       enctype: "multipart/form-data",
    })
-      .done(function (data) {
+      .done(async function (data) {
          displayAlert(
             myDOMs.vehicleLog.AlertContainer,
             "alertContainerVehicleLog",
@@ -971,9 +1259,10 @@ function deleteAllVehicleLog() {
          );
 
          vLogArray = [];
+         await getVehiclePercentage();
+         fillMainDataFromArrays();
          let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
          PercentsendDate.setHours(24);
-         calculateBusinessPercentage(PercentsendDate);
          updateLogData(PercentsendDate);
       })
       .fail(function (err) {
@@ -1081,10 +1370,11 @@ async function quickLogInput() {
       await getAllVehicleLogs();
    }
 
-
+   await getVehiclePercentage();
+   fillMainDataFromArrays();
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
    PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
-   calculateBusinessPercentage(PercentsendDate);
+
    updateLogData(PercentsendDate);
 
 
@@ -1139,10 +1429,8 @@ function PostmyQuickLogs(tempData) {
 
 }
 
-function displayVLogArray() {
-   console.dir(JSON.stringify(vLogArray, undefined, 2));
+async function displayVLogArray() {
+   //console.dir(JSON.stringify(vLogArray, undefined, 2));
 
-   // let myDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   // myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-   // alert(myDate);
+
 }

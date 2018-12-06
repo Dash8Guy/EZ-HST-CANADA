@@ -3,7 +3,7 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const bcrypt = require("bcryptjs");
-let { EZ_ENV } = require(".././config");
+let { EZ_ENV } = require(".././config/config");
 
 const UserSchema = new mongoose.Schema({
   firstName: {

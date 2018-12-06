@@ -7,7 +7,7 @@ let OneExpenseOnLastPage = false;
 let lastTableSortOrder = 'none';
 function SortTable(el) {
   let displaySortText = document.getElementById('sortString');
-  if (el.id === 'HeaderSort-#') {
+  if (el.id === 'HeaderSort-number') {
     if (lastTableSortOrder !== 'asc#') {
       curTableArray.sort(function (a, b) {
         var titleA = a._id.toLowerCase(), titleB = b._id.toLowerCase();
@@ -161,7 +161,7 @@ let a;
 let myStrongTag = document.createElement("p");
 myStrongTag.setAttribute('class', 'float-left')
 let sortString = document.createElement("p");
-sortString.setAttribute('class', 'float-right')
+//sortString.setAttribute('class', 'float-right')
 let nav = document.createElement("nav");
 let ul = document.createElement("ul");
 ul.setAttribute(
@@ -224,7 +224,12 @@ function buildVehicleExpenseTable(
       headerlink.setAttribute("data-toggle", "tooltip");
       headerlink.setAttribute("title", `Click to Sort by ${el}`);
       headerlink.setAttribute("onclick", "SortTable(this);");
-      headerlink.setAttribute("id", `HeaderSort-${el}`);
+      if (el === '#') {
+        headerlink.setAttribute("id", `HeaderSort-number`);
+      } else {
+        headerlink.setAttribute("id", `HeaderSort-${el}`);
+      }
+
       cellh.appendChild(headerlink);
       row.appendChild(cellh);
       cellh.setAttribute("class", "text-center bg-white border border-dark");
@@ -284,7 +289,7 @@ function buildVehicleExpenseTable(
 
     let cell = document.createElement("td");
     let alink = document.createElement("a");
-    let cellTxt = document.createTextNode(i + 1);
+    let cellTxt = document.createTextNode(i);
     alink.appendChild(cellTxt);
     alink.setAttribute("href", "#");
     alink.setAttribute("data-toggle", "tooltip");
@@ -436,11 +441,11 @@ function buildVehicleExpenseTable(
   }
 
   let myPDFBtn = document.createElement("button");
-  myPDFBtn.setAttribute("class", "btn btn-sm btn-outline-secondary float-right mr-4");
+  myPDFBtn.setAttribute("class", "btn btn-sm btn-outline-secondary d-lg-inline float-right mr-4 mb-1");
   myPDFBtn.setAttribute("id", 'printPDFBtn');
-  myPDFBtn.setAttribute("data-toogle", "tooltip");
+  myPDFBtn.setAttribute("data-toggle", "tooltip");
   myPDFBtn.setAttribute("title", "Save Table as a PDF!");
-  if (boldText.includes('Business Expenses')) {
+  if (boldText.includes('Business') && boldText.includes('Expenses')) {
     myPDFBtn.setAttribute("onclick", "generateTablePDF('Bus-Exp')");
   } else if (boldText.includes('Vehicle-1')) {
     myPDFBtn.setAttribute("onclick", "generateTablePDF('V1-Exp')");
@@ -450,7 +455,7 @@ function buildVehicleExpenseTable(
     myPDFBtn.setAttribute("onclick", "generateTablePDF('Home-Exp')");
   } else if (boldText.includes('Other')) {
     myPDFBtn.setAttribute("onclick", "generateTablePDF('Other-Exp')");
-  } else if (boldText.includes('Rental Expenses')) {
+  } else if (boldText.includes('Rental') && boldText.includes('Expenses')) {
     myPDFBtn.setAttribute("onclick", "generateTablePDF('Rental-Exp')");
   } else if (boldText.includes('Business Revenue')) {
     myPDFBtn.setAttribute("onclick", "generateTablePDF('Bus-Inc')");
@@ -476,6 +481,7 @@ function buildVehicleExpenseTable(
 
   addTitleText(myTableAlert, boldText);
   sortString.setAttribute("id", "sortString");
+  sortString.setAttribute("class", "font-weight-bold text-success float-right d-lg-inline");
   sortString.textContent = `Sorted: As entered.`;
   myTableAlert.appendChild(sortString);
 
@@ -501,6 +507,9 @@ function buildVehicleExpenseTable(
   }
 
   resetText(boldText);
+  if (!enableTooltip) {
+    disableTableTooltip('disable');
+  }
 }
 
 function resetText(myText) {
@@ -511,6 +520,7 @@ function addTitleText(myTableAlert, boldText) {
   // let myStrongTag = document.createElement("p");
 
   myStrongTag.setAttribute("id", "titleNode");
+  myStrongTag.setAttribute("class", "font-weight-bold d-lg-inline");
   myStrongTag.textContent = `${boldText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
   myTableAlert.appendChild(myStrongTag);
 }
