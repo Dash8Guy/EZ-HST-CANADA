@@ -21,11 +21,17 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+/* MODAL SCROLLING FIX */
+.modal {
+  overflow-y:auto;
+}
+
 
 /* Table with links */
 
 #titleNode,
-#sortString {
+#sortString,
+#titlePayNode {
   font-size: 14px;
 }
 
@@ -129,7 +135,19 @@ input[type="number"] {
 #rentalExpIDLbl,
 #rentalDescriptionLbl,
 #rentalAddVendorLbl,
-#rentalExpCatSelectLbl, {
+#rentalExpCatSelectLbl,
+#hstPaymentDateLbl,
+#hstPaymentAmtLbl,
+#hstPaymentStatusLbl,
+#hstPaymentDescriptionLbl,
+#pstPaymentDateLbl,
+#pstPaymentAmtLbl,
+#pstPaymentStatusLbl,
+#pstPaymentDescriptionLbl,
+#taxPaymentDateLbl,
+#taxPaymentAmtLbl,
+#taxPaymentStatusLbl,
+#taxPaymentDescriptionLbl {
   margin-bottom: 0px;
 }
 
@@ -138,7 +156,9 @@ input[type="number"] {
 #homeExpID,
 #otherExpID,
 #rentalExpID,
-#incomeExpID {
+#incomeExpID,
+#hstPaymentStatus,
+#pstPaymentStatus {
   font-weight: bold;
 }
 
@@ -147,7 +167,10 @@ input[type="number"] {
 #HomeExpenseModal input,
 #OtherExpenseModal input,
 #RentalExpenseModal input,
-#IncomeModal input {
+#IncomeModal input,
+#hstPaymentModal input, 
+#pstPaymentModal input,
+#taxPaymentModal input {
   height: 22px;
   font-size: 12px;
   padding-top: 6px;
@@ -164,7 +187,10 @@ input[type="number"] {
 #otherModalHead,
 #rentalModalHead,
 #incomeModalHead,
-#incomeStatementModalHead {
+#incomeStatementModalHead,
+#hstPaymentModalHead,
+#pstPaymentModalHead,
+#taxPaymentModalHead {
   height: 60px;
 }
 
@@ -200,7 +226,22 @@ input[type="number"] {
 #monthlyBusLbl,
 #monthlyHomeLbl,
 #monthlyOtherLbl,
-#monthlyRentalLbl {
+#monthlyRentalLbl,
+#hstPaymentformReset,
+#hstPaymentDeleteBtn,
+#closeHSTPaymentModal,
+#hstPaymentSaveChangesBtn,
+#hstPaymentSubmitBtn,
+#pstPaymentformReset,
+#pstPaymentDeleteBtn,
+#closePSTPaymentModal,
+#pstPaymentSaveChangesBtn,
+#pstPaymentSubmitBtn,
+#taxPaymentformReset,
+#taxPaymentDeleteBtn,
+#closeTAXPaymentModal,
+#taxPaymentSaveChangesBtn,
+#taxPaymentSubmitBtn {
   font-size: 14px;
 }
 
@@ -290,7 +331,7 @@ input[type="number"] {
 }
 
 label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -403,11 +444,11 @@ option {
 #vehicleLogDate,
 #vLogBtnSave,
 #vLogBtnDelete {
-  font-size: 12px;
+  font-size:10px;
 }
 
 #dayDisplayVLog {
-  margin-top: -30px;
+  margin-top: 10px;
 }
 
 #vLogLowerBlocksLeft button,
@@ -419,14 +460,14 @@ option {
 #vLogLowerBlocksRight button,
 #vLogLowerBlocksRight label,
 #vLogLowerBlocksRight input {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 #vLogLowerBlocksLeft input,
 #vLogLowerBlocksCenter input,
 #vLogLowerBlocksRight input {
   height: 24px;
-  width: 120px;
+  width: 100px;
 }
 
 
@@ -538,8 +579,26 @@ option {
 }
 
 #settingsSelectLbl,
-#settingsTooltipLbl {
+#settingsTooltipLbl,
+#settingsProvinceSelectLbl,
+#provinceTaxRatesettings {
   font-size: 14px;
+}
+
+#hstSettingLbl,
+#pstSettingLbl {
+  font-size: 12px;
+}
+
+#hstSetting,
+#pstSetting {
+  height: 24px;
+  font-size: 14px;
+}
+
+#settingsProvinceSelectLbl,
+#provinceTaxRatesettings {
+  background-color: rgb(241, 241, 241);
 }
 
 #tooltipOnLbl,
@@ -641,4 +700,356 @@ option {
 #btnApplyPercent,
 #btnPercentCalcReset {
   font-size: 10px;
+}
+
+/* Payment Report  */
+
+#PaymentReportTitle {
+  font-size: 16px;
+}
+
+#printPDFPaymentBtn,
+#paymentSortString {
+  font-size: 12px;
+}
+
+#paymentModalHeader {
+  height: 50px;
+  
+}
+
+#HeaderSort-Paynumber,
+#HeaderSort-1,
+#HeaderSort-2,
+#HeaderSort-3,
+#HeaderSort-4,
+#HeaderSort-5,
+#titlePayNode,
+#paymentSortString {
+  color: rgb(170, 3, 3);
+}
+
+/* FIXED ASSET ENTRY FORM */
+#AssetModal label,
+#AssettopRowInputDiv input {
+  font-size: 10px;
+}
+
+#depreciationRatePercentSpan {
+  font-size: 10px;
+}
+
+#AssetStartValue,
+#AssetClaimAmt,
+#ITCClaimAmt,
+#AssetBusinessPercent,
+#AssetAutoClaimRate,
+#AssetStatus {
+  font-size: 12px;
+}
+
+#AssetStatus {
+  width: 100px;
+}
+
+#AssetModal label {
+  margin-bottom: 0px;
+}
+
+#AssetModal input {
+  height: 25px;
+}
+
+@media (min-width: 992px) {
+    #AssetPurchaseDate,
+    #AssetClaimDate {
+    width: 100px;
+  }
+
+  #AssetStartValue,
+  #AssetClaimAmt,
+  #ITCClaimAmt{
+    width: 100px;
+  }
+  #AssetBusinessPercent  {
+    width: 83px;
+  }
+}
+
+#AssetmodalHead {
+  height: 56px;
+}
+
+#AssetVehicleSelectAreaText {
+  font-size: 10px;
+  margin-bottom: 0px;
+}
+
+#AssetVehiclePercentApplyBtn {
+  font-size: 11px;
+}
+
+#AssetEntryForm {
+  margin-bottom: -10px;
+}
+
+#AssetVehiclePercentContainer {
+  margin-top: 0px;
+}
+
+#AssetReset,
+#AssetDeleteBtn,
+#AssetBottomCloseModal,
+#AssetSaveChangesBtn,
+#AssetSubmitBtn {
+  font-size: 12px;
+}
+
+#AssetBtnCol9Div {
+  margin-left: -20px!important;
+}
+
+#AssetAutoClaimText {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#AssetGenerateClaimBtn {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+
+#AssetIncludeITC {
+  width: 12px;
+}
+
+#AssetDepreciationRateDiv,
+#AssetIncludeITCDiv {
+  margin-top: -15px;
+}
+
+#AssetAutoClaimRate {
+  width: 65px!important;
+}
+
+#AssetVehiclePercentBorder {
+  width: 310px;
+  margin-left: 62px;
+}
+
+#AssetStatusAreaDiv {
+  margin-left: 16px;
+  margin-right: 0px;
+}
+
+#AssetTableAlert {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+#titleAssetNode {
+ font-size: 14px;
+}
+
+#assetSortString,
+#printPDFAssetBtn {
+  font-size: 12px;
+}
+
+#assetModalHeader {
+  height: 50px;
+}
+
+#AssetReportTitle {
+  font-size: 16px;
+}
+
+/* ACCOUNT SUMMARY */
+
+#ASmodalHead {
+  height: 55px;
+}
+
+#ASTopLbl1,
+#ASTopLbl2,
+#ASTopLbl3,
+#ASTopLbl4 {
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.ASLbl {
+  font-size: 10px;
+  font-weight: bold;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+#ASBigTextTop {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#ASBigTextMid,
+#ASBigTextBtm {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#ASBigNumberTop,
+#ASBigNumberMid,
+#ASBigNumberBtm {
+  font-size: 14px;
+}
+
+#ASleftBoldTextTop,
+#ASleftBoldTextMid,
+#ASLastBigNumberBtm {
+  font-size: 16px;
+}
+
+#ASLastTextBtm {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+#ASTimePeriodSelectLbl,
+#ASIncludeToPeriodLbl {
+  font-size: 12px;
+}
+
+#ASTimePeriodSelect {
+  font-size: 12px;
+  height: 27px;
+  width: 140px;
+}
+
+/* HST RETURN */
+
+#HSTReturnModalHeader {
+  height: 54px;
+}
+
+#HSTReturnModalTitle {
+  font-size: 16px;
+}
+
+#HSTReturnModal label,
+#ReturnReportingPeriodLbl {
+  font-size: 10px;
+}
+
+#ReturnReportingPeriodLbl {
+  height: 70px;
+}
+
+#PeriodStartDate,
+#PeriodEndDate {
+  font-size: 11px;
+  width: 120px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+#ReturnFirstLineLi,
+#ReturnLine105Li {
+  height: 50px;
+}
+
+#ReturnLine2To3Li,
+#ReturnLine106To107Li,
+#ReturnLine108to109Li,
+#ReturnLine110To111Li,
+#ReturnLine112to113ALi,
+#ReturnLine205To405Li,
+#ReturnLine113Bto113CLi {
+  height: 100px;
+}
+
+#Line101,
+#Line103,
+#Line104,
+#Line105,
+#Line106,
+#Line107,
+#Line108,
+#Line109,
+#Line110,
+#Line111,
+#Line112,
+#Line113A,
+#Line205,
+#Line405,
+#Line113B,
+#Line113C,
+#Line114,
+#Line115 {
+  width: 100px;
+  height: 28px;
+  font-size: 11px;
+}
+
+#Line101Txt,
+#Line103Txt,
+#Line104Txt,
+#Line105Txt,
+#Line106Txt,
+#Line107Txt,
+#Line108Txt,
+#Line109Txt,
+#Line110Txt,
+#Line111Txt,
+#Line112Txt,
+#Line113ATxt,
+#Line205Txt,
+#Line405Txt,
+#Line113BTxt,
+#Line113CTxt,
+#Line114Txt,
+#Line115Txt {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+#refundTxt,
+#PaymentEnclosedTxt {
+  font-size: 12px;
+}
+
+#Line103,
+#Line104,
+#Line106,
+#Line107,
+#Line110,
+#Line111,
+#Line205,
+#Line405 {
+  background-color: rgb(226, 226, 226);
+}
+
+#ReturnPrintPDF {
+  font-size: 10px;
+}
+
+@media screen {
+  #printSection {
+      display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
 }

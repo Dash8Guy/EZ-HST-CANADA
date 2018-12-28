@@ -3867,7 +3867,7 @@ button.close {
 .modal-body {
   position: relative;
   flex: 1 1 auto;
-  padding: 1rem; }
+  padding: 0.8rem; }
 
 .modal-footer {
   display: flex;
@@ -3901,7 +3901,7 @@ button.close {
     max-width: 300px; } }
 @media (min-width: 992px) {
   .modal-lg {
-    max-width: 800px; } }
+    max-width: 990px; } }
 .tooltip {
   position: absolute;
   z-index: 1070;

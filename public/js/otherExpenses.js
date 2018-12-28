@@ -4,11 +4,19 @@ disableEnableFullSizeOtherImgBtn();
 
 function displayOtherExpModal() {
   $("#OtherExpenseModal").modal("show");
+
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.otherExp.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.otherExp.HSTAmtLabel.innerText = 'GST Amount'
+  }
 }
 function hideOtherExpModal() {
   myDOMs.otherExp.EntryForm.reset();
   removeOtherImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#OtherExpenseModal").modal("hide");
 }
 function updateOtherButtonText() {
@@ -225,6 +233,11 @@ function addOtherCategory() {
 }
 
 function updateOtherExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addOtherOriginalValues();
+    return;
+  }
   if (myDOMs.otherExp.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.otherExp.AlertContainer,
@@ -471,6 +484,10 @@ function updateOtherCostsTableTotals() {
 }
 
 function deleteOtherExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
   if (myDOMs.otherExp.ExpID.value === 'NEW') {
     displayAlert(
       myDOMs.otherExp.AlertContainer,
@@ -1024,6 +1041,15 @@ $("#otherExpBtn").click(function () {
 
 // //Smaller Functions
 
+myDOMs.otherExp.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.otherExp.EntryDate.value)) {
+    alert(`Because your Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.otherExp.EntryDate.value = null;
+    myDOMs.otherExp.EntryDate.focus;
+  }
+});
+
+
 myDOMs.otherExp.Reset.addEventListener("click", function (e) {
   if (myDOMs.otherExp.ExpID.value === 'ALTERED') {
     if (confirm("Are you sure you want to Reset your Entry Form and fill the form with all the saved data?")) {
@@ -1044,8 +1070,6 @@ myDOMs.otherExp.Reset.addEventListener("click", function (e) {
 });
 
 async function addOtherOriginalValues() {
-  let myTempID = myDOMs.otherExp.BlindExpID.value;
-
   myDOMs.otherExp.EntryDate.value = myOriginalData.Date;
   myDOMs.otherExp.NetAmt.value = myOriginalData.Net.toFixed(2);
   myDOMs.otherExp.HSTAmt.value = myOriginalData.Hst.toFixed(2);

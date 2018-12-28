@@ -465,7 +465,6 @@ function buildVehicleExpenseTable(
 
   let myPDFBtnText = document.createTextNode("Print PDF");
   myPDFBtn.appendChild(myPDFBtnText);
-
   let myBtn = document.createElement("button");
   myBtn.setAttribute("class", "close");
   myBtn.setAttribute("id", closeBtnID);
@@ -507,7 +506,7 @@ function buildVehicleExpenseTable(
   }
 
   resetText(boldText);
-  if (!enableTooltip) {
+  if (enableTooltip === false || enableTooltip === "false") {
     disableTableTooltip('disable');
   }
 }

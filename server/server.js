@@ -21,8 +21,10 @@ const { HomeExpense } = require("./models/homeExpense");
 const { OtherExpense } = require("./models/otherExpense");
 const { RentalExpense } = require("./models/rentalExpense");
 const { IncomeEntry } = require("./models/incomeEntry");
+const { PaymentEntry } = require("./models/paymentEntry");
 const { RentalIncomeEntry } = require("./models/rentalIncomeEntry");
 const { VehicleLog } = require("./models/vehicleLog");
+const { FixedAsset } = require("./models/fixedAsset");
 const { MiscData } = require("./models/miscData");
 const { User } = require("./models/user");
 const { VehicleCategorie } = require("./models/vehicleCategorie");
@@ -37,6 +39,7 @@ const { HomeVendor } = require("./models/homeVendor");
 const { OtherVendor } = require("./models/otherVendor");
 const { RentalVendor } = require("./models/rentalVendor");
 const { IncomeClient } = require("./models/incomeClient");
+const { Return_Data } = require("./models/return_data");
 const { authenticate } = require("./middleware/authenticate");
 
 let { EZ_ENV } = require("./config/config");
@@ -74,7 +77,6 @@ app.use((req, res, next) => {
 app.get("/", function (req, res) {
   res.render("index.hbs");
 });
-
 
 app.post("/carExpense", authenticate, async (req, res) => {
   let sampleFile;
@@ -185,22 +187,22 @@ app.post("/carExpense", authenticate, async (req, res) => {
 });
 
 async function uploadReceiptImage2S3(userID, expenseID, myFile) {
-  // myImg = await uploadToS3(myFile, `${userID}_${expenseID}.jpg`);
+  myImg = await uploadToS3(myFile, `${userID}_${expenseID}.jpg`);
 };
 
 async function deleteTheImage(userID, tempID) {
 
-  // try {
-  //   let myImg;
-  //   myImg = await deleteImageFromS3(`${userID}_${tempID}.jpg`);
-  //   if (myImg) {
-  //     //console.log('Image Deleted!')
-  //   } else {
-  //     throw (error);
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    let myImg;
+    myImg = await deleteImageFromS3(`${userID}_${tempID}.jpg`);
+    if (myImg) {
+      //console.log('Image Deleted!')
+    } else {
+      throw (error);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 app.post("/carExpenseRecur", authenticate, (req, res) => {
@@ -375,21 +377,96 @@ app.get("/carExpense", authenticate, (req, res) => {
     });
 });
 
+app.get("/busIncome", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+
+  IncomeEntry.find({
+    _user: req.user._id,
+    carDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    }
+  })
+    .then(busIncome => {
+      if (!busIncome) {
+
+        return res.status(404).send("No Business Revenue entry found!");
+
+      }
+      res.send({ busIncome });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+app.get("/rentalIncome", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+
+  RentalIncomeEntry.find({
+    _user: req.user._id,
+    carDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    }
+  })
+    .then(rentalIncome => {
+      if (!rentalIncome) {
+
+        return res.status(404).send("No Rental Revenue entry found!");
+
+      }
+      res.send({ rentalIncome });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+
 app.get("/carExpenseImg/:_id", authenticate, async (req, res) => {
 
 
-  // try {
-  //   let myImg;
-  //   const tempID = req.params._id;
-  //   myImg = await getImageFromS3(`${req.user._id}_${tempID}.jpg`);
-  //   if (myImg) {
-  //     res.send({ myImg });
-  //   } else {
-  //     throw (error);
-  //   }
-  // } catch (error) {
-  //   return res.status(404).send(error);
-  // }
+  try {
+    let myImg;
+    const tempID = req.params._id;
+    myImg = await getImageFromS3(`${req.user._id}_${tempID}.jpg`);
+    if (myImg) {
+      res.send({ myImg });
+    } else {
+      throw (error);
+    }
+  } catch (error) {
+    return res.status(404).send(error);
+  }
 
 });
 
@@ -418,7 +495,6 @@ app.get("/carExpense/:_id", authenticate, (req, res) => {
             if (err) {
               res.status(400).send(`Unable to retrieve the Image!  ${err}`);
             } else {
-              // console.dir(data);
               res.send({ carexpense, data });
             }
           }
@@ -1482,7 +1558,6 @@ app.delete("/vehicleLog", authenticate, (req, res) => {
   );
 });
 
-
 app.post("/miscData", authenticate, (req, res) => {
   const miscData = new MiscData({
     _user: req.user._id,
@@ -1666,7 +1741,568 @@ app.delete("/users/me/token", authenticate, async (req, res) => {
   }
 });
 
+//Payments
+app.post("/payments", authenticate, async (req, res) => {
 
+  const payment = new PaymentEntry({
+    _user: req.user._id,
+    paymentDate: req.body.paymentDate,
+    taxAmt: req.body.taxAmt,
+    hstAmt: req.body.hstAmt,
+    pstAmt: req.body.pstAmt,
+    description: req.body.description
+  });
+  payment.save().then(
+    doc => {
+      res.send('Payment was Successfully Saved');
+    },
+    e => {
+      res.send(e);
+    }
+  );
+
+});
+
+//HST Payment Only
+app.get("/hstPayments", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+  PaymentEntry.find({
+    _user: req.user._id,
+    paymentDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    },
+    pstAmt: 0,
+    taxAmt: 0
+  }).then(
+    paymentEntries => {
+      res.send({ paymentEntries });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+app.delete("/payments/:_id", authenticate, (req, res) => {
+  const tempID = req.params._id;
+  const userID = req.user._id;
+  if (!ObjectID.isValid(tempID)) {
+    return res
+      .status(404)
+      .send("ID is not valid! Unable to complete the Delete request!");
+  }
+  PaymentEntry
+    .findOneAndDelete({
+      _id: tempID,
+      _user: userID
+    })
+    .then(paymentEntry => {
+      if (!paymentEntry) {
+        return res
+          .status(404)
+          .send(errMsg);
+      }
+      res.send({ paymentEntry });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+app.patch("/payments/:_id", authenticate, (req, res) => {
+  let tempID = req.params._id;
+  let userID = req.user._id;
+  PaymentEntry.findOneAndUpdate(
+    {
+      _id: tempID,
+      _user: userID
+    },
+    {
+      $set: {
+        _user: userID,
+        paymentDate: req.body.paymentDate,
+        taxAmt: req.body.taxAmt,
+        hstAmt: req.body.hstAmt,
+        pstAmt: req.body.pstAmt,
+        description: req.body.description
+      }
+    },
+    { returnOriginal: false }
+  )
+    .then(
+      doc => {
+        let mypackage = {
+          message: 'Payment Updated Successfully!',
+          NewPayment: doc
+        };
+        res.status(200).send(mypackage);
+      },
+      e => {
+        res.status(400).send(e);
+      }
+    );
+});
+
+//All Payments
+app.get("/payments", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+  PaymentEntry.find({
+    _user: req.user._id,
+    paymentDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    }
+  }).then(
+    paymentEntries => {
+      res.send({ paymentEntries });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+//PST Payments Only
+app.get("/pstPayments", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+  PaymentEntry.find({
+    _user: req.user._id,
+    paymentDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    },
+    hstAmt: 0,
+    taxAmt: 0
+  }).then(
+    paymentEntries => {
+      res.send({ paymentEntries });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+//Tax Payments Only
+app.get("/taxPayments", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+  PaymentEntry.find({
+    _user: req.user._id,
+    paymentDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    },
+    hstAmt: 0,
+    pstAmt: 0
+  }).then(
+    paymentEntries => {
+      res.send({ paymentEntries });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+//Fixed Asstes
+app.post("/fixedAssets", authenticate, async (req, res) => {
+
+  const asset = new FixedAsset({
+    _user: req.user._id,
+    purchaseDate: req.body.purchaseDate,
+    claimDate: req.body.claimDate,
+    description: req.body.description,
+    startValue: req.body.startValue,
+    busPercent: req.body.busPercent,
+    claimAmt: req.body.claimAmt,
+    itcClaimAmt: req.body.itcClaimAmt
+  });
+  asset.save().then(
+    doc => {
+      res.send('Fixed Asset was Successfully Saved');
+    },
+    e => {
+      res.send(e);
+    }
+  );
+
+});
+
+app.delete("/fixedAssets/:_id", authenticate, (req, res) => {
+  const tempID = req.params._id;
+  const userID = req.user._id;
+  if (!ObjectID.isValid(tempID)) {
+    return res
+      .status(404)
+      .send("ID is not valid! Unable to complete the Delete request!");
+  }
+  FixedAsset
+    .findOneAndDelete({
+      _id: tempID,
+      _user: userID
+    })
+    .then(asset => {
+      if (!asset) {
+        return res
+          .status(404)
+          .send(errMsg);
+      }
+      res.send({ asset });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+app.patch("/fixedAssets/:_id", authenticate, (req, res) => {
+  let tempID = req.params._id;
+  let userID = req.user._id;
+  FixedAsset.findOneAndUpdate(
+    {
+      _id: tempID,
+      _user: userID
+    },
+    {
+      $set: {
+        _user: userID,
+        purchaseDate: req.body.purchaseDate,
+        claimDate: req.body.claimDate,
+        description: req.body.description,
+        startValue: req.body.startValue,
+        busPercent: req.body.busPercent,
+        claimAmt: req.body.claimAmt,
+        itcClaimAmt: req.body.itcClaimAmt
+      }
+    },
+    { returnOriginal: false }
+  )
+    .then(
+      doc => {
+        let mypackage = {
+          message: 'Fixed Asset Updated Successfully!',
+          NewAsset: doc
+        };
+        res.status(200).send(mypackage);
+      },
+      e => {
+        res.status(400).send(e);
+      }
+    );
+});
+
+app.get("/fixedAssets", authenticate, (req, res) => {
+  let tempStartDate;
+  let tempEndDate;
+
+  if (req.query.startYear) {
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+  } else {
+    tempStartDate = new Date(2018, 0, 1).toISOString();
+
+  }
+
+  if (req.query.endYear) {
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+  } else {
+    tempEndDate = new Date(2018, 11, 31).toISOString();
+  }
+  FixedAsset.find({
+    _user: req.user._id,
+    claimDate: {
+      '$gte': tempStartDate,
+      '$lte': tempEndDate
+    }
+  }).then(
+    assets => {
+      res.send({ assets });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+// GST/HST Return
+
+app.post("/return_data", authenticate, async (req, res) => {
+
+  const return_data = new Return_Data({
+    _user: req.user._id,
+    LineNumber: req.body.LineNumber,
+    JanAmt: req.body.JanAmt,
+    FebAmt: req.body.FebAmt,
+    MarAmt: req.body.MarAmt,
+    AprAmt: req.body.AprAmt,
+    MayAmt: req.body.MayAmt,
+    JunAmt: req.body.JunAmt,
+    JulAmt: req.body.JulAmt,
+    AugAmt: req.body.AugAmt,
+    SepAmt: req.body.SepAmt,
+    OctAmt: req.body.OctAmt,
+    NovAmt: req.body.NovAmt,
+    DecAmt: req.body.DecAmt,
+    Q1Amt: req.body.Q1Amt,
+    Q2Amt: req.body.Q2Amt,
+    Q3Amt: req.body.Q3Amt,
+    Q4Amt: req.body.Q4Amt,
+    YearAmt: req.body.YearAmt
+  });
+  return_data.save().then(
+    doc => {
+      res.send(doc);
+    },
+    e => {
+      res.send(e);
+    }
+  );
+
+});
+
+
+app.patch("/return_data/:_id", authenticate, (req, res) => {
+  let tempID = req.params._id;
+  let userID = req.user._id;
+  let mySetObj = {};
+
+  if (req.body.YearAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      YearAmt: req.body.YearAmt
+    }
+  }
+
+  if (req.body.Q1Amt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q1Amt: req.body.Q1Amt
+    }
+  }
+
+  if (req.body.Q2Amt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q2Amt: req.body.Q2Amt
+    }
+  }
+
+  if (req.body.Q3Amt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q3Amt: req.body.Q3Amt
+    }
+  }
+
+  if (req.body.Q4Amt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q4Amt: req.body.Q4Amt
+    }
+  }
+
+  if (req.body.JanAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JanAmt: req.body.JanAmt
+    }
+  }
+
+  if (req.body.FebAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      FebAmt: req.body.FebAmt
+    }
+  }
+
+  if (req.body.MarAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      MarAmt: req.body.MarAmt
+    }
+  }
+
+  if (req.body.AprAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      AprAmt: req.body.AprAmt
+    }
+  }
+
+  if (req.body.MayAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      MayAmt: req.body.MayAmt
+    }
+  }
+
+  if (req.body.JunAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JunAmt: req.body.JunAmt
+    }
+  }
+
+  if (req.body.JulAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JulAmt: req.body.JulAmt
+    }
+  }
+
+  if (req.body.AugAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      AugAmt: req.body.AugAmt
+    }
+  }
+
+  if (req.body.SepAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      SepAmt: req.body.SepAmt
+    }
+  }
+
+  if (req.body.OctAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      OctAmt: req.body.OctAmt
+    }
+  }
+
+  if (req.body.NovAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      NovAmt: req.body.NovAmt
+    }
+  }
+
+  if (req.body.DecAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      DecAmt: req.body.DecAmt
+    }
+  }
+
+  Return_Data.findOneAndUpdate(
+    {
+      _id: tempID,
+      _user: userID
+    },
+    {
+      $set: mySetObj,
+    },
+    { returnOriginal: false }
+  )
+    .then(
+      doc => {
+        let mypackage = {
+          message: 'Return Data Updated Successfully!',
+          NewAsset: doc
+        };
+        res.status(200).send(mypackage);
+      },
+      e => {
+        res.status(400).send(e);
+      }
+    );
+});
+
+app.get("/return_data", authenticate, (req, res) => {
+
+  Return_Data.find({
+    _user: req.user._id
+  }).then(
+    return_data => {
+      res.send({ return_data });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+
+});
+
+
+//Images - Receipts
 function uploadToS3(file, newName) {
   let s3bucket = new AWS.S3({
     accessKeyId: EZ_ENV.IAM_USER_KEY,

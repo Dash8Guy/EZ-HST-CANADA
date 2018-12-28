@@ -34,6 +34,8 @@ let myvLogAlert = document.createElement("div");
 let vLogtbl = document.createElement("table");
 let vLogresponsiveDiv = document.createElement("div");
 let vLogStrongTag = document.createElement("p");
+
+
 function buildVehicleLogTable(
   curAlertContainer,
   curAlertID,
@@ -90,7 +92,8 @@ function buildVehicleLogTable(
   // creating a row ////////////////////////
 
   for (i = 0; i < 31; i++) {
-
+    //If statement checks is array has less than Month has days and if smaller than after reaching last log in array loop keeps making empty rows until 31 
+    //so that when user changes from month to month, enough rows will be there to accomodate full month logs. Code will hide rows if empty.
     if (i < arrTableJan.length) {
       // creates a table row
       let vLogrow = document.createElement("tr");

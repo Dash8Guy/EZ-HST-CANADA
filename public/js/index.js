@@ -8,7 +8,6 @@ let vendorCar = false;
 //Holds Logged in User first name;
 let loggedIn;
 
-
 function closeFullViewImage() {
   $('#ImageViewModal').modal('hide');
   let img = document.getElementById('DivFullImage');
@@ -18,6 +17,131 @@ function closeFullViewImage() {
 
 
 const myDOMs = {
+  HST_Return: {
+    StartDate: document.getElementById('PeriodStartDate'),
+    EndDate: document.getElementById('PeriodEndDate'),
+    Line101: document.getElementById('Line101'),
+    Line103: document.getElementById('Line103'),
+    Line104: document.getElementById('Line104'),
+    Line105: document.getElementById('Line105'),
+    Line106: document.getElementById('Line106'),
+    Line107: document.getElementById('Line107'),
+    Line108: document.getElementById('Line108'),
+    Line109: document.getElementById('Line109'),
+    Line110: document.getElementById('Line110'),
+    Line111: document.getElementById('Line111'),
+    Line112: document.getElementById('Line112'),
+    Line113A: document.getElementById('Line113A'),
+    Line113B: document.getElementById('Line113B'),
+    Line113C: document.getElementById('Line113C'),
+    Line114: document.getElementById('Line114'),
+    Line115: document.getElementById('Line115'),
+    Line205: document.getElementById('Line205'),
+    Line405: document.getElementById('Line405'),
+    Body: document.getElementById('ReturnBody'),
+
+  },
+  AccountSummary: {
+    GrossRevBus: document.getElementById('ASgrossRevBus'),
+    GrossIncBus: document.getElementById('ASgrossIncBus'),
+    GrossIncRental: document.getElementById('ASgrossIncRental'),
+    NetIncome: document.getElementById('ASnetInc'),
+    TotalDeductionGrossInc: document.getElementById('ASBigNumberTop'),
+    HSTGrossRev: document.getElementById('ASHSTgrossRev'),
+    PSTGrossRev: document.getElementById('ASPSTgrossRev'),
+    TAXGrossInc: document.getElementById('ASTAXgrossInc'),
+    CPP: document.getElementById('ASCPP'),
+    TotalIN: document.getElementById('ASBigNumberMid'),
+    HSTPayment: document.getElementById('ASHSTPayment'),
+    PSTPayments: document.getElementById('ASPSTPayment'),
+    TAXPayments: document.getElementById('ASTAXPayment'),
+    TotalOUT: document.getElementById('ASBigNumberBtm'),
+    BusAcctBal: document.getElementById('ASLastBigNumberBtm'),
+    TimePeriodSeletor: document.getElementById('ASTimePeriodSelect'),
+    IncludeCheckBox: document.getElementById('ASIncludeToPeriod'),
+    AmountandTimeTitle: document.getElementById('ASTopLbl3')
+  },
+  AssetTable: {
+    AlertContainer: document.getElementById('alertReportAsset'),
+  },
+  FixedAssets: {
+    AlertContainer: document.getElementById('AssetContainer'),
+    Modal: document.getElementById('AssetModal'),
+    Modal_Header: document.getElementById('AssetmodalHead'),
+    Form: document.getElementById('AssetEntryForm'),
+    Purchase_Date: document.getElementById('AssetPurchaseDate'),
+    Description: document.getElementById('AssetDescription'),
+    Claim_Date: document.getElementById('AssetClaimDate'),
+    Start_Value: document.getElementById('AssetStartValue'),
+    Depreciation_Claim: document.getElementById('AssetClaimAmt'),
+    ITC_Claim: document.getElementById('ITCClaimAmt'),
+    Business_Percent: document.getElementById('AssetBusinessPercent'),
+    Vehicle1_Selector: document.getElementById('AssetVehicle1'),
+    Vehicle2_Selector: document.getElementById('AssetVehicle2'),
+    Vehicle_Percent_Btn: document.getElementById('AssetVehiclePercentApplyBtn'),
+    Reset_Btn: document.getElementById('AssetReset'),
+    Delete_Btn: document.getElementById('AssetDeleteBtn'),
+    Close_btn: document.getElementById('AssetBottomCloseModal'),
+    Save_Changes_Btn: document.getElementById('AssetSaveChangesBtn'),
+    Submit_Btn: document.getElementById('AssetSubmitBtn'),
+    Auto_Claim_Rate: document.getElementById('AssetAutoClaimRate'),
+    Include_ITC_Selector: document.getElementById('AssetIncludeITC'),
+    Auto_Generate_Btn: document.getElementById('AssetGenerateClaimBtn'),
+    Status: document.getElementById('AssetStatus'),
+    Blind_ID: document.getElementById('Asset_id')
+  },
+  PaymentTable: {
+    AlertContainer: document.getElementById('alertReportHSTPayment'),
+  },
+  TAXPayment: {
+    Modal: document.getElementById('taxPaymentModal'),
+    DateInput: document.getElementById('taxPaymentDate'),
+    PaymentAmtInput: document.getElementById('taxPaymentAmt'),
+    PaymentStatus: document.getElementById('taxPaymentStatus'),
+    BlindID: document.getElementById('taxBlindPaymentID'),
+    PaymentDescription: document.getElementById('taxPaymentDescription'),
+    AutoAmountBtn: document.getElementById('taxPaymentAutoAmtBtn'),
+    DeleteBtn: document.getElementById('taxPaymentDeleteBtn'),
+    CloseBtn: document.getElementById('closeTAXPaymentModal'),
+    SaveChangesBtn: document.getElementById('taxPaymentSaveChangesBtn'),
+    SubmitBtn: document.getElementById('taxPaymentSubmitBtn'),
+    ResetBtn: document.getElementById('taxPaymentformReset'),
+    Form: document.getElementById('formTAXPaymentEntry'),
+    AlertContainer: document.getElementById('alertContainerTAXPayment')
+  },
+  PSTPayment: {
+    Modal: document.getElementById('pstPaymentModal'),
+    DateInput: document.getElementById('pstPaymentDate'),
+    PaymentAmtInput: document.getElementById('pstPaymentAmt'),
+    PaymentStatus: document.getElementById('pstPaymentStatus'),
+    BlindID: document.getElementById('pstBlindPaymentID'),
+    PaymentDescription: document.getElementById('pstPaymentDescription'),
+    AutoAmountBtn: document.getElementById('pstPaymentAutoAmtBtn'),
+    DeleteBtn: document.getElementById('pstPaymentDeleteBtn'),
+    CloseBtn: document.getElementById('closePSTPaymentModal'),
+    SaveChangesBtn: document.getElementById('pstPaymentSaveChangesBtn'),
+    SubmitBtn: document.getElementById('pstPaymentSubmitBtn'),
+    ResetBtn: document.getElementById('pstPaymentformReset'),
+    Form: document.getElementById('formPSTPaymentEntry'),
+    AlertContainer: document.getElementById('alertContainerPSTPayment')
+  },
+  HSTPayment: {
+    Modal: document.getElementById('hstPaymentModal'),
+    Title: document.getElementById('paymentTitle'),
+    DateInput: document.getElementById('hstPaymentDate'),
+    PaymentAmtInput: document.getElementById('hstPaymentAmt'),
+    PaymentStatus: document.getElementById('hstPaymentStatus'),
+    BlindID: document.getElementById('hstBlindPaymentID'),
+    PaymentDescription: document.getElementById('hstPaymentDescription'),
+    AutoAmountBtn: document.getElementById('hstPaymentAutoAmtBtn'),
+    DeleteBtn: document.getElementById('hstPaymentDeleteBtn'),
+    CloseBtn: document.getElementById('closeHSTPaymentModal'),
+    SaveChangesBtn: document.getElementById('hstPaymentSaveChangesBtn'),
+    SubmitBtn: document.getElementById('hstPaymentSubmitBtn'),
+    ResetBtn: document.getElementById('hstPaymentformReset'),
+    Form: document.getElementById('formHSTPaymentEntry'),
+    AlertContainer: document.getElementById('alertContainerHSTPayment')
+  },
   homePercentModal: {
     hrsPerDay: document.getElementById('hoursPerDay'),
     daysPerWeek: document.getElementById('daysPerWeek'),
@@ -32,6 +156,9 @@ const myDOMs = {
     TooltipBtnEnabled: document.getElementById('tooltipOn'),
     TooltipBtnDisabled: document.getElementById('tooltipOFF'),
     ExpensePerPageSelect: document.getElementById('countPerPageSelect'),
+    ProvinceSelect: document.getElementById('settingsProvinceSelect'),
+    HSTsetting: document.getElementById('hstSetting'),
+    PSTsetting: document.getElementById('pstSetting'),
   },
   incomeStatement: {
     TabRevenue: document.getElementById('revenueTab'),
@@ -325,13 +452,17 @@ const myDOMs = {
   main: {
     Alert: document.getElementById("mainAlert"),
     AlertContainer: document.getElementById("alertContainerMain"),
-    closeAlert: document.getElementById("closeBtnAlertMain")
+    closeAlert: document.getElementById("closeBtnAlertMain"),
+    HSTPaymentEntryMenu: document.getElementById("hstPaymentEntryMenu"),
+    HSTPaymentReportMenu: document.getElementById("hstPaymentReportMenu")
+
   },
   income: {
     EntryForm: document.getElementById("formIncomeEntry"),
     EntryDate: document.getElementById("incomeDate"),
     AutoAmount: document.getElementById("incomeAutoAmount"),
     NetAmt: document.getElementById("incomenetAmt"),
+    HSTAmtLabel: document.getElementById("incomehstAmtLbl"),
     HSTAmt: document.getElementById("incomehstAmt"),
     PSTAmt: document.getElementById("incomepstAmt"),
     TotalAmt: document.getElementById("incomeTotalAmt"),
@@ -371,6 +502,7 @@ const myDOMs = {
     EntryDate: document.getElementById("carDate"),
     AutoAmount: document.getElementById("carAutoAmount"),
     NetAmt: document.getElementById("carnetAmt"),
+    HSTAmtLabel: document.getElementById("carhstAmtLbl"),
     HSTAmt: document.getElementById("carhstAmt"),
     PSTAmt: document.getElementById("carpstAmt"),
     TotalAmt: document.getElementById("carTotalAmt"),
@@ -408,6 +540,7 @@ const myDOMs = {
     EntryDate: document.getElementById("busDate"),
     AutoAmount: document.getElementById("busAutoAmount"),
     NetAmt: document.getElementById("busnetAmt"),
+    HSTAmtLabel: document.getElementById("bushstAmtLbl"),
     HSTAmt: document.getElementById("bushstAmt"),
     PSTAmt: document.getElementById("buspstAmt"),
     TotalAmt: document.getElementById("busTotalAmt"),
@@ -444,6 +577,7 @@ const myDOMs = {
     EntryDate: document.getElementById("homeDate"),
     AutoAmount: document.getElementById("homeAutoAmount"),
     NetAmt: document.getElementById("homenetAmt"),
+    HSTAmtLabel: document.getElementById("homehstAmtLbl"),
     HSTAmt: document.getElementById("homehstAmt"),
     PSTAmt: document.getElementById("homepstAmt"),
     TotalAmt: document.getElementById("homeTotalAmt"),
@@ -480,6 +614,7 @@ const myDOMs = {
     EntryDate: document.getElementById("otherDate"),
     AutoAmount: document.getElementById("otherAutoAmount"),
     NetAmt: document.getElementById("othernetAmt"),
+    HSTAmtLabel: document.getElementById("otherhstAmtLbl"),
     HSTAmt: document.getElementById("otherhstAmt"),
     PSTAmt: document.getElementById("otherpstAmt"),
     TotalAmt: document.getElementById("otherTotalAmt"),
@@ -516,6 +651,7 @@ const myDOMs = {
     EntryDate: document.getElementById("rentalDate"),
     AutoAmount: document.getElementById("rentalAutoAmount"),
     NetAmt: document.getElementById("rentalnetAmt"),
+    HSTAmtLabel: document.getElementById("rentalhstAmtLbl"),
     HSTAmt: document.getElementById("rentalhstAmt"),
     PSTAmt: document.getElementById("rentalpstAmt"),
     TotalAmt: document.getElementById("rentalTotalAmt"),
@@ -576,6 +712,19 @@ const myDOMs = {
     Alert: document.getElementById("AlertUserLogin"),
     AlertContainer: document.getElementById("alertContainerUserLogin"),
     closeAlert: document.getElementById("closeBtnAlertUserLogin")
+  }
+};
+
+updateHSTMenus();
+
+function updateHSTMenus() {
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.main.HSTPaymentEntryMenu.innerText = ' HST Payment'
+    myDOMs.main.HSTPaymentReportMenu.innerText = ' HST Payment Report'
+  } else {
+    myDOMs.main.HSTPaymentEntryMenu.innerText = ' GST Payment'
+    myDOMs.main.HSTPaymentReportMenu.innerText = ' GST Payment Report'
   }
 };
 
@@ -694,7 +843,12 @@ function generateTablePDF(expGroup) {
   let data = arrOfObjectToArrOfArrays();
   let columns = ["  #  ", "DATE", "NET", "HST", "PST", "TOTAL", "DESCRIPTION", "SUPPLIER", "CATEGORY"];
   let doc = new jsPDF('l', 'px', 'letter', true);
-  doc.setTextColor(41, 127, 186);
+  if (expGroup === 'Bus-Inc' || expGroup === 'Rental-Inc') {
+    doc.setTextColor(40, 167, 69);
+  } else {
+    doc.setTextColor(18, 19, 194);
+  }
+
   doc.setFontSize(9);
   switch (expGroup) {
     case 'Bus-Exp':
@@ -782,10 +936,10 @@ function generateTablePDF(expGroup) {
     columnWidth: 'auto',
     styles: { cellPadding: 1, fontSize: 6.7 },
     createdHeaderCell: function (cell, data) {
-      alignCol(cell, data);
+      alignCol(cell, data, true, expGroup);
     },
     createdCell: function (cell, data) {
-      alignCol(cell, data);
+      alignCol(cell, data, false, expGroup);
     }
     //columnStyles: { DATE: { halign: 'right' }, NET: { halign: 'right' }, HST: { halign: 'right' }, PST: { halign: 'right' }, TOTAL: { halign: 'right' } }
   });
@@ -794,7 +948,8 @@ function generateTablePDF(expGroup) {
 
 }
 
-function alignCol(cell, data) {
+function alignCol(cell, data, isHeader, expGroup) {
+
   var col = data.column.index;
   var row = data.row.index;
   if (col == 1 || col == 2 || col == 3 || col == 4 || col == 5) {
@@ -805,6 +960,14 @@ function alignCol(cell, data) {
   if (row === curTableArray.length) {
 
     cell.styles.fontStyle = 'bold';
+  }
+  if (isHeader) {
+    if (expGroup === 'Bus-Inc' || expGroup === 'Rental-Inc') {
+      cell.styles.fillColor = [40, 167, 69];
+    } else {
+      cell.styles.fillColor = [18, 19, 194];
+    }
+
   }
 }
 
@@ -1050,6 +1213,7 @@ async function afterLogin(userName) {
   await getAllMainData();
   await getVehiclePercentage();
   fillMainDataFromArrays();
+  fillAcctBalance();
 }
 
 function getUserMe() {
@@ -1211,6 +1375,14 @@ function displayAlert(
     myBtn.setAttribute("onclick", "hideAlert('incomeExpAlert')");
   } else if (curAlertID === "alertContainerVehicleLog") {
     myBtn.setAttribute("onclick", "hideAlert('alertContainerVehicleLog')");
+  } else if (curAlertID === "HSTPaymentExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('HSTPaymentExpAlert')");
+  } else if (curAlertID === "PSTPaymentExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('PSTPaymentExpAlert')");
+  } else if (curAlertID === "TAXPaymentExpAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('TAXPaymentExpAlert')");
+  } else if (curAlertID === "FixedAssetAlert") {
+    myBtn.setAttribute("onclick", "hideAlert('FixedAssetAlert')");
   }
 
 
@@ -1334,6 +1506,13 @@ function removeVlogTblNavAlertChildNodes() {
       }
     }
   }
+
+  if (myDOMs.main.AlertContainer.hasChildNodes()) {
+    while (myDOMs.main.AlertContainer.firstChild) {
+      myDOMs.main.AlertContainer.removeChild(myDOMs.main.AlertContainer.firstChild);
+    }
+  }
+
 }
 
 function removeTblNavAlertChildNodes() {
@@ -1400,6 +1579,13 @@ function removeTblNavAlertChildNodes() {
       }
     }
   }
+
+  if (myDOMs.main.AlertContainer.hasChildNodes()) {
+    while (myDOMs.main.AlertContainer.firstChild) {
+      myDOMs.main.AlertContainer.removeChild(myDOMs.main.AlertContainer.firstChild);
+    }
+  }
+
 }
 
 function registerUser() {
@@ -1651,6 +1837,110 @@ window.addEventListener("beforeunload", function (event) {
 
 function updateFormButtons(myForm) {
   switch (myForm) {
+    case 'Asset':
+      if ($('#Asset_id').val() !== "") {
+        if ($('#AssetSubmitBtn').hasClass("disabled")) {
+        } else {
+          $('#AssetSubmitBtn').addClass("disabled");
+        }
+        if ($('#AssetDeleteBtn').hasClass("disabled")) {
+          $('#AssetDeleteBtn').removeClass("disabled");
+        }
+        if ($('#AssetSaveChangesBtn').hasClass("disabled")) {
+          $('#AssetSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#AssetSubmitBtn').hasClass("disabled")) {
+          $('#AssetSubmitBtn').removeClass("disabled");
+        }
+        if ($('#AssetDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#AssetDeleteBtn').addClass("disabled");
+        }
+        if ($('#AssetSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#AssetSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'TAXPayment':
+      if ($('#taxBlindPaymentID').val() !== "") {
+        if ($('#taxPaymentSubmitBtn').hasClass("disabled")) {
+        } else {
+          $('#taxPaymentSubmitBtn').addClass("disabled");
+        }
+        if ($('#taxPaymentDeleteBtn').hasClass("disabled")) {
+          $('#taxPaymentDeleteBtn').removeClass("disabled");
+        }
+        if ($('#taxPaymentSaveChangesBtn').hasClass("disabled")) {
+          $('#taxPaymentSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#taxPaymentSubmitBtn').hasClass("disabled")) {
+          $('#taxPaymentSubmitBtn').removeClass("disabled");
+        }
+        if ($('#taxPaymentDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#taxPaymentDeleteBtn').addClass("disabled");
+        }
+        if ($('#taxPaymentSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#taxPaymentSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'PSTPayment':
+      if ($('#pstBlindPaymentID').val() !== "") {
+        if ($('#pstPaymentSubmitBtn').hasClass("disabled")) {
+        } else {
+          $('#pstPaymentSubmitBtn').addClass("disabled");
+        }
+        if ($('#pstPaymentDeleteBtn').hasClass("disabled")) {
+          $('#pstPaymentDeleteBtn').removeClass("disabled");
+        }
+        if ($('#pstPaymentSaveChangesBtn').hasClass("disabled")) {
+          $('#pstPaymentSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#pstPaymentSubmitBtn').hasClass("disabled")) {
+          $('#pstPaymentSubmitBtn').removeClass("disabled");
+        }
+        if ($('#pstPaymentDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#pstPaymentDeleteBtn').addClass("disabled");
+        }
+        if ($('#pstPaymentSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#pstPaymentSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
+    case 'HSTPayment':
+      if ($('#hstBlindPaymentID').val() !== "") {
+        if ($('#hstPaymentSubmitBtn').hasClass("disabled")) {
+        } else {
+          $('#hstPaymentSubmitBtn').addClass("disabled");
+        }
+        if ($('#hstPaymentDeleteBtn').hasClass("disabled")) {
+          $('#hstPaymentDeleteBtn').removeClass("disabled");
+        }
+        if ($('#hstPaymentSaveChangesBtn').hasClass("disabled")) {
+          $('#hstPaymentSaveChangesBtn').removeClass("disabled");
+        }
+      } else {
+        if ($('#hstPaymentSubmitBtn').hasClass("disabled")) {
+          $('#hstPaymentSubmitBtn').removeClass("disabled");
+        }
+        if ($('#hstPaymentDeleteBtn').hasClass("disabled")) {
+        } else {
+          $('#hstPaymentDeleteBtn').addClass("disabled");
+        }
+        if ($('#hstPaymentSaveChangesBtn').hasClass("disabled")) {
+        } else {
+          $('#hstPaymentSaveChangesBtn').addClass("disabled");
+        }
+      }
+      break;
     case 'income':
       if ($('#incomeBlindExpID').val() !== "") {
         if ($('#incomeExpBtn').hasClass("disabled")) {

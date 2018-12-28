@@ -4,6 +4,8 @@
 // it is not in the file input field.
 let selectedArrayNum = 0;
 let selectedRowNum = 0;
+//This variable is used to stop user from making changes when opening expense/income that is date on or before the Lock Date
+let savedTransactionLocked = false;
 
 let curTableArray = [];
 let arrTablePage1 = [];
@@ -37,6 +39,22 @@ let myReportTotal = {
   totalPST: 0,
   category: '',
   categoryFull: ''
+}
+//This variable will hold the Total Net, HST and PST for the Report Table being opened and is filled when Opening from Income Statement.
+let myPaymentReportTotal = {
+  totalTax: 0,
+  totalHST: 0,
+  totalPST: 0,
+  category: '',
+  categoryFull: ''
+}
+
+//This variable will hold the Total Claim, ITCClaim, ActualClaim and ActualITCClaim for the Report Table being opened and is filled when opening Asset Table.
+let myAssetReportTotal = {
+  claimAmt: 0,
+  ITCClaimAmt: 0,
+  ActualclaimAmt: 0,
+  ActualITCClaimAmt: 0
 }
 //This Variable is set to true when Table is opened and false when close and is used to stop the UpdateTableTotals from running when adding expenses or income.
 let TableOpen = false;
@@ -865,6 +883,12 @@ fillVehicleExpForm = async (expArr, row) => {
     currentExpModal = myDOMs.income
     currentTextModal = 'R-Income'
   }
+
+  if (new Date(dbMiscData.lockDate) >= new Date(expArr[row].carDate)) {
+    savedTransactionLocked = true;
+    alert('Because the Transaction Date is on or before the Lock Date, you will not be allowed to save any changes to it!');
+  };
+
   selectedRowNum = row;
   if (currentTextModal === 'Business') {
     displayBusExpModal();

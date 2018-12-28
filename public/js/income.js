@@ -10,13 +10,21 @@ function displayIncomeModal(source) {
   } else if (source === 'Rental') {
     myDOMs.income.Selector.value = 'Rental';
   }
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.income.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.income.HSTAmtLabel.innerText = 'GST Amount'
+  }
   updateIncomeHeader();
   myDOMs.income.EntryDate.focus();
 }
+
 function hideIncomeModal() {
   myDOMs.income.EntryForm.reset();
   removeIncomeImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#IncomeModal").modal("hide");
 }
 
@@ -322,6 +330,11 @@ function deleteSelectedIncomeParty() {
 }
 
 function updateIncome(source) {
+  if (savedTransactionLocked) {
+    alert(`Because the Transaction Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this transaction! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addIncomeOriginalValues();
+    return;
+  }
   if (myDOMs.income.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.income.AlertContainer,
@@ -520,6 +533,10 @@ function updateIncome(source) {
 }
 
 function deleteIncomeExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Transaction Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this transaction! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
   let source = '';
   if (myDOMs.income.Selector.value === "Business") {
     source = 'Business';
@@ -1097,6 +1114,14 @@ $("#incomeExpBtn").click(function () {
 });
 
 // // //Smaller Functions
+
+myDOMs.income.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.income.EntryDate.value)) {
+    alert(`Because your Transaction Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this transaction! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.income.EntryDate.value = null;
+    myDOMs.income.EntryDate.focus;
+  }
+});
 
 myDOMs.income.Reset.addEventListener("click", function (e) {
   if (myDOMs.income.ExpID.value === 'ALTERED') {

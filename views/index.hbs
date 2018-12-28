@@ -26,7 +26,7 @@
 
           <li class="nav-item dropdown  mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fab fa-wpforms"></i> Entry Forms
+              Entry Forms
             </a>
 
             <ul class="dropdown-menu">
@@ -36,27 +36,32 @@
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="displayBusExpModal()">
-                      <i class="far fa-building"></i> Business Entry
+                      <i class="fas fa-money-check-alt"> Business Entry</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-primary" onclick="displayCarExpModal()">
-                      <i class="fas fa-car"></i> Vehicle Entry
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayCarExpModal('1')">
+                      <i class="fas fa-car"> Vehicle 1 Entry</i>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-primary" onclick="displayCarExpModal('2')">
+                      <i class="fas fa-car"> Vehicle 2 Entry</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="displayHomeExpModal()">
-                      <i class="fas fa-home"></i> Home Entry
+                      <i class="fas fa-home"> Home Entry</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="displayOtherExpModal()">
-                      <i class="fas fa-hand-holding-usd"></i> Other Costs Entry
+                      <i class="fas fa-file-invoice-dollar"> Other Costs Entry</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="displayRentalExpModal()">
-                      <i class="fas fa-building"></i> Rental Entry
+                      <i class="fas fa-building"> Rental Entry</i>
                     </a>
                   </li>
                 </ul>
@@ -67,12 +72,12 @@
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-success" onclick="displayIncomeModal('Business')">
-                      <i class="far fa-building"></i> Business Entry
+                      <i class="fas fa-hand-holding-usd"> Business Entry</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-success" onclick="displayIncomeModal('Rental')">
-                      <i class="fas fa-building"></i> Rental Entry
+                      <i class="fas fa-hand-holding-usd"> Rental Entry</i>
                     </a>
                   </li>
 
@@ -83,29 +88,38 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payment Entry</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger" onclick="testLocalStorage()">
-                      <i class="far fa-building"></i> Display Screen Size
+                    <a href="#" class="dropdown-item  text-danger" onclick="displayTAXPaymentModal()">
+                      <i class="fas fa-dollar-sign"> Tax Payment</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger">
-                      <i class="fas fa-car"></i> GST/HST Payment
+                    <a href="#" class="dropdown-item  text-danger" onclick="displayHSTPaymentModal()">
+                      <i id="hstPaymentEntryMenu" class="fas fa-dollar-sign"> HST/GST Payment</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-danger">
-                      <i class="fas fa-home"></i> PST Payment
+                    <a href="#" class="dropdown-item  text-danger" onclick="displayPSTPaymentModal()">
+                      <i class="fas fa-dollar-sign"> PST Payment</i>
                     </a>
                   </li>
                 </ul>
               </li>
+              <a href="#" class="dropdown-item  text-dark my-1" onclick="displayAssetModal()">
+                <i class="fas fa-piggy-bank"> Fixed Assets</i>
+              </a>
+              <a href="#" class="dropdown-item  text-dark my-1" onclick="displayHomePercentModal()">
+                <i class="fas fa-home"> Home Business % Entry Form</i>
+              </a>
+              <a href="#" class="dropdown-item  text-black my-1" onclick="displayVehicleLogModal()">
+                <i class="fas fa-car"> Vehicle Log Entry</i>
+              </a>
             </ul>
 
           </li>
 
           <li class="nav-item dropdown  mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fab fa-wpforms"></i> Reports and more
+              Reports and more
             </a>
 
             <ul class="dropdown-menu">
@@ -115,7 +129,7 @@
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="getBusinessExpenses()">
-                      <i class="far fa-building"></i> Business Exp Report
+                      <i class="fas fa-money-check-alt"></i> Business Exp Report
                     </a>
                   </li>
                   <li class="dropdown-item">
@@ -135,7 +149,7 @@
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-primary" onclick="getOtherExpenses()">
-                      <i class="fas fa-hand-holding-usd"></i> Other Exp Report
+                      <i class="fas fa-file-invoice-dollar"></i> Other Exp Report
                     </a>
                   </li>
                   <li class="dropdown-item">
@@ -151,12 +165,12 @@
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-success" onclick="getIncomeExpenses('Business')">
-                      <i class="far fa-building"></i> Business Inc Report
+                      <i class="fas fa-hand-holding-usd"> Business Inc Report</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-success" onclick="getIncomeExpenses('Rental')">
-                      <i class="fas fa-building"></i> Rental Inc Report
+                      <i class="fas fa-hand-holding-usd"> Rental Inc Report</i>
                     </a>
                   </li>
 
@@ -164,31 +178,62 @@
               </li>
 
               <li class="dropdown-item dropdown-submenu">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-danger">Payments</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger" onclick="getTAXPayments()">
+                      <i class="fas fa-dollar-sign"> Tax Payment Report</i>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger" onclick="getHSTPayments()">
+                      <i id="hstPaymentReportMenu" class="fas fa-dollar-sign"> HST/GST Payment Report</i>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger" onclick="getPSTPayments()">
+                      <i class="fas fa-dollar-sign"> PST Payment Report</i>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-danger" onclick="getAllPayments()">
+                      <i class="fas fa-dollar-sign"> All Payments Report</i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="dropdown-item dropdown-submenu">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-dark">Miscellaneous</a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark" onclick="getCountPerPage()">
-                      <i class="fas fa-piggy-bank"></i> How Much Can I Keep
+                    <a href="#" class="dropdown-item  text-dark" onclick="buildAccountArray()">
+                      <i class="fas fa-piggy-bank"> How Much Can I Keep</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark">
-                      <i class="fas fa-file-invoice"></i> GST/HST Return
+                    <a href="#" class="dropdown-item  text-dark" onclick="displayHSTReturnModal()">
+                      <i class="fas fa-file-invoice"> GST/HST Return</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark">
-                      <i class="fas fa-university"></i> Account Summary
+                    <a href="#" class="dropdown-item  text-dark" onclick="displayAccountSummaryModal()">
+                      <i class="fas fa-university"> Account Summary</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
                     <a href="#" class="dropdown-item  text-dark" onclick="displayIncomeStatementModal()">
-                      <i class="fas fa-hand-holding-usd"></i> Income Statement
+                      <i class="fas fa-hand-holding-usd"> Income Statement</i>
                     </a>
                   </li>
                   <li class="dropdown-item">
-                    <a href="#" class="dropdown-item  text-dark" onclick="displayHomePercentModal()">
-                      <i class="fas fa-home"></i> Home Business % Entry Form
+                    <a href="#" class="dropdown-item  text-dark" onclick="getFixedAssets()">
+                      <i class="fas fa-piggy-bank"> Fixed Assets</i>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="#" class="dropdown-item  text-black" onclick="getVlogReportData()">
+                      <i class="fas fa-car"> Vehicle Log Report</i>
                     </a>
                   </li>
                 </ul>
@@ -199,38 +244,20 @@
 
           <li class="nav-item dropdown  mr-3">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-car"></i> Vehicle Log
+              User Register/Login
             </a>
             <div class="dropdown-menu">
-              <a href="#" class="dropdown-item  text-danger" onclick="displayVehicleLogModal()">
-                <i class="fas fa-car"></i> Vehicle Log Entry
+              <a href="#" class="dropdown-item  text-primary my-1" id="navRegister" onclick="displayUserSetupModal()">
+                <i class="fas fa-user-cog"> Registration</i>
               </a>
-              <a href="#" class="dropdown-item  text-danger" onclick="getVlogReportData()">
-                <i class="fas fa-car"></i> Vehicle Log Report
+              <a href="#" class="dropdown-item  text-primary my-1" id="navLogin" onclick="displayLoginUser()">
+                <i class="fas fa-user-check"> User Login</i>
               </a>
-              <a href="#" class="dropdown-item  text-danger" onclick="displayVLogArray()">
-                <i class="fas fa-wrench"></i> Work in Progress
+              <a href="#" class="dropdown-item  text-primary disabled my-1" id="navLogout" onclick="userLogout(false)">
+                <i class="fas fa-user-times"> User Logout</i>
               </a>
-            </div>
-
-          </li>
-
-          <li class="nav-item dropdown  mr-3">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-              <i class="fas fa-user"></i> User Register/Login
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item  text-primary" id="navRegister" onclick="displayUserSetupModal()">
-                <i class="fas fa-user-cog"></i> Registration
-              </a>
-              <a href="#" class="dropdown-item  text-primary" id="navLogin" onclick="displayLoginUser()">
-                <i class="fas fa-user-check"></i> User Login
-              </a>
-              <a href="#" class="dropdown-item  text-primary disabled" id="navLogout" onclick="userLogout(false)">
-                <i class="fas fa-user-times"></i> User Logout
-              </a>
-              <a href="#" class="dropdown-item text-primary" onclick="getUserMe()">
-                <i class="fas fa-user-times"></i> TEST
+              <a href="#" class="dropdown-item text-primary my-1" onclick="getUserMe()">
+                <i class="fas fa-user-times"> TEST</i>
               </a>
             </div>
           </li>
@@ -550,7 +577,7 @@
       <!-- FOOTER IF REQUIRED -->
     </div>
   </div>
-  </div>
+
 
   <!-- BUSINESS EXPENSE ENTRY MODAL -->
 
@@ -768,7 +795,6 @@
       <!-- FOOTER IF REQUIRED -->
     </div>
   </div>
-  </div>
 
   <!-- HOME EXPENSE ENTRY MODAL -->
 
@@ -985,8 +1011,6 @@
       <!-- FOOTER IF REQUIRED -->
     </div>
   </div>
-  </div>
-
 
   <!-- OTHER EXPENSE ENTRY MODAL -->
 
@@ -1202,7 +1226,6 @@
       </div>
       <!-- FOOTER IF REQUIRED -->
     </div>
-  </div>
   </div>
 
   <!-- RENTAL EXPENSE ENTRY MODAL -->
@@ -1420,7 +1443,6 @@
       </div>
       <!-- FOOTER IF REQUIRED -->
     </div>
-  </div>
   </div>
 
   <!-- VEHICLE EXPENSE ENTRY MODAL -->
@@ -1657,12 +1679,11 @@
         </div> -->
     </div>
   </div>
-  </div>
 
   <!-- VEHICLE LOG ENTRY MODAL -->
 
   <div class="modal fade" id="vehicleLogModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white" id="vehicleLogHead">
           <p class="modal-title" id="vehicleLogTitle" style="font-size: 16px;">Vehicle 1 Log Entry Form</p>
@@ -1681,8 +1702,8 @@
           <div class="container align-middle mt-0 pt-0" id="alertVehicleLogContainer">
           </div>
           <div class="container">
-            <div class="col"></div>
-            <div class="col-lg-8 mx-auto order-2" id="navBtnsContainerVLog">
+            {{!-- <div class="col"></div> --}}
+            <div class="col-lg-12 mx-auto order-2" id="navBtnsContainerVLog">
               <div class="btn btn-sm btn-outline-primary" id="vLogBtnFirst" data-toggle="tooltip" title="Click to change Vehicle Log Date to the 1st day of the Year."><i
                   class="fas fa-fast-backward"></i> First</div>
               <div class="btn btn-sm btn-outline-primary" id="vLogBtnPrevious" data-toggle="tooltip" title="Click to change Vehicle Log Date to the Previous day of the Year."><i
@@ -1703,7 +1724,7 @@
             </div>
 
 
-            <div id="dayDisplayVLog" class="col-lg-2 offset-lg-5 d-none d-lg-block" data-toggle="tooltip" title="Displays current Day, Month, Quarter and Year of the Log Date.">
+            <div id="dayDisplayVLog" class="col-lg-4 offset-lg-5 d-none d-lg-block" data-toggle="tooltip" title="Displays current Day, Month, Quarter and Year of the Log Date.">
               <p class="my-0" id="vLogDayDisplay">Day - 1</p>
               <p class="my-0" id="vLogMonthDisplay">Month - 1</p>
               <p class="my-0" id="vLogQuarterDisplay">Quarter - 1</p>
@@ -1711,7 +1732,7 @@
             </div>
           </div>
 
-          <div id="vLogLowerBlocks" class="row align-items-center mt-2 ml-5">
+          <div id="vLogLowerBlocks" class="row align-items-center mt-2 ml-1">
             <div id="vLogLowerBlocksLeft" class="col-lg-4  d-lg-inline-block m-0">
               <label class="mb-0" for="vLogBusKMInput">Business KM</label>
               <input type="number" step=".1" name="vLogBusKMInput" id="vLogBusKMInput" class="form-control" data-toggle="tooltip"
@@ -1929,12 +1950,50 @@
     <div class="modal-dialog  modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-primary">
-          <h5 class="modal-title text-white" id="ImageViewTitle">Vehicle Log Report</h5>
+          <h5 class="modal-title text-white" id="VLogTitle">Vehicle Log Report</h5>
           <button class="close" id="topCloseVlogViewModal" onclick="closevLogModal()"></button>
           <span class="text-white">&times;</span>
         </div>
         <div class="modal-body text-center">
           <div class="container align-middle text-center mt-0 pt-0" id="vLogReportContainer">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Viewing Payment Report Table -->
+  <div class="modal fade text-dark mx-auto" id="PaymentReportModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-danger" id="paymentModalHeader">
+          <h5 class="modal-title text-white" id="PaymentReportTitle">Payment Report</h5>
+          <button class="close" id="PaymentReportModalCloseBtn" onclick="hidePaymentTableModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+          <div class="container align-middle text-center mt-0 pt-0" id="alertReportHSTPayment">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Viewing Asset Report Table -->
+  <div class="modal fade text-dark mx-auto" id="AssetReportModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div id="AssetModalDialog" class="modal-lg modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary" id="assetModalHeader">
+          <h5 class="modal-title text-white" id="AssetReportTitle">Fixed Asset Report</h5>
+          <button class="close" id="AssetReportModalCloseBtn" onclick="hideAssetTableModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+          <div class="container align-middle text-center mt-0 pt-0" id="alertReportAsset">
 
           </div>
         </div>
@@ -2779,7 +2838,6 @@
 
     </div>
   </div>
-  </div>
 
   <!-- Settings Modal -->
 
@@ -2821,12 +2879,46 @@
                   data-toggle="tooltip" title="When DISABLED is selected, tooltips become disabled in every EZ-HST-CANADA Controls.">
                 <label class="form-check-label" id="tooltipOFFLbl" for="tooltipOFF">DISABLED</label>
               </div>
+            </li>
+            <li id="settingsProvinceSelectLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Select
+              Work Province
+              <select class="form-control form-control-sm text-center" id="settingsProvinceSelect" name="settingsProvinceSelect"
+                data-toggle="tooltip" title="Click down arrow to select Home Province or Province where your Business is mostly conducted."
+                value=10>
+                <option value="" selected>Select Province</option>
+                <option value=1>Alberta</option>
+                <option value=2>British Columbia</option>
+                <option value=3>Manitoba</option>
+                <option value=4>New Brunswick</option>
+                <option value=5>Newfoundland and Labrador</option>
+                <option value=6>Northwest Territories</option>
+                <option value=7>Nova Scotia</option>
+                <option value=8>Nunavut</option>
+                <option value=9>Ontario</option>
+                <option value=10>Prince Edward Island</option>
+                <option value=11>Quebec</option>
+                <option value=12>Saskatchewan</option>
+                <option value=13>Yukon</option>
+              </select>
+            </li>
+            <li id="provinceTaxRatesettings" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Tax
+              Rates
+              <div class="form-group text-center">
+                <label class="form-control-label" id="hstSettingLbl" for="">HST/GST</label>
+                <input class="form-control mr-1 text-right" id="hstSetting" type="number" name="hstSetting" value=0
+                  onchange="updateHSTforSelectedProvince()" data-toggle="tooltip" title="Enter selected Province HST or GST setting for entry form auto function">
+              </div>
+              <div class="form-group text-center">
+                <label class="form-control-label" id="pstSettingLbl" for="">PST</label>
+                <input class="form-control ml-1 mr-1 text-right" id="pstSetting" type="number" name="pstSetting" value=0
+                  onchange="updatePSTforSelectedProvince()" data-toggle="tooltip" title="Enter selected Province PST setting for entry form auto function">
+              </div>
+            </li>
+          </ul>
         </div>
-        </li>
-        </ul>
+
       </div>
     </div>
-  </div>
   </div>
 
   <!-- Home Business Percent Modal -->
@@ -2955,510 +3047,1575 @@
         </div>
       </div>
     </div>
+  </div>
+
+  {{!-- HST Payment Modal --}}
+
+  <div class="modal fade" id="hstPaymentModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white" id="hstPaymentModalHead">
+          <p class="modal-title" id="paymentTitle" style="font-size: 16px;">HST/GST Payment Entry Form</p>
+          <button class="close" onclick="hideHSTPaymentModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerHSTPayment">
+          </div>
+          <form id="formHSTPaymentEntry" name="formHSTPaymentEntry" method="POST" action="" target="#" oninput="updateHSTPaymentStatus()">
+            <div role="form" class="row text-center">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="hstPaymentDateLbl" for="hstPaymentDate">Date</label>
+                  <input id="hstPaymentDate" form="formHSTPaymentEntry" name="hstPaymentDate" type="date" min="2018-01-01"
+                    max="2018-12-31" class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="hstPaymentAmtLbl" for="hstPaymentAmt">Payment Amount</label>
+                  <input type="number" form="formHSTPaymentEntry" step=".01" name="hstPaymentAmt" id="hstPaymentAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="Enter the Amount at Line 115 of the Provided HST/GST Return or use button to accomplish this automatically">
+                </div>
+                <div class="form-group">
+                  <label id="hstPaymentStatusLbl" for="hstPaymentStatus">Payment Status</label>
+                  <input type="text" form="formHSTPaymentEntry" id="hstPaymentStatus" name="hstPaymentStatus" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Payment Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formHSTPaymentEntry" id="hstBlindPaymentID" name="hstBlindPaymentID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="hstPaymentDescriptionLbl" for="hstPaymentDescription">Description</label>
+                  <input type="text" form="formHSTPaymentEntry" id="hstPaymentDescription" name="hstPaymentDescription"
+                    class="form-control text-center" placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="hstPaymentAutoAmtBtnLbl" for="hstPaymentAutoAmtBtn" style="font-size: 10px; margin-bottom: -4px;">Use
+                    button to
+                    Enter Payment Amount
+                    Automatically</label>
+                  <button type="button" id="hstPaymentAutoAmtBtn" class="btn btn-sm btn-block btn-outline-danger ml-1 mt-2 text-left"
+                    style="font-size: 12px; height: 26px;" onclick="findHSTDataForPayment()" data-toggle="tooltip"
+                    title="Click to Enter the Amount from Line 115 of the HST/GST Return for Time Period Selected.">
+                    ← &nbsp; &nbsp; &nbsp; &nbsp; Enter Amount from GST/HST Return Line 115 </button>
+                </div>
+                <div class="mx-auto text-center">
+                  <button type="button" id="hstPaymentformReset" form="formHSTPaymentEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="hstPaymentDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2"
+                    onclick="deleteHSTPayment()" data-toggle="tooltip" title="Click to Delete current Payment"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+                  <button type="button" id="closeHSTPaymentModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close Payment form." onclick="hideHSTPaymentModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+                  <button type="button" id="hstPaymentSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing Payment - Payment Status must be ALTERED!"
+                    onclick="updateHSTPayment()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button type="button" id="hstPaymentSubmitBtn" form="formHSTPaymentEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Payment" onclick="addHSTPayment()"><i class="far fa-save"></i>
+                    Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- PST Payment Modal --}}
+
+  <div class="modal fade" id="pstPaymentModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white" id="pstPaymentModalHead">
+          <p class="modal-title" id="pstPaymentTitle" style="font-size: 16px;">PST Payment Entry Form</p>
+          <button class="close" onclick="hidePSTPaymentModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerPSTPayment">
+          </div>
+          <form id="formPSTPaymentEntry" name="formPSTPaymentEntry" method="POST" action="" target="#" oninput="updatePSTPaymentStatus()">
+            <div role="form" class="row text-center">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="pstPaymentDateLbl" for="pstPaymentDate">Date</label>
+                  <input id="pstPaymentDate" form="formPSTPaymentEntry" name="pstPaymentDate" type="date" min="2018-01-01"
+                    max="2018-12-31" class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="pstPaymentAmtLbl" for="pstPaymentAmt">Payment Amount</label>
+                  <input type="number" form="formPSTPaymentEntry" step=".01" name="pstPaymentAmt" id="pstPaymentAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="Enter the Amount of PST calculated for the Selected Time Period or use button to accomplish this automatically">
+                </div>
+                <div class="form-group">
+                  <label id="pstPaymentStatusLbl" for="pstPaymentStatus">Payment Status</label>
+                  <input type="text" form="formPSTPaymentEntry" id="pstPaymentStatus" name="pstPaymentStatus" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Payment Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formPSTPaymentEntry" id="pstBlindPaymentID" name="pstBlindPaymentID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="pstPaymentDescriptionLbl" for="pstPaymentDescription">Description</label>
+                  <input type="text" form="formPSTPaymentEntry" id="pstPaymentDescription" name="pstPaymentDescription"
+                    class="form-control text-center" placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="pstPaymentAutoAmtBtnLbl" for="pstPaymentAutoAmtBtn" style="font-size: 10px; margin-bottom: -4px;">Use
+                    button to
+                    Enter Payment Amount
+                    Automatically</label>
+                  <button type="button" id="pstPaymentAutoAmtBtn" class="btn btn-sm btn-block btn-outline-danger ml-1 mt-2 text-left"
+                    style="font-size: 12px; height: 26px;" onclick="findPSTDataForPayment()" data-toggle="tooltip"
+                    title="Click to Enter the Amount of PST for Time Period Selected.">
+                    ← &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Enter Amount of PST
+                  </button>
+                </div>
+                <div class="mx-auto text-center">
+                  <button type="button" id="pstPaymentformReset" form="formPSTPaymentEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="pstPaymentDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2"
+                    onclick="deletePSTPayment()" data-toggle="tooltip" title="Click to Delete current Payment"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+                  <button type="button" id="closePSTPaymentModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close Payment form." onclick="hidePSTPaymentModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+                  <button type="button" id="pstPaymentSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing Payment - Payment Status must be ALTERED!"
+                    onclick="updatePSTPayment()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button type="button" id="pstPaymentSubmitBtn" form="formPSTPaymentEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Payment" onclick="addPSTPayment()"><i class="far fa-save"></i>
+                    Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Tax Payment Modal --}}
+
+  <div class="modal fade" id="taxPaymentModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white" id="taxPaymentModalHead">
+          <p class="modal-title" id="taxPaymentTitle" style="font-size: 16px;">Tax Payment Entry Form</p>
+          <button class="close" onclick="hideTAXPaymentModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerTAXPayment">
+          </div>
+          <form id="formTAXPaymentEntry" name="formTAXPaymentEntry" method="POST" action="" target="#" oninput="updateTAXPaymentStatus()">
+            <div role="form" class="row text-center">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label id="taxPaymentDateLbl" for="taxPaymentDate">Date</label>
+                  <input id="taxPaymentDate" form="formTAXPaymentEntry" name="taxPaymentDate" type="date" min="2018-01-01"
+                    max="2018-12-31" class="form-control p-0 text-right" data-toggle="tooltip" title="Use Calendar or Up/Down arrows to change Year/Month/Day"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label id="taxPaymentAmtLbl" for="taxPaymentAmt">Payment Amount</label>
+                  <input type="number" form="formTAXPaymentEntry" step=".01" name="taxPaymentAmt" id="taxPaymentAmt"
+                    class="form-control text-right" value=0 data-toggle="tooltip" title="Enter the Amount of calculated Tax for the Selected Time Period or the Amount requested from the Government.">
+                </div>
+                <div class="form-group">
+                  <label id="taxPaymentStatusLbl" for="taxPaymentStatus">Payment Status</label>
+                  <input type="text" form="formTAXPaymentEntry" id="taxPaymentStatus" name="taxPaymentStatus" class="form-control text-center"
+                    value="NEW" data-toggle="tooltip" title="Displays the Payment Status (NEW - SAVED - ALTERED)"
+                    readonly>
+                  <input type="text" form="formTAXPaymentEntry" id="taxBlindPaymentID" name="taxBlindPaymentID" class="form-control d-none"
+                    readonly>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label id="taxPaymentDescriptionLbl" for="taxPaymentDescription">Description</label>
+                  <input type="text" form="formTAXPaymentEntry" id="taxPaymentDescription" name="taxPaymentDescription"
+                    class="form-control text-center" placeholder="Enter Brief Description" data-toggle="tooltip" title="Brief description goes here."
+                    required>
+                </div>
+
+                <div class="mx-auto text-center">
+                  <button type="button" id="taxPaymentformReset" form="formTAXPaymentEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="taxPaymentDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2"
+                    onclick="deleteTAXPayment()" data-toggle="tooltip" title="Click to Delete current Payment"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+                  <button type="button" id="closeTAXPaymentModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close Payment form." onclick="hideTAXPaymentModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+                  <button type="button" id="taxPaymentSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing Payment - Payment Status must be ALTERED!"
+                    onclick="updateTAXPayment()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button type="button" id="taxPaymentSubmitBtn" form="formTAXPaymentEntry" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Payment" onclick="addTAXPayment()"><i class="far fa-save"></i>
+                    Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED ASSET ENTRY MODAL -->
+
+  <div class="modal fade" id="AssetModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary text-white" id="AssetmodalHead">
+          <p class="modal-title" id="AssetTitle" style="font-size: 16px;">Fixed Asset/Capital Property Entry Form</p>
+          <button class="close" onclick="hideAssetModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="AssetContainer">
+          </div>
+          <form id="AssetEntryForm" name="AssetEntryForm" action="" target="#" oninput="updateAssetStatus()">
+            <div id="AssettopRowInputDiv" role="form" class="row text-center">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetPurchaseDateLbl" for="AssetPurchaseDate">Date Added</label>
+                  <input id="AssetPurchaseDate" form="AssetEntryForm" name="AssetPurchaseDate" type="date" class="form-control p-0 mx-0 text-right"
+                    data-toggle="tooltip" title="Use Calendar or Up/Down arrows to Select Date Asset was added to the company">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label id="AssetDescriptionLbl" for="AssetDescription">Description</label>
+                  <input id="AssetDescription" form="AssetEntryForm" name="AssetDescription" type="text" class="form-control p-0 mx-0 text-center"
+                    data-toggle="tooltip" title="Enter a short Description of the Asset to help you remember the correct asset.">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetClaimDateLbl" for="AssetClaimDate">ITC Claim Date</label>
+                  <input id="AssetClaimDate" form="AssetEntryForm" name="AssetClaimDate" type="date" min="2018-01-01"
+                    max="2018-12-31" class="form-control p-0 mx-0 text-right" data-toggle="tooltip" title="Date you wish to claim your Asset. (For Vehicles, claim on last day of the year unless you know it will be used 100% for business)">
+                </div>
+              </div>
+
+            </div>
+
+            <div role="form" class="row text-center">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetStartValueLbl" for="AssetStartValue">Asset Value</label>
+                  <input id="AssetStartValue" form="AssetEntryForm" name="AssetStartValue" type="text" class="form-control py-0 px-1 mx-0 text-center"
+                    data-toggle="tooltip" title="Undepreciated Capital Cost(CCA) at the End of last year or, if you added it this year, the Price of the Asset.">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetClaimAmtLbl" for="AssetClaimAmt">Depreciation Claim</label>
+                  <input id="AssetClaimAmt" form="AssetEntryForm" name="AssetClaimAmt" type="text" class="form-control py-0 px-1 mx-0 text-center"
+                    data-toggle="tooltip" title="Use the Generate Claim button to Automatically fill this box or, enter it manually.">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="ITCClaimAmtLbl" for="ITCClaimAmt">ITC Claim</label>
+                  <input id="ITCClaimAmt" form="AssetEntryForm" name="ITCClaimAmt" type="text" class="form-control py-0 px-1 mx-0 text-center"
+                    data-toggle="tooltip" title="Use the Generate Claim button to Automatically fill this box or, you can enter the Input Tax Credit manually.">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetBusinessPercentLbl" for="AssetBusinessPercent">Business %</label>
+                  <div class="input-group p-0">
+                    <input id="AssetBusinessPercent" form="AssetEntryForm" name="AssetBusinessPercent" type="text"
+                      class="form-control py-0 px-1 mx-0 text-center" data-toggle="tooltip" title="Enter Business usage of the Asset or, if the asset is a Vehicle, use the Apply Vehicle % button after choosing the appropriate vehicle.">
+                    <div class="input-group-append text-center">
+                      <span class="input-group-text p-0 mt-0 mr-0" style="font-size: 10px; width: 10px; height: 25px;">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          {{!-- style="border: 1px solid black;" --}}
+          <div class="row">
+            <div id="AssetStatusAreaDiv" class="form-group text-center">
+              <input id="Asset_id" form="AssetEntryForm" name="Asset_id" type="text" class="form-control d-none">
+              <label id="AssetStatusLbl" for="AssetStatus">Asset Status</label>
+              <input id="AssetStatus" form="AssetEntryForm" name="AssetStatus" type="text" class="form-control py-0 px-1 mx-0 text-center"
+                value="NEW" data-toggle="tooltip" title="Displays the Asset Status (NEW - SAVED - ALTERED)" readonly>
+            </div>
+            <div id="AssetVehiclePercentBorder" class="row mt-0" style="border: 1px solid black;">
+              <div id="AssetVehiclePercentContainer" class="text-right">
+                <p id="AssetVehicleSelectAreaText" class="text-right">Choose Vehicle to Apply Percentage
+                  when Entering Vehicle Asset.</p>
+
+                <div class="form-check form-check-inline mt-2">
+                  <input class="form-check-input radiobtn mr-1 ml-3" id="AssetVehicle1" type="radio" name="AssetVehicle1"
+                    value="1">
+                  <label class="form-check-label" id="AssetVehicle1Lbl" for="AssetVehicle1">Vehicle 1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input radiobtn ml-1 mr-1" id="AssetVehicle2" type="radio" name="AssetVehicle2"
+                    value="2">
+                  <label class="form-check-label" id="AssetVehicle2Lbl" for="AssetVehicle2">Vehicle 2</label>
+                </div>
+
+                <button type="button" id="AssetVehiclePercentApplyBtn" class="btn btn-sm btn-outline-success ml-1 mb-3"
+                  data-toggle="tooltip" title="Click to Apply Selected Vehicle Percentage as shown in the Vehicle Log."
+                  onclick="">Apply Vehicle %
+                </button>
+              </div>
+            </div>
+          </div>
 
 
-    <!--  style="border: 2px solid red;" -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"></script>
-    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.min.js"></script>
-    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
-    <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
-    <script type="text/javascript" src="./js/index.js"></script>
-    <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
-    <script type="text/javascript" src="./js/businessExpenses.js"></script>
-    <script type="text/javascript" src="./js/homeExpenses.js"></script>
-    <script type="text/javascript" src="./js/otherExpenses.js"></script>
-    <script type="text/javascript" src="./js/rentalExpenses.js"></script>
-    <script type="text/javascript" src="./js/income.js"></script>
-    <script type="text/javascript" src="./js/reports.js"></script>
-    <script type="text/javascript" src="./js/tables.js"></script>
-    <script type="text/javascript" src="./js/mainPageScript.js"></script>
-    <script type="text/javascript" src="./js/vehicleLog.js"></script>
-    <script type="text/javascript" src="./js/mainPageScript.js"></script>
-    <script type="text/javascript" src="./js/miscHardCoded.js"></script>
-    <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
-    <script type="text/javascript" src="./js/incomeStatement.js"></script>
-    <script type="text/javascript" src="./js/settings.js"></script>
-    <script type="text/javascript" src="./js/homePercent.js"></script>
+          <div class="row text-center">
+            <div class="col-lg-7 text-left">
+              <div class="form-group">
+                <div>
+                  <button type="button" id="AssetReset" form="AssetEntryForm" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
+                      class="fas fa-sync-alt"></i>
+                    Reset
+                  </button>
+                  <button type="button" id="AssetDeleteBtn" class="btn btn-sm btn-outline-danger ml-1 mt-2" onclick="deleteFixedAsset()"
+                    data-toggle="tooltip" title="Click to Delete current Payment"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </button>
+                  <button type="button" id="AssetBottomCloseModal" class="btn btn-sm btn-outline-primary ml-1 mt-2"
+                    data-toggle="tooltip" title="Close Payment form." onclick="hideAssetModal()"><i class="far fa-window-close"></i>
+                    Close
+                  </button>
+                  <button type="button" id="AssetSaveChangesBtn" class="btn btn-sm btn-outline-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to Save changes you have made to an existing Payment - Payment Status must be ALTERED!"
+                    onclick="updateFixedAsset()"><i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button type="button" id="AssetSubmitBtn" form="AssetEntryForm" class="btn btn-sm btn-success ml-1 mt-2"
+                    data-toggle="tooltip" title="Click to add New Payment" onclick="addFixedAsset()"><i class="far fa-save"></i>
+                    Submit</button>
+                </div>
+              </div>
+            </div>
 
-    <script>
-      // Get the current year for the copyright
-      // $('#year').text(new Date().getFullYear());
+            <div id="AssetAutoClaimAreaDiv" class="col-lg-5 mt-1" style="border: 1px solid black;">
+              <p id="AssetAutoClaimText" class="text-center">Auto-Claim</p>
+              <div id="AssetDepreciationRateDiv" class="form-group input-group mb-3">
+                <label id="AssetAutoClaimRateLbl" class="mx-auto" for="AssetAutoClaimRate">Depreciation Rate</label>
+                <div class="input-group p-0" id="depreciationAppendDiv">
+                  <input id="AssetAutoClaimRate" form="AssetEntryForm" name="AssetAutoClaimRate" type="number" class="form-control p-0 mt-0 text-center ml-4"
+                    data-toggle="tooltip" title="Enter Appropriate Depreciation Rate for Class of Depreciable Property(Asset). More information is available in CRA Business and Professional Income Guide.">
+                  <div class="input-group-append text-center">
+                    <span class="input-group-text p-0 mt-0 mr-4" style="font-size: 10px; width: 10px; height: 25px;">%</span>
+                  </div>
+                </div>
 
-      // This code enables the drop-down submenu
-      $('.dropdown-submenu > a').on("click", function (e) {
-        var submenu = $(this);
-        $('.dropdown-submenu .dropdown-menu').removeClass('show');
-        submenu.next('.dropdown-menu').addClass('show');
-        e.stopPropagation();
-      });
+              </div>
+              <div id="AssetIncludeITCDiv" class="form-check form-check-inline">
+                <input class="form-check-input radiobtn ml-1 mr-1 text-center" id="AssetIncludeITC" type="checkbox"
+                  name="AssetIncludeITC" data-toggle="tooltip" title="Click to include Input Tax Credit Claim if your Assets still have taxes remaining.">
+                <label class="form-check-label" id="AssetIncludeITCLbl" for="AssetIncludeITC">Include ITC</label>
+              </div>
+              <button type="button" id="AssetGenerateClaimBtn" class="btn btn-sm btn-outline-primary ml-1" data-toggle="tooltip"
+                title="Click to Calculate and Apply Depreciation Amount and ITC Claim Amount if selected." onclick="generateClaims()">Generate
+                Claim(s)
+              </button>
+            </div>
 
-      $('.dropdown').on("hidden.bs.dropdown", function () {
-        // hide any open menus when parent closes
-        $('.dropdown-menu.show').removeClass('show');
-      });
-
-
-
-      // Tooltip enable code
-
-
-      $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-      });
-
+          </div>
 
 
-      //Display Image code
 
-      $('document').ready(function () {
-        $("#imgload").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
+        </div>
+      </div>
+    </div>
+  </div>
 
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
+
+  <!-- ACCOUNT SUMMARY MODAL -->
+
+  <div class="modal fade" id="AccountSummaryModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary text-white" id="ASmodalHead">
+          <p class="modal-title" id="ASTitle" style="font-size: 16px;">Business Account Summary</p>
+          <button class="close" onclick="hideAccountSummaryModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="ASTopTitles" class="row">
+            <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <p id="ASTopLbl1">GROUPS</p>
+              <div class="d-flex align-items-center mt-4">
+                <p id="ASleftBoldTextTop" class="text-success mx-auto font-weight-bold">SALES</p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <p id="ASTopLbl2" class="text-center">CATEGORIES</p>
+              <div class="mt-1  px-0">
+                <p class="text-center text-success ASLbl">GROSS REVENUE (BUSINESS)</p>
+                <p class="text-center text-success ASLbl">GROSS INCOME (BUSINESS)</p>
+                <p class="text-center text-success ASLbl">GROSS INCOME/REVENUE (RENTAL)</p>
+                <p class="text-center text-success ASLbl">NET INCOME (Business and Rent)</p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-2 text-right px-0 mx-0" style="border: 1px solid black;">
+              <p id="ASTopLbl3" class="text-center">YEAR</p>
+              <div class="mt-1  px-0">
+                <p id="ASgrossRevBus" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Business Gross Revenue is All Business Revenue including any HST/GST and PST collected">$0.00</p>
+                <p id="ASgrossIncBus" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Business Gross Income is All Business Revenue NOT including HST/GST and PST collected">$0.00</p>
+                <p id="ASgrossIncRental" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Rental Gross Revenue or Gross Income are the same because HST/GST and PST are never charged on Rental Amounts.">$0.00</p>
+                <p id="ASnetInc" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Net Income is the (Total Business Gross Income + Total Rental Gross Income) - (Tax on Gross Income + CPP) Basically, the Amount you keep.">$0.00</p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <p id="ASTopLbl4" class="text-center">TOTALS</p>
+              <p id="ASBigTextTop" class="text-center">Total Deductions on <br> Gross
+                Income </p>
+              <div class="align-items-center mt-3">
+                <p id="ASBigNumberTop" class="mx-auto mt-0 font-weight-bold" data-toggle="tooltip" title="This amount is simply Tax on Gross Income + CPP">$0.00</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="ASMidTitles" class="row">
+            <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <div class="d-flex align-items-center mt-4">
+                <p id="ASleftBoldTextMid" class="text-primary mx-auto font-weight-bold">ACCOUNT IN</p>
+              </div>
+            </div>
+
+            <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <div class="mt-2  px-0">
+                <p class="text-center text-primary ASLbl">HST/GST ON GROSS REVENUE</p>
+                <p class="text-center text-primary ASLbl">PST ON GROSS REVENUE</p>
+                <p class="text-center text-primary ASLbl">TAX ON GROSS INCOME</p>
+                <p class="text-center text-primary ASLbl">CANADA PENSION PLAN</p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-2 text-right  px-0 mx-0" style="border: 1px solid black;">
+              <div class="mt-2  px-0">
+                <p id="ASHSTgrossRev" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of HST/GST collected from Business Revenue">$0.00</p>
+                <p id="ASPSTgrossRev" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of PST collected from Business Revenue">$0.00</p>
+                <p id="ASTAXgrossInc" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of Income Tax on All Gross Income based on Federal income tax rates and your Provinces rates. This amount is also based on your accumulated income in chronological order.">$0.00</p>
+                <p id="ASCPP" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="The Canada Pension Plan amount is 9.9% of your Gross Income but never more than a specified amount set by CRA every year.">$0.00</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="mt-2">
+                <p id="ASBigTextMid" class="text-center text-primary">Total In</p>
+                <div class="align-items-center mt-3">
+                  <p id="ASBigNumberMid" class="mx-auto mt-0 font-weight-bold" data-toggle="tooltip" title="This Amount is (HST/GST + PST + Income Tax + CPP) Ez-HST-CANADA adds this amount to the Account Balance and is the Amount that you would need in order to pay CRA the HST/GST you collected, income taxes and CPP. This amount is only accurate if you have no expenses.">$0.00</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="ASBtmTitles" class="row">
+            <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <div class="d-flex align-items-center mt-4">
+                <p id="ASleftBoldTextMid" class="text-danger mx-auto font-weight-bold">ACCOUNT OUT</p>
+              </div>
+            </div>
+
+            <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <div class="mt-3  px-0">
+                <p class="text-center text-danger ASLbl">HST/GST PAYMENTS</p>
+                <p class="text-center text-danger ASLbl">PST PAYMENTS</p>
+                <p class="text-center text-danger ASLbl">TAX INSTALLMENTS</p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-2 text-right  px-0 mx-0" style="border: 1px solid black;">
+              <div class="mt-3  px-0">
+                <p id="ASHSTPayment" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of HST/GST Payments you have made">$0.00</p>
+                <p id="ASPSTPayment" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of PST Payments you have made">$0.00</p>
+                <p id="ASTAXPayment" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of Tax Payments/Installments you have made">$0.00</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="mt-2">
+                <p id="ASBigTextBtm" class="text-center text-danger">Total Out</p>
+                <div class="align-items-center mt-3">
+                  <p id="ASBigNumberBtm" class="mx-auto mt-0 font-weight-bold" data-toggle="tooltip" title="Total Amounts of All Payments you have made. This Amount reduces the Account Balance.">$0.00</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div id="ASLastTitles" class="row">
+            <div class="col-lg-2 text-center px-0">
+              {{!-- <div class="d-flex align-items-center mt-4">
+                <p id="ASleftBoldTextMid" class="text-danger mx-auto font-weight-bold">ACCOUNT OUT</p>
+              </div> --}}
+            </div>
+
+            <div class="col-lg-7 text-center">
+              <div class="mt-1  px-0">
+                <label class="text-center" id="ASTimePeriodSelectLbl" for="ASTimePeriodSelect">Time Period Selector</label>
+                <select class="align-middle mt-0 pt-0" id="ASTimePeriodSelect" name="ASTimePeriodSelect" data-toggle="tooltip"
+                  title="Click down arrow to select and View results of All the available Time Periods" value=10>
+                  <option value="">Select Time Period</option>
+                  <option value='Year' selected>Full Year</option>
+                  <option value='Q1'>1st ¼</option>
+                  <option value='Q2'>2nd ¼</option>
+                  <option value="Q3">3rd ¼</option>
+                  <option value='Q4'>4th ¼</option>
+                  <option value='Jan'>January</option>
+                  <option value='Feb'>February</option>
+                  <option value='Mar'>March</option>
+                  <option value='Apr'>April</option>
+                  <option value='May'>May</option>
+                  <option value='Jun'>June</option>
+                  <option value='Jul'>July</option>
+                  <option value='Aug'>August</option>
+                  <option value='Sep'>September</option>
+                  <option value='Oct'>October</option>
+                  <option value='Nov'>November</option>
+                  <option value='Dec'>December</option>
+                </select>
+              </div>
+
+              <div id="ASIncludeToPeriodDiv" class="form-check form-check-inline mt-3">
+                <input class="form-check-input radiobtn ml-1 mr-1 text-center" id="ASIncludeToPeriod" type="checkbox"
+                  name="ASIncludeToPeriod" data-toggle="tooltip" title="Check box to include all totals from start of the year to end of Time Period, or un-check to display only amounts from within Time Period">
+                <label class="form-check-label" id="ASIncludeToPeriodLbl" for="ASIncludeToPeriod">Include Totals from
+                  Day One</label>
+              </div>
+
+            </div>
+
+            <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="mt-2">
+                <p id="ASLastTextBtm" class="text-center">Business Account <br> Balance</p>
+                <div class="align-items-center mt-3">
+                  <p id="ASLastBigNumberBtm" class="mx-auto mt-0 font-weight-bold" data-toggle="tooltip" title="Account Balance is the Total Amount IN -  Total Amount Out. Basically, the Amount you should have kept in order to pay CRA. This amount does not take your expenses into account which would reduce the amount owing.">$0.00</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- GST/HST Return Modal -->
+
+  <div class="modal fade text-dark mx-auto px-0" id="HSTReturnModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-md">
+      <div class="modal-content">
+        <div id="HSTReturnModalHeader" class="modal-header bg-primary">
+          <p id="HSTReturnModalTitle" class="modal-title text-white">GST/HST Return</p>
+          <button type="button" id="ReturnPrintPDF" class="btn btn-sm btn-outline-secondary ml-5" data-toggle="tooltip"
+            title="Print current GST/HST Return. To save it as a PDF, choose Save as PDF for the Destination printer."
+            onclick="printElement()">
+            PRINT
+          </button>
+          <button class="close" id="topCloseHSTReturnModal" onclick="hideHSTReturnModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div id="ReturnBody" class="modal-body">
+          <ul class="list-group">
+            <li id="ReturnReportingPeriodLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Reporting
+              Period
+              <div class="form-group align-items-center text-center mt-3">
+                <label class="form-control-label" for="PeriodStartDate">From</label>
+                <input class="text-right" id="PeriodStartDate" type="date" data-toggle="tooltip" title="Displays the Time Period Start Date as Displayed on Main Page"
+                  readonly>
+              </div>
+
+              <div class="form-group align-items-center text-center mt-3">
+                <label class="form-control-label" for="PeriodEndDate">To</label>
+                <input class="text-right" id="PeriodEndDate" type="date" data-toggle="tooltip" title="Displays the Time Period End Date as Displayed on Main Page"
+                  readonly>
+              </div>
+
+            </li>
+
+            <li id="ReturnFirstLineLi" class="list-group-item d-flex justify-content-between align-items-center text-primary">
+              <div>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line101" style="border: 1px solid rgb(18, 19, 194);">101</label>
+                <input class="text-right d-inline pr-1" id="Line101" type="text" data-toggle="tooltip" title="Displays your Total Sales (No HST/GST or PST)"
+                  readonly>
+                <p class="d-inline ml-2" id="Line101Txt">Sales and other revenue.</p>
+              </div>
+            </li>
+            <li id="ReturnLine2To3Li" class="list-group-item justify-content-between align-items-center text-primary">
+              <div>
+                <label class="form-control-label px-1 py-1" for="Line103" style="border: 1px solid rgb(18, 19, 194);">103</label>
+                <input class="text-right d-inline pr-1" id="Line103" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line103Txt">GST/HST amounts that you collected or became
+                  collectible.</p>
+              </div>
+              <div>
+                <label class="form-control-label px-1 py-1" for="Line104" style="border: 1px solid rgb(18, 19, 194);">104</label>
+                <input class="text-right d-inline pr-1" id="Line104" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line104Txt">Adjustments.</p>
+              </div>
+            </li>
+
+            <li id="ReturnLine105Li" class="list-group-item d-flex justify-content-between align-items-center text-primary">
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line105Txt">Total GST/HST and Adjustments (add 103 and 104) ></p>
+                <label class="form-control-label ml-4 bg-primary text-white px-1 py-1" for="Line105" style="border: 1px solid rgb(18, 19, 194);">105</label>
+                <input class="text-right d-inline mr-auto  pr-1" id="Line105" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the sum of line 103 and 104."
+                  readonly>
+              </div>
+            </li>
+
+            <li id="ReturnLine106To107Li" class="list-group-item justify-content-between align-items-center text-primary">
+              <div>
+                <label class="form-control-label px-1 py-1" for="Line106" style="border: 1px solid rgb(18, 19, 194);">106</label>
+                <input class="text-right d-inline pr-1" id="Line106" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line106Txt">Input Tax Credits-ITCs</p>
+              </div>
+              <div>
+                <label class="form-control-label px-1 py-1" for="Line107" style="border: 1px solid rgb(18, 19, 194);">107</label>
+                <input class="text-right d-inline pr-1" id="Line107" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line107Txt">Adjustments.</p>
+              </div>
+            </li>
+
+            <li id="ReturnLine108to109Li" class="list-group-item justify-content-between align-items-center text-primary">
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line108Txt">Total ITCs and Adjustments (add 106 and 107) ></p>
+                <label class="form-control-label ml-4 bg-primary text-white px-1 py-1" for="Line108" style="border: 1px solid rgb(18, 19, 194);">108</label>
+                <input class="text-right d-inline pr-1" id="Line108" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the sum of line 106 and 107."
+                  readonly>
+              </div>
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line109Txt">Net Tax (subtract 108 from 105) ></p>
+                <label class="form-control-label ml-4 bg-primary text-white px-1 py-1" for="Line109" style="border: 1px solid rgb(18, 19, 194);">109</label>
+                <input class="text-right d-inline mr-auto pr-1" id="Line109" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the subtraction of line 108 from 105."
+                  readonly>
+              </div>
+            </li>
+
+            <li id="ReturnLine110To111Li" class="list-group-item justify-content-between align-items-center text-primary">
+              <div>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line110" style="border: 1px solid rgb(18, 19, 194);">110</label>
+                <input class="text-right d-inline pr-1" id="Line110" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line110Txt">Installment and other annual filer payments</p>
+              </div>
+              <div>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line111" style="border: 1px solid rgb(18, 19, 194);">111</label>
+                <input class="text-right d-inline pr-1" id="Line111" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line107Txt">GST/HST Rebates</p>
+              </div>
+            </li>
+
+            <li id="ReturnLine112to113ALi" class="list-group-item justify-content-between align-items-center text-primary">
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line112Txt">Total other Credits (add 110 and 111) ></p>
+                <label class="form-control-label ml-4 px-1 py-1" for="Line112" style="border: 1px solid rgb(18, 19, 194);">112</label>
+                <input class="text-right d-inline pr-1" id="Line112" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the sum of line 110 and 111."
+                  readonly>
+              </div>
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line113ATxt">Balance (subtract 112 from 109) ></p>
+                <label class="form-control-label ml-4 px-1 py-1" for="Line113A" style="border: 1px solid rgb(18, 19, 194);">113A</label>
+                <input class="text-right d-inline mr-auto pr-1" id="Line113A" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the subtraction of line 112 from 109."
+                  readonly>
+              </div>
+            </li>
+
+            <li id="ReturnLine205To405Li" class="list-group-item justify-content-between align-items-center text-primary">
+              <div>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line205" style="border: 1px solid rgb(18, 19, 194);">205</label>
+                <input class="text-right d-inline pr-1" id="Line205" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line205Txt">GST/HST due on the aquisition of taxable real property</p>
+              </div>
+              <div>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line405" style="border: 1px solid rgb(18, 19, 194);">405</label>
+                <input class="text-right d-inline pr-1" id="Line405" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <p class="d-inline ml-2" id="Line405Txt">Other GST/HST to be self assessed</p>
+              </div>
+            </li>
+
+            <li id="ReturnLine113Bto113CLi" class="list-group-item justify-content-between align-items-center text-primary">
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line113BTxt">Total other Debits (add 205 and 405) ></p>
+                <label class="form-control-label ml-4 px-1 py-1" for="Line113B" style="border: 1px solid rgb(18, 19, 194);">113B</label>
+                <input class="text-right d-inline pr-1" id="Line113B" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the sum of line 205 and 405."
+                  readonly>
+              </div>
+              <div class="float-right">
+                <p class="d-inline ml-2" id="Line113CTxt">Balance (add 113A and 113B) ></p>
+                <label class="form-control-label ml-4 px-1 py-1" for="Line113C" style="border: 1px solid rgb(18, 19, 194);">113C</label>
+                <input class="text-right d-inline mr-auto pr-1" id="Line113C" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the sum of line 113A and 113B."
+                  readonly>
+              </div>
+            </li>
+
+            <li id="ReturnLine114To115Li" class="list-group-item d-flex justify-content-between align-items-center text-primary">
+              <div>
+                <p class="pb-0 mb-0 text-center" id="refundTxt" style="border: 1px solid rgb(18, 19, 194);">Refund
+                  Claimed</p>
+                <label class="form-control-label bg-primary text-white px-1 py-1  mt-0" for="Line114" style="border: 1px solid rgb(18, 19, 194);">114</label>
+                <input class="text-right d-inline pr-1" id="Line114" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the positive amount from line 113C when line 113C result is negative."
+                  readonly>
+              </div>
+              <div>
+                <p class="pb-0 mb-0 text-center" id="PaymentEnclosedTxt" style="border: 1px solid rgb(18, 19, 194);">Payment
+                  Enclosed</p>
+                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line115" style="border: 1px solid rgb(18, 19, 194);">115</label>
+                <input class="text-right d-inline pr-1" id="Line115" type="text" data-toggle="tooltip" title="This Input Box is Calculated for you and cannot be changed. It is the amount from line 113C when line 113C result is positive."
+                  readonly>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--  style="border: 2px solid red;" -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.min.js"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
+  <script type="text/javascript" src="./js/thirdpartyjs/html2canvas.min.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
+  <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
+  <script type="text/javascript" src="./js/businessExpenses.js"></script>
+  <script type="text/javascript" src="./js/homeExpenses.js"></script>
+  <script type="text/javascript" src="./js/otherExpenses.js"></script>
+  <script type="text/javascript" src="./js/rentalExpenses.js"></script>
+  <script type="text/javascript" src="./js/income.js"></script>
+  <script type="text/javascript" src="./js/reports.js"></script>
+  <script type="text/javascript" src="./js/tables.js"></script>
+  <script type="text/javascript" src="./js/mainPageScript.js"></script>
+  <script type="text/javascript" src="./js/vehicleLog.js"></script>
+  <script type="text/javascript" src="./js/mainPageScript.js"></script>
+  <script type="text/javascript" src="./js/miscHardCoded.js"></script>
+  <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
+  <script type="text/javascript" src="./js/incomeStatement.js"></script>
+  <script type="text/javascript" src="./js/settings.js"></script>
+  <script type="text/javascript" src="./js/homePercent.js"></script>
+  <script type="text/javascript" src="./js/hstPayments.js"></script>
+  <script type="text/javascript" src="./js/pstPayments.js"></script>
+  <script type="text/javascript" src="./js/taxPayments.js"></script>
+  <script type="text/javascript" src="./js/paymentTables.js"></script>
+  <script type="text/javascript" src="./js/assets.js"></script>
+  <script type="text/javascript" src="./js/assetTables.js"></script>
+  <script type="text/javascript" src="./js/howMuchCanIKeep.js"></script>
+  <script type="text/javascript" src="./js/accountSummary.js"></script>
+  <script type="text/javascript" src="./js/hstReturn.js"></script>
+
+
+  <script>
+    // Hack to enable multiple modals by making sure the .modal-open class
+    // is set to the <body> when there is at least one modal open left
+    // $('body').on('hidden.bs.modal', function () {
+    //   if ($('.modal.in').length > 0) {
+    //     $('body').addClass('modal-open');
+    //   }
+    // });
+
+    // Get the current year for the copyright
+    // $('#year').text(new Date().getFullYear());
+
+    // This code enables the drop-down submenu
+    $('.dropdown-submenu > a').on("click", function (e) {
+      var submenu = $(this);
+      $('.dropdown-submenu .dropdown-menu').removeClass('show');
+      submenu.next('.dropdown-menu').addClass('show');
+      e.stopPropagation();
+    });
+
+    $('.dropdown').on("hidden.bs.dropdown", function () {
+      // hide any open menus when parent closes
+      $('.dropdown-menu.show').removeClass('show');
+    });
+
+
+
+    // Tooltip enable code
+
+
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+
+
+    //Display Image code
+
+    $('document').ready(function () {
+      $("#imgload").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImg').attr('src', e.target.result);
           }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImg').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-
-          }
-        });
-
-        $("#imgloadBus").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
-
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
-          }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImgBus').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-          }
-        });
-
-        $("#imgloadHome").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
-          }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImgHome').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-          }
-        });
-
-        $("#imgloadOther").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
-          }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImgOther').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-          }
-        });
-
-        $("#imgloadRental").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
-          }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImgRental').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-          }
-        });
-
-
-        $("#imgloadIncome").change(function () {
-          if (!this.files[0]) { return; }
-          const myFileSize = this.files[0].size;
-          if (myFileSize > 4112000) {
-            this.value = '';
-            return alert(
-              `The file size is ${
-              myFileSize
-              } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-            );
-          }
-
-          if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#myImgIncome').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-          }
-        });
-
-
-      });
-
-      //the following group of code is used to update the form status by catching the image src change and triggering the appropriate Update Status function
-
-      var elementIncome = document.getElementById('myImgIncome');
-      var elementVehicle = document.getElementById('myImg');
-      var elementBusiness = document.getElementById('myImgBus');
-      var elementHome = document.getElementById('myImgHome');
-      var elementOther = document.getElementById('myImgOther');
-      var elementRental = document.getElementById('myImgRental');
-
-      var xIncome = new MutationObserver(function (e) {
-        updateIncomeFormStatus();
-        disableEnableFullSizeIncomeImgBtn();
-      });
-      var xVehicle = new MutationObserver(function (e) {
-        updateVehicleFormStatus();
-        disableEnableFullSizeVehicleImgBtn();
-      });
-      var xBusiness = new MutationObserver(function (e) {
-        updateBusinessFormStatus();
-        disableEnableFullSizeBusinessImgBtn();
-      });
-      var xHome = new MutationObserver(function (e) {
-        updateHomeFormStatus();
-        disableEnableFullSizeHomeImgBtn();
-      });
-      var xOther = new MutationObserver(function (e) {
-        updateOtherFormStatus();
-        disableEnableFullSizeOtherImgBtn();
-      });
-      var xRental = new MutationObserver(function (e) {
-        updateRentalFormStatus();
-        disableEnableFullSizeRentalImgBtn();
-      });
-
-      xIncome.observe(elementIncome, {
-        attributes: true
-      });
-      xVehicle.observe(elementVehicle, {
-        attributes: true
-      });
-      xBusiness.observe(elementBusiness, {
-        attributes: true
-      });
-      xHome.observe(elementHome, {
-        attributes: true
-      });
-      xOther.observe(elementOther, {
-        attributes: true
-      });
-      xRental.observe(elementRental, {
-        attributes: true
-      });
-
-      // Display File Name in Receipt File Input
-
-      $('#imgload').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      $('#imgloadBus').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      $('#imgloadHome').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      $('#imgloadOther').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      $('#imgloadRental').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      $('#imgloadIncome').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-      })
-
-      // Code to Logout after set time
-
-      var idleTime = 0;
-      $(document).ready(function () {
-        //Increment the idle time counter every minute.
-        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-        //Zero the idle timer on mouse movement.
-        $(this).mousemove(function (e) {
-          idleTime = 0;
-        });
-        $(this).keypress(function (e) {
-          idleTime = 0;
-        });
-        $(this).mousedown(function (e) {
-          idleTime = 0;
-        });
-        $(this).click(function (e) {
-          idleTime = 0;
-        });
-        $(this).scroll(function (e) {
-          idleTime = 0;
-        });
-      });
-
-      function timerIncrement() {
-        idleTime = idleTime + 1;
-        if (idleTime > 6) { // 7 minutes
-          // code to check if logged in and if so, logout
-          if ($("#navLogout").hasClass("disabled")) {
-          } else {
-            userLogout(true);
-          }
+          reader.readAsDataURL(this.files[0]);
 
         }
-      };
+      });
 
-      //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
-      $('document').ready(function () {
+      $("#imgloadBus").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
 
-        $('#addCarExpenseModal').on('shown.bs.modal', function () {
-          if ($('#carBlindExpID').val() !== "") {
-            if ($('#carExpBtn').hasClass("disabled")) {
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgBus').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadHome").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgHome').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadOther").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgOther').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $("#imgloadRental").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgRental').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+
+      $("#imgloadIncome").change(function () {
+        if (!this.files[0]) { return; }
+        const myFileSize = this.files[0].size;
+        if (myFileSize > 4112000) {
+          this.value = '';
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+          );
+        }
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#myImgIncome').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+
+    });
+
+    //the following group of code is used to update the form status by catching the image src change and triggering the appropriate Update Status function
+
+    var elementIncome = document.getElementById('myImgIncome');
+    var elementVehicle = document.getElementById('myImg');
+    var elementBusiness = document.getElementById('myImgBus');
+    var elementHome = document.getElementById('myImgHome');
+    var elementOther = document.getElementById('myImgOther');
+    var elementRental = document.getElementById('myImgRental');
+
+    var xIncome = new MutationObserver(function (e) {
+      updateIncomeFormStatus();
+      disableEnableFullSizeIncomeImgBtn();
+    });
+    var xVehicle = new MutationObserver(function (e) {
+      updateVehicleFormStatus();
+      disableEnableFullSizeVehicleImgBtn();
+    });
+    var xBusiness = new MutationObserver(function (e) {
+      updateBusinessFormStatus();
+      disableEnableFullSizeBusinessImgBtn();
+    });
+    var xHome = new MutationObserver(function (e) {
+      updateHomeFormStatus();
+      disableEnableFullSizeHomeImgBtn();
+    });
+    var xOther = new MutationObserver(function (e) {
+      updateOtherFormStatus();
+      disableEnableFullSizeOtherImgBtn();
+    });
+    var xRental = new MutationObserver(function (e) {
+      updateRentalFormStatus();
+      disableEnableFullSizeRentalImgBtn();
+    });
+
+    xIncome.observe(elementIncome, {
+      attributes: true
+    });
+    xVehicle.observe(elementVehicle, {
+      attributes: true
+    });
+    xBusiness.observe(elementBusiness, {
+      attributes: true
+    });
+    xHome.observe(elementHome, {
+      attributes: true
+    });
+    xOther.observe(elementOther, {
+      attributes: true
+    });
+    xRental.observe(elementRental, {
+      attributes: true
+    });
+
+    // Display File Name in Receipt File Input
+
+    $('#imgload').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadBus').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadHome').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadOther').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadRental').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    $('#imgloadIncome').on('change', function () {
+      //get the file name
+      var fileName = $(this).val();
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+    })
+
+    // Code to Logout after set time
+
+    var idleTime = 0;
+    $(document).ready(function () {
+      //Increment the idle time counter every minute.
+      var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+      //Zero the idle timer on mouse movement.
+      $(this).mousemove(function (e) {
+        idleTime = 0;
+      });
+      $(this).keypress(function (e) {
+        idleTime = 0;
+      });
+      $(this).mousedown(function (e) {
+        idleTime = 0;
+      });
+      $(this).click(function (e) {
+        idleTime = 0;
+      });
+      $(this).scroll(function (e) {
+        idleTime = 0;
+      });
+    });
+
+    function timerIncrement() {
+      idleTime = idleTime + 1;
+      if (idleTime > 6) { // 7 minutes
+        // code to check if logged in and if so, logout
+        if ($("#navLogout").hasClass("disabled")) {
+        } else {
+          userLogout(true);
+        }
+
+      }
+    };
+
+    //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
+    $('document').ready(function () {
+
+      $('#AssetModal').on('shown.bs.modal', function () {
+        if ($('#Asset_id').val() !== "") {
+          if ($('#AssetSubmitBtn').hasClass("disabled")) {
+          } else {
+            $('#AssetSubmitBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
+            if ($('#AssetDeleteBtn').hasClass("disabled")) {
             } else {
-              $('#carExpBtn').addClass("disabled");
-            }
-            if ($('#carExpDeleteBtn').hasClass("disabled")) {
-              $('#carExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
-              $('#carExpSaveChangesBtn').removeClass("disabled");
+              $('#AssetDeleteBtn').addClass("disabled");
             }
           } else {
-            if ($('#carExpBtn').hasClass("disabled")) {
-              $('#carExpBtn').removeClass("disabled");
+            if ($('#AssetDeleteBtn').hasClass("disabled")) {
+              $('#AssetDeleteBtn').removeClass("disabled");
             }
+          }
+          if (savedTransactionLocked) {
+            if ($('#AssetSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#AssetSaveChangesBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#AssetSaveChangesBtn').hasClass("disabled")) {
+              $('#AssetSaveChangesBtn').removeClass("disabled");
+            }
+          }
+        } else {
+          if ($('#AssetSubmitBtn').hasClass("disabled")) {
+            $('#AssetSubmitBtn').removeClass("disabled");
+          }
+          if ($('#AssetDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#AssetDeleteBtn').addClass("disabled");
+          }
+          if ($('#AssetSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#AssetSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#taxPaymentModal').on('shown.bs.modal', function () {
+        if ($('#taxBlindPaymentID').val() !== "") {
+          if ($('#taxPaymentSubmitBtn').hasClass("disabled")) {
+          } else {
+            $('#taxPaymentSubmitBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
+            if ($('#taxPaymentDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#taxPaymentDeleteBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#taxPaymentDeleteBtn').hasClass("disabled")) {
+              $('#taxPaymentDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
+            if ($('#taxPaymentSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#taxPaymentSaveChangesBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#taxPaymentSaveChangesBtn').hasClass("disabled")) {
+              $('#taxPaymentSaveChangesBtn').removeClass("disabled");
+            }
+          }
+        } else {
+          if ($('#taxPaymentSubmitBtn').hasClass("disabled")) {
+            $('#taxPaymentSubmitBtn').removeClass("disabled");
+          }
+          if ($('#taxPaymentDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#taxPaymentDeleteBtn').addClass("disabled");
+          }
+          if ($('#taxPaymentSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#taxPaymentSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#pstPaymentModal').on('shown.bs.modal', function () {
+        if ($('#pstBlindPaymentID').val() !== "") {
+          if ($('#pstPaymentSubmitBtn').hasClass("disabled")) {
+          } else {
+            $('#pstPaymentSubmitBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
+            if ($('#pstPaymentDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#pstPaymentDeleteBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#pstPaymentDeleteBtn').hasClass("disabled")) {
+              $('#pstPaymentDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
+            if ($('#pstPaymentSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#pstPaymentSaveChangesBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#pstPaymentSaveChangesBtn').hasClass("disabled")) {
+              $('#pstPaymentSaveChangesBtn').removeClass("disabled");
+            }
+          }
+        } else {
+          if ($('#pstPaymentSubmitBtn').hasClass("disabled")) {
+            $('#pstPaymentSubmitBtn').removeClass("disabled");
+          }
+          if ($('#pstPaymentDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#pstPaymentDeleteBtn').addClass("disabled");
+          }
+          if ($('#pstPaymentSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#pstPaymentSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#hstPaymentModal').on('shown.bs.modal', function () {
+        if ($('#hstBlindPaymentID').val() !== "") {
+          if ($('#hstPaymentSubmitBtn').hasClass("disabled")) {
+          } else {
+            $('#hstPaymentSubmitBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
+            if ($('#hstPaymentDeleteBtn').hasClass("disabled")) {
+            } else {
+              $('#hstPaymentDeleteBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#hstPaymentDeleteBtn').hasClass("disabled")) {
+              $('#hstPaymentDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
+            if ($('#hstPaymentSaveChangesBtn').hasClass("disabled")) {
+            } else {
+              $('#hstPaymentSaveChangesBtn').addClass("disabled");
+            }
+          } else {
+            if ($('#hstPaymentSaveChangesBtn').hasClass("disabled")) {
+              $('#hstPaymentSaveChangesBtn').removeClass("disabled");
+            }
+          }
+        } else {
+          if ($('#hstPaymentSubmitBtn').hasClass("disabled")) {
+            $('#hstPaymentSubmitBtn').removeClass("disabled");
+          }
+          if ($('#hstPaymentDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#hstPaymentDeleteBtn').addClass("disabled");
+          }
+          if ($('#hstPaymentSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#hstPaymentSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#addCarExpenseModal').on('shown.bs.modal', function () {
+        if ($('#carBlindExpID').val() !== "") {
+          if ($('#carExpBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#carExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#carExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#carExpDeleteBtn').hasClass("disabled")) {
+              $('#carExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#carExpSaveChangesBtn').addClass("disabled");
             }
-          }
-        });
-
-        $('#BusExpenseModal').on('shown.bs.modal', function () {
-          if ($('#busBlindExpID').val() !== "") {
-            if ($('#busExpBtn').hasClass("disabled")) {
-            } else {
-              $('#busExpBtn').addClass("disabled");
-            }
-            if ($('#busExpDeleteBtn').hasClass("disabled")) {
-              $('#busExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
-              $('#busExpSaveChangesBtn').removeClass("disabled");
-            }
           } else {
-            if ($('#busExpBtn').hasClass("disabled")) {
-              $('#busExpBtn').removeClass("disabled");
+            if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+              $('#carExpSaveChangesBtn').removeClass("disabled");
             }
+          }
+        } else {
+          if ($('#carExpBtn').hasClass("disabled")) {
+            $('#carExpBtn').removeClass("disabled");
+          }
+          if ($('#carExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#carExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#carExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#BusExpenseModal').on('shown.bs.modal', function () {
+        if ($('#busBlindExpID').val() !== "") {
+          if ($('#busExpBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#busExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#busExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#busExpDeleteBtn').hasClass("disabled")) {
+              $('#busExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#busExpSaveChangesBtn').addClass("disabled");
             }
-          }
-        });
-
-
-        $('#HomeExpenseModal').on('shown.bs.modal', function () {
-
-          if ($('#homeBlindExpID').val() !== "") {
-            if ($('#homeExpBtn').hasClass("disabled")) {
-            } else {
-              $('#homeExpBtn').addClass("disabled");
-            }
-            if ($('#homeExpDeleteBtn').hasClass("disabled")) {
-              $('#homeExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
-              $('#homeExpSaveChangesBtn').removeClass("disabled");
-            }
           } else {
-            if ($('#homeExpBtn').hasClass("disabled")) {
-              $('#homeExpBtn').removeClass("disabled");
+            if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+              $('#busExpSaveChangesBtn').removeClass("disabled");
             }
+          }
+
+        } else {
+          if ($('#busExpBtn').hasClass("disabled")) {
+            $('#busExpBtn').removeClass("disabled");
+          }
+          if ($('#busExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#busExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#busExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+
+      $('#HomeExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#homeBlindExpID').val() !== "") {
+          if ($('#homeExpBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#homeExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#homeExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+              $('#homeExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#homeExpSaveChangesBtn').addClass("disabled");
             }
-          }
-        });
-
-        $('#OtherExpenseModal').on('shown.bs.modal', function () {
-
-          if ($('#otherBlindExpID').val() !== "") {
-            if ($('#otherExpBtn').hasClass("disabled")) {
-            } else {
-              $('#otherExpBtn').addClass("disabled");
-            }
-            if ($('#otherExpDeleteBtn').hasClass("disabled")) {
-              $('#otherExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
-              $('#otherExpSaveChangesBtn').removeClass("disabled");
-            }
           } else {
-            if ($('#otherExpBtn').hasClass("disabled")) {
-              $('#otherExpBtn').removeClass("disabled");
+            if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+              $('#homeExpSaveChangesBtn').removeClass("disabled");
             }
+          }
+
+        } else {
+          if ($('#homeExpBtn').hasClass("disabled")) {
+            $('#homeExpBtn').removeClass("disabled");
+          }
+          if ($('#homeExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#homeExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#homeExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#OtherExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#otherBlindExpID').val() !== "") {
+          if ($('#otherExpBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#otherExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#otherExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+              $('#otherExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#otherExpSaveChangesBtn').addClass("disabled");
             }
-          }
-        });
-
-        $('#RentalExpenseModal').on('shown.bs.modal', function () {
-
-          if ($('#rentalBlindExpID').val() !== "") {
-            if ($('#rentalExpBtn').hasClass("disabled")) {
-            } else {
-              $('#rentalExpBtn').addClass("disabled");
-            }
-            if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
-              $('#rentalExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
-              $('#rentalExpSaveChangesBtn').removeClass("disabled");
-            }
           } else {
-            if ($('#rentalExpBtn').hasClass("disabled")) {
-              $('#rentalExpBtn').removeClass("disabled");
+            if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+              $('#otherExpSaveChangesBtn').removeClass("disabled");
             }
+          }
+
+        } else {
+          if ($('#otherExpBtn').hasClass("disabled")) {
+            $('#otherExpBtn').removeClass("disabled");
+          }
+          if ($('#otherExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#otherExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#otherExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#RentalExpenseModal').on('shown.bs.modal', function () {
+
+        if ($('#rentalBlindExpID').val() !== "") {
+          if ($('#rentalExpBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#rentalExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+              $('#rentalExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#rentalExpSaveChangesBtn').addClass("disabled");
             }
-          }
-        });
-
-        $('#IncomeModal').on('shown.bs.modal', function () {
-
-          if ($('#incomeBlindExpID').val() !== "") {
-            if ($('#incomeExpBtn').hasClass("disabled")) {
-            } else {
-              $('#incomeExpBtn').addClass("disabled");
-            }
-            if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
-              $('#incomeExpDeleteBtn').removeClass("disabled");
-            }
-            if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
-              $('#incomeExpSaveChangesBtn').removeClass("disabled");
-            }
           } else {
-            if ($('#incomeExpBtn').hasClass("disabled")) {
-              $('#incomeExpBtn').removeClass("disabled");
+            if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+              $('#rentalExpSaveChangesBtn').removeClass("disabled");
             }
+          }
+        } else {
+          if ($('#rentalExpBtn').hasClass("disabled")) {
+            $('#rentalExpBtn').removeClass("disabled");
+          }
+          if ($('#rentalExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#rentalExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#rentalExpSaveChangesBtn').addClass("disabled");
+          }
+        }
+      });
+
+      $('#IncomeModal').on('shown.bs.modal', function () {
+
+        if ($('#incomeBlindExpID').val() !== "") {
+          if ($('#incomeExpBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpBtn').addClass("disabled");
+          }
+          if (savedTransactionLocked) {
             if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
             } else {
               $('#incomeExpDeleteBtn').addClass("disabled");
             }
+          } else {
+            if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+              $('#incomeExpDeleteBtn').removeClass("disabled");
+            }
+          }
+          if (savedTransactionLocked) {
             if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
             } else {
               $('#incomeExpSaveChangesBtn').addClass("disabled");
             }
+          } else {
+            if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+              $('#incomeExpSaveChangesBtn').removeClass("disabled");
+            }
           }
-        });
-
-
+        } else {
+          if ($('#incomeExpBtn').hasClass("disabled")) {
+            $('#incomeExpBtn').removeClass("disabled");
+          }
+          if ($('#incomeExpDeleteBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpDeleteBtn').addClass("disabled");
+          }
+          if ($('#incomeExpSaveChangesBtn').hasClass("disabled")) {
+          } else {
+            $('#incomeExpSaveChangesBtn').addClass("disabled");
+          }
+        }
       });
 
-    </script>
+
+    });
+
+  </script>
 
 
 

@@ -4,11 +4,19 @@ disableEnableFullSizeRentalImgBtn();
 
 function displayRentalExpModal() {
   $("#RentalExpenseModal").modal("show");
+
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.rentalExp.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.rentalExp.HSTAmtLabel.innerText = 'GST Amount'
+  }
 }
 function hideRentalExpModal() {
   myDOMs.rentalExp.EntryForm.reset();
   removeRentalImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#RentalExpenseModal").modal("hide");
 }
 function updateRentalButtonText() {
@@ -224,6 +232,11 @@ function addRentalCategory() {
 }
 
 function updateRentalExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addRentalOriginalValues();
+    return;
+  }
   if (myDOMs.rentalExp.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.rentalExp.AlertContainer,
@@ -527,7 +540,10 @@ function updateRentalExpTableTotals() {
 }
 
 function deleteRentalExpense() {
-
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
   if (myDOMs.rentalExp.ExpID.value === 'NEW') {
     displayAlert(
       myDOMs.rentalExp.AlertContainer,
@@ -1080,6 +1096,14 @@ $("#rentalExpBtn").click(function () {
 });
 
 // //Smaller Functions
+
+myDOMs.rentalExp.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.rentalExp.EntryDate.value)) {
+    alert(`Because your Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.rentalExp.EntryDate.value = null;
+    myDOMs.rentalExp.EntryDate.focus;
+  }
+});
 
 myDOMs.rentalExp.Reset.addEventListener("click", function (e) {
   if (myDOMs.rentalExp.ExpID.value === 'ALTERED') {

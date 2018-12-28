@@ -7,6 +7,8 @@ let otherExpArray = [];
 let rentalExpArray = [];
 let busIncArray = [];
 let rentalIncArray = [];
+let PaymentsArray = [];
+let AssetDataArray = [];
 
 let HomeReductionApplied = true;
 
@@ -472,6 +474,17 @@ let mainData = {
     pst: 0,
     RentalRevenue: 0
   },
+  Payments: {
+    hst: 0,
+    pst: 0,
+    tax: 0
+  },
+  Assets: {
+    Depreciation_Claim_Total: 0,
+    Actual_Depreciation_Claim_Total: 0,
+    ITC_Claim: 0,
+    Actual_ITC_Claim: 0
+  }
 }
 
 async function getAllMainData(myExpIncType) {
@@ -485,6 +498,8 @@ async function getAllMainData(myExpIncType) {
     await getRequestedData('Rental', '');
     await getRequestedData('Income', 'Business');
     await getRequestedData('Income', 'Rental');
+    await getPaymentData();
+    await getAssetData();
     return;
   } else {
     switch (myExpIncType) {
@@ -511,6 +526,12 @@ async function getAllMainData(myExpIncType) {
         break;
       case 'Rental Income':
         await getRequestedData('Income', 'Rental');
+        break;
+      case 'Payments':
+        await getPaymentData();
+        break;
+      case 'Assets':
+        await getAssetData();
 
         return;
     }
@@ -543,7 +564,10 @@ function populateIncomeStatement() {
   myDOMs.incomeStatement.BusBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.busExp.Variable3).toFixed(2))}`
   myDOMs.incomeStatement.BusBodyElement.Variable4Span.innerText = `$${formatNumber((mainData.busExp.Variable4).toFixed(2))}`
   myDOMs.incomeStatement.BusBodyElement.Variable5Span.innerText = `$${formatNumber((mainData.busExp.Variable5).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.busExp.net).toFixed(2))}`
+  myDOMs.incomeStatement.BusBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
+  //Assets
+  myDOMs.incomeStatement.BusBodyElement.CCASpan.innerText = `$${formatNumber((mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
+
 
   // Vehicle 1 Expenses
   myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel).toFixed(2))}`
@@ -634,11 +658,11 @@ function populateIncomeStatement() {
   reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
 
   myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalRevenue.innerText = `$${formatNumber((mainData.RevenueRental.net + mainData.RevenueBus.net).toFixed(2))}`
-  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalExpenses.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net).toFixed(2))}`
-  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.innerText = `$${formatNumber(((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net)).toFixed(2))}`
+  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalExpenses.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
+  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.innerText = `$${formatNumber(((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total)).toFixed(2))}`
 
 
-  if ((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net) < 0) {
+  if ((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total) < 0) {
     if (myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.contains('badge-success')) {
       myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.remove('badge-success');
       myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.add('badge-danger');
@@ -739,10 +763,6 @@ function fillMainDataFromArrays() {
   mainData.vehicle2Exp.Variable3HST = myCallLoopedData.Variable3HST;
   mainData.vehicle2Exp.Variable3PST = myCallLoopedData.Variable3PST;
   // Business Exp
-  myCallData = loopData(busExpArray);
-  mainData.busExp.net = myCallData.myNet;
-  mainData.busExp.hst = myCallData.myHST;
-  mainData.busExp.pst = myCallData.myPST;
   myCallLoopedData = loopDataByBusinessCategory(busExpArray);
   mainData.busExp.Admin = myCallLoopedData.Admin;
   mainData.busExp.AdminHST = myCallLoopedData.AdminHST;
@@ -777,9 +797,9 @@ function fillMainDataFromArrays() {
   mainData.busExp.Maintenance = myCallLoopedData.Maintenance;
   mainData.busExp.MaintenanceHST = myCallLoopedData.MaintenanceHST;
   mainData.busExp.MaintenancePST = myCallLoopedData.MaintenancePST;
-  mainData.busExp.Meals = myCallLoopedData.Meals;
-  mainData.busExp.MealsHST = myCallLoopedData.MealsHST;
-  mainData.busExp.MealsPST = myCallLoopedData.MealsPST;
+  mainData.busExp.Meals = myCallLoopedData.Meals / 2;
+  mainData.busExp.MealsHST = myCallLoopedData.MealsHST / 2;
+  mainData.busExp.MealsPST = myCallLoopedData.MealsPST / 2;
   mainData.busExp.Office = myCallLoopedData.Office;
   mainData.busExp.OfficeHST = myCallLoopedData.OfficeHST;
   mainData.busExp.OfficePST = myCallLoopedData.OfficePST;
@@ -816,6 +836,11 @@ function fillMainDataFromArrays() {
   mainData.busExp.Variable5 = myCallLoopedData.Variable5;
   mainData.busExp.Variable5HST = myCallLoopedData.Variable5HST;
   mainData.busExp.Variable5PST = myCallLoopedData.Variable5PST;
+
+  myCallData = loopData(busExpArray);
+  mainData.busExp.net = myCallData.myNet - (myCallLoopedData.Meals / 2);
+  mainData.busExp.hst = myCallData.myHST - (myCallLoopedData.MealsHST / 2);
+  mainData.busExp.pst = myCallData.myPST - (myCallLoopedData.MealsPST / 2);
   //Home Exp
   //the call to loopForHomePercentReduction populates an object variable that is used when toggling home percent
   loopForHomePercentReduction(homeExpArray);
@@ -942,6 +967,17 @@ function fillMainDataFromArrays() {
   mainData.RevenueRental.net = myCallData.myNet;
   mainData.RevenueRental.hst = myCallData.myHST;
   mainData.RevenueRental.pst = myCallData.myPST;
+  //Payments
+  myCallData = loopPaymentData();
+  mainData.Payments.hst = myCallData.myHST;
+  mainData.Payments.pst = myCallData.myPST;
+  mainData.Payments.tax = myCallData.myTax;
+  //Assets
+  myCallData = loopAssetData();
+  mainData.Assets.Depreciation_Claim_Total = myCallData.myClaim;
+  mainData.Assets.Actual_Depreciation_Claim_Total = myCallData.myActualClaim;
+  mainData.Assets.ITC_Claim = myCallData.myITC_Claim;
+  mainData.Assets.Actual_ITC_Claim = myCallData.myActual_ITC_Claim;
 
   updateMainPageDisplayAmounts();
 }
@@ -957,10 +993,10 @@ function updateMainPageDisplayAmounts() {
   reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
   reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
 
-  myDOMs.main_page.NetExpense.value = `$${(formatNumber(Number(mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total).toFixed(2)))}`;
+  myDOMs.main_page.NetExpense.value = `$${(formatNumber(Number(mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2)))}`;
   myDOMs.main_page.NetRevenue.value = `$${(formatNumber(Number(mainData.RevenueBus.net + mainData.RevenueRental.net).toFixed(2)))}`;
-  myDOMs.main_page.NetIncome.value = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total)).toFixed(2)))}`;
-  if ((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total) < 0) {
+  myDOMs.main_page.NetIncome.value = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total)).toFixed(2)))}`;
+  if ((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total) < 0) {
     if (myDOMs.main_page.NetIncome.classList.contains('text-success')) {
       myDOMs.main_page.NetIncome.classList.remove('text-success');
       myDOMs.main_page.NetIncome.classList.add('text-danger');
@@ -971,6 +1007,65 @@ function updateMainPageDisplayAmounts() {
       myDOMs.main_page.NetIncome.classList.add('text-success');
     }
   }
+}
+
+function getAssetData() {
+  let tempData;
+
+  tempData = {
+    auth: myToken,
+    startYear: startDate.getFullYear(),
+    startMonth: startDate.getMonth(),
+    startDay: startDate.getDate(),
+    endYear: endDate.getFullYear(),
+    endMonth: endDate.getMonth(),
+    endDay: endDate.getDate()
+  };
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      method: "GET",
+      url: `${serverURL}fixedAssets`,
+      data: tempData,
+      enctype: "multipart/form-data"
+    })
+      .done(function (data) {
+        resolve(data);
+        AssetDataArray = data.assets;
+      })
+      .fail(function (e) {
+        reject(JSON.stringify(e.statusText, undefined, 2));
+        if (e.readyState === 0 || myToken === '') {
+          alert('You Must be logged in before using EZ-HST-CANADA>')
+        } else {
+          alert(JSON.stringify(e.statusText, undefined, 2));
+        }
+      });
+  });
+};
+
+function getPaymentData() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      method: "GET",
+      url: `${serverURL}payments`,
+      data: tempData,
+      enctype: "multipart/form-data"
+    })
+      .done(function (myPayments) {
+        resolve(myPayments);
+
+        PaymentsArray = myPayments.paymentEntries;
+      })
+      .fail(function (e) {
+        reject(JSON.stringify(e.statusText, undefined, 2));
+        if (e.readyState === 0 || myToken === '') {
+          alert('You Must be logged in before using EZ-HST-CANADA>')
+        } else {
+          alert(JSON.stringify(e.statusText, undefined, 2));
+        }
+      });
+  });
 }
 
 function getRequestedData(carNumber, source) {
@@ -1039,6 +1134,26 @@ function getRequestedData(carNumber, source) {
 
 
 }
+
+function loopAssetData() {
+  let Claim = 0;
+  let Actual_Claim = 0;
+  let ITC_Claim = 0;
+  let Actual_ITC_Claim = 0;
+
+  AssetDataArray.forEach((el, index) => {
+    Claim += el.claimAmt;
+    Actual_Claim += (el.claimAmt * el.busPercent / 100);
+    ITC_Claim += el.itcClaimAmt;
+    Actual_ITC_Claim += (el.itcClaimAmt * el.busPercent / 100);
+  });
+  return {
+    myClaim: Claim,
+    myActualClaim: Actual_Claim,
+    myITC_Claim: ITC_Claim,
+    myActual_ITC_Claim: Actual_ITC_Claim
+  }
+};
 
 function loopDataByBusinessCategory(data) {
   let myLoopedData = {
@@ -1777,6 +1892,23 @@ function loopDataByOtherCostsCategory(data) {
   return myLoopedData;
 };
 
+function loopPaymentData() {
+  let totalHST = 0;
+  let totalPST = 0;
+  let totalTax = 0;
+
+  PaymentsArray.forEach((el, index) => {
+    totalHST += el.hstAmt;
+    totalPST += el.pstAmt;
+    totalTax += el.taxAmt;
+  });
+  return {
+    myHST: totalHST,
+    myPST: totalPST,
+    myTax: totalTax,
+  }
+};
+
 
 function loopData(data) {
   let totalNet = 0;
@@ -2226,9 +2358,9 @@ function displayMealsReport() {
   if (TableOpen) {
     hideTableAlert();
   }
-  myReportTotal.totalNet = mainData.busExp.Meals;
-  myReportTotal.totalHST = mainData.busExp.MealsHST;
-  myReportTotal.totalPST = mainData.busExp.MealsPST;
+  myReportTotal.totalNet = mainData.busExp.Meals * 2;
+  myReportTotal.totalHST = mainData.busExp.MealsHST * 2;
+  myReportTotal.totalPST = mainData.busExp.MealsPST * 2;
   myReportTotal.category = 'Meals';
   getBusinessExpenses('Meals and Entertainment');
   hideIncomeStatementModal();
@@ -3266,6 +3398,13 @@ function displayRentalIncomeReport() {
   // myReportTotal.totalHST = mainData.RevenueRental.hst;
   // myReportTotal.totalPST = mainData.RevenueRental.pst;
   getIncomeExpenses('Rental');
+  hideIncomeStatementModal();
+  reOpenIncomeStatement = true;
+}
+
+//Assets
+function displayCCAReport() {
+  getFixedAssets();
   hideIncomeStatementModal();
   reOpenIncomeStatement = true;
 }

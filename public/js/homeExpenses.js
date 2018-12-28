@@ -4,11 +4,20 @@ disableEnableFullSizeHomeImgBtn();
 
 function displayHomeExpModal() {
   $("#HomeExpenseModal").modal("show");
-}
+
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.homeExp.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.homeExp.HSTAmtLabel.innerText = 'GST Amount'
+  }
+};
+
 function hideHomeExpModal() {
   myDOMs.homeExp.EntryForm.reset();
   removeHomeImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#HomeExpenseModal").modal("hide");
 }
 function updateHomeButtonText() {
@@ -224,6 +233,11 @@ function addHomeCategory() {
 }
 
 function updateHomeExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addHomeOriginalValues();
+    return;
+  }
   if (myDOMs.homeExp.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.homeExp.AlertContainer,
@@ -500,6 +514,10 @@ function updateHomeExpTableTotals() {
 
 
 function deleteHomeExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
 
   if (myDOMs.homeExp.ExpID.value === 'NEW') {
     displayAlert(
@@ -1053,6 +1071,14 @@ $("#homeExpBtn").click(function () {
   }
 });
 
+myDOMs.homeExp.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.homeExp.EntryDate.value)) {
+    alert(`Because your Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.homeExp.EntryDate.value = null;
+    myDOMs.homeExp.EntryDate.focus;
+  }
+});
+
 // //Smaller Functions
 
 myDOMs.homeExp.Reset.addEventListener("click", function (e) {
@@ -1285,37 +1311,6 @@ myDOMs.homeExp.ReoccurYES.addEventListener('click', function (e) {
   }
 })
 
-
-
-
-// function disableEnableBtn() {
-//   // alert('Buttons Called');
-//   if (myDOMs.homeExp.ExpID.value === 'NEW') {
-//     if ($('#homeExpSaveChangesBtn').hasClass('disabled')) {
-//     } else {
-//       $('#homeExpSaveChangesBtn').addClass("disabled");
-//     }
-//     if ($('#homeExpDeleteBtn').hasClass("disabled")) {
-//     } else {
-//       $('#homeExpDeleteBtn').addClass("disabled");
-//     }
-//     if ($('#homeExpBtn').hasClass('disabled')) {
-//       $('#homeExpBtn').removeClass("disabled");
-//     }
-//   } else {
-
-//     if ($('#homeExpSaveChangesBtn').hasClass('disabled')) {
-//       $('#homeExpSaveChangesBtn').removeClass("disabled");
-//     }
-//     if ($('#homeExpDeleteBtn').hasClass("disabled")) {
-//       $('#homeExpDeleteBtn').removeClass("disabled");
-//     }
-//     if ($('#homeExpBtn').hasClass('disabled')) {
-//     } else {
-//       $('#homeExpBtn').addClass("disabled");
-//     }
-//   }
-// }
 
 function disableEnableFullSizeHomeImgBtn() {
   // alert('Buttons Called');

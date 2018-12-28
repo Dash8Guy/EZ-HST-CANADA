@@ -96,6 +96,10 @@ async function updateMainDataAfterTimePeriodChange() {
    await getVehiclePercentage();
    fillMainDataFromArrays();
    updateMainPageDisplayAmounts();
+   let myTempStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
+   let myTempEndDate = new Date(myDOMs.main_page.EndDate.value);
+   myTempEndDate.setHours(myTempEndDate.getHours() + (myTempEndDate.getTimezoneOffset() / 60));
+   updatedViewDynamicData(myTempStartDate, myTempEndDate, true);
 };
 
 myDOMs.main_page.StartDate.addEventListener('change', function (e) {

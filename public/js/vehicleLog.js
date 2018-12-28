@@ -784,8 +784,6 @@ function calculateBusinessPercentage(selectDate, myReturn) {
    applyPercentCalculationsToDOM(selectDate);
    zeroCalcVariables();
 
-
-
 }
 
 function applyPercentCalculationsToDOM(selectDate) {

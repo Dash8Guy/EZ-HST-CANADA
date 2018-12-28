@@ -4,12 +4,21 @@ disableEnableFullSizeBusinessImgBtn();
 
 function displayBusExpModal() {
   $("#BusExpenseModal").modal("show");
+
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.busExp.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.busExp.HSTAmtLabel.innerText = 'GST Amount'
+  }
 }
 function hideBusExpModal() {
   myDOMs.busExp.EntryForm.reset();
   removeBusImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#BusExpenseModal").modal("hide");
+
 }
 function updateBusinessButtonText() {
   var isExpanded = $("#collapseBus1").hasClass("show");
@@ -229,6 +238,11 @@ function addBusinessCategory() {
 }
 
 function updateBusinessExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addOriginalValues();
+    return;
+  }
   if (myDOMs.busExp.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.busExp.AlertContainer,
@@ -578,7 +592,10 @@ function updateBusinessExpTableTotals() {
 }
 
 function deleteBusinessExpense() {
-
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
   if (myDOMs.busExp.ExpID.value === 'NEW') {
     displayAlert(
       myDOMs.busExp.AlertContainer,
@@ -717,9 +734,9 @@ function getBusinessExpenses(myFilter) {
     hideTableAlert();
   }
   if (!myFilter) {
-    myReportTotal.totalNet = mainData.busExp.net;
-    myReportTotal.totalHST = mainData.busExp.hst;
-    myReportTotal.totalPST = mainData.busExp.pst;
+    myReportTotal.totalNet = (mainData.busExp.net + (mainData.busExp.Meals));
+    myReportTotal.totalHST = (mainData.busExp.hst + (mainData.busExp.MealsHST));
+    myReportTotal.totalPST = (mainData.busExp.pst + (mainData.busExp.MealsPST));
   }
 
   let tempData;
@@ -1132,6 +1149,14 @@ $("#busExpBtn").click(function () {
 });
 
 // //Smaller Functions
+
+myDOMs.busExp.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.busExp.EntryDate.value)) {
+    alert(`Because your Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.busExp.EntryDate.value = null;
+    myDOMs.busExp.EntryDate.focus;
+  }
+});
 
 myDOMs.busExp.Reset.addEventListener("click", function (e) {
   if (myDOMs.busExp.ExpID.value === 'ALTERED') {

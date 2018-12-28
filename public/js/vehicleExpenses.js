@@ -3,13 +3,27 @@ populateVehicleCategories();
 disableEnableFullSizeVehicleImgBtn();
 
 
-function displayCarExpModal() {
+function displayCarExpModal(carNum) {
   $("#addCarExpenseModal").modal("show");
+  let myProv = localStorage.getItem('Selected_Province');
+  if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
+    myDOMs.carExp.HSTAmtLabel.innerText = 'HST Amount'
+  } else {
+    myDOMs.carExp.HSTAmtLabel.innerText = 'GST Amount'
+  }
+  if (carNum === "1") {
+    myDOMs.carExp.Selector.value = "Vehicle 1";
+    myDOMs.carExp.Title.textContent = "Vehicle 1 Expense Entry Form";
+  } else if (carNum === "2") {
+    myDOMs.carExp.Selector.value = "Vehicle 2";
+    myDOMs.carExp.Title.textContent = "Vehicle 2 Expense Entry Form";
+  }
 }
 function hideCarExpModal() {
   myDOMs.carExp.EntryForm.reset();
   removeBusImage();
   resetOriginalData();
+  savedTransactionLocked = false;
   $("#addCarExpenseModal").modal("hide");
 }
 function updateButtonText() {
@@ -453,6 +467,11 @@ function getVehicleExpenseByID(expID) {
     });
 }
 function updateVehicleExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    addVehicleOriginalValues();
+    return;
+  }
   if (myDOMs.carExp.ExpID.value === 'SAVED') {
     displayAlert(
       myDOMs.carExp.AlertContainer,
@@ -834,6 +853,10 @@ function updateTableTotals(carNum) {
 }
 
 function deleteVehicleExpense() {
+  if (savedTransactionLocked) {
+    alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Delete this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    return;
+  }
   let carNumValue;
   if (myDOMs.carExp.ExpID.value === 'NEW') {
     displayAlert(
@@ -1491,6 +1514,15 @@ $("#carExpBtn").click(function () {
 });
 
 //Smaller Functions
+
+myDOMs.carExp.EntryDate.addEventListener('change', function (event) {
+  if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.carExp.EntryDate.value)) {
+    alert(`Because your Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Submit this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
+    myDOMs.carExp.EntryDate.value = null;
+    myDOMs.carExp.EntryDate.focus;
+  }
+});
+
 function updateCarHeader() {
   if (myDOMs.carExp.Selector.value === "Vehicle 1") {
     myDOMs.carExp.Title.textContent = "Vehicle 1 Expense Entry Form";
@@ -1500,6 +1532,7 @@ function updateCarHeader() {
 }
 
 function AutoFillTaxes(myForm) {
+  let myZeroValue = 0;
   if (myForm === "car") {
     netCont = myDOMs.carExp.NetAmt;
     hstCont = myDOMs.carExp.HSTAmt;
@@ -1526,21 +1559,35 @@ function AutoFillTaxes(myForm) {
     pstCont = myDOMs.rentalExp.PSTAmt;
     totalCont = myDOMs.rentalExp.TotalAmt;
   } else if (myForm === "income") {
-    netCont = myDOMs.income.NetAmt;
-    hstCont = myDOMs.income.HSTAmt;
-    pstCont = myDOMs.income.PSTAmt;
-    totalCont = myDOMs.income.TotalAmt;
+    if (myDOMs.income.Selector.value === "Business") {
+      netCont = myDOMs.income.NetAmt;
+      hstCont = myDOMs.income.HSTAmt;
+      pstCont = myDOMs.income.PSTAmt;
+      totalCont = myDOMs.income.TotalAmt;
+    } else if (myDOMs.income.Selector.value === "Rental") {
+      let myTempAmt = Number(myDOMs.income.NetAmt.value);
+
+      myDOMs.income.NetAmt.value = myTempAmt.toFixed(2);
+      myDOMs.income.HSTAmt.value = myZeroValue.toFixed(2);
+      pstCont.value = myZeroValue.toFixed(2);
+      totalCont.value = myTempAmt.toFixed(2);
+      return;
+    }
+
   }
 
   let myNet = 0;
   let myHST = 0;
   let myPST = 0;
-  let myCalcHST = 0.15;
-  let myCalcPST = 0;
+  let myCalcHST = Number(provinceTaxSettings.Current.HST);
+  let myCalcPST = Number(provinceTaxSettings.Current.PST);
   let myTotal = 0;
 
+  // alert(myCalcHST);
+  // alert(myCalcPST);
+
   if (netCont.value > 0) {
-    myNet = netCont.value / (myCalcHST + 1);
+    myNet = netCont.value / (myCalcHST + myCalcPST + 1);
     myHST = myNet * myCalcHST;
     myPST = myNet * myCalcPST;
     myTotal = myNet + myHST + myPST;
