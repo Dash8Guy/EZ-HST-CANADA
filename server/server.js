@@ -318,10 +318,6 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
 });
 
 app.get("/carExpense", authenticate, (req, res) => {
-  console.dir(process.env.IAM_USER_KEY);
-  console.dir(process.env.IAM_USER_SECRET);
-  console.dir(process.env.BUCKET_NAME);
-
 
   let tempStartDate;
   let tempEndDate;

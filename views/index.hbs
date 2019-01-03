@@ -2410,20 +2410,25 @@
                   </li>
                 </ul>
               </div>
-              <div class="container d-lg-inline-block mt-2">
-                <p class="font-weight-bold mb-1 float-right" id="incStHomePercentText">Home % for Displayed Time Period
+              <div class="container d-lg-inline-block mt-2 w-100">
+                <p class="font-weight-bold mb-1 float-right text-primary" id="incStHomePercentText">Home % for
+                  Displayed Time Period
                   is<span class="px-2 ml-2 font-weight-bold" id="incStHomePercentDisplay" style="border: 2px solid rgb(47, 58, 211)">25%</span></p>
               </div>
-              <div class="container d-lg-inline-block mt-1">
+              <div class="container d-lg-inline-block mt-1 w-100">
                 <button id="incStHomePercentBtn" class="btn btn-sm btn-outline-success mt-0 float-right" type="button"
                   data-toggle="tooltip" title="Click to toggle from 100% view to reduced %" onclick="toggleHomePercentButton()">100
                   %</button>
               </div>
-              <p class="font-weight-bold mb-1 text-left" id="incStHomePercentText2">When the Income Statement opens,
-                Home
-                Expenses are reduced by the percentage applied in the Business Use of Home Calculator/Entry Form.The
-                Amount is the Business Part Only.<br>Use the button to Switch back and forth from reduced Percentage to
-                100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              <div class="container d-lg-inline-block mt-1">
+                <p class="font-weight-bold mb-1 text-left" id="incStHomePercentText2">When the Income Statement opens,
+                  Home
+                  Expenses are reduced by the percentage applied in the Business Use of Home Calculator/Entry Form.The
+                  Amount is the Business Part Only.<br>Use the button to Switch back and forth from reduced Percentage
+                  to
+                  100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              </div>
+
             </div>
             <div class="card-body d-none" id="IncStatVehicle1Expenses">
               <h6 class="card-title">Vehicle 1 Expenses</h6>
@@ -2545,12 +2550,14 @@
                   data-toggle="tooltip" title="Click to toggle from 100% view to reduced %" onclick="toggleVehicle1PercentButton()">100
                   %</button>
               </div>
-              <p class="font-weight-bold mb-1 text-left" id="incStVehicle1PercentText2">When the Income Statement
-                opens, Vehicle 1 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
-                Each Expense(except the bottom two) are Reduced by the Vehicle 1 Business Use Percentage of the
-                selected time period matching the Receipt Date.<br>
-                <br>Use the button to Switch back and forth from reduced Percentage to
-                100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              <div class="container d-lg-inline-block mt-1">
+                <p class="font-weight-bold mb-1 text-left" id="incStVehicle1PercentText2">When the Income Statement
+                  opens, Vehicle 1 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
+                  Each Expense(except the bottom two) are Reduced by the Vehicle 1 Business Use Percentage of the
+                  selected time period matching the Receipt Date.<br>
+                  <br>Use the button to Switch back and forth from reduced Percentage to
+                  100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatVehicle2Expenses">
               <h6 class="card-title">Vehicle 2 Expenses</h6>
@@ -2672,12 +2679,14 @@
                   data-toggle="tooltip" title="Click to toggle from 100% view to reduced %" onclick="toggleVehicle2PercentButton()">100
                   %</button>
               </div>
-              <p class="font-weight-bold mb-1 text-left" id="incStVehicle2PercentText2">When the Income Statement
-                opens, Vehicle 2 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
-                Each Expense(except the bottom two) are Reduced by the Vehicle 2 Business Use Percentage of the
-                selected time period matching the Receipt Date.<br>
-                <br>Use the button to Switch back and forth from reduced Percentage to
-                100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              <div class="container d-lg-inline-block mt-1">
+                <p class="font-weight-bold mb-1 text-left" id="incStVehicle2PercentText2">When the Income Statement
+                  opens, Vehicle 2 Expenses are reduced by the percentage applied in the Vehicle Log.<br>
+                  Each Expense(except the bottom two) are Reduced by the Vehicle 2 Business Use Percentage of the
+                  selected time period matching the Receipt Date.<br>
+                  <br>Use the button to Switch back and forth from reduced Percentage to
+                  100%.<br><strong>When transferring the amount to the T2125 form, use the 100% view.</strong></p>
+              </div>
             </div>
             <div class="card-body d-none" id="IncStatOtherCostsExpenses">
               <h6 class="card-title">Other Costs Expenses</h6>
@@ -3566,7 +3575,7 @@
         <div class="modal-body">
           <div class="container">
             <div id="ASTopTitles" class="row">
-              <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <div class="col-sm-2 text-center px-0" style="border: 1px solid black;">
                 <p id="ASTopLbl1">GROUPS</p>
                 <div class="d-flex align-items-center mt-4">
                   <p id="ASleftBoldTextTop" class="text-success mx-auto font-weight-bold">SALES</p>
@@ -3574,18 +3583,18 @@
 
               </div>
 
-              <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <div class="col-5 text-center" style="border: 1px solid black;">
                 <p id="ASTopLbl2" class="text-center">CATEGORIES</p>
                 <div class="mt-1  px-0">
-                  <p class="text-center text-success ASLbl">GROSS REVENUE (BUSINESS)</p>
-                  <p class="text-center text-success ASLbl">GROSS INCOME (BUSINESS)</p>
-                  <p class="text-center text-success ASLbl">GROSS INCOME/REVENUE (RENTAL)</p>
-                  <p class="text-center text-success ASLbl">NET INCOME (Business and Rent)</p>
+                  <p class="text-center text-success ASLbl">GROSS REVENUE(BUS)</p>
+                  <p class="text-center text-success ASLbl">GROSS INCOME(BUS)</p>
+                  <p class="text-center text-success ASLbl">GROSS INC/REV(RENT)</p>
+                  <p class="text-center text-success ASLbl">NET INCOME(Bus and Rent)</p>
                 </div>
 
               </div>
 
-              <div class="col-lg-2 text-right px-0 mx-0" style="border: 1px solid black;">
+              <div class="col-2 text-right px-0 mx-0" style="border: 1px solid black;">
                 <p id="ASTopLbl3" class="text-center">YEAR</p>
                 <div class="mt-1  px-0">
                   <p id="ASgrossRevBus" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Business Gross Revenue is All Business Revenue including any HST/GST and PST collected">$0.00</p>
@@ -3596,7 +3605,7 @@
 
               </div>
 
-              <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="col-3 text-center  px-0" style="border: 1px solid black;">
                 <p id="ASTopLbl4" class="text-center">TOTALS</p>
                 <p id="ASBigTextTop" class="text-center">Total Deductions on <br> Gross
                   Income </p>
@@ -3610,23 +3619,23 @@
 
           <div class="container">
             <div id="ASMidTitles" class="row">
-              <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <div class="col-2 text-center px-0" style="border: 1px solid black;">
                 <div class="d-flex align-items-center mt-4">
-                  <p id="ASleftBoldTextMid" class="text-primary mx-auto font-weight-bold">ACCOUNT IN</p>
+                  <p id="ASleftBoldTextMid" class="text-primary mx-auto font-weight-bold">ACCNT IN</p>
                 </div>
               </div>
 
-              <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <div class="col-5 text-center" style="border: 1px solid black;">
                 <div class="mt-2  px-0">
-                  <p class="text-center text-primary ASLbl">HST/GST ON GROSS REVENUE</p>
-                  <p class="text-center text-primary ASLbl">PST ON GROSS REVENUE</p>
-                  <p class="text-center text-primary ASLbl">TAX ON GROSS INCOME</p>
-                  <p class="text-center text-primary ASLbl">CANADA PENSION PLAN</p>
+                  <p class="text-center text-primary ASLbl">HST/GST GROSS REV</p>
+                  <p class="text-center text-primary ASLbl">PST GROSS REV</p>
+                  <p class="text-center text-primary ASLbl">TAX GROSS INC</p>
+                  <p class="text-center text-primary ASLbl">CPP</p>
                 </div>
 
               </div>
 
-              <div class="col-lg-2 text-right  px-0 mx-0" style="border: 1px solid black;">
+              <div class="col-2 text-right  px-0 mx-0" style="border: 1px solid black;">
                 <div class="mt-2  px-0">
                   <p id="ASHSTgrossRev" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of HST/GST collected from Business Revenue">$0.00</p>
                   <p id="ASPSTgrossRev" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of PST collected from Business Revenue">$0.00</p>
@@ -3635,7 +3644,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="col-3 text-center  px-0" style="border: 1px solid black;">
                 <div class="mt-2">
                   <p id="ASBigTextMid" class="text-center text-primary">Total In</p>
                   <div class="align-items-center mt-3">
@@ -3649,13 +3658,13 @@
 
           <div class="container">
             <div id="ASBtmTitles" class="row">
-              <div class="col-lg-2 text-center px-0" style="border: 1px solid black;">
+              <div class="col-2 text-center px-0" style="border: 1px solid black;">
                 <div class="d-flex align-items-center mt-4">
-                  <p id="ASleftBoldTextMid" class="text-danger mx-auto font-weight-bold">ACCOUNT OUT</p>
+                  <p id="ASleftBoldTextMid" class="text-danger mx-auto font-weight-bold">ACCNT OUT</p>
                 </div>
               </div>
 
-              <div class="col-lg-5 text-center" style="border: 1px solid black;">
+              <div class="col-5 text-center" style="border: 1px solid black;">
                 <div class="mt-3  px-0">
                   <p class="text-center text-danger ASLbl">HST/GST PAYMENTS</p>
                   <p class="text-center text-danger ASLbl">PST PAYMENTS</p>
@@ -3664,7 +3673,7 @@
 
               </div>
 
-              <div class="col-lg-2 text-right  px-0 mx-0" style="border: 1px solid black;">
+              <div class="col-2 text-right  px-0 mx-0" style="border: 1px solid black;">
                 <div class="mt-3  px-0">
                   <p id="ASHSTPayment" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of HST/GST Payments you have made">$0.00</p>
                   <p id="ASPSTPayment" class="text-right mr-2 ASLbl" data-toggle="tooltip" title="Total Amount of PST Payments you have made">$0.00</p>
@@ -3672,7 +3681,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="col-3 text-center  px-0" style="border: 1px solid black;">
                 <div class="mt-2">
                   <p id="ASBigTextBtm" class="text-center text-danger">Total Out</p>
                   <div class="align-items-center mt-3">
@@ -3691,7 +3700,7 @@
                 </div> --}}
               </div>
 
-              <div class="col-lg-7 text-center">
+              <div class="col-7 text-center">
                 <div class="mt-1  px-0">
                   <label class="text-center" id="ASTimePeriodSelectLbl" for="ASTimePeriodSelect">Time Period Selector</label>
                   <select class="align-middle mt-0 pt-0" id="ASTimePeriodSelect" name="ASTimePeriodSelect" data-toggle="tooltip"
@@ -3726,7 +3735,7 @@
 
               </div>
 
-              <div class="col-lg-3 text-center  px-0" style="border: 1px solid black;">
+              <div class="col-3 text-center  px-0" style="border: 1px solid black;">
                 <div class="mt-2">
                   <p id="ASLastTextBtm" class="text-center">Business Account <br> Balance</p>
                   <div class="align-items-center mt-3">

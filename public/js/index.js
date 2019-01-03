@@ -749,6 +749,7 @@ function renameIncomeStatementElements() {
     myDOMs.incomeStatement.BusBodyElement.Legal.innerText = 'Legal & Prof Fees';
     myDOMs.incomeStatement.BusBodyElement.Wages.innerText = 'Wages & benefits';
     myDOMs.incomeStatement.BusBodyElement.CCA.innerText = 'CCA/Fixed Asset Claim';
+    myDOMs.incomeStatement.RentalBodyElement.Wages.innerText = `Salaries,wages, and benefits`;
   } else {
     myDOMs.incomeStatement.BusBodyElement.Dues.innerText = 'Fees, licences, dues, memberships';
     myDOMs.incomeStatement.BusBodyElement.Freight.innerText = 'Delivery, freight, and express';
@@ -758,6 +759,7 @@ function renameIncomeStatementElements() {
     myDOMs.incomeStatement.BusBodyElement.Legal.innerText = 'Legal, accounting, and other Prof. Fees';
     myDOMs.incomeStatement.BusBodyElement.Wages.innerText = 'Salaries, wages, and benefits';
     myDOMs.incomeStatement.BusBodyElement.CCA.innerText = 'Capital Cost Allowance (CCA)/Fixed Asset Depreciation Claim';
+    myDOMs.incomeStatement.RentalBodyElement.Wages.innerText = `Salaries,wages, and benefits(incl employer's contribution)`;
   }
 }
 
