@@ -858,28 +858,28 @@ function getExpenseToEdit(lnk) {
 fillVehicleExpForm = async (expArr, row) => {
   let currentExpModal;
   let currentTextModal;
-  if (document.getElementById("titleNode").textContent.includes("Business") && document.getElementById("titleNode").textContent.includes("Expenses")) {
+  if (document.getElementById('myTitleNode').textContent.includes("Business") && document.getElementById('myTitleNode').textContent.includes("Expenses")) {
     currentExpModal = myDOMs.busExp;
     currentTextModal = 'Business'
-  } else if (document.getElementById("titleNode").textContent.includes("Vehicle-1")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Vehicle-1")) {
     currentExpModal = myDOMs.carExp
     currentTextModal = 'Vehicle-1'
-  } else if (document.getElementById("titleNode").textContent.includes("Vehicle-2")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Vehicle-2")) {
     currentExpModal = myDOMs.carExp
     currentTextModal = 'Vehicle-2'
-  } else if (document.getElementById("titleNode").textContent.includes("Home")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Home")) {
     currentExpModal = myDOMs.homeExp
     currentTextModal = 'Home'
-  } else if (document.getElementById("titleNode").textContent.includes("Other")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Other")) {
     currentExpModal = myDOMs.otherExp
     currentTextModal = 'Other'
-  } else if (document.getElementById("titleNode").textContent.includes("Rental") && document.getElementById("titleNode").textContent.includes("Expenses")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Rental") && document.getElementById("myTitleNode").textContent.includes("Expenses")) {
     currentExpModal = myDOMs.rentalExp
     currentTextModal = 'Rental'
-  } else if (document.getElementById("titleNode").textContent.includes("Business") && document.getElementById("titleNode").textContent.includes("Revenue")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Business") && document.getElementById("myTitleNode").textContent.includes("Revenue")) {
     currentExpModal = myDOMs.income
     currentTextModal = 'B-Income'
-  } else if (document.getElementById("titleNode").textContent.includes("Rental") && document.getElementById("titleNode").textContent.includes("Revenue")) {
+  } else if (document.getElementById("myTitleNode").textContent.includes("Rental") && document.getElementById("myTitleNode").textContent.includes("Revenue")) {
     currentExpModal = myDOMs.income
     currentTextModal = 'R-Income'
   }

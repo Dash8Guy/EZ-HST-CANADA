@@ -3,7 +3,7 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const bcrypt = require("bcryptjs");
-let { EZ_ENV } = require(".././config/config");
+// const { EZ_ENV } = require("../config/config");
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -59,7 +59,7 @@ UserSchema.methods.generateAuthToken = function () {
   let user = this;
   let access = "auth";
   let token = jwt
-    .sign({ _id: user._id.toHexString(), access }, EZ_ENV.secret_key)
+    .sign({ _id: user._id.toHexString(), access }, process.env.secret_key)
     .toString();
   user.tokens = user.tokens.concat([{ access, token }]);
   return user.save().then(() => {
@@ -72,7 +72,7 @@ UserSchema.statics.findByToken = function (token) {
   let decoded;
 
   try {
-    decoded = jwt.verify(token, EZ_ENV.secret_key);
+    decoded = jwt.verify(token, process.env.secret_key);
   } catch (e) {
     return Promise.reject("Authentication failed");
   }

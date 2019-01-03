@@ -42,14 +42,14 @@ const { IncomeClient } = require("./models/incomeClient");
 const { Return_Data } = require("./models/return_data");
 const { authenticate } = require("./middleware/authenticate");
 
-let { EZ_ENV } = require("./config/config");
+//let { EZ_ENV } = require("./config/config");
 
 var app = express();
 app.use(fileUpload());
 //app.use(busboy());
 
 //Set the KEY SECRET
-EZ_ENV.secret_key = new ObjectID().toHexString();
+process.env.secret_key = new ObjectID().toHexString();
 
 //Middleware
 
@@ -318,6 +318,11 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
 });
 
 app.get("/carExpense", authenticate, (req, res) => {
+  console.dir(process.env.IAM_USER_KEY);
+  console.dir(process.env.IAM_USER_SECRET);
+  console.dir(process.env.BUCKET_NAME);
+
+
   let tempStartDate;
   let tempEndDate;
 
@@ -471,6 +476,7 @@ app.get("/carExpenseImg/:_id", authenticate, async (req, res) => {
 });
 
 app.get("/carExpense/:_id", authenticate, (req, res) => {
+
   const tempID = req.params._id;
   if (!ObjectID.isValid(tempID)) {
     return res
@@ -2304,14 +2310,15 @@ app.get("/return_data", authenticate, (req, res) => {
 
 //Images - Receipts
 function uploadToS3(file, newName) {
+
   let s3bucket = new AWS.S3({
-    accessKeyId: EZ_ENV.IAM_USER_KEY,
-    secretAccessKey: EZ_ENV.IAM_USER_SECRET,
-    Bucket: EZ_ENV.BUCKET_NAME,
+    accessKeyId: process.env.IAM_USER_KEY,
+    secretAccessKey: process.env.IAM_USER_SECRET,
+    Bucket: process.env.BUCKET_NAME,
   });
   s3bucket.createBucket(function () {
     var params = {
-      Bucket: EZ_ENV.BUCKET_NAME,
+      Bucket: process.env.BUCKET_NAME,
       Key: newName,
       Body: file.data,
     };
@@ -2332,12 +2339,12 @@ function uploadToS3(file, newName) {
 
 function getImageFromS3(fileName) {
   let s3 = new AWS.S3({
-    accessKeyId: EZ_ENV.IAM_USER_KEY,
-    secretAccessKey: EZ_ENV.IAM_USER_SECRET,
-    Bucket: EZ_ENV.BUCKET_NAME,
+    accessKeyId: process.env.IAM_USER_KEY,
+    secretAccessKey: process.env.IAM_USER_SECRET,
+    Bucket: process.env.BUCKET_NAME,
   });
   let params = {
-    Bucket: EZ_ENV.BUCKET_NAME,
+    Bucket: process.env.BUCKET_NAME,
     Key: fileName
   };
   return new Promise((resolve, reject) => {
@@ -2364,12 +2371,12 @@ function getImageFromS3(fileName) {
 
 function deleteImageFromS3(fileName) {
   let s3 = new AWS.S3({
-    accessKeyId: EZ_ENV.IAM_USER_KEY,
-    secretAccessKey: EZ_ENV.IAM_USER_SECRET,
-    Bucket: EZ_ENV.BUCKET_NAME,
+    accessKeyId: process.env.IAM_USER_KEY,
+    secretAccessKey: process.env.IAM_USER_SECRET,
+    Bucket: process.env.BUCKET_NAME,
   });
   let params = {
-    Bucket: EZ_ENV.BUCKET_NAME,
+    Bucket: process.env.BUCKET_NAME,
     Key: fileName
   };
   return new Promise((resolve, reject) => {

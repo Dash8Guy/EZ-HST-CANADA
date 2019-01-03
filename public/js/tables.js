@@ -509,20 +509,18 @@ function buildVehicleExpenseTable(
   if (enableTooltip === false || enableTooltip === "false") {
     disableTableTooltip('disable');
   }
-}
+};
 
 function resetText(myText) {
-  document.getElementById("titleNode").textContent = `${myText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+  document.getElementById("myTitleNode").textContent = `${myText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
 }
 
 function addTitleText(myTableAlert, boldText) {
-  // let myStrongTag = document.createElement("p");
-
-  myStrongTag.setAttribute("id", "titleNode");
+  myStrongTag.setAttribute("id", "myTitleNode");
   myStrongTag.setAttribute("class", "font-weight-bold d-lg-inline");
   myStrongTag.textContent = `${boldText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
   myTableAlert.appendChild(myStrongTag);
-}
+};
 
 function addPagination() {
   // let ul = document.createElement("ul");

@@ -27,6 +27,7 @@ input[type="number"] {
 }
 
 
+
 /* Table with links */
 
 #titleNode,
@@ -148,7 +149,7 @@ input[type="number"] {
 #taxPaymentAmtLbl,
 #taxPaymentStatusLbl,
 #taxPaymentDescriptionLbl {
-  margin-bottom: 0px;
+  margin-bottom: 0px!important;
 }
 
 #carExpID,
@@ -602,7 +603,7 @@ option {
 }
 
 #tooltipOnLbl,
-#tooltipOffLbl {
+#tooltipOFFLbl {
   font-size: 9px;
 }
 
@@ -731,8 +732,9 @@ option {
 
 /* FIXED ASSET ENTRY FORM */
 #AssetModal label,
-#AssettopRowInputDiv input {
-  font-size: 10px;
+#AssettopRowInputDiv input,
+#Asset_id {
+  font-size: 9px;
 }
 
 #depreciationRatePercentSpan {
@@ -746,10 +748,6 @@ option {
 #AssetAutoClaimRate,
 #AssetStatus {
   font-size: 12px;
-}
-
-#AssetStatus {
-  width: 100px;
 }
 
 #AssetModal label {
@@ -772,7 +770,7 @@ option {
     width: 100px;
   }
   #AssetBusinessPercent  {
-    width: 83px;
+    width: 86%;
   }
 }
 
@@ -834,14 +832,14 @@ option {
 }
 
 #AssetVehiclePercentBorder {
-  width: 310px;
+  width: 330px;
   margin-left: 62px;
 }
 
-#AssetStatusAreaDiv {
+/* #AssetStatusAreaDiv {
   margin-left: 16px;
   margin-right: 0px;
-}
+} */
 
 #AssetTableAlert {
   padding-right: 8px;
@@ -1051,5 +1049,26 @@ option {
     position:absolute;
     left:0;
     top:0;
+  }
+}
+
+
+/* BELOW IS USED TO MAKE SMART PHONES LOOK GOOD AND USEABLE */
+
+@media (max-width: 575px) {
+  #vLogBusKMInput,
+  #vLogPerKMInput,
+  #vLogOdometer,
+  #vLogBtnSaveOdometer,
+  #vLogBusKMTotal,
+  #vLogPerKMTotal,
+  #vLogOdometerTotal,
+  #vLogBtnResetLog,
+  #vLogBusPercentYear,
+  #vLogBusPercentQuarter,
+  #vLogBusPercentMonth,
+  #vLogQuickPercent {
+    width: 75px!important;
+    font-size: 9px!important;
   }
 }

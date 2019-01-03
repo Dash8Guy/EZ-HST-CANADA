@@ -283,11 +283,14 @@ function verifyAllLocalStorageForSettings() {
    }
 };
 
-function displaySettingsModal() {
+// function displaySettingsModal() {
+//    $("#settingsModal").modal("show");
+// }
+
+myDOMs.main_page.SettingsBtn.addEventListener('click', function (event) {
+   //displaySettingsModal();
    $("#settingsModal").modal("show");
-}
-
-
+});
 
 
 myDOMs.settingsModal.TooltipBtnEnabled.addEventListener('click', function (e) {

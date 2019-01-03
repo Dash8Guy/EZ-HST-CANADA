@@ -424,7 +424,17 @@ const myDOMs = {
     Alert: document.getElementById("alertVehicleLog"),
     AlertContainer: document.getElementById("alertVehicleLogContainer"),
     closeAlert: document.getElementById("VehicleLogCloseBtnAlert"),
-    DisplayDateArea: document.getElementById('dayDisplayVLog')
+    DisplayDateArea: document.getElementById('dayDisplayVLog'),
+    BusKMsInputLabel: document.getElementById('vLogBusKMInputLbl'),
+    PersKMsInputLabel: document.getElementById('vLogPerKMInputLbl'),
+    OdometerInputLabel: document.getElementById('vLogOdometerLbl'),
+    BusKMsTotalLabel: document.getElementById('vLogBusKMTotalLbl'),
+    PersKMsTotalsLabel: document.getElementById('vLogPerKMTotalLbl'),
+    OdometerTotalLabel: document.getElementById('vLogOdometerTotalLbl'),
+    BusPercentYearLabel: document.getElementById('vLogBusPercentYearLbl'),
+    BusPercentQuarterLabel: document.getElementById('vLogBusPercentQuarterLbl'),
+    BusPercentMonthLabel: document.getElementById('vLogBusPercentMonthLbl')
+
   },
   main_page: {
     SelectPeriod: document.getElementById('timePeriodSelect'),
@@ -435,6 +445,7 @@ const myDOMs = {
     LockDate: document.getElementById('lockDate'),
     StartDate: document.getElementById('startDatePage'),
     EndDate: document.getElementById('endDatePage'),
+    SettingsBtn: document.getElementById('mainSettings'),
   },
   imageModal: {
     Img: document.getElementById("ModalImageTag")
@@ -750,11 +761,65 @@ function renameIncomeStatementElements() {
   }
 }
 
+function AddorRemoveVLogNavBtnsText() {
+  if (window.innerWidth < 510) {
+    myDOMs.vehicleLog.PreviousBtn.innerHTML = '<i class="fas fa-step-backward"></i>';
+    myDOMs.vehicleLog.NextBtn.innerHTML = '<i class="fas fa-step-forward"></i>';
+    myDOMs.vehicleLog.FirstBtn.innerHTML = '<i class="fas fa-fast-backward"></i>';
+    myDOMs.vehicleLog.LastBtn.innerHTML = '<i class="fas fa-fast-forward"></i>';
+  } else {
+    myDOMs.vehicleLog.PreviousBtn.innerHTML = '<i class="fas fa-step-backward"></i> Previous';
+    myDOMs.vehicleLog.NextBtn.innerHTML = 'Next <i class="fas fa-step-forward"></i>';
+    myDOMs.vehicleLog.FirstBtn.innerHTML = '<i class="fas fa-fast-backward"></i> First';
+    myDOMs.vehicleLog.LastBtn.innerHTML = 'Last <i class="fas fa-fast-forward"></i>';
+  }
+};
 
+function ChangeVlogLabelTextForResize() {
+  if (window.innerWidth < 992) {
+    myDOMs.vehicleLog.BusKMsInputLabel.innerText = 'Bus KM';
+    myDOMs.vehicleLog.PersKMsInputLabel.innerText = 'Per KM';
+    myDOMs.vehicleLog.OdometerInputLabel.innerText = 'Od Pr Yr';
+    myDOMs.vehicleLog.SaveOdometerBtn.innerText = 'Save Od';
+
+    myDOMs.vehicleLog.BusKMsTotalLabel.innerText = 'Ttl Bus KM';
+    myDOMs.vehicleLog.PersKMsTotalsLabel.innerText = 'Ttl Per KM';
+    myDOMs.vehicleLog.OdometerTotalLabel.innerText = 'Odometer';
+    myDOMs.vehicleLog.ResetLogBtn.innerText = 'Reset Log';
+
+    myDOMs.vehicleLog.BusPercentYearLabel.innerText = '% Yr';
+    myDOMs.vehicleLog.BusPercentQuarterLabel.innerText = '% ¼';
+    myDOMs.vehicleLog.BusPercentMonthLabel.innerText = '% Mth';
+    myDOMs.vehicleLog.QuickPercentBtn.innerText = 'Quick Set %';
+  } else {
+    myDOMs.vehicleLog.BusKMsInputLabel.innerText = 'Business KM';
+    myDOMs.vehicleLog.PersKMsInputLabel.innerText = 'Personal KM';
+    myDOMs.vehicleLog.OdometerInputLabel.innerText = 'Odometer Previous Year';
+    myDOMs.vehicleLog.SaveOdometerBtn.innerText = 'Save Odometer';
+
+    myDOMs.vehicleLog.BusKMsTotalLabel.innerText = 'Total Business KM';
+    myDOMs.vehicleLog.PersKMsTotalsLabel.innerText = 'Total Personal KM';
+    myDOMs.vehicleLog.OdometerTotalLabel.innerText = 'Odometer';
+    myDOMs.vehicleLog.ResetLogBtn.innerText = 'Reset Log';
+
+    myDOMs.vehicleLog.BusPercentYearLabel.innerText = 'Business % Year';
+    myDOMs.vehicleLog.BusPercentQuarterLabel.innerText = 'Business % ¼';
+    myDOMs.vehicleLog.BusPercentMonthLabel.innerText = 'Business % Month';
+    myDOMs.vehicleLog.QuickPercentBtn.innerText = 'Quick Method Set %';
+  }
+}
+
+runResizeCode();
 
 window.addEventListener('resize', function (e) {
-  renameIncomeStatementElements();
+  runResizeCode();
 });
+
+function runResizeCode() {
+  renameIncomeStatementElements();
+  AddorRemoveVLogNavBtnsText();
+  ChangeVlogLabelTextForResize();
+};
 
 function getTodaysDate() {
   let today = new Date();

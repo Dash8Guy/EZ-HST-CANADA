@@ -1462,7 +1462,7 @@ function buildHowMuchCanIKeepTable(
    myHMBtn.appendChild(btnTextHM);
 
 
-   addTitleText(HMTableAlert, boldText);
+   addHMTitleText(HMTableAlert, boldText);
    // HMsortString.setAttribute("id", "HMsortString");
    // HMsortString.setAttribute("class", "font-weight-bold text-success float-right d-lg-inline");
    // HMsortString.textContent = `Sorted: As entered.`;
@@ -1479,17 +1479,17 @@ function buildHowMuchCanIKeepTable(
    //addArrow();
 
 
-   resetText(boldText);
+   resetHMText(boldText);
    if (enableTooltip === false || enableTooltip === "false") {
       disableTableTooltip('disable');
    }
 };
 
-function resetText(myText) {
+function resetHMText(myText) {
    document.getElementById("titleAccountNode").textContent = `${myText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
 }
 
-function addTitleText(HMTableAlert, boldText) {
+function addHMTitleText(HMTableAlert, boldText) {
    // let HMStrongTag = document.createElement("p");
 
    HMStrongTag.setAttribute("id", "titleAccountNode");

@@ -7,7 +7,7 @@ let assetArray = [];
 
 //This next string variable will hold the last sort order applied on the table. (ascDate-descDate-asc#-desc#)
 let lastAssetTableSortOrder = 'none';
-function SortPayTable(el) {
+function SortAssetTable(el) {
   let displaySortText = document.getElementById('assetSortString');
   if (el.id === 'HeadAssetSort-Assetnumber') {
     if (lastAssetTableSortOrder !== 'asc#') {
@@ -29,7 +29,7 @@ function SortPayTable(el) {
       });
       lastAssetTableSortOrder = 'desc#';
       AssetSortStringVariable = `Sorted: Descending as Entered.`;
-      displaySortText.textContent = `Sorted: Descending as Entered.`;
+      //displaySortText.textContent = `Sorted: Descending as Entered.`;
     }
 
   } else if (el.id === 'HeadAssetSort-1') {
@@ -264,7 +264,7 @@ function buildAssetReportTable(
     headerAssetLink.setAttribute("href", "#");
     headerAssetLink.setAttribute("data-toggle", "tooltip");
     headerAssetLink.setAttribute("title", `Click to Sort by ${el}`);
-    headerAssetLink.setAttribute("onclick", "SortPayTable(this);");
+    headerAssetLink.setAttribute("onclick", "SortAssetTable(this);");
     if (el === '#') {
       headerAssetLink.setAttribute("id", `HeadAssetSort-Assetnumber`);
     } else {
