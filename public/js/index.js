@@ -483,6 +483,7 @@ const myDOMs = {
     Title: document.getElementById("incomeTitle"),
     Reset: document.getElementById("incomeEntryformReset"),
     Img: document.getElementById("myImgIncome"),
+    BlindImg: document.getElementById("myImgIncomeBlind"),
     FullSizeImgBtn: document.getElementById('incomeExpShowFullSize'),
     FileSelector: document.getElementById("imgloadIncome"),
     Checkbox: document.getElementById("checkboxReceiptIncome"),
@@ -524,6 +525,7 @@ const myDOMs = {
     Title: document.getElementById("carTitle"),
     Reset: document.getElementById("carEntryformReset"),
     Img: document.getElementById("myImg"),
+    BlindImg: document.getElementById("myImgBlind"),
     FullSizeImgBtn: document.getElementById('carExpShowFullSize'),
     FileSelector: document.getElementById("imgload"),
     Checkbox: document.getElementById("checkboxReceipt"),
@@ -561,6 +563,7 @@ const myDOMs = {
     Title: document.getElementById("busTitle"),
     Reset: document.getElementById("busEntryformReset"),
     Img: document.getElementById("myImgBus"),
+    BlindImg: document.getElementById("myImgBusBlind"),
     FullSizeImgBtn: document.getElementById('busExpShowFullSize'),
     FileSelector: document.getElementById("imgloadBus"),
     Checkbox: document.getElementById("checkboxReceiptBus"),
@@ -598,6 +601,7 @@ const myDOMs = {
     Title: document.getElementById("homeTitle"),
     Reset: document.getElementById("homeEntryformReset"),
     Img: document.getElementById("myImgHome"),
+    BlindImg: document.getElementById("myImgHomeBlind"),
     FullSizeImgBtn: document.getElementById('homeExpShowFullSize'),
     FileSelector: document.getElementById("imgloadHome"),
     Checkbox: document.getElementById("checkboxReceiptHome"),
@@ -635,6 +639,7 @@ const myDOMs = {
     Title: document.getElementById("otherTitle"),
     Reset: document.getElementById("otherEntryformReset"),
     Img: document.getElementById("myImgOther"),
+    BlindImg: document.getElementById("myImgOtherBlind"),
     FullSizeImgBtn: document.getElementById('otherExpShowFullSize'),
     FileSelector: document.getElementById("imgloadOther"),
     Checkbox: document.getElementById("checkboxReceiptOther"),
@@ -672,6 +677,7 @@ const myDOMs = {
     Title: document.getElementById("rentalTitle"),
     Reset: document.getElementById("rentalEntryformReset"),
     Img: document.getElementById("myImgRental"),
+    BlindImg: document.getElementById("myImgRentalBlind"),
     FullSizeImgBtn: document.getElementById('rentalExpShowFullSize'),
     FileSelector: document.getElementById("imgloadRental"),
     Checkbox: document.getElementById("checkboxReceiptRental"),
@@ -2166,3 +2172,93 @@ function updateFormButtons(myForm) {
       }
   }
 }
+
+function ResizeImage(mySource) {
+  let filesToUploads;
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+    switch (mySource) {
+      case 'BusExp':
+        filesToUploads = document.getElementById('imgloadBus').files;
+        break;
+      case 'CarExp':
+        filesToUploads = document.getElementById('imgload').files;
+        break;
+      case 'HomeExp':
+        filesToUploads = document.getElementById('imgloadHome').files;
+        break;
+      case 'OtherExp':
+        filesToUploads = document.getElementById('imgloadOther').files;
+        break;
+      case 'RentalExp':
+        filesToUploads = document.getElementById('imgloadRental').files;
+        break;
+      case 'Income':
+        filesToUploads = document.getElementById('imgloadIncome').files;
+    }
+
+    let file = filesToUploads[0];
+    if (file) {
+
+      let reader = new FileReader();
+      // Set the image once loaded into file reader
+      reader.onload = function (e) {
+
+        let img = document.createElement("img");
+        img.src = e.target.result;
+
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        let MAX_WIDTH = 1000;
+        let MAX_HEIGHT = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        dataurl = canvas.toDataURL(file.type);
+
+        switch (mySource) {
+          case 'BusExp':
+            document.getElementById('myImgBus').src = dataurl;
+            break;
+          case 'CarExp':
+            document.getElementById('myImg').src = dataurl;
+            break;
+          case 'HomeExp':
+            document.getElementById('myImgHome').src = dataurl;
+            break;
+          case 'OtherExp':
+            document.getElementById('myImgOther').src = dataurl;
+            break;
+          case 'RentalExp':
+            document.getElementById('myImgRental').src = dataurl;
+            break;
+          case 'Income':
+            document.getElementById('myImgIncome').src = dataurl;
+        }
+      }
+      reader.readAsDataURL(file);
+
+    }
+
+  } else {
+    alert('The File APIs are not fully supported in this browser.');
+  }
+}
+

@@ -526,6 +526,9 @@
                               <div id="incomeImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImgIncome">
                               </div>
+                              <div id="incomeImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgIncomeBlind">
+                              </div>
 
                             </div>
                           </div>
@@ -739,9 +742,13 @@
                                       Image</button>
                                   </div>
                                 </div>
+                                {{!-- onclick="removeBusImage()" --}}
                               </form>
                               <div id="busImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImgBus">
+                              </div>
+                              <div id="busImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgBusBlind">
                               </div>
 
                             </div>
@@ -959,6 +966,9 @@
                               </form>
                               <div id="homeImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImgHome">
+                              </div>
+                              <div id="homeImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgHomeBlind">
                               </div>
 
                             </div>
@@ -1178,6 +1188,9 @@
                               </form>
                               <div id="otherImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImgOther">
+                              </div>
+                              <div id="otherImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgOtherBlind">
                               </div>
 
                             </div>
@@ -1400,6 +1413,9 @@
                               </form>
                               <div id="rentalImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImgRental">
+                              </div>
+                              <div id="rentalImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgRentalBlind">
                               </div>
 
                             </div>
@@ -1627,6 +1643,9 @@
                               </form>
                               <div id="vehicleImgContainer">
                                 <img src="" alt="" class="img-fluid w-1 h-1" id="myImg">
+                              </div>
+                              <div id="vehicleImgContainerBlind">
+                                <img src="" alt="" class="img-fluid w-1 h-1 d-none" id="myImgBlind">
                               </div>
 
                             </div>
@@ -4016,136 +4035,108 @@
 
 
     //Display Image code
-
+    //Vehicle Exp Image code
     $('document').ready(function () {
       $("#imgload").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
+        //const myFileSize = this.files[0].size;
 
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
+        //if (myFileSize > 4112000) {
+        //  this.value = '';
+        //  return alert(
+        //    `The file size is ${
+        //    myFileSize
+        //    } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
+        //  );
+        // }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImg').attr('src', e.target.result);
+            $('#myImgBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
-
         }
+
+        ResizeImage('CarExp');
+        removeVehicleBlindImage();
+
       });
 
+      //Bus Exp Image code
       $("#imgloadBus").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImgBus').attr('src', e.target.result);
+            $('#myImgBusBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
+
+        ResizeImage('BusExp');
+        removeBusBlindImage();
+
       });
 
       $("#imgloadHome").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImgHome').attr('src', e.target.result);
+            $('#myImgHomeBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
+        ResizeImage('HomeExp');
+        removeHomeBlindImage();
       });
+
 
       $("#imgloadOther").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImgOther').attr('src', e.target.result);
+            $('#myImgOtherBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
+        ResizeImage('OtherExp');
+        removeOtherBlindImage();
       });
+
 
       $("#imgloadRental").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImgRental').attr('src', e.target.result);
+            $('#myImgRentalBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
+        ResizeImage('RentalExp');
+        removeRentalBlindImage();
       });
 
 
       $("#imgloadIncome").change(function () {
         if (!this.files[0]) { return; }
-        const myFileSize = this.files[0].size;
-        if (myFileSize > 4112000) {
-          this.value = '';
-          return alert(
-            `The file size is ${
-            myFileSize
-            } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-          );
-        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
-            $('#myImgIncome').attr('src', e.target.result);
+            $('#myImgIncomeBlind').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
+        ResizeImage('Income');
+        removeIncomeBlindImage();
       });
 
 

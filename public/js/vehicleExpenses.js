@@ -21,7 +21,7 @@ function displayCarExpModal(carNum) {
 }
 function hideCarExpModal() {
   myDOMs.carExp.EntryForm.reset();
-  removeBusImage();
+  removeImage();
   resetOriginalData();
   savedTransactionLocked = false;
   $("#addCarExpenseModal").modal("hide");
@@ -589,7 +589,7 @@ function updateVehicleExpense() {
         "closeBtnAlert",
         `${data.message} `,
         myObjMsg,
-        `Expense ID: ${data.NewExpense._id}`,
+        ` `,
         "GREEN",
         6000
       );
@@ -897,7 +897,7 @@ function deleteVehicleExpense() {
           "closeBtnAlert",
           "Expense Successfully Deleted! ",
           "",
-          `Exp ID: ${data.carexpense._id}`,
+          ` `,
           "GREEN",
           6000
         );
@@ -1233,16 +1233,16 @@ $("#carExpBtn").click(function () {
         if (TableOpen) {
           alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
         }
-        let myDisplay = [`The following are all the new expense ID's`];
-        for (i = 0; i < data.insertedCount; i++) {
-          myDisplay.push(data.insertedIds[i]);
-        }
+        // let myDisplay = [`The following are all the new expense ID's`];
+        // for (i = 0; i < data.insertedCount; i++) {
+        //   myDisplay.push(data.insertedIds[i]);
+        // }
         displayAlert(
           myDOMs.carExp.AlertContainer,
           "carExpAlert",
           "closeBtnAlert",
           "Expenses Successfully Saved! ",
-          myDisplay,
+          '',
           " ",
           "GREEN",
           0
@@ -1386,7 +1386,7 @@ $("#carExpBtn").click(function () {
             "closeBtnAlert",
             `${data.message} `,
             myObjMsg,
-            `Expense ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1478,7 +1478,7 @@ $("#carExpBtn").click(function () {
             "closeBtnAlert",
             `${data.message} `,
             "",
-            `Expense ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1724,6 +1724,11 @@ function removeImage() {
   myDOMs.carExp.FileSelector.value = "";
   updateVehicleFormStatus();
 }
+
+function removeVehicleBlindImage() {
+  myDOMs.carExp.BlindImg.setAttribute("src", "");
+};
+
 
 
 function validateVehicleEntryForm() {

@@ -448,7 +448,7 @@ function updateIncome(source) {
         "incomeCloseBtnAlert",
         `${data.message} `,
         myObjMsg,
-        `Expense ID: ${data.NewExpense._id}`,
+        ` `,
         "GREEN",
         6000
       );
@@ -578,7 +578,7 @@ function deleteIncomeExpense() {
           "incomeCloseBtnAlert",
           "Revenue Entry Successfully Deleted! ",
           "",
-          `Exp ID: ${data.carexpense._id}`,
+          ` `,
           "GREEN",
           6000
         );
@@ -875,16 +875,16 @@ $("#incomeExpBtn").click(function () {
       data: mydata
     })
       .done(async function (data) {
-        let myDisplay = [`The following are all the new Revenue Entry ID's`];
-        for (i = 0; i < data.insertedCount; i++) {
-          myDisplay.push(data.insertedIds[i]);
-        }
+        // let myDisplay = [`The following are all the new Revenue Entry ID's`];
+        // for (i = 0; i < data.insertedCount; i++) {
+        //   myDisplay.push(data.insertedIds[i]);
+        // }
         displayAlert(
           myDOMs.income.AlertContainer,
           "incomeExpAlert",
           "incomeCloseBtnAlert",
           myTempMsg,
-          myDisplay,
+          '',
           " ",
           "GREEN",
           0
@@ -1015,7 +1015,7 @@ $("#incomeExpBtn").click(function () {
             "incomeCloseBtnAlert",
             `${data.message} `,
             myObjMsg,
-            `Revenue ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1084,7 +1084,7 @@ $("#incomeExpBtn").click(function () {
             "incomeCloseBtnAlert",
             `${data.message} `,
             "",
-            `Revenue ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1185,6 +1185,10 @@ function removeIncomeImage() {
   myDOMs.income.FileSelector.value = "";
   updateIncomeFormStatus();
 }
+
+function removeIncomeBlindImage() {
+  myDOMs.income.BlindImg.setAttribute("src", "");
+};
 
 function validateIncomeEntryForm() {
   const homeDate = document.forms["formIncomeEntry"]["incomeDate"];

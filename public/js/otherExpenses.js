@@ -350,7 +350,7 @@ function updateOtherExpense() {
         "otherCloseBtnAlert",
         `${data.message} `,
         myObjMsg,
-        `Expense ID: ${data.NewExpense._id}`,
+        ` `,
         "GREEN",
         6000
       );
@@ -522,7 +522,7 @@ function deleteOtherExpense() {
           "otherCloseBtnAlert",
           "Expense Successfully Deleted! ",
           "",
-          `Exp ID: ${data.carexpense._id}`,
+          ` `,
           "GREEN",
           6000
         );
@@ -796,16 +796,16 @@ $("#otherExpBtn").click(function () {
         if (TableOpen) {
           alert('When Table Report is open, any New Expense added will not be updated in the Table Report! \n\n To view the Report with the new expense, close and Re-open the Report!');
         }
-        let myDisplay = [`The following are all the new expense ID's`];
-        for (i = 0; i < data.insertedCount; i++) {
-          myDisplay.push(data.insertedIds[i]);
-        }
+        // let myDisplay = [`The following are all the new expense ID's`];
+        // for (i = 0; i < data.insertedCount; i++) {
+        //   myDisplay.push(data.insertedIds[i]);
+        // }
         displayAlert(
           myDOMs.otherExp.AlertContainer,
           "otherExpAlert",
           "otherCloseBtnAlert",
           "Expenses Successfully Saved! ",
-          myDisplay,
+          '',
           " ",
           "GREEN",
           0
@@ -939,7 +939,7 @@ $("#otherExpBtn").click(function () {
             "otherCloseBtnAlert",
             `${data.message} `,
             myObjMsg,
-            `Expense ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1010,7 +1010,7 @@ $("#otherExpBtn").click(function () {
             "otherCloseBtnAlert",
             `${data.message} `,
             "",
-            `Expense ID: ${data.newID}`,
+            ` `,
             "GREEN",
             6000
           );
@@ -1110,6 +1110,11 @@ function removeOtherImage() {
   myDOMs.otherExp.FileSelector.value = "";
   updateOtherFormStatus();
 }
+
+function removeOtherBlindImage() {
+  myDOMs.otherExp.BlindImg.setAttribute("src", "");
+};
+
 
 function validateOtherEntryForm() {
   const otherDate = document.forms["formOtherExpEntry"]["otherDate"];
