@@ -189,7 +189,7 @@ app.post("/carExpense", authenticate, async (req, res) => {
 });
 
 async function uploadReceiptImage2S3(userID, expenseID, myFile) {
-  myImg = await uploadToS3(myFile, `${userID}_${expenseID}.jpg`);
+  myImg = await uploadToS3(myFile, `${userID}_${expenseID}.png`);
 };
 
 async function deleteTheImage(userID, tempID) {
