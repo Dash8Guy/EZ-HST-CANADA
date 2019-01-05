@@ -196,7 +196,7 @@ async function deleteTheImage(userID, tempID) {
 
   try {
     let myImg;
-    myImg = await deleteImageFromS3(`${userID}_${tempID}.jpg`);
+    myImg = await deleteImageFromS3(`${userID}_${tempID}.png`);
     if (myImg) {
       //console.log('Image Deleted!')
     } else {
@@ -461,7 +461,7 @@ app.get("/carExpenseImg/:_id", authenticate, async (req, res) => {
   try {
     let myImg;
     const tempID = req.params._id;
-    myImg = await getImageFromS3(`${req.user._id}_${tempID}.jpg`);
+    myImg = await getImageFromS3(`${req.user._id}_${tempID}.png`);
     if (myImg) {
       res.send({ myImg });
     } else {
@@ -494,7 +494,7 @@ app.get("/carExpense/:_id", authenticate, (req, res) => {
 
       if (carexpense.receiptPath) {
         fs.readFile(
-          `./server/imageUpload/${req.user._id}_${tempID}.jpg`,
+          `./server/imageUpload/${req.user._id}_${tempID}.png`,
           (err, data) => {
             if (err) {
               res.status(400).send(`Unable to retrieve the Image!  ${err}`);
