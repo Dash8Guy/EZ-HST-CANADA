@@ -116,6 +116,8 @@ app.post("/carExpense", authenticate, async (req, res) => {
     }
   } else {
     sampleFile = req.files.imgload;
+    // console.dir(sampleFile);
+    // return;
 
     let myCarExpObjectImg = {
       _user: req.user._id,

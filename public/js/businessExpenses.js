@@ -1,4 +1,5 @@
 //Random Function
+let ImgReceiptToSend;
 populateBusinessCategories();
 disableEnableFullSizeBusinessImgBtn();
 
@@ -1007,10 +1008,22 @@ $("#busExpBtn").click(function () {
       }
 
       // Append the files to the formData.
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        formData.append("imgload", file, file.name);
-      }
+      // for (var i = 0; i < files.length; i++) {
+      //   var file = files[i];
+      //   formData.append("imgload", file, file.name);
+      // }
+
+      let myImg64Arr = ImgReceiptToSend.split(",");
+      let Part1 = myImg64Arr[0];
+      let Part2 = myImg64Arr[1];
+      let n = Part1.indexOf(";");
+      let ContentType = Part1.slice(5, Number(n));
+
+      let blob = b64toBlob(Part2, ContentType);
+
+
+      formData.append("imgload", blob, 'NewReceiptImg');
+
       let myTempDate = new Date(
         myDate.getFullYear(),
         myDate.getMonth(),
@@ -1219,7 +1232,7 @@ function removeBusImage() {
   $(".custom-file-label").html("");
   myDOMs.busExp.FileSelector.value = "";
   updateBusinessFormStatus();
-}
+};
 
 function removeBusBlindImage() {
   myDOMs.busExp.BlindImg.setAttribute("src", "");
@@ -1470,8 +1483,4 @@ function displayFullSizeBusinessImage() {
 
 }
 
-function ApplyImgCompress() {
 
-  resize_images(7500, 7500, 600, 600);
-
-}
