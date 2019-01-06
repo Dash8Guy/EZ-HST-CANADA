@@ -2210,8 +2210,8 @@ function ResizeImage(mySource) {
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
-        let MAX_WIDTH = 1000;
-        let MAX_HEIGHT = 1200;
+        let MAX_WIDTH = 800;
+        let MAX_HEIGHT = 1000;
         let width = img.width;
         let height = img.height;
 

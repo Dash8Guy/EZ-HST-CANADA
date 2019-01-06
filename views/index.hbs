@@ -4067,6 +4067,13 @@
       $("#imgloadBus").change(function () {
         if (!this.files[0]) { return; }
 
+        const myFileSize = this.files[0].size;
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
+
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
