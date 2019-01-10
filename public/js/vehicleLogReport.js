@@ -317,6 +317,7 @@ function buildVehicleLogTable(
 function closevLogModal() {
   $("#VLogViewModal").modal("hide");
   removeVlogTblNavAlertChildNodes();
+  ToggleMenuBar();
 }
 
 function resetVlogText(myText) {
@@ -484,6 +485,7 @@ async function getVlogReportData() {
   addPercentandOdometertoArray();
   fillTableArrays();
   buildVehicleLogTable(myDOMs.vLogReport.Container, "vLogTableAlert", "topCloseVlogViewModal", `${vLogArray.length} total logs displayed on 1 page per month.`, "TABLE CAR GREEN", 0, 'JAN');
+  ToggleMenuBar();
 }
 
 function addPercentandOdometertoArray() {

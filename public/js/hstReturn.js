@@ -58,7 +58,7 @@ function displayHSTReturnModal() {
    Return_Time_Period = getTimePeriod();
    getReturnData();
    StartReturnFunctions();
-
+   ToggleMenuBar();
 };
 
 function hideHSTReturnModal() {
@@ -81,6 +81,7 @@ function hideHSTReturnModal() {
    myDOMs.HST_Return.Line115.value = '';
    myDOMs.HST_Return.Line205.value = '';
    myDOMs.HST_Return.Line405.value = '';
+   ToggleMenuBar();
 };
 
 function updateReturnData(LineNumber) {

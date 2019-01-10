@@ -1,9 +1,19 @@
 function displayAssetModal() {
    $("#AssetModal").modal("show");
+   let myMainNav = document.getElementById("main-nav");
+   let myTopVal = myMainNav.offsetTop;
+   if (myTopVal === 0 && AssetTableOpen === false) {
+      ToggleMenuBar();
+   }
 }
 function hideAssetModal() {
    $("#AssetModal").modal("hide");
    myDOMs.FixedAssets.Form.reset();
+   let myMainNav = document.getElementById("main-nav");
+   let myTopVal = myMainNav.offsetTop;
+   if (myTopVal === -108 && AssetTableOpen === false) {
+      ToggleMenuBar();
+   }
 }
 
 myDOMs.FixedAssets.Vehicle1_Selector.addEventListener('click', function (event) {
@@ -534,7 +544,7 @@ function getFixedAssets() {
             0,
             "Asset"
          );
-         // updateFormButtons('HSTPayment');
+         ToggleMenuBar();
       })
       .fail(function (e) {
          if (e.readyState === 0 || myToken === '') {

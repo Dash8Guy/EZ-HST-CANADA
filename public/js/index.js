@@ -7,6 +7,31 @@ let categoryCar = false;
 let vendorCar = false;
 //Holds Logged in User first name;
 let loggedIn;
+//This varaible is set to true when Collapse Nav Bar is Open and false when closed
+let NavBarCollapseOpen = false;
+
+//Next varaible used to know if any Modals are open
+let AssetModalOpen = false;
+let TaxPaymentModalOpen = false;
+let HSTPaymentModalOpenForNAV = false;
+let PSTPaymentModalOpenForNAV = false;
+let VehicleExpEntryModalOpen = false;
+let BusExpEntryModalOpen = false;
+let HomeExpEntryModalOpen = false;
+let OtherExpEntryModalOpen = false;
+let RentalExpEntryModalOpen = false;
+let IncomeEntryModalOpen = false;
+let VLogModalOpen = false;
+let UserSetupModalOpen = false;
+let UserLoginModalOpen = false;
+let VLogReportModalOpen = false;
+let PaymentReportModalOpen = false;
+let AssetReportModalOpen = false;
+let IncomeStatementModalOpen = false;
+let HomePercentModalOpen = false;
+let AccountSummaryModalOpen = false;
+let HSTReturnModalOpen = false;
+
 
 function closeFullViewImage() {
   $('#ImageViewModal').modal('hide');
@@ -14,6 +39,7 @@ function closeFullViewImage() {
   img.setAttribute('style', 'transform:rotate(0deg)');
   imageAngle = 0;
 };
+
 
 
 const myDOMs = {
@@ -39,7 +65,7 @@ const myDOMs = {
     Line205: document.getElementById('Line205'),
     Line405: document.getElementById('Line405'),
     Body: document.getElementById('ReturnBody'),
-
+    Modal: document.getElementById('HSTReturnModal')
   },
   AccountSummary: {
     GrossRevBus: document.getElementById('ASgrossRevBus'),
@@ -446,6 +472,7 @@ const myDOMs = {
     StartDate: document.getElementById('startDatePage'),
     EndDate: document.getElementById('endDatePage'),
     SettingsBtn: document.getElementById('mainSettings'),
+    NavToggleBtn: document.getElementById('toggleNav')
   },
   imageModal: {
     Img: document.getElementById("ModalImageTag")
@@ -454,7 +481,10 @@ const myDOMs = {
     Login: document.getElementById("navLogin"),
     Logout: document.getElementById("navLogout"),
     Register: document.getElementById("navRegister"),
-    UserLogName: document.getElementById("navUserLog")
+    UserLogName: document.getElementById("navUserLog"),
+    Main: document.getElementById("main-nav"),
+    NavBarCollapse: document.getElementById("NavBarCollapseBtn")
+
   },
   vLogReport: {
     Container: document.getElementById('vLogReportContainer'),
@@ -465,8 +495,8 @@ const myDOMs = {
     AlertContainer: document.getElementById("alertContainerMain"),
     closeAlert: document.getElementById("closeBtnAlertMain"),
     HSTPaymentEntryMenu: document.getElementById("hstPaymentEntryMenu"),
-    HSTPaymentReportMenu: document.getElementById("hstPaymentReportMenu")
-
+    HSTPaymentReportMenu: document.getElementById("hstPaymentReportMenu"),
+    MainMiddleSection: document.getElementById("MainMiddleSection")
   },
   income: {
     EntryForm: document.getElementById("formIncomeEntry"),
@@ -730,6 +760,120 @@ const myDOMs = {
     AlertContainer: document.getElementById("alertContainerUserLogin"),
     closeAlert: document.getElementById("closeBtnAlertUserLogin")
   }
+};
+
+myDOMs.nav.NavBarCollapse.addEventListener('click', function (event) {
+  // alert('Collapse Click');
+  // alert(`Nav Bar Open: ${NavBarCollapseOpen}`);
+  // alert(`NavBar Open: ${NavBarCollapseOpen}`);
+  // alert(`Event Trusted: ${event.isTrusted}`);
+  // if (event.isTrusted === false) {
+  // } else {
+  if (NavBarCollapseOpen === true) {
+    NavBarCollapseOpen = false;
+  } else {
+    NavBarCollapseOpen = true;
+  }
+  // }
+  // alert(`NavBar Open: ${NavBarCollapseOpen}`);
+});
+
+
+function ToggleMenuBar(FromBtn) {
+
+  let myMainNav = document.getElementById("main-nav");
+  let LeftMainDOM = document.getElementById("timePeriodDiv");
+  let RightMainDOM = document.getElementById("MainViewTotals");
+  let MainContainerAlertTemp = document.getElementById("alertContainerMain");
+  let MainAlertTemp = document.getElementById("mainAlert");
+  let MiddleMainDOM = document.getElementById("MainMiddleSection");
+
+  let BusExpTableAlertDOM = document.getElementById("mainTableAlert");
+  let myTopVal = myMainNav.offsetTop;
+
+
+  if (FromBtn === true && AssetModalOpen === true || TaxPaymentModalOpen === true || HSTPaymentModalOpenForNAV === true || PSTPaymentModalOpenForNAV === true || VehicleExpEntryModalOpen === true || BusExpEntryModalOpen === true || HomeExpEntryModalOpen === true || OtherExpEntryModalOpen === true || RentalExpEntryModalOpen === true || IncomeEntryModalOpen === true || VLogModalOpen === true || UserSetupModalOpen === true || UserLoginModalOpen === true || VLogReportModalOpen === true || PaymentReportModalOpen === true || AssetReportModalOpen === true || IncomeStatementModalOpen === true || HomePercentModalOpen === true || AccountSummaryModalOpen === true || HSTReturnModalOpen === true) {
+    // alert('1st');
+    myMainNav.style.top = '-108px';
+    LeftMainDOM.style.top = '-108px';
+    RightMainDOM.style.top = '-108px';
+    MiddleMainDOM.style.top = '-108px';
+    MainContainerAlertTemp.style.top = '-108px';
+    if (MainAlertTemp === undefined || MainAlertTemp === null) {
+    } else {
+      MainAlertTemp.style.top = '-108px';
+    }
+    if (BusExpTableAlertDOM === undefined || BusExpTableAlertDOM === null) {
+    } else {
+      BusExpTableAlertDOM.style.top = '-108px';
+    }
+    myDOMs.main_page.NavToggleBtn.innerText = 'Display Menu Bar';
+
+    if (window.innerWidth < 992) {
+      let MyCollapse = document.getElementById("navbarCollapse");
+      let myCollapseVal = MyCollapse.offsetTop;
+      if (myCollapseVal !== 0 || myCollapseVal === 0 && NavBarCollapseOpen === true) {
+        myDOMs.nav.NavBarCollapse.click(false);
+      }
+    }
+
+  } else if (AssetModalOpen === false && TaxPaymentModalOpen === false && HSTPaymentModalOpenForNAV === false && PSTPaymentModalOpenForNAV === false && VehicleExpEntryModalOpen === false && BusExpEntryModalOpen === false && HomeExpEntryModalOpen === false && OtherExpEntryModalOpen === false && RentalExpEntryModalOpen === false && IncomeEntryModalOpen === false && VLogModalOpen === false && UserSetupModalOpen === false && UserLoginModalOpen === false && VLogReportModalOpen === false && PaymentReportModalOpen === false && AssetReportModalOpen === false && IncomeStatementModalOpen === false && HomePercentModalOpen === false && AccountSummaryModalOpen === false && HSTReturnModalOpen === false) {
+
+    if (myTopVal === -108) {
+      if (reOpenIncomeStatement) { return };
+      myMainNav.style.top = '0';
+      LeftMainDOM.style.top = '0';
+      RightMainDOM.style.top = '0';
+      MiddleMainDOM.style.top = '0';
+      MainContainerAlertTemp.style.top = '0';
+      if (MainAlertTemp === undefined || MainAlertTemp === null) {
+      } else {
+        MainAlertTemp.style.top = '0';
+      }
+      if (BusExpTableAlertDOM === undefined || BusExpTableAlertDOM === null) {
+      } else {
+        BusExpTableAlertDOM.style.top = '0';
+      }
+      myDOMs.main_page.NavToggleBtn.innerText = 'Hide Menu Bar';
+
+      if (window.innerWidth < 992) {
+        let MyCollapse = document.getElementById("navbarCollapse");
+        let myCollapseVal = MyCollapse.offsetTop;
+        if (myCollapseVal !== 0 || myCollapseVal === 0 && NavBarCollapseOpen === true) {
+          myDOMs.nav.NavBarCollapse.click(false);
+        }
+      }
+
+    } else {
+      // alert('3rd');
+      myMainNav.style.top = '-108px';
+      LeftMainDOM.style.top = '-108px';
+      RightMainDOM.style.top = '-108px';
+      MiddleMainDOM.style.top = '-108px';
+      MainContainerAlertTemp.style.top = '-108px';
+      if (MainAlertTemp === undefined || MainAlertTemp === null) {
+      } else {
+        MainAlertTemp.style.top = '-108px';
+      }
+      if (BusExpTableAlertDOM === undefined || BusExpTableAlertDOM === null) {
+      } else {
+        BusExpTableAlertDOM.style.top = '-108px';
+      }
+      myDOMs.main_page.NavToggleBtn.innerText = 'Display Menu Bar';
+
+      if (window.innerWidth < 992) {
+        let MyCollapse = document.getElementById("navbarCollapse");
+        let myCollapseVal = MyCollapse.offsetTop;
+        if (myCollapseVal !== 0 || myCollapseVal === 0 && NavBarCollapseOpen === true) {
+          myDOMs.nav.NavBarCollapse.click(false);
+        }
+      }
+
+
+    }
+
+  }
+
 };
 
 updateHSTMenus();
@@ -1174,7 +1318,13 @@ function browserLogout() {
     .fail(function (e) { });
 }
 
-function userLogout(autoGenerated) {
+async function userLogout(autoGenerated) {
+  await resumeUserLogout(autoGenerated);
+  ToggleMenuBar();
+
+}
+
+function resumeUserLogout(autoGenerated) {
   if ($("#navLogout").hasClass("disabled")) {
     displayAlert(
       myDOMs.main.AlertContainer,
@@ -1188,41 +1338,62 @@ function userLogout(autoGenerated) {
     );
     return;
   }
-  $.ajax({
-    url: `${serverURL}users/me/token`,
-    method: "DELETE",
-    data: {
-      auth: myToken
-    }
-  })
-    .done(function (data) {
-      afterLogout();
-      if (autoGenerated) {
-        displayAlert(
-          myDOMs.main.AlertContainer,
-          "mainAlert",
-          "closeBtnAlertMain",
-          "EZ-HST-Canada has detected no activity for over 6 min and has Logged Out Successfully! ",
-          "",
-          " ",
-          "GREEN",
-          0
-        );
-      } else {
-        displayAlert(
-          myDOMs.main.AlertContainer,
-          "mainAlert",
-          "closeBtnAlertMain",
-          "Logged Out Successfully! ",
-          "",
-          " ",
-          "GREEN",
-          6000
-        );
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${serverURL}users/me/token`,
+      method: "DELETE",
+      data: {
+        auth: myToken
       }
     })
-    .fail(function (e) { });
-}
+      .done(function (data) {
+        resolve(data);
+        afterLogout();
+        if (autoGenerated) {
+          displayAlert(
+            myDOMs.main.AlertContainer,
+            "mainAlert",
+            "closeBtnAlertMain",
+            "EZ-HST-Canada has detected no activity for over 15 min and has Logged Out Successfully! ",
+            "",
+            " ",
+            "GREEN",
+            0
+          );
+
+        } else {
+          displayAlert(
+            myDOMs.main.AlertContainer,
+            "mainAlert",
+            "closeBtnAlertMain",
+            "Logged Out Successfully! ",
+            "",
+            " ",
+            "GREEN",
+            6000
+          );
+          ToggleNavAfterTimeDelay();
+        }
+      })
+      .fail(function (e) {
+        reject(e);
+      });
+  });
+
+
+};
+
+function ToggleNavAfterTimeDelay() {
+  setTimeout(function () {
+    let myMainNav = document.getElementById("main-nav");
+    let myTopVal = myMainNav.offsetTop;
+    if (myTopVal === -108) {
+      ToggleMenuBar();
+    }
+  }, 6000);
+};
+
+
 
 function afterLogout() {
   myToken = "";
@@ -1497,7 +1668,13 @@ function displayAlert(
 }
 function hideAlert(AlertID) {
   $(`#${AlertID}`).hide("fade");
-}
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+
+  if (myTopVal === -108 && AlertID === 'mainAlert') {
+    ToggleMenuBar();
+  }
+};
 
 function hideTableAlert() {
   $("#mainTableAlert").hide("fade");
@@ -1512,8 +1689,12 @@ function hideTableAlert() {
   if (reOpenIncomeStatement) {
     reOpenIncomeStatement = false;
     displayIncomeStatementModal();
+    return;
   }
-}
+
+  ToggleMenuBar();
+
+};
 
 function removeVlogTblNavAlertChildNodes() {
   if (vLoga !== undefined) {
@@ -1586,7 +1767,7 @@ function removeVlogTblNavAlertChildNodes() {
     }
   }
 
-}
+};
 
 function removeTblNavAlertChildNodes() {
   if (a !== undefined) {
@@ -1659,7 +1840,7 @@ function removeTblNavAlertChildNodes() {
     }
   }
 
-}
+};
 
 function registerUser() {
   mydata = {
@@ -1724,7 +1905,7 @@ function registerUser() {
       }
     }
   });
-}
+};
 
 function displayUserSetupModal() {
   if ($("#navRegister").hasClass("disabled")) {
@@ -1746,7 +1927,15 @@ function displayUserSetupModal() {
     return;
   }
   $("#userSetupModal").modal();
-}
+  ToggleMenuBar();
+};
+
+function hideUserSetupModal() {
+
+  $("#userSetupModal").modal('hide');
+  ToggleMenuBar();
+
+};
 
 function displayLoginUser() {
 
@@ -1765,7 +1954,15 @@ function displayLoginUser() {
     return;
   }
   $("#userLoginModal").modal('show');
-}
+  ToggleMenuBar();
+};
+
+function hideLoginUser() {
+
+  $("#userLoginModal").modal('hide');
+  ToggleMenuBar();
+
+};
 
 function setPasswordValidClass(myPassInput) {
   if (myPassInput === "first") {
@@ -1835,7 +2032,7 @@ function setPasswordValidClass(myPassInput) {
       }
     }
   }
-}
+};
 
 function setEmailValidClass(myPassInput) {
   if (myPassInput === "first") {
@@ -1891,7 +2088,7 @@ function setEmailValidClass(myPassInput) {
       }
     }
   }
-}
+};
 
 $("#userSetupModal").on("hidden.bs.modal", function () {
   myDOMs.userSetupModal.Form.reset();
@@ -2173,94 +2370,33 @@ function updateFormButtons(myForm) {
   }
 }
 
+
 function ResizeImage(mySource) {
   let filesToUploads;
-  if (window.File && window.FileReader && window.FileList && window.Blob) {
-    switch (mySource) {
-      case 'BusExp':
-        filesToUploads = document.getElementById('imgloadBus').files;
-        break;
-      case 'CarExp':
-        filesToUploads = document.getElementById('imgload').files;
-        break;
-      case 'HomeExp':
-        filesToUploads = document.getElementById('imgloadHome').files;
-        break;
-      case 'OtherExp':
-        filesToUploads = document.getElementById('imgloadOther').files;
-        break;
-      case 'RentalExp':
-        filesToUploads = document.getElementById('imgloadRental').files;
-        break;
-      case 'Income':
-        filesToUploads = document.getElementById('imgloadIncome').files;
-    }
+  // if (window.File && window.FileReader && window.FileList && window.Blob) {
+  switch (mySource) {
+    case 'BusExp':
+      filesToUploads = document.getElementById('imgloadBus').files;
+      break;
+    case 'CarExp':
+      filesToUploads = document.getElementById('imgload').files;
+      break;
+    case 'HomeExp':
+      filesToUploads = document.getElementById('imgloadHome').files;
+      break;
+    case 'OtherExp':
+      filesToUploads = document.getElementById('imgloadOther').files;
+      break;
+    case 'RentalExp':
+      filesToUploads = document.getElementById('imgloadRental').files;
+      break;
+    case 'Income':
+      filesToUploads = document.getElementById('imgloadIncome').files;
+  }
 
-    let file = filesToUploads[0];
-    if (file) {
-
-      let reader = new FileReader();
-      // Set the image once loaded into file reader
-      reader.onload = function (e) {
-
-        let img = document.createElement("img");
-        img.src = e.target.result;
-
-        let canvas = document.createElement("canvas");
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-
-        let MAX_WIDTH = 800;
-        let MAX_HEIGHT = 1000;
-        let width = img.width;
-        let height = img.height;
-
-        if (width > height) {
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
-          }
-        } else {
-          if (height > MAX_HEIGHT) {
-            width *= MAX_HEIGHT / height;
-            height = MAX_HEIGHT;
-          }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-
-        dataurl = canvas.toDataURL();
-        ImgReceiptToSend = dataurl;
-        // 'data:image/png;base64'
-
-        switch (mySource) {
-          case 'BusExp':
-            document.getElementById('myImgBus').src = dataurl;
-            break;
-          case 'CarExp':
-            document.getElementById('myImg').src = dataurl;
-            break;
-          case 'HomeExp':
-            document.getElementById('myImgHome').src = dataurl;
-            break;
-          case 'OtherExp':
-            document.getElementById('myImgOther').src = dataurl;
-            break;
-          case 'RentalExp':
-            document.getElementById('myImgRental').src = dataurl;
-            break;
-          case 'Income':
-            document.getElementById('myImgIncome').src = dataurl;
-        }
-      }
-      reader.readAsDataURL(file);
-
-    }
-
-  } else {
-    alert('The File APIs are not fully supported in this browser.');
+  let file = filesToUploads[0];
+  if (file) {
+    readFile(file, mySource);
   }
 };
 
@@ -2288,3 +2424,92 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   return blob;
 };
 
+
+function processFile(dataURL, fileType, mySource) {
+  var maxWidth = 900;
+  var maxHeight = 900;
+
+  var image = new Image();
+  image.src = dataURL;
+
+  image.onload = function () {
+    var width = image.width;
+    var height = image.height;
+    var shouldResize = (width > maxWidth) || (height > maxHeight);
+
+    if (!shouldResize) {
+      sendFile(dataURL);
+      return;
+    }
+
+    var newWidth;
+    var newHeight;
+
+    if (width > height) {
+      newHeight = height * (maxWidth / width);
+      newWidth = maxWidth;
+    } else {
+      newWidth = width * (maxHeight / height);
+      newHeight = maxHeight;
+    }
+
+    var canvas = document.createElement('canvas');
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    var context = canvas.getContext('2d');
+
+    context.drawImage(this, 0, 0, newWidth, newHeight);
+
+    dataURL = canvas.toDataURL(fileType);
+
+    ImgReceiptToSend = dataURL;
+
+    switch (mySource) {
+      case 'BusExp':
+        document.getElementById('myImgBus').src = dataURL;
+        document.getElementById('myImgBusBlind').src = dataURL;
+        break;
+      case 'CarExp':
+        document.getElementById('myImg').src = dataURL;
+        document.getElementById('myImgBlind').src = dataURL;
+        break;
+      case 'HomeExp':
+        document.getElementById('myImgHome').src = dataURL;
+        document.getElementById('myImgHomeBlind').src = dataURL;
+        break;
+      case 'OtherExp':
+        document.getElementById('myImgOther').src = dataURL;
+        document.getElementById('myImgOtherBlind').src = dataURL;
+        break;
+      case 'RentalExp':
+        document.getElementById('myImgRental').src = dataURL;
+        document.getElementById('myImgRentalBlind').src = dataURL;
+        break;
+      case 'Income':
+        document.getElementById('myImgIncome').src = dataURL;
+        document.getElementById('myImgIncomeBlind').src = dataURL;
+    }
+  };
+
+  image.onerror = function () {
+    alert('There was an error processing your file!');
+  };
+}
+
+
+
+function readFile(file, mySource) {
+  var reader = new FileReader();
+
+  reader.onloadend = function () {
+    processFile(reader.result, file.typ, mySource);
+  }
+
+  reader.onerror = function () {
+    alert('There was an error reading the file!');
+  }
+
+  reader.readAsDataURL(file);
+}

@@ -555,6 +555,7 @@ function hideAssetTableModal() {
     reOpenIncomeStatement = false;
     displayIncomeStatementModal();
   }
+  ToggleMenuBar();
 };
 
 function removeAssetTblNavAlertChildNodes() {

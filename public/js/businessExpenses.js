@@ -14,6 +14,12 @@ function displayBusExpModal() {
   } else {
     myDOMs.busExp.HSTAmtLabel.innerText = 'GST Amount'
   }
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && TableOpen === false) {
+    ToggleMenuBar();
+  }
+
 }
 function hideBusExpModal() {
   myDOMs.busExp.EntryForm.reset();
@@ -21,7 +27,12 @@ function hideBusExpModal() {
   resetOriginalData();
   savedTransactionLocked = false;
   $("#BusExpenseModal").modal("hide");
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && TableOpen === false) {
 
+    ToggleMenuBar();
+  }
 }
 function updateBusinessButtonText() {
   var isExpanded = $("#collapseBus1").hasClass("show");
@@ -751,12 +762,7 @@ function deleteBusinessExpense() {
 }
 
 function getBusinessExpenses(myFilter) {
-  if (TableOpen) {
-    if (reOpenIncomeStatement) {
-      reOpenIncomeStatement = false;
-    }
-    hideTableAlert();
-  }
+
   if (!myFilter) {
     myReportTotal.totalNet = (mainData.busExp.net + (mainData.busExp.Meals));
     myReportTotal.totalHST = (mainData.busExp.hst + (mainData.busExp.MealsHST));
@@ -823,6 +829,7 @@ function getBusinessExpenses(myFilter) {
         0,
         0
       );
+      ToggleMenuBar();
 
     })
     .fail(function (e) {
@@ -1034,7 +1041,7 @@ $("#busExpBtn").click(function () {
 
 
       if (imageTooSmall) {
-        var file = files[0];
+        let file = files[0];
         formData.append("imgload", file, file.name);
       } else {
         let myImg64Arr = ImgReceiptToSend.split(",");
@@ -1253,7 +1260,8 @@ function addOriginalValues() {
 
 function removeBusImage() {
   myDOMs.busExp.Img.setAttribute("src", "");
-  $(".custom-file-label").html("");
+  myDOMs.busExp.BlindImg.setAttribute("src", "");
+  // $(".custom-file-label").html("");
   myDOMs.busExp.FileSelector.value = "";
   updateBusinessFormStatus();
 };

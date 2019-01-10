@@ -11,6 +11,12 @@ function displayHomeExpModal() {
   } else {
     myDOMs.homeExp.HSTAmtLabel.innerText = 'GST Amount'
   }
+
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && TableOpen === false) {
+    ToggleMenuBar();
+  }
 };
 
 function hideHomeExpModal() {
@@ -19,6 +25,11 @@ function hideHomeExpModal() {
   resetOriginalData();
   savedTransactionLocked = false;
   $("#HomeExpenseModal").modal("hide");
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && TableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 function updateHomeButtonText() {
   var isExpanded = $("#collapseHome1").hasClass("show");
@@ -287,8 +298,18 @@ function updateHomeExpense() {
           alert("You can only upload 1 file!");
           return false;
         }
-        file = files[0];
-        formData.append("imgload", file, file.name);
+        if (imageTooSmall) {
+          file = files[0];
+          formData.append("imgload", file, file.name);
+        } else {
+          let myImg64Arr = ImgReceiptToSend.split(",");
+          let Part1 = myImg64Arr[0];
+          let Part2 = myImg64Arr[1];
+          let n = Part1.indexOf(";");
+          let ContentType = Part1.slice(5, Number(n));
+          let blob = b64toBlob(Part2, ContentType);
+          formData.append("imgload", blob, 'NewReceiptImg');
+        }
       }
     } else {
       // Image from old file is present but we do nothing and it will stay there if there is no files added from user.
@@ -300,8 +321,18 @@ function updateHomeExpense() {
           alert("You can only upload 1 file!");
           return false;
         }
-        file = files[0];
-        formData.append("imgload", file, file.name);
+        if (imageTooSmall) {
+          file = files[0];
+          formData.append("imgload", file, file.name);
+        } else {
+          let myImg64Arr = ImgReceiptToSend.split(",");
+          let Part1 = myImg64Arr[0];
+          let Part2 = myImg64Arr[1];
+          let n = Part1.indexOf(";");
+          let ContentType = Part1.slice(5, Number(n));
+          let blob = b64toBlob(Part2, ContentType);
+          formData.append("imgload", blob, 'NewReceiptImg');
+        }
       }
     }
     receiptPath = true;
@@ -650,12 +681,12 @@ function deleteHomeExpense() {
 }
 
 function getHomeExpenses(myFilter) {
-  if (TableOpen) {
-    if (reOpenIncomeStatement) {
-      reOpenIncomeStatement = false;
-    }
-    hideTableAlert();
-  }
+  // if (TableOpen) {
+  //   if (reOpenIncomeStatement) {
+  //     reOpenIncomeStatement = false;
+  //   }
+  //   hideTableAlert();
+  // }
   if (!myFilter) {
     myReportTotal.totalNet = mainData.homeExp.net;
     myReportTotal.totalHST = mainData.homeExp.hst;
@@ -722,6 +753,7 @@ function getHomeExpenses(myFilter) {
         0,
         0
       );
+      ToggleMenuBar();
 
     })
     .fail(function (e) {
@@ -930,10 +962,20 @@ $("#homeExpBtn").click(function () {
       }
 
       // Append the files to the formData.
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
+
+      if (imageTooSmall) {
+        let file = files[0];
         formData.append("imgload", file, file.name);
+      } else {
+        let myImg64Arr = ImgReceiptToSend.split(",");
+        let Part1 = myImg64Arr[0];
+        let Part2 = myImg64Arr[1];
+        let n = Part1.indexOf(";");
+        let ContentType = Part1.slice(5, Number(n));
+        let blob = b64toBlob(Part2, ContentType);
+        formData.append("imgload", blob, 'NewReceiptImg');
       }
+
       let myTempDate = new Date(
         myDate.getFullYear(),
         myDate.getMonth(),

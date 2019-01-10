@@ -455,6 +455,9 @@ function hidePaymentTableModal() {
   PaymentSortStringVariable = 'Sorted: As entered.'
   // removeVlogTblNavAlertChildNodes();
   PaymentTableOpen = false;
+
+  ToggleMenuBar();
+
 };
 
 function removePaymentTblNavAlertChildNodes() {

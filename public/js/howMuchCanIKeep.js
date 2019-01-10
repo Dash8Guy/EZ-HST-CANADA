@@ -883,6 +883,11 @@ async function buildAccountArray() {
    await addMathColumnsToArray();
    //console.dir(JSON.stringify(AccountArray, undefined, 2));
    buildHowMuchCanIKeepTable(myDOMs.main.AlertContainer, 'mainTableAlert', 'closeBtnAlertMain', `How Much You Can Keep Report - ${AccountArray.length} Transactions`, "TABLE CAR GREEN", 0, 0);
+   let myMainNav = document.getElementById("main-nav");
+   let myTopVal = myMainNav.offsetTop;
+   if (myTopVal === 0 && TableOpen === false) {
+      ToggleMenuBar();
+   }
 };
 
 function sortAccountArrayByDate() {
@@ -901,6 +906,7 @@ function hideAcctTableAlert() {
    removeAcctTblNavAlertChildNodes();
    removeTblNavAlertChildNodes();
    removeVlogTblNavAlertChildNodes();
+   ToggleMenuBar();
 };
 
 function removeAcctTblNavAlertChildNodes() {

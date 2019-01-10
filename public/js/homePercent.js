@@ -3,6 +3,12 @@ function displayHomePercentModal() {
    $("#homePercentModal").modal("show");
    myDOMs.homePercentModal.PeriodSelect.value = 'Year';
    updateTimePeriodChange();
+   ToggleMenuBar();
+};
+
+function hideHomePercentModal() {
+   $("#homePercentModal").modal("hide");
+   ToggleMenuBar();
 };
 
 function updateTimePeriodChange() {

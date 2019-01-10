@@ -14,15 +14,15 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top" id="main-nav">
+  <nav class="navbar navbar-expand-lg d-block bg-primary navbar-dark fixed-top" id="main-nav">
     <div class="container">
       <p id="navUserLog" class="navbar-text text-white d-none d-xl-inline ml-0 pr-3 pb-0"></p>
-      <a href="index.html" class="navbar-brand">
-        <img src="img/EZ-Tax-Logo64-2018.png" alt="" class="img-fluid mr-1">EZ-HST-CANADA</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <a href="#" class="navbar-brand">
+        <img src="img/EZ-Tax-Logo64-2018.png" alt="" class="img-fluid mr-1" onclick="hideNav()">EZ-HST-CANADA</a>
+      <button id="NavBarCollapseBtn" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="collapse navbar-collapse" id="navbarCollapse" onchange="SetCollapseOpen()">
         <ul class="navbar-nav ml-auto">
 
           <li class="nav-item dropdown  mr-3">
@@ -272,7 +272,7 @@
 
   <!-- JUST BELOW NAV ADDING FROM & TO DATE INPUTS ON RIGHT SIDE / LEFT SIDE WILL HAVE UPDATED TOTALS -->
   <div class="container">
-    <div class="row mx-1">
+    <div class="row mx-1 mt-0">
 
       <div id="timePeriodDiv" class="col-lg-2 float-left bg-primary">
         <div class="form-group m-0">
@@ -311,20 +311,24 @@
               data-toggle="tooltip" title="Click to Adjust all available settings"><i class="fas fa-cog"></i>
               Settings
             </button>
+            <button type="button" id="toggleNav" form="someRandomForm" class="btn btn-light mt-3 w-100 text-primary mb-2"
+              data-toggle="tooltip" title="Click to Toggle Menu Bar" onclick="ToggleMenuBar(true)">
+              &nbsp; &nbsp; Hide Menu Bar
+            </button>
           </form>
         </div>
       </div>
 
 
 
-      <div class="col-lg-8 text-center">
+      <div id="MainMiddleSection" class="col-lg-8 text-center">
         <div class="form-group m-0">
           <p>UNDER CONSTRUCTION</p>
         </div>
       </div>
 
 
-      <div class="col-lg-2 float-right ml-0 bg-primary">
+      <div class="col-lg-2 float-right ml-0 bg-primary" id="MainViewTotals">
         <div id="main_page_right" class="form-group">
           <form id="mainLeftDisplay" class="ml-auto width-100">
             <label class="control-label control-label-sm text-white" id="netRevDisplayLbl" for="netRevDisplay">Net
@@ -727,8 +731,11 @@
                                     Receipt
                                     images(PNG,JPG)</label>
                                   <input type="file" class="form-control-file mt-0 pt-0" name="imgloadBus" id="imgloadBus"
-                                    accept=".jpg, .jpeg, .png" style="opacity: 0;" />
+                                    accept="image/*" style="opacity: 0;" />
                                 </div>
+
+                                {{!-- capture="camera" --}}
+
                                 <div class="form-group d-md-inline">
 
                                   <div class="form-check form-check-inline">
@@ -1848,7 +1855,7 @@
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <h5 class="modal-title text-white">User Registration</h5>
-          <button type="button" class="close" id="topCloseRegisterUserModal" onclick="$('#userSetupModal').modal( 'hide' )"></button>
+          <button type="button" class="close" id="topCloseRegisterUserModal" onclick="hideUserSetupModal()"></button>
           <span class="text-white">&times;</span>
         </div>
         <div class="modal-body">
@@ -1933,7 +1940,7 @@
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <h5 class="modal-title text-white">User Login</h5>
-          <button type="button" class="close" id="topCloseUserLoginModal" onclick="$('#userLoginModal').modal( 'hide' )"></button>
+          <button type="button" class="close" id="topCloseUserLoginModal" onclick="hideLoginUser()"></button>
           <span class="text-white">&times;</span>
         </div>
         <div class="modal-body">
@@ -3001,7 +3008,7 @@
       <div class="modal-content">
         <div id="homePercentModalHeader" class="modal-header bg-primary">
           <h5 class="modal-title text-white">Business Use of Home Entry Form</h5>
-          <button type="button" class="close" id="topClosehomePercentModal" onclick="$('#homePercentModal').modal( 'hide' )"></button>
+          <button type="button" class="close" id="topClosehomePercentModal" onclick="hideHomePercentModal();"></button>
           <span class="text-white">&times;</span>
         </div>
         <div class="modal-body">
@@ -3189,7 +3196,7 @@
                     <button type="button" id="hstPaymentAutoAmtBtn" class="btn btn-sm btn-block btn-outline-danger ml-1 mt-2 text-left"
                       style="font-size: 12px; height: 26px;" onclick="findHSTDataForPayment()" data-toggle="tooltip"
                       title="Click to Enter the Amount from Line 115 of the HST/GST Return for Time Period Selected.">
-                      ← &nbsp; &nbsp; &nbsp; &nbsp; Enter Amount from GST/HST Return Line 115 </button>
+                      ← &nbsp; Enter Amount from GST/HST Return Line 115 </button>
                   </div>
                   <div class="mx-auto text-center">
                     <button type="button" id="hstPaymentformReset" form="formHSTPaymentEntry" class="btn btn-sm btn-outline-primary ml-1 mt-2"
@@ -4003,6 +4010,12 @@
     // Get the current year for the copyright
     // $('#year').text(new Date().getFullYear());
 
+    //Navbar Auto-Hide
+    // $("navbar-fixed-top").autoHidingNavbar('setDisableAutohide', true);
+
+
+
+
     // This code enables the drop-down submenu
     $('.dropdown-submenu > a').on("click", function (e) {
       var submenu = $(this);
@@ -4039,21 +4052,27 @@
     $('document').ready(function () {
       $("#imgload").change(function () {
         if (!this.files[0]) { return; }
-        //const myFileSize = this.files[0].size;
+        const myFileSize = this.files[0].size;
 
-        //if (myFileSize > 4112000) {
-        //  this.value = '';
-        //  return alert(
-        //    `The file size is ${
-        //    myFileSize
-        //    } bytes. The largest image allowed is 4 MB (4,112,000 bytes)`
-        //  );
-        // }
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
 
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgBlind').attr('src', e.target.result);
+            $('#myImg').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4068,6 +4087,15 @@
         if (!this.files[0]) { return; }
 
         const myFileSize = this.files[0].size;
+
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
         if (myFileSize < 360000) {
           imageTooSmall = true;
         } else {
@@ -4078,6 +4106,7 @@
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgBusBlind').attr('src', e.target.result);
+            $('#myImgBus').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4091,10 +4120,27 @@
       $("#imgloadHome").change(function () {
         if (!this.files[0]) { return; }
 
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
+
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgHomeBlind').attr('src', e.target.result);
+            $('#myImgHome').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4106,10 +4152,27 @@
       $("#imgloadOther").change(function () {
         if (!this.files[0]) { return; }
 
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
+
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgOtherBlind').attr('src', e.target.result);
+            $('#myImgOther').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4121,10 +4184,27 @@
       $("#imgloadRental").change(function () {
         if (!this.files[0]) { return; }
 
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
+
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgRentalBlind').attr('src', e.target.result);
+            $('#myImgRental').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4136,10 +4216,28 @@
       $("#imgloadIncome").change(function () {
         if (!this.files[0]) { return; }
 
+        const myFileSize = this.files[0].size;
+
+        if (myFileSize > 5140000) {
+          return alert(
+            `The file size is ${
+            myFileSize
+            } bytes. The largest image allowed is 5 MB (5,140,000 bytes)`
+          );
+        }
+
+
+        if (myFileSize < 360000) {
+          imageTooSmall = true;
+        } else {
+          imageTooSmall = false;
+        }
+
         if (this.files && this.files[0]) {
           var reader = new FileReader();
           reader.onload = function (e) {
             $('#myImgIncomeBlind').attr('src', e.target.result);
+            $('#myImgIncome').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
         }
@@ -4205,47 +4303,49 @@
 
     // Display File Name in Receipt File Input
 
-    $('#imgload').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    //$('#imgload').on('change', function () {
+    //get the file name
+    // var fileName = $(this).val();
+    //replace the "Choose a file" label
+    // $(this).next('.custom-file-label').html(fileName);
+    //})
 
-    $('#imgloadBus').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    // $('#imgloadBus').on('change', function () {
+    //get the file name
+    //  var fileName = $(this).val();
+    //replace the "Choose a file" label
+    //    $(this).next('.custom-file-label').html(fileName);
+    // })
 
-    $('#imgloadHome').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    //$('#imgloadHome').on('change', function () {
+    //get the file name
+    //  var fileName = $(this).val();
+    //replace the "Choose a file" label
+    //  $(this).next('.custom-file-label').html(fileName);
+    // })
 
-    $('#imgloadOther').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    // $('#imgloadOther').on('change', function () {
+    //get the file name
+    //  var fileName = $(this).val();
+    //replace the "Choose a file" label
+    //  $(this).next('.custom-file-label').html(fileName);
+    // })
 
-    $('#imgloadRental').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    //$('#imgloadRental').on('change', function () {
+    //get the file name
+    //  var fileName = $(this).val();
+    //replace the "Choose a file" label
+    //  $(this).next('.custom-file-label').html(fileName);
+    // })
 
-    $('#imgloadIncome').on('change', function () {
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    })
+    //$('#imgloadIncome').on('change', function () {
+    //get the file name
+    // var fileName = $(this).val();
+    //replace the "Choose a file" label
+    //  $(this).next('.custom-file-label').html(fileName);
+    //})
+
+
 
     // Code to Logout after set time
 
@@ -4274,7 +4374,7 @@
 
     function timerIncrement() {
       idleTime = idleTime + 1;
-      if (idleTime > 6) { // 7 minutes
+      if (idleTime > 14) { // 15 minutes
         // code to check if logged in and if so, logout
         if ($("#navLogout").hasClass("disabled")) {
         } else {
@@ -4283,6 +4383,297 @@
 
       }
     };
+
+    // This section will set all modals when open to true or closed false.
+    $('document').ready(function () {
+
+      $('#AssetModal').on('shown.bs.modal', function () {
+        AssetModalOpen = true;
+      });
+      $('#AssetModal').on('hidden.bs.modal', function () {
+        AssetModalOpen = false;
+      });
+
+      $('#taxPaymentModal').on('shown.bs.modal', function () {
+        TaxPaymentModalOpen = true;
+      });
+      $('#taxPaymentModal').on('hidden.bs.modal', function () {
+        TaxPaymentModalOpen = false;
+      });
+
+      $('#pstPaymentModal').on('shown.bs.modal', function () {
+        PSTPaymentModalOpenForNAV = true;
+      });
+      $('#pstPaymentModal').on('hidden.bs.modal', function () {
+        PSTPaymentModalOpenForNAV = false;
+      });
+
+      $('#hstPaymentModal').on('shown.bs.modal', function () {
+        HSTPaymentModalOpenForNAV = true;
+      });
+      $('#hstPaymentModal').on('hidden.bs.modal', function () {
+        HSTPaymentModalOpenForNAV = false;
+      });
+
+      $('#addCarExpenseModal').on('shown.bs.modal', function () {
+        VehicleExpEntryModalOpen = true;
+      });
+      $('#addCarExpenseModal').on('hidden.bs.modal', function () {
+        VehicleExpEntryModalOpen = false;
+      });
+
+      $('#BusExpenseModal').on('shown.bs.modal', function () {
+        BusExpEntryModalOpen = true;
+      });
+      $('#BusExpenseModal').on('hidden.bs.modal', function () {
+        BusExpEntryModalOpen = false;
+      });
+
+      $('#HomeExpenseModal').on('shown.bs.modal', function () {
+        HomeExpEntryModalOpen = true;
+      });
+      $('#HomeExpenseModal').on('hidden.bs.modal', function () {
+        HomeExpEntryModalOpen = false;
+      });
+
+      $('#OtherExpenseModal').on('shown.bs.modal', function () {
+        OtherExpEntryModalOpen = true;
+      });
+      $('#OtherExpenseModal').on('hidden.bs.modal', function () {
+        OtherExpEntryModalOpen = false;
+      });
+
+      $('#RentalExpenseModal').on('shown.bs.modal', function () {
+        RentalExpEntryModalOpen = true;
+      });
+      $('#RentalExpenseModal').on('hidden.bs.modal', function () {
+        RentalExpEntryModalOpen = false;
+      });
+
+      $('#IncomeModal').on('shown.bs.modal', function () {
+        IncomeEntryModalOpen = true;
+      });
+      $('#IncomeModal').on('hidden.bs.modal', function () {
+        IncomeEntryModalOpen = false;
+      });
+
+      $('#vehicleLogModal').on('shown.bs.modal', function () {
+        VLogModalOpen = true;
+      });
+      $('#vehicleLogModal').on('hidden.bs.modal', function () {
+        VLogModalOpen = false;
+      });
+
+      $('#userSetupModal').on('shown.bs.modal', function () {
+        UserSetupModalOpen = true;
+      });
+      $('#userSetupModal').on('hidden.bs.modal', function () {
+        UserSetupModalOpen = false;
+      });
+
+      $('#userLoginModal').on('shown.bs.modal', function () {
+        UserLoginModalOpen = true;
+      });
+      $('#userLoginModal').on('hidden.bs.modal', function () {
+        UserLoginModalOpen = false;
+      });
+
+      $('#VLogViewModal').on('shown.bs.modal', function () {
+        VLogReportModalOpen = true;
+      });
+      $('#VLogViewModal').on('hidden.bs.modal', function () {
+        VLogReportModalOpen = false;
+      });
+
+      $('#PaymentReportModal').on('shown.bs.modal', function () {
+        PaymentReportModalOpen = true;
+      });
+      $('#PaymentReportModal').on('hidden.bs.modal', function () {
+        PaymentReportModalOpen = false;
+      });
+
+      $('#AssetReportModal').on('shown.bs.modal', function () {
+        AssetReportModalOpen = true;
+      });
+      $('#AssetReportModal').on('hidden.bs.modal', function () {
+        AssetReportModalOpen = false;
+      });
+
+      $('#incStatementModal').on('shown.bs.modal', function () {
+        IncomeStatementModalOpen = true;
+      });
+      $('#incStatementModal').on('hidden.bs.modal', function () {
+        IncomeStatementModalOpen = false;
+      });
+
+      $('#homePercentModal').on('shown.bs.modal', function () {
+        HomePercentModalOpen = true;
+      });
+      $('#homePercentModal').on('hidden.bs.modal', function () {
+        HomePercentModalOpen = false;
+      });
+
+      $('#AccountSummaryModal').on('shown.bs.modal', function () {
+        AccountSummaryModalOpen = true;
+      });
+      $('#AccountSummaryModal').on('hidden.bs.modal', function () {
+        AccountSummaryModalOpen = false;
+      });
+
+      $('#HSTReturnModal').on('shown.bs.modal', function () {
+        HSTReturnModalOpen = true;
+      });
+      $('#HSTReturnModal').on('hidden.bs.modal', function () {
+        HSTReturnModalOpen = false;
+      });
+
+
+
+
+
+
+
+      $('#AssetModal').on('show.bs.modal', function () {
+        AssetModalOpen = true;
+      });
+      $('#AssetModal').on('hide.bs.modal', function () {
+        AssetModalOpen = false;
+      });
+
+      $('#taxPaymentModal').on('show.bs.modal', function () {
+        TaxPaymentModalOpen = true;
+      });
+      $('#taxPaymentModal').on('hide.bs.modal', function () {
+        TaxPaymentModalOpen = false;
+      });
+
+      $('#pstPaymentModal').on('show.bs.modal', function () {
+        PSTPaymentModalOpenForNAV = true;
+      });
+      $('#pstPaymentModal').on('hide.bs.modal', function () {
+        PSTPaymentModalOpenForNAV = false;
+      });
+
+      $('#hstPaymentModal').on('show.bs.modal', function () {
+        HSTPaymentModalOpenForNAV = true;
+      });
+      $('#hstPaymentModal').on('hide.bs.modal', function () {
+        HSTPaymentModalOpenForNAV = false;
+      });
+
+      $('#addCarExpenseModal').on('show.bs.modal', function () {
+        VehicleExpEntryModalOpen = true;
+      });
+      $('#addCarExpenseModal').on('hide.bs.modal', function () {
+        VehicleExpEntryModalOpen = false;
+      });
+
+      $('#BusExpenseModal').on('show.bs.modal', function () {
+        BusExpEntryModalOpen = true;
+      });
+      $('#BusExpenseModal').on('hide.bs.modal', function () {
+        BusExpEntryModalOpen = false;
+      });
+
+      $('#HomeExpenseModal').on('show.bs.modal', function () {
+        HomeExpEntryModalOpen = true;
+      });
+      $('#HomeExpenseModal').on('hide.bs.modal', function () {
+        HomeExpEntryModalOpen = false;
+      });
+
+      $('#OtherExpenseModal').on('show.bs.modal', function () {
+        OtherExpEntryModalOpen = true;
+      });
+      $('#OtherExpenseModal').on('hide.bs.modal', function () {
+        OtherExpEntryModalOpen = false;
+      });
+
+      $('#RentalExpenseModal').on('show.bs.modal', function () {
+        RentalExpEntryModalOpen = true;
+      });
+      $('#RentalExpenseModal').on('hide.bs.modal', function () {
+        RentalExpEntryModalOpen = false;
+      });
+
+      $('#IncomeModal').on('show.bs.modal', function () {
+        IncomeEntryModalOpen = true;
+      });
+      $('#IncomeModal').on('hide.bs.modal', function () {
+        IncomeEntryModalOpen = false;
+      });
+
+      $('#vehicleLogModal').on('show.bs.modal', function () {
+        VLogModalOpen = true;
+      });
+      $('#vehicleLogModal').on('hide.bs.modal', function () {
+        VLogModalOpen = false;
+      });
+
+      $('#userSetupModal').on('show.bs.modal', function () {
+        UserSetupModalOpen = true;
+      });
+      $('#userSetupModal').on('hide.bs.modal', function () {
+        UserSetupModalOpen = false;
+      });
+
+      $('#userLoginModal').on('show.bs.modal', function () {
+        UserLoginModalOpen = true;
+      });
+      $('#userLoginModal').on('hide.bs.modal', function () {
+        UserLoginModalOpen = false;
+      });
+
+      $('#VLogViewModal').on('show.bs.modal', function () {
+        VLogReportModalOpen = true;
+      });
+      $('#VLogViewModal').on('hide.bs.modal', function () {
+        VLogReportModalOpen = false;
+      });
+
+      $('#PaymentReportModal').on('show.bs.modal', function () {
+        PaymentReportModalOpen = true;
+      });
+      $('#PaymentReportModal').on('hide.bs.modal', function () {
+        PaymentReportModalOpen = false;
+      });
+
+      $('#AssetReportModal').on('show.bs.modal', function () {
+        AssetReportModalOpen = true;
+      });
+      $('#AssetReportModal').on('hide.bs.modal', function () {
+        AssetReportModalOpen = false;
+      });
+
+      $('#incStatementModal').on('show.bs.modal', function () {
+        IncomeStatementModalOpen = true;
+      });
+      $('#incStatementModal').on('hide.bs.modal', function () {
+        IncomeStatementModalOpen = false;
+      });
+
+      $('#homePercentModal').on('show.bs.modal', function () {
+        HomePercentModalOpen = true;
+      });
+      $('#homePercentModal').on('hide.bs.modal', function () {
+        HomePercentModalOpen = false;
+      });
+
+      $('#AccountSummaryModal').on('show.bs.modal', function () {
+        AccountSummaryModalOpen = true;
+      });
+      $('#AccountSummaryModal').on('hide.bs.modal', function () {
+        AccountSummaryModalOpen = false;
+      });
+
+      $('#HSTReturnModal').on('show.bs.modal', function () {
+        HSTReturnModalOpen = true;
+      });
+      $('#HSTReturnModal').on('hide.bs.modal', function () {
+        HSTReturnModalOpen = false;
+      });
+
+    });
 
     //Disable buttons on Vehicle Expense Entry Modal depending if new expense or existing one
     $('document').ready(function () {

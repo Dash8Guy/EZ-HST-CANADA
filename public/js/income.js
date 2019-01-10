@@ -18,6 +18,11 @@ function displayIncomeModal(source) {
   }
   updateIncomeHeader();
   myDOMs.income.EntryDate.focus();
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && TableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function hideIncomeModal() {
@@ -26,6 +31,11 @@ function hideIncomeModal() {
   resetOriginalData();
   savedTransactionLocked = false;
   $("#IncomeModal").modal("hide");
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && TableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function updateIncomeHeader() {
@@ -384,8 +394,18 @@ function updateIncome(source) {
           alert("You can only upload 1 file!");
           return false;
         }
-        file = files[0];
-        formData.append("imgload", file, file.name);
+        if (imageTooSmall) {
+          file = files[0];
+          formData.append("imgload", file, file.name);
+        } else {
+          let myImg64Arr = ImgReceiptToSend.split(",");
+          let Part1 = myImg64Arr[0];
+          let Part2 = myImg64Arr[1];
+          let n = Part1.indexOf(";");
+          let ContentType = Part1.slice(5, Number(n));
+          let blob = b64toBlob(Part2, ContentType);
+          formData.append("imgload", blob, 'NewReceiptImg');
+        }
       }
     } else {
       // Image from old file is present but we do nothing and it will stay there if there is no files added from user.
@@ -397,8 +417,18 @@ function updateIncome(source) {
           alert("You can only upload 1 file!");
           return false;
         }
-        file = files[0];
-        formData.append("imgload", file, file.name);
+        if (imageTooSmall) {
+          file = files[0];
+          formData.append("imgload", file, file.name);
+        } else {
+          let myImg64Arr = ImgReceiptToSend.split(",");
+          let Part1 = myImg64Arr[0];
+          let Part2 = myImg64Arr[1];
+          let n = Part1.indexOf(";");
+          let ContentType = Part1.slice(5, Number(n));
+          let blob = b64toBlob(Part2, ContentType);
+          formData.append("imgload", blob, 'NewReceiptImg');
+        }
       }
     }
     receiptPath = true;
@@ -671,12 +701,12 @@ function deleteIncomeExpense() {
 }
 
 function getIncomeExpenses(source) {
-  if (TableOpen) {
-    if (reOpenIncomeStatement) {
-      reOpenIncomeStatement = false;
-    }
-    hideTableAlert();
-  }
+  // if (TableOpen) {
+  //   if (reOpenIncomeStatement) {
+  //     reOpenIncomeStatement = false;
+  //   }
+  //   hideTableAlert();
+  // }
   if (source === 'Rental') {
     myReportTotal.totalNet = mainData.RevenueRental.net;
     myReportTotal.totalHST = mainData.RevenueRental.hst;
@@ -741,7 +771,7 @@ function getIncomeExpenses(source) {
         0,
         0
       );
-
+      ToggleMenuBar();
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {
@@ -976,10 +1006,20 @@ $("#incomeExpBtn").click(function () {
       }
 
       // Append the files to the formData.
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
+
+      if (imageTooSmall) {
+        let file = files[0];
         formData.append("imgload", file, file.name);
+      } else {
+        let myImg64Arr = ImgReceiptToSend.split(",");
+        let Part1 = myImg64Arr[0];
+        let Part2 = myImg64Arr[1];
+        let n = Part1.indexOf(";");
+        let ContentType = Part1.slice(5, Number(n));
+        let blob = b64toBlob(Part2, ContentType);
+        formData.append("imgload", blob, 'NewReceiptImg');
       }
+
       let myTempDate = new Date(
         myDate.getFullYear(),
         myDate.getMonth(),

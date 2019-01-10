@@ -3,6 +3,11 @@
 function displayPSTPaymentModal() {
   $("#pstPaymentModal").modal("show");
   PSTPaymentModalOpen = true;
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function hidePSTPaymentModal() {
@@ -10,6 +15,11 @@ function hidePSTPaymentModal() {
   myDOMs.PSTPayment.Form.reset();
   savedTransactionLocked = false;
   PSTPaymentModalOpen = false;
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function addPSTPayment() {
@@ -335,7 +345,7 @@ function getPSTPayments() {
         0,
         "PST"
       );
-      // updateFormButtons('HSTPayment');
+      ToggleMenuBar();
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {

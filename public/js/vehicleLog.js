@@ -101,6 +101,7 @@ let TotalV2 = 0;
 async function displayVehicleLogModal() {
    let tempZero = 0;
    $("#vehicleLogModal").modal("show");
+   ToggleMenuBar();
    myDOMs.vehicleLog.DateLog.value = myDOMs.main_page.StartDate.value;
    await getAllVehicleLogs();
    // myDOMs.vehicleLog.Selector.value = "Vehicle 2";
@@ -125,11 +126,11 @@ async function displayVehicleLogModal() {
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
    PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
    calculateBusinessPercentage(PercentsendDate);
-
 };
 
 function hideVehicleLogExpModal() {
    $("#vehicleLogModal").modal("hide");
+   ToggleMenuBar();
 }
 
 myDOMs.vehicleLog.DateLog.addEventListener('change', function (e) {
@@ -405,7 +406,7 @@ function getAllVehicleLogs() {
             sortArrayByDate();
          })
          .fail(function (e) {
-            reject("Income Client List was NOT retrieved Successfully!")
+            reject("Income Client List was NOT retrieved Successfully!");
             alert("Income Client List was NOT retrieved Successfully!");
          });
    });

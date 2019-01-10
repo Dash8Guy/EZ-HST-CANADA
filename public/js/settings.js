@@ -1313,6 +1313,7 @@ function setTooltips() {
    $('#settingsProvinceSelect').tooltip(myDisable);
    $('#hstSetting').tooltip(myDisable);
    $('#pstSetting').tooltip(myDisable);
+   $('#toggleNav').tooltip(myDisable);
 
    //Payment entry forms
    $('#taxPaymentDate').tooltip(myDisable);

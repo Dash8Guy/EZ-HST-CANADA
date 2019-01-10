@@ -9,6 +9,11 @@ function displayHSTPaymentModal() {
     myDOMs.HSTPayment.Title.innerText = 'GST Payment Entry Form'
   }
   HSTPaymentModalOpen = true;
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function hideHSTPaymentModal() {
@@ -16,6 +21,11 @@ function hideHSTPaymentModal() {
   myDOMs.HSTPayment.Form.reset();
   savedTransactionLocked = false;
   HSTPaymentModalOpen = false;
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function addHSTPayment() {
@@ -342,7 +352,7 @@ function getAllPayments() {
         0,
         "ALL"
       );
-      //updateFormButtons('HSTPayment');
+      ToggleMenuBar();
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {
@@ -392,7 +402,7 @@ function getHSTPayments() {
         0,
         "HST"
       );
-      // updateFormButtons('HSTPayment');
+      ToggleMenuBar();
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {

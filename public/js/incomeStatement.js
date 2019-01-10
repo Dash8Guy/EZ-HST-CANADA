@@ -26,10 +26,12 @@ async function displayIncomeStatementModal() {
   reduceVehicle1AmountPercentage();
   reduceVehicle2AmountPercentage();
   reduceHomeAmountPercentage();
+  ToggleMenuBar();
 }
 
 function hideIncomeStatementModal() {
   $("#incStatementModal").modal("hide");
+  ToggleMenuBar();
 }
 
 function displayRevenueIncStat() {

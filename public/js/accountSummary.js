@@ -9,10 +9,21 @@ async function displayAccountSummaryModal() {
    ASStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
    ASEndDate = new Date(myDOMs.randomData.appYear, 11, 31);
    updatedViewDynamicData(ASStartDate, ASEndDate, false);
+
+   let myMainNav = document.getElementById("main-nav");
+   let myTopVal = myMainNav.offsetTop;
+   if (myTopVal === 0) {
+      ToggleMenuBar();
+   }
 };
 
 function hideAccountSummaryModal() {
    $("#AccountSummaryModal").modal("hide");
+   let myMainNav = document.getElementById("main-nav");
+   let myTopVal = myMainNav.offsetTop;
+   if (myTopVal === -108) {
+      ToggleMenuBar();
+   }
 };
 
 

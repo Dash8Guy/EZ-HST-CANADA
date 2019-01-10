@@ -2,12 +2,22 @@
 
 function displayTAXPaymentModal() {
   $("#taxPaymentModal").modal("show");
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === 0 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function hideTAXPaymentModal() {
   $("#taxPaymentModal").modal("hide");
   myDOMs.TAXPayment.Form.reset();
   savedTransactionLocked = false;
+  let myMainNav = document.getElementById("main-nav");
+  let myTopVal = myMainNav.offsetTop;
+  if (myTopVal === -108 && PaymentTableOpen === false) {
+    ToggleMenuBar();
+  }
 }
 
 function addTAXPayment() {
@@ -333,7 +343,7 @@ function getTAXPayments() {
         0,
         "TAX"
       );
-      // updateFormButtons('HSTPayment');
+      ToggleMenuBar();
     })
     .fail(function (e) {
       if (e.readyState === 0 || myToken === '') {
