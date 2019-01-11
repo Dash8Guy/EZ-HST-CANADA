@@ -52,7 +52,12 @@ function getMiscData() {
       enctype: "multipart/form-data"
    })
       .done(function (data) {
-         //alert(JSON.stringify(data.miscData, undefined, 2));
+
+         if (data.miscData[0] === undefined || data.miscData[0] === null) {
+            postMiscData(true);
+            return;
+         }
+
          MiscID = data.miscData[0]._id;
          dbMiscData.odometerV1 = data.miscData[0].odometerV1;
          dbMiscData.odometerV2 = data.miscData[0].odometerV2;
@@ -421,7 +426,7 @@ const miscData = {
    }
 };
 
-function postMiscData() {
+function postMiscData(FromGetData) {
    dbMiscData.auth = myToken;
    $.ajax({
       url: `${serverURL}miscData`,
@@ -430,7 +435,11 @@ function postMiscData() {
       enctype: "multipart/form-data",
    })
       .done(function (data) {
-         alert('Data Successfully Saved');
+         if (FromGetData === true) {
+         } else {
+            alert('Data Successfully Saved');
+         }
+
       })
       .fail(function (e) {
          alert(`Misc Data Could Not Be saved - Error: ${JSON.stringify(e, undefined, 2)}`);

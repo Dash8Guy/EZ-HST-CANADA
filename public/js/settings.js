@@ -75,31 +75,30 @@ let provinceTaxSettings = {
 
 }
 
-verifyAllLocalStorageForSettings();
 
 function verifyAllLocalStorageForSettings() {
-   if (localStorage.getItem('Count_Per_Page') === null) {
-      localStorage.setItem('Count_Per_Page', Number(10));
+   if (localStorage.getItem(`${userEmail}_Count_Per_Page`) === null) {
+      localStorage.setItem(`${userEmail}_Count_Per_Page`, Number(10));
       //alert('Count per Page was Null');
    } else {
       // alert(`Setting Count Per Page from Local Storage: ${localStorage.getItem('Count_Per_Page')}`)
-      rowCountPerPage = Number(localStorage.getItem('Count_Per_Page'));
-      rowCountPerPageDefault = Number(localStorage.getItem('Count_Per_Page'));
+      rowCountPerPage = Number(localStorage.getItem(`${userEmail}_Count_Per_Page`));
+      rowCountPerPageDefault = Number(localStorage.getItem(`${userEmail}_Count_Per_Page`));
       myDOMs.settingsModal.ExpensePerPageSelect.value = Number(rowCountPerPageDefault);
    }
 
-   if (localStorage.getItem('Current_HST') === null && localStorage.getItem('Current_PST') === null) {
-      localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-      localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
+   if (localStorage.getItem(`${userEmail}_Current_HST`) === null && localStorage.getItem(`${userEmail}_Current_PST`) === null) {
+      localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+      localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
    } else {
-      provinceTaxSettings.Current.HST = localStorage.getItem('Current_HST');
-      provinceTaxSettings.Current.PST = localStorage.getItem('Current_PST');
+      provinceTaxSettings.Current.HST = localStorage.getItem(`${userEmail}_Current_HST`);
+      provinceTaxSettings.Current.PST = localStorage.getItem(`${userEmail}_Current_PST`);
    }
 
-   if (localStorage.getItem('Selected_Province') === null) {
+   if (localStorage.getItem(`${userEmail}_Selected_Province`) === null) {
       alert(`Because this may be the first time using this Application, \n The Working Location Province needs to be Selected. \n To do so, Select the Appropriate Province \n by clicking on the Settings button located \n on the main page below Time Period`);
    } else {
-      myDOMs.settingsModal.ProvinceSelect.value = localStorage.getItem('Selected_Province');
+      myDOMs.settingsModal.ProvinceSelect.value = localStorage.getItem(`${userEmail}_Selected_Province`);
    }
 
    if (provinceTaxSettings.Current.HST === 0 && provinceTaxSettings.Current.PST === 0) {
@@ -109,166 +108,166 @@ function verifyAllLocalStorageForSettings() {
       myDOMs.settingsModal.PSTsetting.value = provinceTaxSettings.Current.PST
    }
    //AB
-   if (localStorage.getItem('AB_HST') === null) {
-      localStorage.setItem('AB_HST', provinceTaxSettings.AB.HST);
+   if (localStorage.getItem(`${userEmail}_AB_HST`) === null) {
+      localStorage.setItem(`${userEmail}_AB_HST`, provinceTaxSettings.AB.HST);
    } else {
-      provinceTaxSettings.AB.HST = localStorage.getItem('AB_HST');
+      provinceTaxSettings.AB.HST = localStorage.getItem(`${userEmail}_AB_HST`);
    }
-   if (localStorage.getItem('AB_PST') === null) {
-      localStorage.setItem('AB_PST', provinceTaxSettings.AB.PST);
+   if (localStorage.getItem(`${userEmail}_AB_PST`) === null) {
+      localStorage.setItem(`${userEmail}_AB_PST`, provinceTaxSettings.AB.PST);
    } else {
-      provinceTaxSettings.AB.PST = localStorage.getItem('AB_PST');
+      provinceTaxSettings.AB.PST = localStorage.getItem(`${userEmail}_AB_PST`);
    }
    //BC
-   if (localStorage.getItem('BC_HST') === null) {
-      localStorage.setItem('BC_HST', provinceTaxSettings.BC.HST);
+   if (localStorage.getItem(`${userEmail}_BC_HST`) === null) {
+      localStorage.setItem(`${userEmail}_BC_HST`, provinceTaxSettings.BC.HST);
    } else {
-      provinceTaxSettings.BC.HST = localStorage.getItem('BC_HST');
+      provinceTaxSettings.BC.HST = localStorage.getItem(`${userEmail}_BC_HST`);
    }
-   if (localStorage.getItem('BC_PST') === null) {
-      localStorage.setItem('BC_PST', provinceTaxSettings.BC.PST);
+   if (localStorage.getItem(`${userEmail}_BC_PST`) === null) {
+      localStorage.setItem(`${userEmail}_BC_PST`, provinceTaxSettings.BC.PST);
    } else {
-      provinceTaxSettings.BC.PST = localStorage.getItem('BC_PST');
+      provinceTaxSettings.BC.PST = localStorage.getItem(`${userEmail}_BC_PST`);
    }
    //MB
-   if (localStorage.getItem('MB_HST') === null) {
-      localStorage.setItem('MB_HST', provinceTaxSettings.MB.HST);
+   if (localStorage.getItem(`${userEmail}_MB_HST`) === null) {
+      localStorage.setItem(`${userEmail}_MB_HST`, provinceTaxSettings.MB.HST);
    } else {
-      provinceTaxSettings.MB.HST = localStorage.getItem('MB_HST');
+      provinceTaxSettings.MB.HST = localStorage.getItem(`${userEmail}_MB_HST`);
    }
-   if (localStorage.getItem('MB_PST') === null) {
-      localStorage.setItem('MB_PST', provinceTaxSettings.MB.PST);
+   if (localStorage.getItem(`${userEmail}_MB_PST`) === null) {
+      localStorage.setItem(`${userEmail}_MB_PST`, provinceTaxSettings.MB.PST);
    } else {
-      provinceTaxSettings.MB.PST = localStorage.getItem('MB_PST');
+      provinceTaxSettings.MB.PST = localStorage.getItem(`${userEmail}_MB_PST`);
    }
    //NB
-   if (localStorage.getItem('NB_HST') === null) {
-      localStorage.setItem('NB_HST', provinceTaxSettings.NB.HST);
+   if (localStorage.getItem(`${userEmail}_NB_HST`) === null) {
+      localStorage.setItem(`${userEmail}_NB_HST`, provinceTaxSettings.NB.HST);
    } else {
-      provinceTaxSettings.NB.HST = localStorage.getItem('NB_HST');
+      provinceTaxSettings.NB.HST = localStorage.getItem(`${userEmail}_NB_HST`);
    }
-   if (localStorage.getItem('NB_PST') === null) {
-      localStorage.setItem('NB_PST', provinceTaxSettings.NB.PST);
+   if (localStorage.getItem(`${userEmail}_NB_PST`) === null) {
+      localStorage.setItem(`${userEmail}_NB_PST`, provinceTaxSettings.NB.PST);
    } else {
-      provinceTaxSettings.NB.PST = localStorage.getItem('NB_PST');
+      provinceTaxSettings.NB.PST = localStorage.getItem(`${userEmail}_NB_PST`);
    }
    //NL
-   if (localStorage.getItem('NL_HST') === null) {
-      localStorage.setItem('NL_HST', provinceTaxSettings.NL.HST);
+   if (localStorage.getItem(`${userEmail}_NL_HST`) === null) {
+      localStorage.setItem(`${userEmail}_NL_HST`, provinceTaxSettings.NL.HST);
    } else {
-      provinceTaxSettings.NL.HST = localStorage.getItem('NL_HST');
+      provinceTaxSettings.NL.HST = localStorage.getItem(`${userEmail}_NL_HST`);
    }
-   if (localStorage.getItem('NL_PST') === null) {
-      localStorage.setItem('NL_PST', provinceTaxSettings.NL.PST);
+   if (localStorage.getItem(`${userEmail}_NL_PST`) === null) {
+      localStorage.setItem(`${userEmail}_NL_PST`, provinceTaxSettings.NL.PST);
    } else {
-      provinceTaxSettings.NL.PST = localStorage.getItem('NL_PST');
+      provinceTaxSettings.NL.PST = localStorage.getItem(`${userEmail}_NL_PST`);
    }
    //NT
-   if (localStorage.getItem('NT_HST') === null) {
-      localStorage.setItem('NT_HST', provinceTaxSettings.NT.HST);
+   if (localStorage.getItem(`${userEmail}_NT_HST`) === null) {
+      localStorage.setItem(`${userEmail}_NT_HST`, provinceTaxSettings.NT.HST);
    } else {
-      provinceTaxSettings.NT.HST = localStorage.getItem('NT_HST');
+      provinceTaxSettings.NT.HST = localStorage.getItem(`${userEmail}_NT_HST`);
    }
-   if (localStorage.getItem('NT_PST') === null) {
-      localStorage.setItem('NT_PST', provinceTaxSettings.NT.PST);
+   if (localStorage.getItem(`${userEmail}_NT_PST`) === null) {
+      localStorage.setItem(`${userEmail}_NT_PST`, provinceTaxSettings.NT.PST);
    } else {
-      provinceTaxSettings.NT.PST = localStorage.getItem('NT_PST');
+      provinceTaxSettings.NT.PST = localStorage.getItem(`${userEmail}_NT_PST`);
    }
    //NS
-   if (localStorage.getItem('NS_HST') === null) {
-      localStorage.setItem('NS_HST', provinceTaxSettings.NS.HST);
+   if (localStorage.getItem(`${userEmail}_NS_HST`) === null) {
+      localStorage.setItem(`${userEmail}_NS_HST`, provinceTaxSettings.NS.HST);
    } else {
-      provinceTaxSettings.NS.HST = localStorage.getItem('NS_HST');
+      provinceTaxSettings.NS.HST = localStorage.getItem(`${userEmail}_NS_HST`);
    }
-   if (localStorage.getItem('NS_PST') === null) {
-      localStorage.setItem('NS_PST', provinceTaxSettings.NS.PST);
+   if (localStorage.getItem(`${userEmail}_NS_PST`) === null) {
+      localStorage.setItem(`${userEmail}_NS_PST`, provinceTaxSettings.NS.PST);
    } else {
-      provinceTaxSettings.NS.PST = localStorage.getItem('NS_PST');
+      provinceTaxSettings.NS.PST = localStorage.getItem(`${userEmail}_NS_PST`);
    }
    //NU
-   if (localStorage.getItem('NU_HST') === null) {
-      localStorage.setItem('NU_HST', provinceTaxSettings.NU.HST);
+   if (localStorage.getItem(`${userEmail}_NU_HST`) === null) {
+      localStorage.setItem(`${userEmail}_NU_HST`, provinceTaxSettings.NU.HST);
    } else {
-      provinceTaxSettings.NU.HST = localStorage.getItem('NU_HST');
+      provinceTaxSettings.NU.HST = localStorage.getItem(`${userEmail}_NU_HST`);
    }
-   if (localStorage.getItem('NU_PST') === null) {
-      localStorage.setItem('NU_PST', provinceTaxSettings.NU.PST);
+   if (localStorage.getItem(`${userEmail}_NU_PST`) === null) {
+      localStorage.setItem(`${userEmail}_NU_PST`, provinceTaxSettings.NU.PST);
    } else {
-      provinceTaxSettings.NU.PST = localStorage.getItem('NU_PST');
+      provinceTaxSettings.NU.PST = localStorage.getItem(`${userEmail}_NU_PST`);
    }
    //ON
-   if (localStorage.getItem('ON_HST') === null) {
-      localStorage.setItem('ON_HST', provinceTaxSettings.ON.HST);
+   if (localStorage.getItem(`${userEmail}_ON_HST`) === null) {
+      localStorage.setItem(`${userEmail}_ON_HST`, provinceTaxSettings.ON.HST);
    } else {
-      provinceTaxSettings.ON.HST = localStorage.getItem('ON_HST');
+      provinceTaxSettings.ON.HST = localStorage.getItem(`${userEmail}_ON_HST`);
    }
-   if (localStorage.getItem('ON_PST') === null) {
-      localStorage.setItem('ON_PST', provinceTaxSettings.ON.PST);
+   if (localStorage.getItem(`${userEmail}_ON_PST`) === null) {
+      localStorage.setItem(`${userEmail}_ON_PST`, provinceTaxSettings.ON.PST);
    } else {
-      provinceTaxSettings.ON.PST = localStorage.getItem('ON_PST');
+      provinceTaxSettings.ON.PST = localStorage.getItem(`${userEmail}_ON_PST`);
    }
    //PEI
-   if (localStorage.getItem('PEI_HST') === null) {
-      localStorage.setItem('PEI_HST', provinceTaxSettings.PEI.HST);
+   if (localStorage.getItem(`${userEmail}_PEI_HST`) === null) {
+      localStorage.setItem(`${userEmail}_PEI_HST`, provinceTaxSettings.PEI.HST);
    } else {
-      provinceTaxSettings.PEI.HST = localStorage.getItem('PEI_HST');
+      provinceTaxSettings.PEI.HST = localStorage.getItem(`${userEmail}_PEI_HST`);
    }
-   if (localStorage.getItem('PEI_PST') === null) {
-      localStorage.setItem('PEI_PST', provinceTaxSettings.PEI.PST);
+   if (localStorage.getItem(`${userEmail}_PEI_PST`) === null) {
+      localStorage.setItem(`${userEmail}_PEI_PST`, provinceTaxSettings.PEI.PST);
    } else {
-      provinceTaxSettings.PEI.PST = localStorage.getItem('PEI_PST');
+      provinceTaxSettings.PEI.PST = localStorage.getItem(`${userEmail}_PEI_PST`);
    }
    //QC
-   if (localStorage.getItem('QC_HST') === null) {
-      localStorage.setItem('QC_HST', provinceTaxSettings.QC.HST);
+   if (localStorage.getItem(`${userEmail}_QC_HST`) === null) {
+      localStorage.setItem(`${userEmail}_QC_HST`, provinceTaxSettings.QC.HST);
    } else {
-      provinceTaxSettings.QC.HST = localStorage.getItem('QC_HST');
+      provinceTaxSettings.QC.HST = localStorage.getItem(`${userEmail}_QC_HST`);
    }
-   if (localStorage.getItem('QC_PST') === null) {
-      localStorage.setItem('QC_PST', provinceTaxSettings.QC.PST);
+   if (localStorage.getItem(`${userEmail}_QC_PST`) === null) {
+      localStorage.setItem(`${userEmail}_QC_PST`, provinceTaxSettings.QC.PST);
    } else {
-      provinceTaxSettings.QC.PST = localStorage.getItem('QC_PST');
+      provinceTaxSettings.QC.PST = localStorage.getItem(`${userEmail}_QC_PST`);
    }
    //SK
-   if (localStorage.getItem('SK_HST') === null) {
-      localStorage.setItem('SK_HST', provinceTaxSettings.SK.HST);
+   if (localStorage.getItem(`${userEmail}_SK_HST`) === null) {
+      localStorage.setItem(`${userEmail}_SK_HST`, provinceTaxSettings.SK.HST);
    } else {
-      provinceTaxSettings.SK.HST = localStorage.getItem('SK_HST');
+      provinceTaxSettings.SK.HST = localStorage.getItem(`${userEmail}_SK_HST`);
    }
-   if (localStorage.getItem('SK_PST') === null) {
-      localStorage.setItem('SK_PST', provinceTaxSettings.SK.PST);
+   if (localStorage.getItem(`${userEmail}_SK_PST`) === null) {
+      localStorage.setItem(`${userEmail}_SK_PST`, provinceTaxSettings.SK.PST);
    } else {
-      provinceTaxSettings.SK.PST = localStorage.getItem('SK_PST');
+      provinceTaxSettings.SK.PST = localStorage.getItem(`${userEmail}_SK_PST`);
    }
    //YT
-   if (localStorage.getItem('YT_HST') === null) {
-      localStorage.setItem('YT_HST', provinceTaxSettings.YT.HST);
+   if (localStorage.getItem(`${userEmail}_YT_HST`) === null) {
+      localStorage.setItem(`${userEmail}_YT_HST`, provinceTaxSettings.YT.HST);
    } else {
-      provinceTaxSettings.YT.HST = localStorage.getItem('YT_HST');
+      provinceTaxSettings.YT.HST = localStorage.getItem(`${userEmail}_YT_HST`);
    }
-   if (localStorage.getItem('YT_PST') === null) {
-      localStorage.setItem('YT_PST', provinceTaxSettings.YT.PST);
+   if (localStorage.getItem(`${userEmail}_YT_PST`) === null) {
+      localStorage.setItem(`${userEmail}_YT_PST`, provinceTaxSettings.YT.PST);
    } else {
-      provinceTaxSettings.YT.PST = localStorage.getItem('YT_PST');
+      provinceTaxSettings.YT.PST = localStorage.getItem(`${userEmail}_YT_PST`);
    }
 
 
-   if (localStorage.getItem('Count_Per_Page') === null) {
-      localStorage.setItem('Count_Per_Page', Number(10));
+   if (localStorage.getItem(`${userEmail}_Count_Per_Page`) === null) {
+      localStorage.setItem(`${userEmail}_Count_Per_Page`, Number(10));
    } else {
-      rowCountPerPage = Number(localStorage.getItem('Count_Per_Page'));
-      rowCountPerPageDefault = Number(localStorage.getItem('Count_Per_Page'));
+      rowCountPerPage = Number(localStorage.getItem(`${userEmail}_Count_Per_Page`));
+      rowCountPerPageDefault = Number(localStorage.getItem(`${userEmail}_Count_Per_Page`));
       myDOMs.settingsModal.ExpensePerPageSelect.value = Number(rowCountPerPageDefault);
    }
 
-   if (localStorage.getItem('Tooltips') === null) {
-      localStorage.setItem('Tooltips', true);
+   if (localStorage.getItem(`${userEmail}_Tooltips`) === null) {
+      localStorage.setItem(`${userEmail}_Tooltips`, true);
       myDOMs.settingsModal.TooltipBtnDisabled.checked = false;
       myDOMs.settingsModal.TooltipBtnEnabled.checked = true;
       enableTooltip = true;
       setTooltips();
    } else {
-      enableTooltip = localStorage.getItem('Tooltips');
+      enableTooltip = localStorage.getItem(`${userEmail}_Tooltips`);
       if (enableTooltip === "true" || enableTooltip === true) {
          myDOMs.settingsModal.TooltipBtnDisabled.checked = false;
          myDOMs.settingsModal.TooltipBtnEnabled.checked = true;
@@ -283,215 +282,289 @@ function verifyAllLocalStorageForSettings() {
    }
 };
 
-// function displaySettingsModal() {
-//    $("#settingsModal").modal("show");
-// }
 
-myDOMs.main_page.SettingsBtn.addEventListener('click', function (event) {
-   //displaySettingsModal();
-   $("#settingsModal").modal("show");
-});
+
+function DisplaySettingsModal() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+   } else if (userEmail !== null && userEmail !== '') {
+      $("#settingsModal").modal("show");
+   }
+
+};
 
 
 myDOMs.settingsModal.TooltipBtnEnabled.addEventListener('click', function (e) {
+
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      if (myDOMs.settingsModal.TooltipBtnDisabled.checked === true) {
+         myDOMs.settingsModal.TooltipBtnEnabled.checked = false;
+      } else {
+         myDOMs.settingsModal.TooltipBtnEnabled.checked = true;
+      }
+      return;
+   }
    if (myDOMs.settingsModal.TooltipBtnEnabled.checked !== false) {
       myDOMs.settingsModal.TooltipBtnDisabled.checked = false;
       enableTooltip = true;
-      localStorage.setItem('Tooltips', true);
+      localStorage.setItem(`${userEmail}_Tooltips`, true);
       setTooltips();
    } else {
       myDOMs.settingsModal.TooltipBtnDisabled.checked = true;
       enableTooltip = false;
-      localStorage.setItem('Tooltips', false);
+      localStorage.setItem(`${userEmail}_Tooltips`, false);
       setTooltips();
    }
 });
 
 myDOMs.settingsModal.TooltipBtnDisabled.addEventListener('click', function (e) {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      if (myDOMs.settingsModal.TooltipBtnEnabled.checked === true) {
+         myDOMs.settingsModal.TooltipBtnDisabled.checked = false;
+      } else {
+         myDOMs.settingsModal.TooltipBtnDisabled.checked = true;
+      }
+      return;
+   }
+
    if (myDOMs.settingsModal.TooltipBtnDisabled.checked !== false) {
       myDOMs.settingsModal.TooltipBtnEnabled.checked = false;
       enableTooltip = false;
-      localStorage.setItem('Tooltips', false);
+      localStorage.setItem(`${userEmail}_Tooltips`, false);
       setTooltips();
    } else {
       myDOMs.settingsModal.TooltipBtnEnabled.checked = true;
       enableTooltip = true;
-      localStorage.setItem('Tooltips', true);
+      localStorage.setItem(`${userEmail}_Tooltips`, true);
       setTooltips();
    }
 });
 
 myDOMs.settingsModal.ExpensePerPageSelect.addEventListener('change', function (event) {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      myDOMs.settingsModal.ExpensePerPageSelect.value = rowCountPerPage;
+      return;
+   }
    rowCountPerPage = Number(myDOMs.settingsModal.ExpensePerPageSelect.value);
    rowCountPerPageDefault = Number(myDOMs.settingsModal.ExpensePerPageSelect.value);
-   localStorage.setItem('Count_Per_Page', Number(myDOMs.settingsModal.ExpensePerPageSelect.value));
+   localStorage.setItem(`${userEmail}_Count_Per_Page`, Number(myDOMs.settingsModal.ExpensePerPageSelect.value));
 });
 
 function updateHSTforSelectedProvince() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      myDOMs.settingsModal.HSTsetting.value = 0;
+      return;
+   }
+
+   if (myDOMs.settingsModal.HSTsetting.value > 100) {
+      alert('Value above 100 is not permitted!');
+      myDOMs.settingsModal.HSTsetting.value = 0;
+      return;
+   }
+
+   if (myDOMs.settingsModal.HSTsetting.value > 1) {
+      myDOMs.settingsModal.HSTsetting.value = (myDOMs.settingsModal.HSTsetting.value / 100);
+   }
+
+   if (myDOMs.settingsModal.HSTsetting.value === "") {
+      myDOMs.settingsModal.HSTsetting.value = 0;
+   }
+
    switch (myDOMs.settingsModal.ProvinceSelect.value) {
       case "1":
          provinceTaxSettings.AB.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.AB.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('AB_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_AB_HST`, provinceTaxSettings.Current.HST);
          break;
       case "2":
          provinceTaxSettings.BC.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.BC.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('BC_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_BC_HST`, provinceTaxSettings.Current.HST);
          break;
       case "3":
          provinceTaxSettings.MB.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.MB.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('MB_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_MB_HST`, provinceTaxSettings.Current.HST);
          break;
       case "4":
          provinceTaxSettings.NB.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.NB.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('NB_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_NB_HST`, provinceTaxSettings.Current.HST);
          break;
       case "5":
          provinceTaxSettings.NL.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.NL.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('NL_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_NL_HST`, provinceTaxSettings.Current.HST);
          break;
       case "6":
          provinceTaxSettings.NT.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.NT.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('NT_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_NT_HST`, provinceTaxSettings.Current.HST);
          break;
       case "7":
          provinceTaxSettings.NS.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.NS.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('NS_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_NS_HST`, provinceTaxSettings.Current.HST);
          break;
       case "8":
          provinceTaxSettings.NU.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.NU.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('NU_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_NU_HST`, provinceTaxSettings.Current.HST);
          break;
       case "9":
          provinceTaxSettings.ON.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.ON.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('ON_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_ON_HST`, provinceTaxSettings.Current.HST);
          break;
       case "10":
          provinceTaxSettings.PEI.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.PEI.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('PEI_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_PEI_HST`, provinceTaxSettings.Current.HST);
          break;
       case "11":
          provinceTaxSettings.QC.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.QC.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('QC_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_QC_HST`, provinceTaxSettings.Current.HST);
          break;
       case "12":
          provinceTaxSettings.SK.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.SK.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('SK_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_SK_HST`, provinceTaxSettings.Current.HST);
          break;
       case "13":
          provinceTaxSettings.YT.HST = myDOMs.settingsModal.HSTsetting.value;
          provinceTaxSettings.Current.HST = provinceTaxSettings.YT.HST
-         localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-         localStorage.setItem('YT_HST', provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+         localStorage.setItem(`${userEmail}_YT_HST`, provinceTaxSettings.Current.HST);
    };
 }
 
+
+
 function updatePSTforSelectedProvince() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      myDOMs.settingsModal.PSTsetting.value = 0;
+      return;
+   }
+
+   if (myDOMs.settingsModal.PSTsetting.value > 100) {
+      alert('Value above 100 is not permitted!');
+      myDOMs.settingsModal.PSTsetting.value = 0;
+      return;
+   }
+
+   if (myDOMs.settingsModal.PSTsetting.value > 1) {
+      myDOMs.settingsModal.PSTsetting.value = (myDOMs.settingsModal.PSTsetting.value / 100);
+   }
+
+   if (myDOMs.settingsModal.PSTsetting.value === "") {
+      myDOMs.settingsModal.PSTsetting.value = 0;
+   }
+
    switch (myDOMs.settingsModal.ProvinceSelect.value) {
       case "1":
          provinceTaxSettings.AB.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.AB.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('AB_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_AB_PST`, provinceTaxSettings.Current.PST);
          break;
       case "2":
          provinceTaxSettings.BC.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.BC.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('BC_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_BC_PST`, provinceTaxSettings.Current.PST);
          break;
       case "3":
          provinceTaxSettings.MB.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.MB.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('MB_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_MB_PST`, provinceTaxSettings.Current.PST);
          break;
       case "4":
          provinceTaxSettings.NB.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.NB.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('NB_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_NB_PST`, provinceTaxSettings.Current.PST);
          break;
       case "5":
          provinceTaxSettings.NL.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.NL.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('NL_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_NL_PST`, provinceTaxSettings.Current.PST);
          break;
       case "6":
          provinceTaxSettings.NT.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.NT.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('NT_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_NT_PST`, provinceTaxSettings.Current.PST);
          break;
       case "7":
          provinceTaxSettings.NS.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.NS.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('NS_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_NS_PST`, provinceTaxSettings.Current.PST);
          break;
       case "8":
          provinceTaxSettings.NU.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.NU.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('NU_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_NU_PST`, provinceTaxSettings.Current.PST);
          break;
       case "9":
          provinceTaxSettings.ON.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.ON.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('ON_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_ON_PST`, provinceTaxSettings.Current.PST);
          break;
       case "10":
          provinceTaxSettings.PEI.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.PEI.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('PEI_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_PEI_PST`, provinceTaxSettings.Current.PST);
          break;
       case "11":
          provinceTaxSettings.QC.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.QC.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('QC_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_QC_PST`, provinceTaxSettings.Current.PST);
          break;
       case "12":
          provinceTaxSettings.SK.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.SK.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('SK_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_SK_PST`, provinceTaxSettings.Current.PST);
          break;
       case "13":
          provinceTaxSettings.YT.PST = myDOMs.settingsModal.PSTsetting.value;
          provinceTaxSettings.Current.PST = provinceTaxSettings.YT.PST
-         localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-         localStorage.setItem('YT_PST', provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+         localStorage.setItem(`${userEmail}_YT_PST`, provinceTaxSettings.Current.PST);
    };
 }
 
 myDOMs.settingsModal.ProvinceSelect.addEventListener('change', function (event) {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      myDOMs.settingsModal.ProvinceSelect.value = "";
+      return;
+   }
    let selectedProvince = '';
    switch (myDOMs.settingsModal.ProvinceSelect.value) {
       case "1":
@@ -562,9 +635,9 @@ myDOMs.settingsModal.ProvinceSelect.addEventListener('change', function (event) 
 
    provinceTaxSettings.Current.HST = myDOMs.settingsModal.HSTsetting.value;
    provinceTaxSettings.Current.PST = myDOMs.settingsModal.PSTsetting.value;
-   localStorage.setItem('Current_HST', provinceTaxSettings.Current.HST);
-   localStorage.setItem('Current_PST', provinceTaxSettings.Current.PST);
-   localStorage.setItem('Selected_Province', selectedProvince);
+   localStorage.setItem(`${userEmail}_Current_HST`, provinceTaxSettings.Current.HST);
+   localStorage.setItem(`${userEmail}_Current_PST`, provinceTaxSettings.Current.PST);
+   localStorage.setItem(`${userEmail}_Selected_Province`, selectedProvince);
    updateHSTMenus();
 });
 

@@ -308,11 +308,12 @@
               <option value="December">December</option>
             </select>
             <button type="button" id="mainSettings" form="someRandomForm" class="btn btn-light mt-3 w-100 text-primary mb-2"
-              data-toggle="tooltip" title="Click to Adjust all available settings"><i class="fas fa-cog"></i>
+              data-toggle="tooltip" title="Click to Adjust all available settings" onclick="DisplaySettingsModal()"><i
+                class="fas fa-cog"></i>
               Settings
             </button>
             <button type="button" id="toggleNav" form="someRandomForm" class="btn btn-light mt-3 w-100 text-primary mb-2"
-              data-toggle="tooltip" title="Click to Toggle Menu Bar" onclick="ToggleMenuBar(true)">
+              data-toggle="tooltip" title="Click to Toggle Menu Bar" onclick="ToggleMenuBar()">
               &nbsp; &nbsp; Hide Menu Bar
             </button>
           </form>
@@ -334,19 +335,19 @@
             <label class="control-label control-label-sm text-white" id="netRevDisplayLbl" for="netRevDisplay">Net
               Revenue</label>
             <input class="form-control form-control-sm text-right text-success" type="text" id="netRevDisplay" value="0"
-              data-toggle="tooltip" title="Displays your Net Revenue during the Time Period Selected.">
+              data-toggle="tooltip" title="Displays your Net Revenue during the Time Period Selected." readonly>
             <label class="control-label control-label-sm text-white" id="netExpDisplayLbl" for="netExpDisplay">Net
               Expenses</label>
             <input class="form-control form-control-sm text-right text-danger" type="text" id="netExpDisplay" value="0"
-              data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected.">
+              data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected." readonly>
             <label class="control-label control-label-sm text-white" id="netIncomeDisplayLbl" for="netIncomeDisplay">Net
               Income</label>
             <input class="form-control form-control-sm text-right text-success" type="text" id="netIncomeDisplay" value="0"
-              data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected.">
+              data-toggle="tooltip" title="Displays your Net Income during the Time Period Selected." readonly>
             <label class="control-label control-label-sm text-white" id="acctBalanceLbl" for="acctBalance">Account
               Balance</label>
             <input class="form-control form-control-sm text-right" type="text" id="acctBalance" value="0" data-toggle="tooltip"
-              title="Displays your Account Balance corresponding to the Time Period selected.">
+              title="Displays your Account Balance corresponding to the Time Period selected." readonly>
             <label class="control-label control-label-sm text-white" id="lockDateLbl" for="lockDate">Lock Date</label>
             <input class="form-control form-control-sm text-center mb-2" type="date" id="lockDate" value="2017-12-31"
               data-toggle="tooltip" title="Select a Lock-Date which is used to protect any previously completed HST report from being altered.">
@@ -3826,14 +3827,14 @@
             </li>
             <li id="ReturnLine2To3Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label class="form-control-label px-1 py-1" for="Line103" style="border: 1px solid rgb(18, 19, 194);">103</label>
-                <input class="text-right d-inline pr-1" id="Line103" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line103Lbl" class="form-control-label px-1 py-1" for="Line103" style="border: 1px solid rgb(18, 19, 194);">103</label>
+                <input class="text-right d-inline pr-1" id="Line103" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 103.">
                 <p class="d-none d-sm-inline ml-2" id="Line103Txt">GST/HST amounts that you collected or became
                   collectible.</p>
               </div>
               <div>
-                <label class="form-control-label px-1 py-1" for="Line104" style="border: 1px solid rgb(18, 19, 194);">104</label>
-                <input class="text-right d-inline pr-1" id="Line104" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line104Lbl" class="form-control-label px-1 py-1" for="Line104" style="border: 1px solid rgb(18, 19, 194);">104</label>
+                <input class="text-right d-inline pr-1" id="Line104" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 104.">
                 <p class="d-none d-sm-inline ml-2" id="Line104Txt">Adjustments.</p>
               </div>
             </li>
@@ -3849,13 +3850,13 @@
 
             <li id="ReturnLine106To107Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label class="form-control-label px-1 py-1" for="Line106" style="border: 1px solid rgb(18, 19, 194);">106</label>
-                <input class="text-right d-inline pr-1" id="Line106" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line106Lbl" class="form-control-label px-1 py-1" for="Line106" style="border: 1px solid rgb(18, 19, 194);">106</label>
+                <input class="text-right d-inline pr-1" id="Line106" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 106.">
                 <p class="d-none d-sm-inline ml-2" id="Line106Txt">Input Tax Credits-ITCs</p>
               </div>
               <div>
-                <label class="form-control-label px-1 py-1" for="Line107" style="border: 1px solid rgb(18, 19, 194);">107</label>
-                <input class="text-right d-inline pr-1" id="Line107" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line107Lbl" class="form-control-label px-1 py-1" for="Line107" style="border: 1px solid rgb(18, 19, 194);">107</label>
+                <input class="text-right d-inline pr-1" id="Line107" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 107.">
                 <p class="d-none d-sm-inline ml-2" id="Line107Txt">Adjustments.</p>
               </div>
             </li>
@@ -3877,13 +3878,13 @@
 
             <li id="ReturnLine110To111Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line110" style="border: 1px solid rgb(18, 19, 194);">110</label>
-                <input class="text-right d-inline pr-1" id="Line110" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line110Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line110" style="border: 1px solid rgb(18, 19, 194);">110</label>
+                <input class="text-right d-inline pr-1" id="Line110" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 110.">
                 <p class="d-none d-sm-inline ml-2" id="Line110Txt">Installment and other annual filer payments</p>
               </div>
               <div>
-                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line111" style="border: 1px solid rgb(18, 19, 194);">111</label>
-                <input class="text-right d-inline pr-1" id="Line111" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line111Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line111" style="border: 1px solid rgb(18, 19, 194);">111</label>
+                <input class="text-right d-inline pr-1" id="Line111" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 111.">
                 <p class="d-none d-sm-inline ml-2" id="Line107Txt">GST/HST Rebates</p>
               </div>
             </li>
@@ -3905,14 +3906,14 @@
 
             <li id="ReturnLine205To405Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line205" style="border: 1px solid rgb(18, 19, 194);">205</label>
-                <input class="text-right d-inline pr-1" id="Line205" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line205Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line205" style="border: 1px solid rgb(18, 19, 194);">205</label>
+                <input class="text-right d-inline pr-1" id="Line205" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 205.">
                 <p class="d-none d-sm-inline ml-2" id="Line205Txt">GST/HST due on the aquisition of taxable real
                   property</p>
               </div>
               <div>
-                <label class="form-control-label bg-primary text-white px-1 py-1" for="Line405" style="border: 1px solid rgb(18, 19, 194);">405</label>
-                <input class="text-right d-inline pr-1" id="Line405" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, double click this input box.">
+                <label id="Line405Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line405" style="border: 1px solid rgb(18, 19, 194);">405</label>
+                <input class="text-right d-inline pr-1" id="Line405" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 405.">
                 <p class="d-none d-sm-inline ml-2" id="Line405Txt">Other GST/HST to be self assessed</p>
               </div>
             </li>
@@ -4018,6 +4019,10 @@
 
     // This code enables the drop-down submenu
     $('.dropdown-submenu > a').on("click", function (e) {
+      if (userEmail === null || userEmail === '') {
+        alert('You must be looged in to use any controls!');
+        return;
+      }
       var submenu = $(this);
       $('.dropdown-submenu .dropdown-menu').removeClass('show');
       submenu.next('.dropdown-menu').addClass('show');
@@ -4039,11 +4044,7 @@
     });
 
 
-    $(document).ready(function () {
-      $("#mainSettings").on('touchstart click', function () {
-        $("#settingsModal").modal("show");
-      });
-    });
+
 
 
 

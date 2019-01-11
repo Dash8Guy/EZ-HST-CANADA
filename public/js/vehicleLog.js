@@ -99,6 +99,10 @@ let PersonalTotalV2 = 0;
 let TotalV2 = 0;
 
 async function displayVehicleLogModal() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      return;
+   }
    let tempZero = 0;
    $("#vehicleLogModal").modal("show");
    ToggleMenuBar();

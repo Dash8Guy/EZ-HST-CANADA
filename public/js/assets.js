@@ -1,4 +1,8 @@
 function displayAssetModal() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      return;
+   }
    $("#AssetModal").modal("show");
    let myMainNav = document.getElementById("main-nav");
    let myTopVal = myMainNav.offsetTop;
@@ -7,6 +11,7 @@ function displayAssetModal() {
    }
 }
 function hideAssetModal() {
+
    $("#AssetModal").modal("hide");
    myDOMs.FixedAssets.Form.reset();
    let myMainNav = document.getElementById("main-nav");

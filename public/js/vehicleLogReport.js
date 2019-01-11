@@ -482,10 +482,15 @@ function filterVlogMonth(myMonth) {
 
 async function getVlogReportData() {
   await getAllVehicleLogs();
-  addPercentandOdometertoArray();
-  fillTableArrays();
-  buildVehicleLogTable(myDOMs.vLogReport.Container, "vLogTableAlert", "topCloseVlogViewModal", `${vLogArray.length} total logs displayed on 1 page per month.`, "TABLE CAR GREEN", 0, 'JAN');
-  ToggleMenuBar();
+  if (vLogArray.length > 0) {
+    addPercentandOdometertoArray();
+    fillTableArrays();
+    buildVehicleLogTable(myDOMs.vLogReport.Container, "vLogTableAlert", "topCloseVlogViewModal", `${vLogArray.length} total logs displayed on 1 page per month.`, "TABLE CAR GREEN", 0, 'JAN');
+    ToggleMenuBar();
+  } else {
+    alert('You have no Vehicle Log entries at this time. To start adding Vehicle Logs, go to Entry Forms and open Vehicle Log Entry.');
+  }
+
 }
 
 function addPercentandOdometertoArray() {

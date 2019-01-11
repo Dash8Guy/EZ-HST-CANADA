@@ -1,5 +1,9 @@
 
 function displayHomePercentModal() {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      return;
+   }
    $("#homePercentModal").modal("show");
    myDOMs.homePercentModal.PeriodSelect.value = 'Year';
    updateTimePeriodChange();

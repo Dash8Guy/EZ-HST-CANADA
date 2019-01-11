@@ -2,7 +2,7 @@
 
 function displayHSTPaymentModal() {
   $("#hstPaymentModal").modal("show");
-  let myProv = localStorage.getItem('Selected_Province');
+  let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
   if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
     myDOMs.HSTPayment.Title.innerText = 'HST Payment Entry Form'
   } else {

@@ -40,15 +40,15 @@ function addMathColumnsToArray() {
    });
 };
 
-function testGetTaxes() {
+// function testGetTaxes() {
 
-   let amtSoFar = prompt("Enter Amount so far.");
-   let myAmt = prompt("Enter Revenue Amount.");
+//    let amtSoFar = prompt("Enter Amount so far.");
+//    let myAmt = prompt("Enter Revenue Amount.");
 
-   alert(`Provincial Part: ${getProvinceIncomeTaxAmt(Number(amtSoFar), Number(myAmt))}`);
-   alert(`Federal Part: ${getFederalIncomeTaxAmt(Number(amtSoFar), Number(myAmt))}`);
+//    alert(`Provincial Part: ${getProvinceIncomeTaxAmt(Number(amtSoFar), Number(myAmt))}`);
+//    alert(`Federal Part: ${getFederalIncomeTaxAmt(Number(amtSoFar), Number(myAmt))}`);
 
-}
+// }
 
 function getProvinceIncomeTaxAmt(myTotalBeforeAmt, myNewAmt) {
 
@@ -94,6 +94,10 @@ function getProvinceIncomeTaxAmt(myTotalBeforeAmt, myNewAmt) {
       case "13":
          myLink = miscData.year2018.YTLevels
    };
+
+   if (myLink === null || myLink === undefined) {
+      return;
+   }
 
    let ProvinceAmt = 0;
    if (Number(myTotalBeforeAmt) + Number(myNewAmt) <= myLink.IncomeLevel1) {
@@ -988,7 +992,7 @@ function buildHowMuchCanIKeepTable(
    HMTableAlert.setAttribute("id", curAlertID);
    //Create the Table Header Row
    let myAcctHeaders = [];
-   let myProv = localStorage.getItem('Selected_Province');
+   let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
    if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
       myAcctHeaders = [
          "#",
@@ -1764,7 +1768,7 @@ function generateAccountTablePDF() {
    let fileSaveText;
    let data = arrOfAccountObjectToArrOfArrays();
    let columns = [];
-   let myProv = localStorage.getItem('Selected_Province');
+   let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
    if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
       columns = ["#", "DATE", "GROSS REV", "HST", "PST", "GROSS INC", "FED TAX", "PROV TAX", "CPP", "NET INC", "ACCT IN", "HST PMT", "PST PMT", "TAX PMT", "ACCT OUT", "ACCT BAL"];
    } else {

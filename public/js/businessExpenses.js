@@ -8,7 +8,7 @@ disableEnableFullSizeBusinessImgBtn();
 function displayBusExpModal() {
   $("#BusExpenseModal").modal("show");
 
-  let myProv = localStorage.getItem('Selected_Province');
+  let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
   if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
     myDOMs.busExp.HSTAmtLabel.innerText = 'HST Amount'
   } else {

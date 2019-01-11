@@ -1,4 +1,7 @@
 let myToken;
+//User Email
+let userEmail = '';
+
 //URL Variable
 let serverURL = window.location.pathname;
 //alert(serverURL);
@@ -48,14 +51,20 @@ const myDOMs = {
     EndDate: document.getElementById('PeriodEndDate'),
     Line101: document.getElementById('Line101'),
     Line103: document.getElementById('Line103'),
+    Line103Lbl: document.getElementById('Line103Lbl'),
     Line104: document.getElementById('Line104'),
+    Line104Lbl: document.getElementById('Line104Lbl'),
     Line105: document.getElementById('Line105'),
     Line106: document.getElementById('Line106'),
+    Line106Lbl: document.getElementById('Line106Lbl'),
     Line107: document.getElementById('Line107'),
+    Line107Lbl: document.getElementById('Line107Lbl'),
     Line108: document.getElementById('Line108'),
     Line109: document.getElementById('Line109'),
     Line110: document.getElementById('Line110'),
+    Line110Lbl: document.getElementById('Line110Lbl'),
     Line111: document.getElementById('Line111'),
+    Line111Lbl: document.getElementById('Line111Lbl'),
     Line112: document.getElementById('Line112'),
     Line113A: document.getElementById('Line113A'),
     Line113B: document.getElementById('Line113B'),
@@ -63,7 +72,9 @@ const myDOMs = {
     Line114: document.getElementById('Line114'),
     Line115: document.getElementById('Line115'),
     Line205: document.getElementById('Line205'),
+    Line205Lbl: document.getElementById('Line205Lbl'),
     Line405: document.getElementById('Line405'),
+    Line405Lbl: document.getElementById('Line405Lbl'),
     Body: document.getElementById('ReturnBody'),
     Modal: document.getElementById('HSTReturnModal')
   },
@@ -779,7 +790,7 @@ myDOMs.nav.NavBarCollapse.addEventListener('click', function (event) {
 });
 
 
-function ToggleMenuBar(FromBtn) {
+function ToggleMenuBar() {
 
   let myMainNav = document.getElementById("main-nav");
   let LeftMainDOM = document.getElementById("timePeriodDiv");
@@ -791,8 +802,7 @@ function ToggleMenuBar(FromBtn) {
   let BusExpTableAlertDOM = document.getElementById("mainTableAlert");
   let myTopVal = myMainNav.offsetTop;
 
-
-  if (FromBtn === true && AssetModalOpen === true || TaxPaymentModalOpen === true || HSTPaymentModalOpenForNAV === true || PSTPaymentModalOpenForNAV === true || VehicleExpEntryModalOpen === true || BusExpEntryModalOpen === true || HomeExpEntryModalOpen === true || OtherExpEntryModalOpen === true || RentalExpEntryModalOpen === true || IncomeEntryModalOpen === true || VLogModalOpen === true || UserSetupModalOpen === true || UserLoginModalOpen === true || VLogReportModalOpen === true || PaymentReportModalOpen === true || AssetReportModalOpen === true || IncomeStatementModalOpen === true || HomePercentModalOpen === true || AccountSummaryModalOpen === true || HSTReturnModalOpen === true) {
+  if (AssetModalOpen === true || TaxPaymentModalOpen === true || HSTPaymentModalOpenForNAV === true || PSTPaymentModalOpenForNAV === true || VehicleExpEntryModalOpen === true || BusExpEntryModalOpen === true || HomeExpEntryModalOpen === true || OtherExpEntryModalOpen === true || RentalExpEntryModalOpen === true || IncomeEntryModalOpen === true || VLogModalOpen === true || UserSetupModalOpen === true || UserLoginModalOpen === true || VLogReportModalOpen === true || PaymentReportModalOpen === true || AssetReportModalOpen === true || IncomeStatementModalOpen === true || HomePercentModalOpen === true || AccountSummaryModalOpen === true || HSTReturnModalOpen === true) {
     // alert('1st');
     myMainNav.style.top = '-108px';
     LeftMainDOM.style.top = '-108px';
@@ -820,6 +830,7 @@ function ToggleMenuBar(FromBtn) {
   } else if (AssetModalOpen === false && TaxPaymentModalOpen === false && HSTPaymentModalOpenForNAV === false && PSTPaymentModalOpenForNAV === false && VehicleExpEntryModalOpen === false && BusExpEntryModalOpen === false && HomeExpEntryModalOpen === false && OtherExpEntryModalOpen === false && RentalExpEntryModalOpen === false && IncomeEntryModalOpen === false && VLogModalOpen === false && UserSetupModalOpen === false && UserLoginModalOpen === false && VLogReportModalOpen === false && PaymentReportModalOpen === false && AssetReportModalOpen === false && IncomeStatementModalOpen === false && HomePercentModalOpen === false && AccountSummaryModalOpen === false && HSTReturnModalOpen === false) {
 
     if (myTopVal === -108) {
+      // alert('2nd');
       if (reOpenIncomeStatement) { return };
       myMainNav.style.top = '0';
       LeftMainDOM.style.top = '0';
@@ -879,7 +890,7 @@ function ToggleMenuBar(FromBtn) {
 updateHSTMenus();
 
 function updateHSTMenus() {
-  let myProv = localStorage.getItem('Selected_Province');
+  let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
   if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
     myDOMs.main.HSTPaymentEntryMenu.innerText = ' HST Payment'
     myDOMs.main.HSTPaymentReportMenu.innerText = ' HST Payment Report'
@@ -1373,6 +1384,8 @@ function resumeUserLogout(autoGenerated) {
             6000
           );
           ToggleNavAfterTimeDelay();
+          userEmail = '';
+          myToken = '';
         }
       })
       .fail(function (e) {
@@ -1444,7 +1457,7 @@ async function afterLogin(userName) {
     //console.log("Logout is getting enabled");
     myDOMs.nav.Register.classList.add("disabled");
   }
-
+  verifyAllLocalStorageForSettings();
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
   await populateVehicleVendors();
   await populateBusinessVendors();
@@ -1536,6 +1549,7 @@ function loginUser() {
         6000
       );
       myToken = data.token;
+      userEmail = tempdata.email;
       afterLogin(tempdata.firstName);
       myDOMs.userLoginModal.Form.reset();
     })
@@ -1868,8 +1882,8 @@ function registerUser() {
         "RED",
         6000
       );
-      afterLogin(mydata.firstName);
       myToken = data.token;
+      afterLogin(mydata.firstName);
       myDOMs.userSetupModal.Form.reset();
     },
     error: function (error) {

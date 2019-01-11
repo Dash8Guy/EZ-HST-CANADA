@@ -1543,15 +1543,17 @@ myDOMs.HST_Return.Line103.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line103.addEventListener('dblclick', async function (event) {
-   if (ID_Line103 !== '' && ID_Line103 !== null & ID_Line103 !== undefined) {
-      myDOMs.HST_Return.Line103.value = 0;
-      await updateReturnData(103);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line103Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line103 !== '' && ID_Line103 !== null & ID_Line103 !== undefined) {
+         myDOMs.HST_Return.Line103.value = 0;
+         await updateReturnData(103);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1571,16 +1573,19 @@ myDOMs.HST_Return.Line104.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line104.addEventListener('dblclick', async function (event) {
-   if (ID_Line104 !== '' && ID_Line104 !== null & ID_Line104 !== undefined) {
-      myDOMs.HST_Return.Line104.value = 0;
-      await updateReturnData(104);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line104Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line104 !== '' && ID_Line104 !== null & ID_Line104 !== undefined) {
+         myDOMs.HST_Return.Line104.value = 0;
+         await updateReturnData(104);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
+
 });
 
 myDOMs.HST_Return.Line106.addEventListener('change', async function (event) {
@@ -1599,15 +1604,17 @@ myDOMs.HST_Return.Line106.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line106.addEventListener('dblclick', async function (event) {
-   if (ID_Line106 !== '' && ID_Line106 !== null & ID_Line106 !== undefined) {
-      myDOMs.HST_Return.Line106.value = 0;
-      await updateReturnData(106);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line106Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line106 !== '' && ID_Line106 !== null & ID_Line106 !== undefined) {
+         myDOMs.HST_Return.Line106.value = 0;
+         await updateReturnData(106);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1627,15 +1634,17 @@ myDOMs.HST_Return.Line107.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line107.addEventListener('dblclick', async function (event) {
-   if (ID_Line107 !== '' && ID_Line107 !== null & ID_Line107 !== undefined) {
-      myDOMs.HST_Return.Line107.value = 0;
-      await updateReturnData(107);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line107Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line107 !== '' && ID_Line107 !== null & ID_Line107 !== undefined) {
+         myDOMs.HST_Return.Line107.value = 0;
+         await updateReturnData(107);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1655,15 +1664,17 @@ myDOMs.HST_Return.Line110.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line110.addEventListener('dblclick', async function (event) {
-   if (ID_Line110 !== '' && ID_Line110 !== null & ID_Line110 !== undefined) {
-      myDOMs.HST_Return.Line110.value = 0;
-      await updateReturnData(110);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line110Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line110 !== '' && ID_Line110 !== null & ID_Line110 !== undefined) {
+         myDOMs.HST_Return.Line110.value = 0;
+         await updateReturnData(110);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1683,15 +1694,17 @@ myDOMs.HST_Return.Line111.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line111.addEventListener('dblclick', async function (event) {
-   if (ID_Line111 !== '' && ID_Line111 !== null & ID_Line111 !== undefined) {
-      myDOMs.HST_Return.Line111.value = 0;
-      await updateReturnData(111);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line111Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line111 !== '' && ID_Line111 !== null & ID_Line111 !== undefined) {
+         myDOMs.HST_Return.Line111.value = 0;
+         await updateReturnData(111);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1711,15 +1724,17 @@ myDOMs.HST_Return.Line205.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line205.addEventListener('dblclick', async function (event) {
-   if (ID_Line205 !== '' && ID_Line205 !== null & ID_Line205 !== undefined) {
-      myDOMs.HST_Return.Line205.value = 0;
-      await updateReturnData(205);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line205Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line205 !== '' && ID_Line205 !== null & ID_Line205 !== undefined) {
+         myDOMs.HST_Return.Line205.value = 0;
+         await updateReturnData(205);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 
@@ -1739,15 +1754,17 @@ myDOMs.HST_Return.Line405.addEventListener('change', async function (event) {
    }
 });
 
-myDOMs.HST_Return.Line405.addEventListener('dblclick', async function (event) {
-   if (ID_Line405 !== '' && ID_Line405 !== null & ID_Line405 !== undefined) {
-      myDOMs.HST_Return.Line405.value = 0;
-      await updateReturnData(405);
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
-   } else {
-      ZeroTheReturnData(true);
-      DoTheMathonLoopedData();
+myDOMs.HST_Return.Line405Lbl.addEventListener('click', async function (event) {
+   if (confirm("Are you sure you want to Reset this Amount back to the Calculated Value?")) {
+      if (ID_Line405 !== '' && ID_Line405 !== null & ID_Line405 !== undefined) {
+         myDOMs.HST_Return.Line405.value = 0;
+         await updateReturnData(405);
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      } else {
+         ZeroTheReturnData(true);
+         DoTheMathonLoopedData();
+      }
    }
 });
 

@@ -1664,7 +1664,7 @@ app.patch("/miscData/:_id", authenticate, (req, res) => {
 app.get("/miscData", authenticate, (req, res) => {
 
   MiscData.find({
-    _user: req.user._id
+    _user: req.user._id,
   }).then(
     miscData => {
       res.send({ miscData });

@@ -7,6 +7,13 @@ endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 
 myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
 
+   if (userEmail === null || userEmail === '') {
+      e.preventDefault();
+      alert('You must be looged in to use any controls!');
+      myDOMs.main_page.SelectPeriod.value = "Full Year";
+      return;
+   }
+
    switch (myDOMs.main_page.SelectPeriod.value) {
       case 'Full Year':
          myDOMs.main_page.StartDate.value = '2018-01-01';
@@ -103,16 +110,43 @@ async function updateMainDataAfterTimePeriodChange() {
 };
 
 myDOMs.main_page.StartDate.addEventListener('change', function (e) {
+
+   if (userEmail === null || userEmail === '') {
+      let myDate = new Date(myDOMs.main_page.StartDate.value);
+      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+      let myYear = myDate.getFullYear();
+      alert('You must be looged in to use any controls!');
+      myDOMs.main_page.StartDate.value = `${myYear}-01-01`;
+      return;
+   }
    startDate = new Date(myDOMs.main_page.StartDate.value);
    startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.EndDate.addEventListener('change', function (e) {
+   if (userEmail === null || userEmail === '') {
+      let myDate = new Date(myDOMs.main_page.EndDate.value);
+      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+      let myYear = myDate.getFullYear();
+      alert('You must be looged in to use any controls!');
+      myDOMs.main_page.EndDate.value = `${myYear}-12-31`;
+      return;
+   }
    endDate = new Date(myDOMs.main_page.EndDate.value);
    endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.LockDate.addEventListener('change', function (e) {
+
+   if (userEmail === null || userEmail === '') {
+      let myDate = new Date(myDOMs.main_page.StartDate.value);
+      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+      let myYear = myDate.getFullYear() - 1;
+      alert('You must be looged in to use any controls!');
+      myDOMs.main_page.LockDate.value = `${myYear}-12-31`;
+      return;
+   }
+
    let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
    myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
    // let myHardCodeDate = new Date(

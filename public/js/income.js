@@ -10,7 +10,7 @@ function displayIncomeModal(source) {
   } else if (source === 'Rental') {
     myDOMs.income.Selector.value = 'Rental';
   }
-  let myProv = localStorage.getItem('Selected_Province');
+  let myProv = localStorage.getItem(`${userEmail}_Selected_Province`);
   if (myProv === "4" || myProv === "5" || myProv === "7" || myProv === "9" || myProv === "10") {
     myDOMs.income.HSTAmtLabel.innerText = 'HST Amount'
   } else {
