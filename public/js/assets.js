@@ -197,6 +197,14 @@ function addFixedAsset() {
    let claimDate = new Date(myDOMs.FixedAssets.Claim_Date.value);
    claimDate.setHours(claimDate.getHours() + (claimDate.getTimezoneOffset() / 60));
 
+   let myClaimStartMonth = claimDate.getMonth();
+   let myClaimStartYear = claimDate.getFullYear();
+   let myClaimStartDay = claimDate.getDate();
+
+   let myStartMonth = startDate.getMonth();
+   let myStartYear = startDate.getFullYear();
+   let myStartDay = startDate.getDate();
+
    let tempAmt = myDOMs.FixedAssets.Start_Value.value.split(',');
    let myStartAmt = '';
 
@@ -224,6 +232,12 @@ function addFixedAsset() {
       busPercent: myDOMs.FixedAssets.Business_Percent.value,
       claimAmt: myDepreciationtAmt,
       itcClaimAmt: myITCClaimAmt,
+      dateYearClaim: myClaimStartYear,
+      dateMonthClaim: myClaimStartMonth,
+      dateDayClaim: myClaimStartDay,
+      dateYearBuy: myStartYear,
+      dateMonthBuy: myStartMonth,
+      dateDayBuy: myStartDay,
       auth: myToken
    };
 
@@ -300,16 +314,29 @@ function updateFixedAsset() {
       return;
    }
 
+   let myTempDate;
+   let myTempClaimDate
    let assetID = myDOMs.FixedAssets.Blind_ID.value;
    formData = new FormData();
    let myClaimDate;
    myClaimDate = new Date(myDOMs.FixedAssets.Claim_Date.value);
    myClaimDate.setHours(myClaimDate.getHours() + (myClaimDate.getTimezoneOffset() / 60));
-   formData.append("claimDate", myClaimDate);
+   let myClaimStartMonth = claimDate.getMonth();
+   let myClaimStartYear = claimDate.getFullYear();
+   let myClaimStartDay = claimDate.getDate();
+   myTempClaimDate = new Date(myClaimStartYear, myClaimStartMonth, myClaimStartDay).toISOString();
+
+   formData.append("claimDate", myTempClaimDate);
+
    let myPurchaseDate;
    myPurchaseDate = new Date(myDOMs.FixedAssets.Purchase_Date.value);
    myPurchaseDate.setHours(myPurchaseDate.getHours() + (myPurchaseDate.getTimezoneOffset() / 60));
-   formData.append("purchaseDate", myPurchaseDate);
+   let myStartMonth = myPurchaseDate.getMonth();
+   let myStartYear = myPurchaseDate.getFullYear();
+   let myStartDay = myPurchaseDate.getDate();
+   myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
+
+   formData.append("purchaseDate", myTempDate);
 
    let myCorrectedStartValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Start_Value.value);
    let myCorrectedClaimValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Depreciation_Claim.value);

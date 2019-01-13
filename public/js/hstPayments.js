@@ -42,15 +42,20 @@ function addHSTPayment() {
 
   let myDate = new Date(myDOMs.HSTPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
   let mydata;
 
   mydata = {
-    paymentDate: myDate,
     hstAmt: myDOMs.HSTPayment.PaymentAmtInput.value,
     pstAmt: 0,
     taxAmt: 0,
     description: myDOMs.HSTPayment.PaymentDescription.value,
+    dateYear: myStartYear,
+    dateMonth: myStartMonth,
+    dateDay: myStartDay,
     auth: myToken,
   };
 
@@ -137,8 +142,12 @@ function updateHSTPayment() {
 
   myDate = new Date(myDOMs.HSTPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
-  formData.append("paymentDate", myDate);
+  formData.append("paymentDate", myTempDate);
   formData.append("hstAmt", myDOMs.HSTPayment.PaymentAmtInput.value);
   formData.append("pstAmt", 0);
   formData.append("taxAmt", 0);

@@ -83,9 +83,12 @@ app.get("/", function (req, res) {
 app.post("/carExpense", authenticate, async (req, res) => {
   let sampleFile;
   let myCarExpense;
+
+  let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay).toISOString();
+
   let myCarExpObject = {
     _user: req.user._id,
-    carDate: req.body.carDate,
+    carDate: myNewDate,
     carnetAmt: req.body.carnetAmt,
     carhstAmt: req.body.carhstAmt,
     carpstAmt: req.body.carpstAmt,
@@ -123,7 +126,7 @@ app.post("/carExpense", authenticate, async (req, res) => {
 
     let myCarExpObjectImg = {
       _user: req.user._id,
-      carDate: req.body.carDate,
+      carDate: myNewDate,
       carnetAmt: req.body.carnetAmt,
       carhstAmt: req.body.carhstAmt,
       carpstAmt: req.body.carpstAmt,
@@ -219,7 +222,7 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
 
   for (i = myStartMonth; i <= 11; i++) {
     myTempMonth = i;
-    let myTempDate = new Date(myStartYear, i, myStartDay);
+    let myTempDate = new Date(myStartYear, i, myStartDay).toISOString();
     // console.log(`Day is ${myTempDay} and Month is ${myTempMonth}`);
     if (myStartDay > 30 && myTempMonth !== 1) {
       if (
@@ -228,7 +231,7 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
         myTempMonth === 8 ||
         myTempMonth === 10
       ) {
-        myTempDate = new Date(myStartYear, i, 30);
+        myTempDate = new Date(myStartYear, i, 30).toISOString();
       }
     }
 
@@ -236,11 +239,12 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
       if (
         myStartYear === 2020 ||
         myStartYear === 2024 ||
-        myStartYear === 2024
+        myStartYear === 2028 ||
+        myStartYear === 2032
       ) {
-        myTempDate = new Date(myStartYear, i, 29);
+        myTempDate = new Date(myStartYear, i, 29).toISOString();
       } else {
-        myTempDate = new Date(myStartYear, i, 28);
+        myTempDate = new Date(myStartYear, i, 28).toISOString();
       }
     }
 
@@ -330,7 +334,6 @@ app.get("/carExpense", authenticate, (req, res) => {
     tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
   } else {
     tempStartDate = new Date(2018, 0, 1).toISOString();
-
   }
 
   if (req.query.endYear) {
@@ -1750,9 +1753,11 @@ app.delete("/users/me/token", authenticate, async (req, res) => {
 //Payments
 app.post("/payments", authenticate, async (req, res) => {
 
+  let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay).toISOString();
+
   const payment = new PaymentEntry({
     _user: req.user._id,
-    paymentDate: req.body.paymentDate,
+    paymentDate: myNewDate,
     taxAmt: req.body.taxAmt,
     hstAmt: req.body.hstAmt,
     pstAmt: req.body.pstAmt,
@@ -1882,6 +1887,7 @@ app.get("/payments", authenticate, (req, res) => {
   } else {
     tempEndDate = new Date(2018, 11, 31).toISOString();
   }
+
   PaymentEntry.find({
     _user: req.user._id,
     paymentDate: {
@@ -1974,10 +1980,13 @@ app.get("/taxPayments", authenticate, (req, res) => {
 //Fixed Asstes
 app.post("/fixedAssets", authenticate, async (req, res) => {
 
+  let myNewDateClaim = new Date(req.body.dateYearClaim, req.body.dateMonthClaim, req.body.dateDayClaim).toISOString();
+  let myNewDateBuy = new Date(req.body.dateYearBuy, req.body.dateMonthBuy, req.body.dateDayBuy).toISOString();
+
   const asset = new FixedAsset({
     _user: req.user._id,
-    purchaseDate: req.body.purchaseDate,
-    claimDate: req.body.claimDate,
+    purchaseDate: myNewDateBuy,
+    claimDate: myNewDateClaim,
     description: req.body.description,
     startValue: req.body.startValue,
     busPercent: req.body.busPercent,

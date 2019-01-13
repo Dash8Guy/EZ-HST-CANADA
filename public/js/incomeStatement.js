@@ -1047,6 +1047,16 @@ function getAssetData() {
 };
 
 function getPaymentData() {
+  tempData = {
+    auth: myToken,
+    startYear: startDate.getFullYear(),
+    startMonth: startDate.getMonth(),
+    startDay: startDate.getDate(),
+    endYear: endDate.getFullYear(),
+    endMonth: endDate.getMonth(),
+    endDay: endDate.getDate()
+  };
+
   return new Promise((resolve, reject) => {
     $.ajax({
       method: "GET",
@@ -1056,7 +1066,6 @@ function getPaymentData() {
     })
       .done(function (myPayments) {
         resolve(myPayments);
-
         PaymentsArray = myPayments.paymentEntries;
       })
       .fail(function (e) {

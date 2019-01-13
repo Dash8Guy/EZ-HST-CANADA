@@ -343,13 +343,12 @@ function updateOtherExpense() {
   }
 
   myDate = new Date(myDOMs.otherExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(
-    myDate.getFullYear(),
-    myDate.getMonth(),
-    myDate.getDate()
-  );
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.otherExp.NetAmt.value);
@@ -743,8 +742,9 @@ $("#otherExpBtn").click(function () {
     alert("To update existing expenses, Use the Save Changes button");
     return;
   }
+
   let myDate = new Date(myDOMs.otherExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
   let myStartMonth = myDate.getMonth();
   let myStartYear = myDate.getFullYear();
   let myStartDay = myDate.getDate();
@@ -799,7 +799,6 @@ $("#otherExpBtn").click(function () {
   if (myDOMs.otherExp.ReoccurYES.checked === true) {
 
     mydata = {
-      carDate: myDate,
       carnetAmt: myDOMs.otherExp.NetAmt.value,
       carhstAmt: myDOMs.otherExp.HSTAmt.value,
       carpstAmt: myDOMs.otherExp.PSTAmt.value,
@@ -942,12 +941,7 @@ $("#otherExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
-      formData.append("carDate", myTempDate);
+
       formData.append("carnetAmt", myDOMs.otherExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.otherExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.otherExp.PSTAmt.value);
@@ -958,6 +952,9 @@ $("#otherExpBtn").click(function () {
       formData.append("expReceipt", true);
       formData.append("auth", myToken);
       formData.append("carNumber", "Other");
+      formData.append("dateYear", myStartYear);
+      formData.append("dateMonth", myStartMonth);
+      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1014,14 +1011,8 @@ $("#otherExpBtn").click(function () {
       //business expense without receipt image
 
       let mydata;
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
 
       mydata = {
-        carDate: myTempDate,
         carnetAmt: myDOMs.otherExp.NetAmt.value,
         carhstAmt: myDOMs.otherExp.HSTAmt.value,
         carpstAmt: myDOMs.otherExp.PSTAmt.value,
@@ -1030,6 +1021,9 @@ $("#otherExpBtn").click(function () {
         vendorSelect: myDOMs.otherExp.Vendor.value,
         carExpCatSelect: myDOMs.otherExp.Category.value,
         expReceipt: false,
+        dateYear: myStartYear,
+        dateMonth: myStartMonth,
+        dateDay: myStartDay,
         auth: myToken,
         carNumber: "Other"
       };

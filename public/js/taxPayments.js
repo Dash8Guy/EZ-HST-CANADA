@@ -34,6 +34,9 @@ function addTAXPayment() {
 
   let myDate = new Date(myDOMs.TAXPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
   let mydata;
 
@@ -43,6 +46,9 @@ function addTAXPayment() {
     hstAmt: 0,
     taxAmt: myDOMs.TAXPayment.PaymentAmtInput.value,
     description: myDOMs.TAXPayment.PaymentDescription.value,
+    dateYear: myStartYear,
+    dateMonth: myStartMonth,
+    dateDay: myStartDay,
     auth: myToken,
   };
 
@@ -129,8 +135,12 @@ function updateTAXPayment() {
 
   myDate = new Date(myDOMs.TAXPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
-  formData.append("paymentDate", myDate);
+  formData.append("paymentDate", myTempDate);
   formData.append("taxAmt", myDOMs.TAXPayment.PaymentAmtInput.value);
   formData.append("hstAmt", 0);
   formData.append("pstAmt", 0);

@@ -37,14 +37,20 @@ function addPSTPayment() {
   let myDate = new Date(myDOMs.PSTPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
 
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
+
   let mydata;
 
   mydata = {
-    paymentDate: myDate,
     pstAmt: myDOMs.PSTPayment.PaymentAmtInput.value,
     hstAmt: 0,
     taxAmt: 0,
     description: myDOMs.PSTPayment.PaymentDescription.value,
+    dateYear: myStartYear,
+    dateMonth: myStartMonth,
+    dateDay: myStartDay,
     auth: myToken,
   };
 
@@ -131,8 +137,12 @@ function updatePSTPayment() {
 
   myDate = new Date(myDOMs.PSTPayment.DateInput.value);
   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
-  formData.append("paymentDate", myDate);
+  formData.append("paymentDate", myTempDate);
   formData.append("pstAmt", myDOMs.PSTPayment.PaymentAmtInput.value);
   formData.append("hstAmt", 0);
   formData.append("taxAmt", 0);

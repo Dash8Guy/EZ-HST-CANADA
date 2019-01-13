@@ -578,13 +578,12 @@ function updateVehicleExpense() {
   }
 
   myDate = new Date(myDOMs.carExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(
-    myDate.getFullYear(),
-    myDate.getMonth(),
-    myDate.getDate()
-  );
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.carExp.NetAmt.value);
@@ -1164,7 +1163,7 @@ $("#carExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.carExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
   let myStartMonth = myDate.getMonth();
   let myStartYear = myDate.getFullYear();
   let myStartDay = myDate.getDate();
@@ -1219,7 +1218,6 @@ $("#carExpBtn").click(function () {
   if (myDOMs.carExp.ReoccurYES.checked === true) {
     if (myDOMs.carExp.Selector.value === "Vehicle 1") {
       mydata = {
-        carDate: myDate,
         carnetAmt: myDOMs.carExp.NetAmt.value,
         carhstAmt: myDOMs.carExp.HSTAmt.value,
         carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1236,7 +1234,6 @@ $("#carExpBtn").click(function () {
       };
     } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
       mydata = {
-        carDate: myDate,
         carnetAmt: myDOMs.carExp.NetAmt.value,
         carhstAmt: myDOMs.carExp.HSTAmt.value,
         carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1385,13 +1382,6 @@ $("#carExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
-      formData.append("carDate", myTempDate);
       formData.append("carnetAmt", myDOMs.carExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.carExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.carExp.PSTAmt.value);
@@ -1401,6 +1391,9 @@ $("#carExpBtn").click(function () {
       formData.append("carExpCatSelect", myDOMs.carExp.Category.value);
       formData.append("expReceipt", true);
       formData.append("auth", myToken);
+      formData.append("dateYear", myStartYear);
+      formData.append("dateMonth", myStartMonth);
+      formData.append("dateDay", myStartDay);
       if (myDOMs.carExp.Selector.value === "Vehicle 1") {
         formData.append("carNumber", "1");
       } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
@@ -1468,14 +1461,9 @@ $("#carExpBtn").click(function () {
       //vehicle expense without receipt image
 
       let mydata;
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
+
       if (myDOMs.carExp.Selector.value === "Vehicle 1") {
         mydata = {
-          carDate: myTempDate,
           carnetAmt: myDOMs.carExp.NetAmt.value,
           carhstAmt: myDOMs.carExp.HSTAmt.value,
           carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1484,12 +1472,14 @@ $("#carExpBtn").click(function () {
           vendorSelect: myDOMs.carExp.Vendor.value,
           carExpCatSelect: myDOMs.carExp.Category.value,
           expReceipt: false,
+          dateYear: myStartYear,
+          dateMonth: myStartMonth,
+          dateDay: myStartDay,
           auth: myToken,
           carNumber: "1"
         };
       } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
         mydata = {
-          carDate: myTempDate,
           carnetAmt: myDOMs.carExp.NetAmt.value,
           carhstAmt: myDOMs.carExp.HSTAmt.value,
           carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1498,6 +1488,9 @@ $("#carExpBtn").click(function () {
           vendorSelect: myDOMs.carExp.Vendor.value,
           carExpCatSelect: myDOMs.carExp.Category.value,
           expReceipt: false,
+          dateYear: myStartYear,
+          dateMonth: myStartMonth,
+          dateDay: myStartDay,
           auth: myToken,
           carNumber: "2"
         };

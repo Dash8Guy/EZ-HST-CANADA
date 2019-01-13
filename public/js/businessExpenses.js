@@ -5,6 +5,43 @@ let imageTooSmall = false;
 populateBusinessCategories();
 disableEnableFullSizeBusinessImgBtn();
 
+
+function TestDateFormat() {
+  let myDate = new Date(myDOMs.main_page.StartDate.value);
+  alert(myDate.getTimezoneOffset())
+  alert(myDate.getHours());
+  //myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+
+  myDate.setHours(25);
+  alert(myDate.getTimezoneOffset())
+  alert(myDate.getHours());
+  let myYear = myDate.getFullYear();
+  let myMonth = myDate.getMonth();
+  let myDay = myDate.getDate();
+
+  tempStartDate = new Date(myYear, myMonth, myDay).toISOString();
+  alert(tempStartDate);
+
+
+  // alert(myDate.getTimezoneOffset());
+  //alert(myDate.getHours());
+  // alert(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+
+  // alert(myNewDate);
+  // alert(myDate.getHours());
+  // alert(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  //myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+
+
+  //let myUpdatedDate = myNewDate.toDateString();
+
+  // alert(myNewDate);
+  //myDate = myDate.toDateString();
+  //myDate = myDate.toLocaleString('en-US', { timeZone: 'America/Glace_Bay' });
+  //myDate = myDate.toLocaleString('en-US', { timeZone: 'America/Cancun' });
+  alert(tempStartDate);
+};
+
 function displayBusExpModal() {
   $("#BusExpenseModal").modal("show");
 
@@ -354,13 +391,12 @@ function updateBusinessExpense() {
   }
 
   myDate = new Date(myDOMs.busExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(
-    myDate.getFullYear(),
-    myDate.getMonth(),
-    myDate.getDate()
-  );
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.busExp.NetAmt.value);
@@ -854,10 +890,11 @@ $("#busExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.busExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
   let myStartMonth = myDate.getMonth();
   let myStartYear = myDate.getFullYear();
   let myStartDay = myDate.getDate();
+
   //Send message when trying to add receipt image with multiple monthly payments
   if (
     myDOMs.busExp.ReoccurYES.checked === true &&
@@ -909,7 +946,6 @@ $("#busExpBtn").click(function () {
   if (myDOMs.busExp.ReoccurYES.checked === true) {
 
     mydata = {
-      carDate: myDate,
       carnetAmt: myDOMs.busExp.NetAmt.value,
       carhstAmt: myDOMs.busExp.HSTAmt.value,
       carpstAmt: myDOMs.busExp.PSTAmt.value,
@@ -922,7 +958,7 @@ $("#busExpBtn").click(function () {
       dateMonth: myStartMonth,
       dateDay: myStartDay,
       auth: myToken,
-      carNumber: "Bus"
+      carNumber: "Bus",
     };
 
 
@@ -1054,13 +1090,6 @@ $("#busExpBtn").click(function () {
       }
 
 
-
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
-      formData.append("carDate", myTempDate);
       formData.append("carnetAmt", myDOMs.busExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.busExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.busExp.PSTAmt.value);
@@ -1071,6 +1100,9 @@ $("#busExpBtn").click(function () {
       formData.append("expReceipt", true);
       formData.append("auth", myToken);
       formData.append("carNumber", "Bus");
+      formData.append("dateYear", myStartYear);
+      formData.append("dateMonth", myStartMonth);
+      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1127,14 +1159,13 @@ $("#busExpBtn").click(function () {
       //business expense without receipt image
 
       let mydata;
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
+      // let myTempDate = new Date(
+      //   myDate.getFullYear(),
+      //   myDate.getMonth(),
+      //   myDate.getDate()
+      // );
 
       mydata = {
-        carDate: myTempDate,
         carnetAmt: myDOMs.busExp.NetAmt.value,
         carhstAmt: myDOMs.busExp.HSTAmt.value,
         carpstAmt: myDOMs.busExp.PSTAmt.value,
@@ -1143,6 +1174,9 @@ $("#busExpBtn").click(function () {
         vendorSelect: myDOMs.busExp.Vendor.value,
         carExpCatSelect: myDOMs.busExp.Category.value,
         expReceipt: false,
+        dateYear: myStartYear,
+        dateMonth: myStartMonth,
+        dateDay: myStartDay,
         auth: myToken,
         carNumber: "Bus"
       };

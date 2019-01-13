@@ -342,13 +342,12 @@ function updateRentalExpense() {
   }
 
   myDate = new Date(myDOMs.rentalExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(
-    myDate.getFullYear(),
-    myDate.getMonth(),
-    myDate.getDate()
-  );
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.rentalExp.NetAmt.value);
@@ -800,7 +799,7 @@ $("#rentalExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.rentalExp.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
   let myStartMonth = myDate.getMonth();
   let myStartYear = myDate.getFullYear();
   let myStartDay = myDate.getDate();
@@ -855,7 +854,6 @@ $("#rentalExpBtn").click(function () {
   if (myDOMs.rentalExp.ReoccurYES.checked === true) {
 
     mydata = {
-      carDate: myDate,
       carnetAmt: myDOMs.rentalExp.NetAmt.value,
       carhstAmt: myDOMs.rentalExp.HSTAmt.value,
       carpstAmt: myDOMs.rentalExp.PSTAmt.value,
@@ -998,12 +996,6 @@ $("#rentalExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
-      formData.append("carDate", myTempDate);
       formData.append("carnetAmt", myDOMs.rentalExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.rentalExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.rentalExp.PSTAmt.value);
@@ -1014,6 +1006,9 @@ $("#rentalExpBtn").click(function () {
       formData.append("expReceipt", true);
       formData.append("auth", myToken);
       formData.append("carNumber", "Rental");
+      formData.append("dateYear", myStartYear);
+      formData.append("dateMonth", myStartMonth);
+      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1070,14 +1065,8 @@ $("#rentalExpBtn").click(function () {
       //rental expense without receipt image
 
       let mydata;
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
 
       mydata = {
-        carDate: myTempDate,
         carnetAmt: myDOMs.rentalExp.NetAmt.value,
         carhstAmt: myDOMs.rentalExp.HSTAmt.value,
         carpstAmt: myDOMs.rentalExp.PSTAmt.value,
@@ -1086,6 +1075,9 @@ $("#rentalExpBtn").click(function () {
         vendorSelect: myDOMs.rentalExp.Vendor.value,
         carExpCatSelect: myDOMs.rentalExp.Category.value,
         expReceipt: false,
+        dateYear: myStartYear,
+        dateMonth: myStartMonth,
+        dateDay: myStartDay,
         auth: myToken,
         carNumber: "Rental"
       };

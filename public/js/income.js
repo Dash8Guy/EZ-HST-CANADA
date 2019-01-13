@@ -440,13 +440,12 @@ function updateIncome(source) {
   }
 
   myDate = new Date(myDOMs.income.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  let myStartMonth = myDate.getMonth();
+  let myStartYear = myDate.getFullYear();
+  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(
-    myDate.getFullYear(),
-    myDate.getMonth(),
-    myDate.getDate()
-  );
+  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
   formData.append("carDate", myTempDate);
   formData.append("carnetAmt", myDOMs.income.NetAmt.value);
@@ -825,7 +824,7 @@ $("#incomeExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.income.EntryDate.value);
-  myDate.setHours(40);
+  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
   let myStartMonth = myDate.getMonth();
   let myStartYear = myDate.getFullYear();
   let myStartDay = myDate.getDate();
@@ -1020,12 +1019,7 @@ $("#incomeExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
-      formData.append("carDate", myTempDate);
+
       formData.append("carnetAmt", myDOMs.income.NetAmt.value);
       formData.append("carhstAmt", myDOMs.income.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.income.PSTAmt.value);
@@ -1037,6 +1031,9 @@ $("#incomeExpBtn").click(function () {
       formData.append("auth", myToken);
       formData.append("carNumber", "Income");
       formData.append("source", source);
+      formData.append("dateYear", myStartYear);
+      formData.append("dateMonth", myStartMonth);
+      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1090,14 +1087,8 @@ $("#incomeExpBtn").click(function () {
       //business expense without receipt image
 
       let mydata;
-      let myTempDate = new Date(
-        myDate.getFullYear(),
-        myDate.getMonth(),
-        myDate.getDate()
-      );
 
       mydata = {
-        carDate: myTempDate,
         carnetAmt: myDOMs.income.NetAmt.value,
         carhstAmt: myDOMs.income.HSTAmt.value,
         carpstAmt: myDOMs.income.PSTAmt.value,
@@ -1106,6 +1097,9 @@ $("#incomeExpBtn").click(function () {
         vendorSelect: myDOMs.income.Vendor.value,
         carExpCatSelect: myDOMs.income.Party.value,
         expReceipt: false,
+        dateYear: myStartYear,
+        dateMonth: myStartMonth,
+        dateDay: myStartDay,
         auth: myToken,
         carNumber: "Income",
         source: source
