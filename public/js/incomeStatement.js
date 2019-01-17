@@ -1015,13 +1015,13 @@ function getAssetData() {
   let tempData;
 
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   return new Promise((resolve, reject) => {
@@ -1037,7 +1037,7 @@ function getAssetData() {
       })
       .fail(function (e) {
         reject(JSON.stringify(e.statusText, undefined, 2));
-        if (e.readyState === 0 || myToken === '') {
+        if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
           alert('You Must be logged in before using EZ-HST-CANADA>')
         } else {
           alert(JSON.stringify(e.statusText, undefined, 2));
@@ -1048,13 +1048,13 @@ function getAssetData() {
 
 function getPaymentData() {
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   return new Promise((resolve, reject) => {
@@ -1070,7 +1070,7 @@ function getPaymentData() {
       })
       .fail(function (e) {
         reject(JSON.stringify(e.statusText, undefined, 2));
-        if (e.readyState === 0 || myToken === '') {
+        if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '') {
           alert('You Must be logged in before using EZ-HST-CANADA>')
         } else {
           alert(JSON.stringify(e.statusText, undefined, 2));
@@ -1084,13 +1084,13 @@ function getRequestedData(carNumber, source) {
   //carNumber = Income, 1, 2, Bus, Home, Other, Rental
   tempData = {
     carNumber: carNumber,
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate(),
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate(),
     source: source
   };
 
@@ -1132,7 +1132,7 @@ function getRequestedData(carNumber, source) {
       })
       .fail(function (e) {
         reject(JSON.stringify(e.statusText, undefined, 2));
-        if (e.readyState === 0 || myToken === '') {
+        if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
           alert('You Must be logged in before using EZ-HST-CANADA>')
         } else {
           alert(JSON.stringify(e.statusText, undefined, 2));
@@ -2114,15 +2114,14 @@ async function getVehiclePercentage() {
   let percentFound = false;
   let myEndDate = new Date(myDOMs.main_page.EndDate.value);
   let myStartDate = new Date(myDOMs.main_page.StartDate.value);
-  myEndDate.setHours(myEndDate.getHours() + (myEndDate.getTimezoneOffset() / 60));
-  myStartDate.setHours(myStartDate.getHours() + (myStartDate.getTimezoneOffset() / 60));
+
 
   await getAllVehicleLogs();
   calculateBusinessPercentage(myEndDate, true);
 
-  switch (myStartDate.getMonth()) {
+  switch (myStartDate.getUTCMonth()) {
     case 0:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 0:
           V1BusPercent = BusPercJanV1;
           V2BusPercent = BusPercJanV2;
@@ -2141,7 +2140,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 1:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 1:
           V1BusPercent = BusPercFebV1;
           V2BusPercent = BusPercFebV2;
@@ -2149,7 +2148,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 2:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 2:
           V1BusPercent = BusPercMarV1;
           V2BusPercent = BusPercMarV2;
@@ -2157,7 +2156,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 3:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 3:
           V1BusPercent = BusPercAprV1;
           V2BusPercent = BusPercAprV2;
@@ -2170,7 +2169,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 4:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 4:
           V1BusPercent = BusPercMayV1;
           V2BusPercent = BusPercMayV2;
@@ -2178,7 +2177,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 5:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 5:
           V1BusPercent = BusPercJunV1;
           V2BusPercent = BusPercJunV2;
@@ -2186,7 +2185,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 6:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 6:
           V1BusPercent = BusPercJulV1;
           V2BusPercent = BusPercJulV2;
@@ -2199,7 +2198,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 7:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 7:
           V1BusPercent = BusPercAugV1;
           V2BusPercent = BusPercAugV2;
@@ -2207,7 +2206,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 8:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 8:
           V1BusPercent = BusPercSepV1;
           V2BusPercent = BusPercSepV2;
@@ -2215,7 +2214,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 9:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 9:
           V1BusPercent = BusPercOctV1;
           V2BusPercent = BusPercOctV2;
@@ -2228,7 +2227,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 10:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 10:
           V1BusPercent = BusPercNovV1;
           V2BusPercent = BusPercNovV2;
@@ -2236,7 +2235,7 @@ async function getVehiclePercentage() {
       }
       break;
     case 11:
-      switch (myEndDate.getMonth()) {
+      switch (myEndDate.getUTCMonth()) {
         case 11:
           V1BusPercent = BusPercDecV1;
           V2BusPercent = BusPercDecV2;

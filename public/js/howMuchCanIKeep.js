@@ -737,13 +737,13 @@ function getBusIncomeData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
    return new Promise((resolve, reject) => {
@@ -759,7 +759,7 @@ function getBusIncomeData() {
             BusAcctArray = data.busIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
@@ -776,13 +776,13 @@ function getRentalIncomeData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
 
@@ -799,7 +799,7 @@ function getRentalIncomeData() {
             RentalAcctArray = data.rentalIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -817,13 +817,13 @@ function getAllPaymentData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
    return new Promise((resolve, reject) => {
       $.ajax({
@@ -838,7 +838,7 @@ function getAllPaymentData() {
             AddCarDateToArray();
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -1192,9 +1192,19 @@ function buildHowMuchCanIKeepTable(
       HMrow2.appendChild(cellHM);
 
       cellHM = document.createElement("td");
-      myDate = new Date(el.carDate);
-      tempDate = myDate.toLocaleDateString();
-      cellTxtHM = document.createTextNode(tempDate);
+      let myDate = new Date(el.carDate);
+      let myDay = myDate.getUTCDate();
+      let myMonth = myDate.getUTCMonth() + 1;
+      let myYear = myDate.getUTCFullYear();
+      if (myDay < 10) {
+         myDay = `0${myDay}`;
+      }
+      if (myMonth < 10) {
+         myMonth = `0${myMonth}`;
+      }
+      let tempStringDateHM = `${myMonth}-${myDay}-${myYear}`;
+
+      cellTxtHM = document.createTextNode(tempStringDateHM);
       cellHM.appendChild(cellTxtHM);
       cellHM.setAttribute("class", "text-center");
       cellHM.setAttribute("id", `cellDate${index}`);

@@ -298,26 +298,51 @@ function buildAssetReportTable(
     AssetCell.appendChild(assetaLink);
     AssetCell.setAttribute("class", "text-center");
     Assetrow.appendChild(AssetCell);
+
     //Date Added
     AssetCell = document.createElement("td");
     myDate = new Date(arrTablePage1[i].purchaseDate);
-    tempDate = myDate.toLocaleDateString();
-    cellAssetTxt = document.createTextNode(tempDate);
+
+    let myCellDay = myDate.getUTCDate();
+    let myCellMonth = myDate.getUTCMonth() + 1;
+    let myCellYear = myDate.getUTCFullYear();
+    if (myCellDay < 10) {
+      myCellDay = `0${myCellDay}`;
+    }
+    if (myCellMonth < 10) {
+      myCellMonth = `0${myCellMonth}`;
+    }
+    let tempAssetStringDate = `${myCellMonth}-${myCellDay}-${myCellYear}`;
+
+    cellAssetTxt = document.createTextNode(tempAssetStringDate);
     AssetCell.appendChild(cellAssetTxt);
     AssetCell.setAttribute("class", "text-center");
     AssetCell.setAttribute("style", "color: rgb(0, 0, 0);");
     AssetCell.setAttribute("id", `cellPurchaseDate${i}`);
     Assetrow.appendChild(AssetCell);
+
     //Claim Date
     AssetCell = document.createElement("td");
     myDate = new Date(arrTablePage1[i].claimDate);
-    tempDate = myDate.toLocaleDateString();
-    cellAssetTxt = document.createTextNode(tempDate);
+    myCellDay = myDate.getUTCDate();
+    myCellMonth = myDate.getUTCMonth() + 1;
+    myCellYear = myDate.getUTCFullYear();
+
+    if (myCellDay < 10) {
+      myCellDay = `0${myCellDay}`;
+    }
+    if (myCellMonth < 10) {
+      myCellMonth = `0${myCellMonth}`;
+    }
+    tempAssetStringDate = `${myCellMonth}-${myCellDay}-${myCellYear}`;
+
+    cellAssetTxt = document.createTextNode(tempAssetStringDate);
     AssetCell.appendChild(cellAssetTxt);
     AssetCell.setAttribute("class", "text-center");
     AssetCell.setAttribute("style", "color: rgb(0, 0, 0);");
     AssetCell.setAttribute("id", `cellClaimDate${i}`);
     Assetrow.appendChild(AssetCell);
+
     //Description
     AssetCell = document.createElement("td");
     cellAssetTxt = document.createTextNode(arrTablePage1[i].description);
@@ -540,7 +565,7 @@ function addAssetTitleText(myTableAssetAlert, boldText) {
 
   myStrongTagAsset.setAttribute("id", "titleAssetNode");
   myStrongTagAsset.setAttribute("class", "font-weight-bold");
-  myStrongTagAsset.textContent = `${boldText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+  myStrongTagAsset.textContent = `${boldText} (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
   myTableAssetAlert.appendChild(myStrongTagAsset);
 }
 
@@ -746,9 +771,9 @@ function getAssetToEdit(lnk) {
 
   let myTempID = assetArray[selectRow]._id;
   let myClaimDate = new Date(assetArray[selectRow].claimDate);
-  let myDay = myClaimDate.getDate();
-  let myMonth = myClaimDate.getMonth() + 1;
-  let myYear = myClaimDate.getFullYear();
+  let myDay = myClaimDate.getUTCDate();
+  let myMonth = myClaimDate.getUTCMonth() + 1;
+  let myYear = myClaimDate.getUTCFullYear();
   if (myDay < 10) {
     myDay = `0${myDay}`;
   }
@@ -764,9 +789,9 @@ function getAssetToEdit(lnk) {
   myDOMs.FixedAssets.Claim_Date.value = myYear + "-" + myMonth + "-" + myDay;
 
   myClaimDate = new Date(assetArray[selectRow].purchaseDate);
-  myDay = myClaimDate.getDate();
-  myMonth = myClaimDate.getMonth() + 1;
-  myYear = myClaimDate.getFullYear();
+  myDay = myClaimDate.getUTCDate();
+  myMonth = myClaimDate.getUTCMonth() + 1;
+  myYear = myClaimDate.getUTCFullYear();
   if (myDay < 10) {
     myDay = `0${myDay}`;
   }

@@ -2,8 +2,7 @@
 
 startDate = new Date(myDOMs.main_page.StartDate.value);
 endDate = new Date(myDOMs.main_page.EndDate.value);
-startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
-endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
+
 
 myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
 
@@ -93,8 +92,7 @@ myDOMs.main_page.SelectPeriod.addEventListener('change', function (e) {
    }
    startDate = new Date(myDOMs.main_page.StartDate.value);
    endDate = new Date(myDOMs.main_page.EndDate.value);
-   startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
-   endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
+
    updateMainDataAfterTimePeriodChange();
 });
 
@@ -103,9 +101,12 @@ async function updateMainDataAfterTimePeriodChange() {
    await getVehiclePercentage();
    fillMainDataFromArrays();
    updateMainPageDisplayAmounts();
-   let myTempStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let myTempStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+   myTempStartDate.setUTCHours(0);
    let myTempEndDate = new Date(myDOMs.main_page.EndDate.value);
-   myTempEndDate.setHours(myTempEndDate.getHours() + (myTempEndDate.getTimezoneOffset() / 60));
+
+   //myTempEndDate.setHours(myTempEndDate.getHours() + (myTempEndDate.getTimezoneOffset() / 60));
    updatedViewDynamicData(myTempStartDate, myTempEndDate, true);
 };
 
@@ -113,47 +114,36 @@ myDOMs.main_page.StartDate.addEventListener('change', function (e) {
 
    if (userEmail === null || userEmail === '') {
       let myDate = new Date(myDOMs.main_page.StartDate.value);
-      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-      let myYear = myDate.getFullYear();
+      let myYear = myDate.getUTCFullYear();
       alert('You must be looged in to use any controls!');
       myDOMs.main_page.StartDate.value = `${myYear}-01-01`;
       return;
    }
    startDate = new Date(myDOMs.main_page.StartDate.value);
-   startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.EndDate.addEventListener('change', function (e) {
    if (userEmail === null || userEmail === '') {
       let myDate = new Date(myDOMs.main_page.EndDate.value);
-      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-      let myYear = myDate.getFullYear();
+      let myYear = myDate.getUTCFullYear();
       alert('You must be looged in to use any controls!');
       myDOMs.main_page.EndDate.value = `${myYear}-12-31`;
       return;
    }
    endDate = new Date(myDOMs.main_page.EndDate.value);
-   endDate.setHours(endDate.getHours() + (endDate.getTimezoneOffset() / 60));
 });
 
 myDOMs.main_page.LockDate.addEventListener('change', function (e) {
 
    if (userEmail === null || userEmail === '') {
       let myDate = new Date(myDOMs.main_page.StartDate.value);
-      myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-      let myYear = myDate.getFullYear() - 1;
+      let myYear = myDate.getUTCFullYear() - 1;
       alert('You must be looged in to use any controls!');
       myDOMs.main_page.LockDate.value = `${myYear}-12-31`;
       return;
    }
 
    let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-   myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
-   // let myHardCodeDate = new Date(
-   //    myTempHardCodeDate.getFullYear(),
-   //    myTempHardCodeDate.getMonth(),
-   //    myTempHardCodeDate.getDate()
-   // );
    dbMiscData.lockDate = myTempHardCodeDate;
    updateMiscData();
 });

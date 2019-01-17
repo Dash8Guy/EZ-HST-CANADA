@@ -652,9 +652,11 @@ async function fillAcctBalance() {
    AccountArray = TempArray.concat(PaymentAcctArray);
    await sortAccountArrayByDate();
    await addMathColumnsToArray();
-   let myTempStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let myTempStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+   myTempStartDate.setUTCHours(0);
+
    let myTempEndDate = new Date(myDOMs.main_page.EndDate.value);
-   myTempEndDate.setHours(myTempEndDate.getHours() + (myTempEndDate.getTimezoneOffset() / 60));
 
    updatedViewDynamicData(myTempStartDate, myTempEndDate, true);
 };
@@ -664,13 +666,13 @@ function FillBusIncomeData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate(),
    };
 
    return new Promise((resolve, reject) => {
@@ -686,9 +688,9 @@ function FillBusIncomeData() {
             BusAcctArray = data.busIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
-               alert('You Must be logged in before using EZ-HST-CANADA>')
+               alert('You Must be logged in before using EZ-HST-CANADA');
             } else {
                reject(e.statusText, undefined, 2);
                alert(JSON.stringify(e.statusText, undefined, 2));
@@ -703,13 +705,13 @@ function FillRentalIncomeData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate(),
    };
 
 
@@ -726,7 +728,7 @@ function FillRentalIncomeData() {
             RentalAcctArray = data.rentalIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -744,13 +746,13 @@ function FillAllPaymentData() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
    return new Promise((resolve, reject) => {
       $.ajax({
@@ -765,7 +767,7 @@ function FillAllPaymentData() {
             AddCarDateToArray();
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {

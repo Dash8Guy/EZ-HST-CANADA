@@ -109,7 +109,7 @@ function updateTimePeriodChange() {
          myDOMs.homePercentModal.BusinessHomePercent.value = Number((dbMiscData.homePercDec)).toFixed(2);
          setPercentGreen();
    }
-}
+};
 
 myDOMs.homePercentModal.PeriodSelect.addEventListener('change', function (event) {
    updateTimePeriodChange();
@@ -222,7 +222,7 @@ function verifyIfDuplicatePercent(percentValue) {
          }
    }
 
-}
+};
 
 myDOMs.homePercentModal.applyPercentBtn.addEventListener('click', function (event) {
    runHomePercentClickEvent();
@@ -366,39 +366,49 @@ async function runHomePercentClickEvent() {
 };
 
 function verifyLockDate() {
-
+   let myVarDate;
+   let myDateTemp = myDOMs.main_page.StartDate.value;
    switch (myDOMs.homePercentModal.PeriodSelect.value) {
-
       case 'Year':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 0, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case '1Q':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 0, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case '2Q':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 3, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 3, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case '3Q':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 6, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 6, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case '4Q':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 9, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 9, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
@@ -406,91 +416,115 @@ function verifyLockDate() {
          }
 
       case 'Jan':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 0, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Feb':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 1, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 1, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Mar':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 2, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 2, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Apr':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 3, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 3, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'May':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 4, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 4, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Jun':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 5, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 5, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Jul':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 6, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 6, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Aug':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 7, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 7, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Sep':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 8, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 8, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Oct':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 9, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 9, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Nov':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 10, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 10, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
       case 'Dec':
-         if (new Date(dbMiscData.lockDate) >= new Date(myDOMs.randomData.appYear, 11, 1)) {
+         myVarDate = new Date(myDateTemp.getUTCFullYear(), 11, 1);
+         myVarDate.setUTCHours(0);
+         if (Date.parse(dbMiscData.lockDate) >= Date.parse(myVarDate)) {
             alert(`Because your Time Period Falls within the Lock date. \n The Save Function has been disabled! \n This is Likely because the Lock Date was set to prevent any changes \n during the time period in which the HST/GST Return has been filed!`);
             return true;
          } else {
             return false;
          }
    }
-}
+};
 
 myDOMs.homePercentModal.BusinessHomePercent.addEventListener('input', function (event) {
    let IsDuplicate = false;
@@ -566,7 +600,7 @@ function doTheMath() {
 
 
 
-}
+};
 
 myDOMs.homePercentModal.homeArea.addEventListener('input', function (event) {
    if (myDOMs.homePercentModal.homeArea.value !== '' || myDOMs.homePercentModal.homeArea.value !== null || myDOMs.homePercentModal.homeArea.value !== undefined) {
@@ -679,4 +713,4 @@ function doReset() {
    myDOMs.homePercentModal.hrsPerDay.value = '';
    myDOMs.homePercentModal.daysPerWeek.value = '';
    updateTimePeriodChange();
-}
+};

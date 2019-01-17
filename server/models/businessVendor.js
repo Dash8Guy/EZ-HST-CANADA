@@ -8,7 +8,7 @@ const BusinessVendor = mongoose.model("BusinessVendor", {
   text: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   }
 });
 

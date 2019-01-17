@@ -1,4 +1,3 @@
-let myToken;
 //User Email
 let userEmail = '';
 
@@ -774,19 +773,13 @@ const myDOMs = {
 };
 
 myDOMs.nav.NavBarCollapse.addEventListener('click', function (event) {
-  // alert('Collapse Click');
-  // alert(`Nav Bar Open: ${NavBarCollapseOpen}`);
-  // alert(`NavBar Open: ${NavBarCollapseOpen}`);
-  // alert(`Event Trusted: ${event.isTrusted}`);
-  // if (event.isTrusted === false) {
-  // } else {
+
   if (NavBarCollapseOpen === true) {
     NavBarCollapseOpen = false;
   } else {
     NavBarCollapseOpen = true;
   }
-  // }
-  // alert(`NavBar Open: ${NavBarCollapseOpen}`);
+
 });
 
 
@@ -986,9 +979,9 @@ function runResizeCode() {
 
 function getTodaysDate() {
   let today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth() + 1; //January is 0!
-  let yyyy = today.getFullYear();
+  let dd = today.getUTCDate();
+  let mm = today.getUTCMonth() + 1; //January is 0!
+  let yyyy = today.getUTCFullYear();
 
   if (dd < 10) {
     dd = '0' + dd
@@ -1004,17 +997,18 @@ function getTodaysDate() {
 
 function formatMyDate(date) {
   let myDate = new Date(date);
-  let myDay = myDate.getDate();
-  let myMonth = myDate.getMonth() + 1;
-  let myYear = myDate.getFullYear();
-  // if (myDay < 10) {
-  //   myDay = `0${myDay}`;
-  // }
-  // if (myMonth < 10) {
-  //   myMonth = `0${myMonth}`;
-  // }
+  let myDay = myDate.getUTCDate();
+  let myMonth = myDate.getUTCMonth() + 1;
+  let myYear = myDate.getUTCFullYear();
 
-  return myMonth + "/" + myDay + "/" + myYear;
+  if (myDay < 10) {
+    myDay = `0${myDay}`;
+  }
+  if (myMonth < 10) {
+    myMonth = `0${myMonth}`;
+  }
+
+  return myMonth + "-" + myDay + "-" + myYear;
 }
 
 function arrOfObjectToArrOfArrays() {
@@ -1067,7 +1061,6 @@ function formatNumber(num) {
 function generateTablePDF(expGroup) {
   let headText;
   let fileSaveText;
-  let myTempDate = getTodaysDate();
   let data = arrOfObjectToArrOfArrays();
   let columns = ["  #  ", "DATE", "NET", "HST", "PST", "TOTAL", "DESCRIPTION", "SUPPLIER", "CATEGORY"];
   let doc = new jsPDF('l', 'px', 'letter', true);
@@ -1081,79 +1074,79 @@ function generateTablePDF(expGroup) {
   switch (expGroup) {
     case 'Bus-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Business(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+        headText = `${curTableArray.length} Business(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Business Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       } else {
-        headText = `${curTableArray.length} Business Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Business Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+        headText = `${curTableArray.length} Business Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Business Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       }
       break;
     case 'V1-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Vehicle-1(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+        headText = `${curTableArray.length} Vehicle-1(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Vehicle-1 Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       } else {
-        headText = `${curTableArray.length} Vehicle-1 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Vehicle-1 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+        headText = `${curTableArray.length} Vehicle-1 Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Vehicle-1 Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       }
       break;
     case 'V2-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Vehicle-2(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Vehicle-2(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Vehicle-2 Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Vehicle-2 Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Vehicle-2 Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Vehicle-2 Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Vehicle-2 Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'Home-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Home(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Home(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Home Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Home Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Home Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Home Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Home Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'Other-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Other(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Other(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Other Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Other Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Other Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Other Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Other Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'Rental-Exp':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Rental(${myReportTotal.categoryFull}) Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Rental(${myReportTotal.categoryFull}) Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Rental Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Rental Expenses. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Rental Expenses(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Rental Expenses. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Rental Expenses(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'Bus-Inc':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Business Revenue(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Business Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Business Revenue Entries. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Business Revenue(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'Rental-Inc':
       if (reOpenIncomeStatement) {
-        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Rental Revenue(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       } else {
-        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-        fileSaveText = `Rental Revenue(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+        headText = `${curTableArray.length} Rental Revenue Entries. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+        fileSaveText = `Rental Revenue(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
       }
       break;
     case 'VLog':
-      headText = `${curTableArray.length} Log Entries. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Vehicle Log(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`
+      headText = `${curTableArray.length} Log Entries. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+      fileSaveText = `Vehicle Log(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`
   }
   doc.text(headText, 34, 22);
   // if (data.column.dataKey === 'NET' || data.column.dataKey === 'HST' || data.column.dataKey === 'PST' || data.column.dataKey === 'TOTAL') {
@@ -1199,111 +1192,6 @@ function alignCol(cell, data, isHeader, expGroup) {
   }
 }
 
-function tableToJson(table) {
-  let data = [];
-
-  let headers = [];
-  for (let i = 0; i < table.rows[0].cells.length; i++) {
-    headers[i] = table.rows[0].cells[i].innerText;
-  }
-  data.push(headers);
-
-  for (let i = 1; i < table.rows.length; i++) {
-    let tableRow = table.rows[i];
-    let rowData = {};
-
-    for (let j = 0; j < tableRow.cells.length; j++) {
-      rowData[headers[j]] = tableRow.cells[j].innerText;
-      // console.log(tableRow.cells[j].innerHTML);
-    }
-
-    data.push(rowData);
-  }
-  return data;
-}
-
-// function PrintPDFTable() {
-//   let table = tableToJson($('#expReportTable').get(0));
-//   let doc = new jsPDF('l', 'px', 'letter', true);
-//   let counter = 0;
-//   doc.setFontSize(8);
-//   doc.cellInitialize();
-//   $.each(table, function (i, row) {
-//     //console.log(`i=${i} and row=${JSON.stringify(row, undefined, 2)}`);
-//     if (i === 0) {
-//       doc.setFontType('bold')
-//     } else {
-//       doc.setFontType('normal')
-//     }
-
-//     if (i === 26 || i === 51 || i === 76) {
-//       counter = 0;
-//       $.each(row, function (j, cell) {
-//         // console.log(`Column:${j}- has(${cell})`);
-
-//         if (counter === 0) {
-//           //Number
-//           doc.cell(2, 2, 14, 16.8, j, i);
-//         } else if (counter === 6) {
-//           //Description
-//           doc.cell(2, 2, 185, 16.8, j, i);
-//         } else if (counter === 7) {
-//           //Vendor
-//           doc.cell(2, 2, 90, 16.8, j, i);
-//         } else if (counter === 8) {
-//           //Category
-//           doc.cell(2, 2, 105, 16.8, j, i);
-//         } else if (counter === 9) {
-//           //Receipt
-//           doc.cell(2, 2, 31, 16.8, j, i);
-//         } else if (counter === 1) {
-//           //Date
-//           doc.cell(2, 2, 33, 16.8, j, i);
-//         } else if (counter === 2 || counter === 5) {
-//           //Net or Total
-//           doc.cell(2, 2, 36, 16.8, j, i);
-//         } else {
-//           //HST and PST
-//           doc.cell(2, 2, 28, 16.8, j, i);
-//         }
-//         counter = counter + 1;
-//       });
-//     }
-
-//     counter = 0;
-//     $.each(row, function (j, cell) {
-//       if (counter === 0) {
-//         //Number
-//         doc.cell(2, 2, 14, 16.8, cell, i);
-//       } else if (counter === 6) {
-//         //Description
-//         doc.cell(2, 2, 185, 16.8, cell, i);
-//       } else if (counter === 7) {
-//         //Vendor
-//         doc.cell(2, 2, 90, 16.8, cell, i);
-//       } else if (counter === 8) {
-//         //Category
-//         doc.cell(2, 2, 105, 16.8, cell, i);
-//       } else if (counter === 9) {
-//         //Receipt
-//         doc.cell(2, 2, 31, 16.8, cell, i);
-//       } else if (counter === 1) {
-//         //Date
-//         doc.cell(2, 2, 33, 16.8, cell, i);
-//       } else if (counter === 2 || counter === 5) {
-//         //Net or Total
-//         doc.cell(2, 2, 36, 16.8, cell, i);
-//       } else {
-//         //HST and PST
-//         doc.cell(2, 2, 28, 16.8, cell, i);
-//       }
-//       counter = counter + 1;
-//     });
-
-//   });
-
-//   doc.save('Test Table.pdf');
-// }
 
 function displayScreenSize() {
   alert(
@@ -1319,7 +1207,7 @@ function browserLogout() {
     method: "DELETE",
     async: false,
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (data) {
@@ -1354,7 +1242,7 @@ function resumeUserLogout(autoGenerated) {
       url: `${serverURL}users/me/token`,
       method: "DELETE",
       data: {
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       }
     })
       .done(function (data) {
@@ -1385,7 +1273,6 @@ function resumeUserLogout(autoGenerated) {
           );
           ToggleNavAfterTimeDelay();
           userEmail = '';
-          myToken = '';
         }
       })
       .fail(function (e) {
@@ -1409,7 +1296,7 @@ function ToggleNavAfterTimeDelay() {
 
 
 function afterLogout() {
-  myToken = "";
+  window.sessionStorage.removeItem('myRandomVar');
   vendorCar = false;
   categoryCar = false;
   emptyVendorSelect();
@@ -1459,6 +1346,11 @@ async function afterLogin(userName) {
   }
   verifyAllLocalStorageForSettings();
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
+  await populateBusinessCategories();
+  await populateHomeCategories();
+  await populateOtherCategories();
+  await populateRentalCategories();
+  await populateVehicleCategories();
   await populateVehicleVendors();
   await populateBusinessVendors();
   await populateHomeVendors();
@@ -1478,7 +1370,7 @@ function getUserMe() {
     method: "GET",
     url: `${serverURL}users/me`,
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (myUser) {
@@ -1548,7 +1440,7 @@ function loginUser() {
         "GREEN",
         6000
       );
-      myToken = data.token;
+      window.sessionStorage.setItem('myRandomVar', data.token);
       userEmail = tempdata.email;
       afterLogin(tempdata.firstName);
       myDOMs.userLoginModal.Form.reset();
@@ -1600,10 +1492,7 @@ function displayAlert(
       "alert alert-success alert-dismissible collapse"
     );
   }
-  // } else if (alertType === "TABLE CAR GREEN") {
-  //   //this code calls the function on tables.js and builds the table structure and Pagination if required and is appended lower in this code
-  //   buildVehicleExpenseTable(alertType);
-  // }
+
 
   myAlert.setAttribute("id", curAlertID);
 
@@ -1882,7 +1771,7 @@ function registerUser() {
         "RED",
         6000
       );
-      myToken = data.token;
+      window.sessionStorage.setItem('myRandomVar', data.token);
       afterLogin(mydata.firstName);
       myDOMs.userSetupModal.Form.reset();
     },
@@ -2114,7 +2003,7 @@ $("#userLoginModal").on("hidden.bs.modal", function () {
 
 // code to Logout when browser is closed
 window.addEventListener("beforeunload", function (event) {
-  if (myToken !== "") {
+  if (window.sessionStorage.getItem('myRandomVar') !== "" || window.sessionStorage.getItem('myRandomVar') !== null) {
     browserLogout();
   }
 });

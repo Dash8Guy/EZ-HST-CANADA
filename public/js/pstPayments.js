@@ -35,23 +35,14 @@ function addPSTPayment() {
   }
 
   let myDate = new Date(myDOMs.PSTPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
 
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
-
-  let mydata;
-
-  mydata = {
+  let mydata = {
+    paymentDate: myDate,
     pstAmt: myDOMs.PSTPayment.PaymentAmtInput.value,
     hstAmt: 0,
     taxAmt: 0,
     description: myDOMs.PSTPayment.PaymentDescription.value,
-    dateYear: myStartYear,
-    dateMonth: myStartMonth,
-    dateDay: myStartDay,
-    auth: myToken,
+    auth: window.sessionStorage.getItem('myRandomVar'),
   };
 
   $.ajax({
@@ -131,23 +122,16 @@ function updatePSTPayment() {
 
   let expID = myDOMs.PSTPayment.BlindID.value;
 
-  formData = new FormData();
+  let formData = new FormData();
 
-  let myDate;
+  let myDate = new Date(myDOMs.PSTPayment.DateInput.value);
 
-  myDate = new Date(myDOMs.PSTPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
-
-  formData.append("paymentDate", myTempDate);
+  formData.append("paymentDate", myDate);
   formData.append("pstAmt", myDOMs.PSTPayment.PaymentAmtInput.value);
   formData.append("hstAmt", 0);
   formData.append("taxAmt", 0);
   formData.append("description", myDOMs.PSTPayment.PaymentDescription.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
   $.ajax({
     method: "PATCH",
@@ -182,18 +166,20 @@ function updatePSTPayment() {
       };
       updatePSTPaymentArray(selectedRowNum, PaymentData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       originalPSTPayment.ID = data.NewPayment._id;
-      originalPSTPayment.Date = myYear + "-" + myMonth + "-" + myDay;
+      originalPSTPayment.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       originalPSTPayment.Description = myDOMs.PSTPayment.PaymentDescription.value;
       originalPSTPayment.Payment = parseFloat(myDOMs.PSTPayment.PaymentAmtInput.value);
       originalPSTPayment.Status = 'SAVED';
@@ -245,7 +231,7 @@ function deletePSTPayment() {
   if (confirm("Are you sure you want to Delete this Payment?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
     };
     $.ajax({
       url: `${serverURL}payments/${paymentID}`,
@@ -325,13 +311,13 @@ function getPSTPayments() {
   let tempData;
 
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   $.ajax({
@@ -358,7 +344,7 @@ function getPSTPayments() {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));

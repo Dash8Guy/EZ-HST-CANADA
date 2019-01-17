@@ -33,23 +33,14 @@ function addTAXPayment() {
   }
 
   let myDate = new Date(myDOMs.TAXPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  let mydata;
-
-  mydata = {
+  let mydata = {
     paymentDate: myDate,
     pstAmt: 0,
     hstAmt: 0,
     taxAmt: myDOMs.TAXPayment.PaymentAmtInput.value,
     description: myDOMs.TAXPayment.PaymentDescription.value,
-    dateYear: myStartYear,
-    dateMonth: myStartMonth,
-    dateDay: myStartDay,
-    auth: myToken,
+    auth: window.sessionStorage.getItem('myRandomVar'),
   };
 
   $.ajax({
@@ -129,23 +120,16 @@ function updateTAXPayment() {
 
   let expID = myDOMs.TAXPayment.BlindID.value;
 
-  formData = new FormData();
+  let formData = new FormData();
 
-  let myDate;
+  let myDate = new Date(myDOMs.TAXPayment.DateInput.value);
 
-  myDate = new Date(myDOMs.TAXPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
-
-  formData.append("paymentDate", myTempDate);
+  formData.append("paymentDate", myDate);
   formData.append("taxAmt", myDOMs.TAXPayment.PaymentAmtInput.value);
   formData.append("hstAmt", 0);
   formData.append("pstAmt", 0);
   formData.append("description", myDOMs.TAXPayment.PaymentDescription.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
   $.ajax({
     method: "PATCH",
@@ -180,18 +164,20 @@ function updateTAXPayment() {
       };
       updateTAXPaymentArray(selectedRowNum, TaxData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       originalTAXPayment.ID = data.NewPayment._id;
-      originalTAXPayment.Date = myYear + "-" + myMonth + "-" + myDay;
+      originalTAXPayment.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       originalTAXPayment.Description = myDOMs.TAXPayment.PaymentDescription.value;
       originalTAXPayment.Payment = parseFloat(myDOMs.TAXPayment.PaymentAmtInput.value);
       originalTAXPayment.Status = 'SAVED';
@@ -243,7 +229,7 @@ function deleteTAXPayment() {
   if (confirm("Are you sure you want to Delete this Payment?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
     };
     $.ajax({
       url: `${serverURL}payments/${paymentID}`,
@@ -323,13 +309,13 @@ function getTAXPayments() {
   let tempData;
 
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   $.ajax({
@@ -356,7 +342,7 @@ function getTAXPayments() {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));

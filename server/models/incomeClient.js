@@ -8,7 +8,7 @@ const IncomeClient = mongoose.model("IncomeClient", {
    text: {
       type: String,
       required: true,
-      unique: true
+      unique: false
    }
 });
 

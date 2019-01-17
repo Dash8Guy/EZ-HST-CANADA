@@ -260,8 +260,18 @@ function goToPage(page) {
     }
 
     myDate = new Date(el.carDate);
-    tempDate = myDate.toLocaleDateString();
-    document.getElementById(`cellDate${index}`).innerHTML = tempDate;
+    let myDay = myDate.getUTCDate();
+    let myMonth = myDate.getUTCMonth() + 1;
+    let myYear = myDate.getUTCFullYear();
+    if (myDay < 10) {
+      myDay = `0${myDay}`;
+    }
+    if (myMonth < 10) {
+      myMonth = `0${myMonth}`;
+    }
+    let tempStringDate = `${myMonth}-${myDay}-${myYear}`;
+
+    document.getElementById(`cellDate${index}`).innerHTML = tempStringDate;
     document.getElementById(
       `cellNetAmt${index}`
     ).innerHTML = `$${formatNumber(el.carnetAmt.toFixed(2))}`;
@@ -884,7 +894,7 @@ fillVehicleExpForm = async (expArr, row) => {
     currentTextModal = 'R-Income'
   }
 
-  if (new Date(dbMiscData.lockDate) >= new Date(expArr[row].carDate)) {
+  if (Date.parse(dbMiscData.lockDate) >= Date.parse(expArr[row].carDate)) {
     savedTransactionLocked = true;
     alert('Because the Transaction Date is on or before the Lock Date, you will not be allowed to save any changes to it!');
   };
@@ -919,9 +929,10 @@ fillVehicleExpForm = async (expArr, row) => {
 
   let myTempID = expArr[row]._id;
   let myDate = new Date(expArr[row].carDate);
-  let myDay = myDate.getDate();
-  let myMonth = myDate.getMonth() + 1;
-  let myYear = myDate.getFullYear();
+
+  let myDay = myDate.getUTCDate();
+  let myMonth = myDate.getUTCMonth() + 1;
+  let myYear = myDate.getUTCFullYear();
   if (myDay < 10) {
     myDay = `0${myDay}`;
   }
@@ -1073,43 +1084,43 @@ const getImageData = (myTempID, vehicleNum) => {
   let myTempData;
   if (vehicleNum === 1) {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "1"
     };
   } else if (vehicleNum === 2) {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "2"
     };
   } else if (vehicleNum === 'Bus') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Bus"
     };
   } else if (vehicleNum === 'Home') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Home"
     };
   } else if (vehicleNum === 'Other') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Other"
     };
   } else if (vehicleNum === 'Rental') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Rental"
     };
   } else if (vehicleNum === 'B-Income') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Income",
       source: 'Business'
     };
   } else if (vehicleNum === 'R-Income') {
     myTempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Income",
       source: 'Rental'
     };
@@ -1211,29 +1222,23 @@ function getRequestedArray(arrNum) {
   }
 }
 
-function testImgSrc() {
-  let container = document.getElementById("myImg");
-  let mySRC = container.getAttribute("src");
-  console.log(mySRC);
-}
-
 function updateRequestedArray(arrNum, row, data) {
   let varNumOne = 1;
   let arrRow = row;
   row = +row + +varNumOne;
   let myDate = new Date(data.carDate);
-  let myDay = myDate.getDate();
-  let myMonth = myDate.getMonth() + 1;
-  let myYear = myDate.getFullYear();
-  // if (myDay < 10) {
-  //   myDay = `0${myDay}`;
-  // }
-  // if (myMonth < 10) {
-  //   myMonth = `0${myMonth}`;
-  // }
+  let myDay = myDate.getUTCDate();
+  let myMonth = myDate.getUTCMonth() + 1;
+  let myYear = myDate.getUTCFullYear();
+  if (myDay < 10) {
+    myDay = `0${myDay}`;
+  }
+  if (myMonth < 10) {
+    myMonth = `0${myMonth}`;
+  }
 
   var myTable = document.getElementById("expReportTable");
-  myTable.rows[row].cells[1].innerHTML = myMonth + "/" + myDay + "/" + myYear;
+  myTable.rows[row].cells[1].innerHTML = `${myMonth}-${myDay}-${myYear}`;
   myTable.rows[row].cells[2].innerHTML = `$${data.carNetAmt.toFixed(2)}`;
   myTable.rows[row].cells[3].innerHTML = `$${data.carHSTAmt.toFixed(2)}`;
   myTable.rows[row].cells[4].innerHTML = `$${data.carPSTAmt.toFixed(2)}`;

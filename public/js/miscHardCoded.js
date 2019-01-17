@@ -1,12 +1,7 @@
 let MiscID = null;
 let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
 
-// let myHardCodeDate = new Date(
-//    myTempHardCodeDate.getFullYear(),
-//    myTempHardCodeDate.getMonth(),
-//    myTempHardCodeDate.getDate()
-// );
+
 
 let dbMiscData = {
    odometerV1: 0,
@@ -42,7 +37,7 @@ let dbMiscData = {
 
 function getMiscData() {
    tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
    };
 
    $.ajax({
@@ -91,9 +86,9 @@ function getMiscData() {
 
          //Add Date to Page Lock Date
          let mylockTempDate = new Date(dbMiscData.lockDate);
-         let mylockTempDateMonth = mylockTempDate.getMonth() + 1;
-         let mylockTempDateYear = mylockTempDate.getFullYear();
-         let mylockTempDateDay = mylockTempDate.getDate();
+         let mylockTempDateMonth = mylockTempDate.getUTCMonth() + 1;
+         let mylockTempDateYear = mylockTempDate.getUTCFullYear();
+         let mylockTempDateDay = mylockTempDate.getUTCDate();
 
          if (mylockTempDateDay < 10) {
             mylockTempDateDay = `0${mylockTempDateDay}`;
@@ -427,7 +422,7 @@ const miscData = {
 };
 
 function postMiscData(FromGetData) {
-   dbMiscData.auth = myToken;
+   dbMiscData.auth = window.sessionStorage.getItem('myRandomVar');
    $.ajax({
       url: `${serverURL}miscData`,
       method: "POST",
@@ -448,18 +443,7 @@ function postMiscData(FromGetData) {
 }
 
 function updateMiscData() {
-   if (dbMiscData.lockDate === null) {
-      let myTempHardCodeDate = new Date(myDOMs.main_page.LockDate.value);
-      myTempHardCodeDate.setHours(myTempHardCodeDate.getHours() + (myTempHardCodeDate.getTimezoneOffset() / 60));
-
-      // let myHardCodeDate = new Date(
-      //    myTempHardCodeDate.getFullYear(),
-      //    myTempHardCodeDate.getMonth(),
-      //    myTempHardCodeDate.getDate()
-      // );
-      dbMiscData.lockDate = myHardCodeDate;
-   }
-   dbMiscData.auth = myToken;
+   dbMiscData.auth = window.sessionStorage.getItem('myRandomVar');
 
    return new Promise((resolve, reject) => {
       $.ajax({

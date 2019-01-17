@@ -301,14 +301,26 @@ function buildVehicleExpenseTable(
     //cell.setAttribute("id", `cellNumber${i}`);
     row.appendChild(cell);
 
+
     cell = document.createElement("td");
-    myDate = new Date(arrTablePage1[i].carDate);
-    tempDate = myDate.toLocaleDateString();
-    cellTxt = document.createTextNode(tempDate);
+    let myDate = new Date(arrTablePage1[i].carDate);
+    let myDay = myDate.getUTCDate();
+    let myMonth = myDate.getUTCMonth() + 1;
+    let myYear = myDate.getUTCFullYear();
+    if (myDay < 10) {
+      myDay = `0${myDay}`;
+    }
+    if (myMonth < 10) {
+      myMonth = `0${myMonth}`;
+    }
+    let tempStringDate = `${myMonth}-${myDay}-${myYear}`;
+
+    cellTxt = document.createTextNode(tempStringDate);
     cell.appendChild(cellTxt);
     cell.setAttribute("class", "text-center");
     cell.setAttribute("id", `cellDate${i}`);
     row.appendChild(cell);
+
 
     cell = document.createElement("td");
     cellTxt = document.createTextNode(`$${arrTablePage1[i].carnetAmt.toFixed(2)}`);

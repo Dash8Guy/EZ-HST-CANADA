@@ -1,5 +1,5 @@
 //Random Function
-populateOtherCategories();
+// populateOtherCategories();
 disableEnableFullSizeOtherImgBtn();
 
 function displayOtherExpModal() {
@@ -67,7 +67,7 @@ function emptyOtherCategorySelect() {
 function postmyOtherVendor(myNewVendor) {
   const mydata = {
     text: myNewVendor,
-    auth: myToken
+    auth: window.sessionStorage.getItem('myRandomVar')
   };
 
   $.ajax({
@@ -91,13 +91,11 @@ function postmyOtherVendor(myNewVendor) {
       );
     })
     .fail(function (err) {
-      let myObjMsg = [err.responseJSON.body, err.responseJSON.fix];
-
       displayAlert(
         myDOMs.otherExp.AlertContainer,
         "otherExpAlert",
         "otherCloseBtnAlert",
-        `${err.responseJSON.title} `,
+        `${err} `,
         myObjMsg,
         ` `,
         "RED",
@@ -128,7 +126,7 @@ function deleteSelectedOtherVendor() {
       url: `${serverURL}otherVendors`,
       data: {
         text: selectedVendor,
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       },
       enctype: "multipart/form-data"
     })
@@ -169,7 +167,7 @@ function populateOtherVendors() {
     url: `${serverURL}otherVendors`,
     method: "GET",
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (data) {
@@ -279,7 +277,6 @@ function updateOtherExpense() {
   formData = new FormData();
   let file;
   let myDate;
-  let myTempDate;
   let myTempArr;
   let receiptPath = false;
   //Receipt to be saved in this if statement
@@ -343,14 +340,8 @@ function updateOtherExpense() {
   }
 
   myDate = new Date(myDOMs.otherExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
-
-  formData.append("carDate", myTempDate);
+  formData.append("carDate", myDate);
   formData.append("carnetAmt", myDOMs.otherExp.NetAmt.value);
   formData.append("carhstAmt", myDOMs.otherExp.HSTAmt.value);
   formData.append("carpstAmt", myDOMs.otherExp.PSTAmt.value);
@@ -358,7 +349,7 @@ function updateOtherExpense() {
   formData.append("carDescription", myDOMs.otherExp.Description.value);
   formData.append("vendorSelect", myDOMs.otherExp.Vendor.value);
   formData.append("carExpCatSelect", myDOMs.otherExp.Category.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
   formData.append("carNumber", "Other");
 
 
@@ -384,7 +375,7 @@ function updateOtherExpense() {
         6000
       );
       //Code to update report array
-      let carDate = myTempDate;
+      let carDate = myDate;
       let carNetAmt = parseFloat(myDOMs.otherExp.NetAmt.value);
       let carHSTAmt = parseFloat(myDOMs.otherExp.HSTAmt.value);
       let carPSTAmt = parseFloat(myDOMs.otherExp.PSTAmt.value);
@@ -406,19 +397,21 @@ function updateOtherExpense() {
       };
       updateRequestedArray(selectedArrayNum, selectedRowNum, OtherData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       myOriginalData.BlindID = data.NewExpense._id;
       myOriginalData.Category = myDOMs.otherExp.Category.value;
-      myOriginalData.Date = myYear + "-" + myMonth + "-" + myDay;
+      myOriginalData.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       //myOriginalData.Date = myTempDate;
       myOriginalData.Description = myDOMs.otherExp.Description.value;
       myOriginalData.Hst = parseFloat(myDOMs.otherExp.HSTAmt.value);
@@ -535,7 +528,7 @@ function deleteOtherExpense() {
   if (confirm("Are you sure you want to Delete this Expense?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: 'Other'
     };
     $.ajax({
@@ -662,13 +655,13 @@ function getOtherExpenses(myFilter) {
 
   tempData = {
     carNumber: "Other",
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   $.ajax({
@@ -722,7 +715,7 @@ function getOtherExpenses(myFilter) {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -744,10 +737,7 @@ $("#otherExpBtn").click(function () {
   }
 
   let myDate = new Date(myDOMs.otherExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
+
   //Send message when trying to add receipt image with multiple monthly payments
   if (
     myDOMs.otherExp.ReoccurYES.checked === true &&
@@ -799,6 +789,7 @@ $("#otherExpBtn").click(function () {
   if (myDOMs.otherExp.ReoccurYES.checked === true) {
 
     mydata = {
+      carDate: myDate,
       carnetAmt: myDOMs.otherExp.NetAmt.value,
       carhstAmt: myDOMs.otherExp.HSTAmt.value,
       carpstAmt: myDOMs.otherExp.PSTAmt.value,
@@ -807,10 +798,7 @@ $("#otherExpBtn").click(function () {
       vendorSelect: myDOMs.otherExp.Vendor.value,
       carExpCatSelect: myDOMs.otherExp.Category.value,
       carExpReoccuring: 1,
-      dateYear: myStartYear,
-      dateMonth: myStartMonth,
-      dateDay: myStartDay,
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Other"
     };
 
@@ -941,7 +929,7 @@ $("#otherExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-
+      formData.append("carDate", myDate);
       formData.append("carnetAmt", myDOMs.otherExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.otherExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.otherExp.PSTAmt.value);
@@ -950,11 +938,8 @@ $("#otherExpBtn").click(function () {
       formData.append("vendorSelect", myDOMs.otherExp.Vendor.value);
       formData.append("carExpCatSelect", myDOMs.otherExp.Category.value);
       formData.append("expReceipt", true);
-      formData.append("auth", myToken);
+      formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
       formData.append("carNumber", "Other");
-      formData.append("dateYear", myStartYear);
-      formData.append("dateMonth", myStartMonth);
-      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1013,6 +998,7 @@ $("#otherExpBtn").click(function () {
       let mydata;
 
       mydata = {
+        carDate: myDate,
         carnetAmt: myDOMs.otherExp.NetAmt.value,
         carhstAmt: myDOMs.otherExp.HSTAmt.value,
         carpstAmt: myDOMs.otherExp.PSTAmt.value,
@@ -1021,10 +1007,7 @@ $("#otherExpBtn").click(function () {
         vendorSelect: myDOMs.otherExp.Vendor.value,
         carExpCatSelect: myDOMs.otherExp.Category.value,
         expReceipt: false,
-        dateYear: myStartYear,
-        dateMonth: myStartMonth,
-        dateDay: myStartDay,
-        auth: myToken,
+        auth: window.sessionStorage.getItem('myRandomVar'),
         carNumber: "Other"
       };
 

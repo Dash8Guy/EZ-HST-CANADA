@@ -8,7 +8,7 @@ const VehicleVendor = mongoose.model("VehicleVendor", {
   text: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   }
 });
 

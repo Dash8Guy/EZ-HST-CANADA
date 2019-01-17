@@ -2,25 +2,168 @@
 let ImgReceiptToSend;
 //this variable is set to true if original image is smaller than 360 kb;
 let imageTooSmall = false;
-populateBusinessCategories();
+// populateBusinessCategories();
 disableEnableFullSizeBusinessImgBtn();
 
 
 function TestDateFormat() {
-  let myDate = new Date(myDOMs.main_page.StartDate.value);
-  alert(myDate.getTimezoneOffset())
-  alert(myDate.getHours());
+  startDate = new Date(myDOMs.main_page.StartDate.value);
+
+  var myDate = new Date(2019, 0, 16);
+  // var myDateFormat = myDate.toDateString(); //Wed Jan 16 2019
+  // alert(myDateFormat);
+  // var myDateFormat = myDate.toLocaleDateString(); //1/16/2019
+  // alert(myDateFormat);
+  // var myDateFormat = myDate.toLocaleString(); //1/16/2019, 12:00:00 AM
+  // alert(myDateFormat);
+  // var myDateFormat = myDate.toUTCString(); //Wed, 16 Jan 2019 04:00:00 GMT
+  // alert(myDateFormat);
+  var myDateFormat = myDate.toISOString(); //2019-01-16T04:00:00.000Z
+  let myDateOnly = myDateFormat.substring(0, 10);
+  alert(myDateOnly);
+  // var myDateFormat = myDate.toString(); //Wed Jan 16 2019 00:00:00 GMT-0400 (Atlantic Standard Time)
+  // alert(myDateFormat);
+
+
+
+
+  // let myYear = startDate.getUTCFullYear();
+  // let myMonth = startDate.getUTCMonth();
+  // let myDay = startDate.getUTCDate();
+
+  // let myNewDate = new Date(myYear, myMonth, myDay);
+  // myNewDate.setUTCHours(0);
+  // //They are both the same
+  // alert(startDate.toISOString());
+  // alert(myNewDate.toISOString());
+
+  // if (myDay < 10) {
+  //   myDay = `0${myDay}`;
+  // }
+  // if (myMonth < 10) {
+  //   myMonth = `0${myMonth}`;
+  // }
+
+  // myDOMs.main_page.StartDate.value = myYear + "-" + myMonth + "-" + myDay;
+
+  // let myDate = new Date(2018, 0, 1);
+
+  // alert(myDate.getHours());
+  // alert(myDate.getUTCHours());
+  // alert(myDate.getTimezoneOffset());
+
+  // let myDate2 = new Date(myDOMs.main_page.StartDate.value).toISOString();
+
+  // alert(myDate);
+  // alert(myDate2);
+  // myDate.setHours(-(myDate.getTimezoneOffset() / 60));
+  // myDate = myDate.toISOString();
+
+
+
+  // var userEnteredDate = "12/20/1989";
+  // var parts = userEnteredDate.split("/");
+
+  // var userEnteredDateISO = parts[2] + "-" + parts[0] + "-" + parts[1];
+
+  // var userEnteredDateObj = new Date(userEnteredDateISO);
+  // var dateFromAPI = new Date("1989-12-20T00:00:00Z");
+
+  // var result = userEnteredDateObj.getTime() == dateFromAPI.getTime();
+  // alert(userEnteredDateObj.toISOString());
+  // alert(dateFromAPI);
+
+
+  // alert(result);
+
+
+  // let myDate = new Date(myDOMs.main_page.EndDate.value).toISOString();
+  // let NumDate = Date.parse(myDate);
+  // let newDate = new Date(NumDate);
+  // alert(myDate);
+  // alert(NumDate);
+  // alert(newDate);
+
+  // var userEnteredDate = new Date("12/20/1989");
+  // var userEnteredDateTimeStamp = Date.UTC(userEnteredDate.getFullYear(), userEnteredDate.getMonth(), userEnteredDate.getDate());
+  // alert(userEnteredDateTimeStamp);
+  // var myDate = new Date(userEnteredDate.getFullYear(), userEnteredDate.getMonth(), userEnteredDate.getDate());
+  // alert(myDate);
+  // var dateFromAPI = new Date("1989-12-20T00:00:00Z");
+  // var result = userEnteredDateTimeStamp == dateFromAPI.getTime();
+
+  // alert(result);
+
+
+
+
+
+
+
+
+  // alert(`Month: ${myDate.getUTCMonth()}`);
+  // alert(`Date: ${myDate.getUTCDate()}`);
+  // alert(`Year: ${myDate.getUTCFullYear()}`);
+  // alert(`Day: ${myDate.getUTCDay()}`);
+  // alert(`Hours: ${myDate.getUTCHours()}`);
+
+
+  // let myStartMonth = myDate.getMonth();
+  // let myStartYear = myDate.getFullYear();
+  // let myStartDay = myDate.getDate();
+
+  // alert(`Month: ${myStartMonth}`);
+  // alert(`Year: ${myStartYear}`);
+  // alert(`Day: ${myStartDay}`);
+
+
+  // myYear = 2018;
+  // myMonth = 1;
+  // myDay = 3
+
+  // if (myDay < 10) {
+  //   myDay = `0${myDay}`;
+  // }
+  // if (myMonth < 10) {
+  //   myMonth = `0${myMonth}`;
+  // }
+
+  // myDOMs.main_page.StartDate.value = myYear + "-" + myMonth + "-" + myDay;
+
+  // let myOtherDate = new Date(myDOMs.main_page.StartDate.value).toISOString();
+
+  // if (myDate > myOtherDate) {
+  //   alert('It works');
+  // } else {
+  //   alert('my Date is before my other date');
+  // }
+
+  //myDate.setHours(20);
+  //alert(myDate.getHours());
   //myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+  //myDate = myDate.toISOString();
+  //alert(myDate);
+  //alert(myDate.toISOString());
 
-  myDate.setHours(25);
-  alert(myDate.getTimezoneOffset())
-  alert(myDate.getHours());
-  let myYear = myDate.getFullYear();
-  let myMonth = myDate.getMonth();
-  let myDay = myDate.getDate();
+  // let myTempDate = new Date(2018, 0, 1);
+  // myTempDate.setHours(-(myTempDate.getTimezoneOffset() / 60));
+  // alert(myTempDate.getHours());
+  // alert(myTempDate.getTimezoneOffset() / 60);
+  // alert(myTempDate);
+  // alert(myTempDate.toISOString());
+  // alert(myDate.getTimezoneOffset())
+  // alert(myDate.getHours());
+  // //myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
 
-  tempStartDate = new Date(myYear, myMonth, myDay).toISOString();
-  alert(tempStartDate);
+  // myDate.setHours(25);
+  // alert(myDate.getTimezoneOffset())
+  // alert(myDate.getHours());
+  // let myYear = myDate.getFullYear();
+  // let myMonth = myDate.getMonth();
+  // let myDay = myDate.getDate();
+
+  // tempStartDate = new Date(myYear, myMonth, myDay).toISOString();
+  // alert(tempStartDate);
 
 
   // alert(myDate.getTimezoneOffset());
@@ -39,7 +182,7 @@ function TestDateFormat() {
   //myDate = myDate.toDateString();
   //myDate = myDate.toLocaleString('en-US', { timeZone: 'America/Glace_Bay' });
   //myDate = myDate.toLocaleString('en-US', { timeZone: 'America/Cancun' });
-  alert(tempStartDate);
+  // alert(tempStartDate);
 };
 
 function displayBusExpModal() {
@@ -59,6 +202,7 @@ function displayBusExpModal() {
 
 }
 function hideBusExpModal() {
+
   myDOMs.busExp.EntryForm.reset();
   removeBusImage();
   resetOriginalData();
@@ -109,7 +253,7 @@ function emptyBusCategorySelect() {
 function postmyBusVendor(myNewVendor) {
   const mydata = {
     text: myNewVendor,
-    auth: myToken
+    auth: window.sessionStorage.getItem('myRandomVar')
   };
 
   $.ajax({
@@ -133,13 +277,11 @@ function postmyBusVendor(myNewVendor) {
       );
     })
     .fail(function (err) {
-      let myObjMsg = [err.responseJSON.body, err.responseJSON.fix];
-
       displayAlert(
         myDOMs.busExp.AlertContainer,
         "busExpAlert",
         "busCloseBtnAlert",
-        `${err.responseJSON.title} `,
+        `${err} `,
         myObjMsg,
         ` `,
         "RED",
@@ -170,7 +312,7 @@ function deleteSelectedBusinessVendor() {
       url: `${serverURL}businessVendors`,
       data: {
         text: selectedVendor,
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       },
       enctype: "multipart/form-data"
     })
@@ -211,7 +353,7 @@ function populateBusinessVendors() {
     url: `${serverURL}businessVendors`,
     method: "GET",
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (data) {
@@ -325,7 +467,6 @@ function updateBusinessExpense() {
   formData = new FormData();
   let file;
   let myDate;
-  let myTempDate;
   let myTempArr;
   let receiptPath = false;
   //Receipt to be saved in this if statement
@@ -391,14 +532,9 @@ function updateBusinessExpense() {
   }
 
   myDate = new Date(myDOMs.busExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
 
-  formData.append("carDate", myTempDate);
+  formData.append("carDate", myDate);
   formData.append("carnetAmt", myDOMs.busExp.NetAmt.value);
   formData.append("carhstAmt", myDOMs.busExp.HSTAmt.value);
   formData.append("carpstAmt", myDOMs.busExp.PSTAmt.value);
@@ -406,7 +542,7 @@ function updateBusinessExpense() {
   formData.append("carDescription", myDOMs.busExp.Description.value);
   formData.append("vendorSelect", myDOMs.busExp.Vendor.value);
   formData.append("carExpCatSelect", myDOMs.busExp.Category.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
   formData.append("carNumber", "Bus");
 
 
@@ -432,7 +568,7 @@ function updateBusinessExpense() {
         6000
       );
       //Code to update report array
-      let carDate = myTempDate;
+      let carDate = myDate;
       let carNetAmt = parseFloat(myDOMs.busExp.NetAmt.value);
       let carHSTAmt = parseFloat(myDOMs.busExp.HSTAmt.value);
       let carPSTAmt = parseFloat(myDOMs.busExp.PSTAmt.value);
@@ -454,19 +590,21 @@ function updateBusinessExpense() {
       };
       updateRequestedArray(selectedArrayNum, selectedRowNum, BusData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       myOriginalData.BlindID = data.NewExpense._id;
       myOriginalData.Category = myDOMs.busExp.Category.value;
-      myOriginalData.Date = myYear + "-" + myMonth + "-" + myDay;
+      myOriginalData.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       //myOriginalData.Date = myTempDate;
       myOriginalData.Description = myDOMs.busExp.Description.value;
       myOriginalData.Hst = parseFloat(myDOMs.busExp.HSTAmt.value);
@@ -685,7 +823,7 @@ function deleteBusinessExpense() {
   if (confirm("Are you sure you want to Delete this Expense?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: 'Bus'
     };
     $.ajax({
@@ -809,14 +947,15 @@ function getBusinessExpenses(myFilter) {
 
   tempData = {
     carNumber: "Bus",
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
+
 
   $.ajax({
     method: "GET",
@@ -869,7 +1008,7 @@ function getBusinessExpenses(myFilter) {
 
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' | window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -890,10 +1029,6 @@ $("#busExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.busExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
   //Send message when trying to add receipt image with multiple monthly payments
   if (
@@ -946,6 +1081,7 @@ $("#busExpBtn").click(function () {
   if (myDOMs.busExp.ReoccurYES.checked === true) {
 
     mydata = {
+      carDate: myDate,
       carnetAmt: myDOMs.busExp.NetAmt.value,
       carhstAmt: myDOMs.busExp.HSTAmt.value,
       carpstAmt: myDOMs.busExp.PSTAmt.value,
@@ -954,10 +1090,7 @@ $("#busExpBtn").click(function () {
       vendorSelect: myDOMs.busExp.Vendor.value,
       carExpCatSelect: myDOMs.busExp.Category.value,
       carExpReoccuring: 1,
-      dateYear: myStartYear,
-      dateMonth: myStartMonth,
-      dateDay: myStartDay,
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Bus",
     };
 
@@ -1089,7 +1222,8 @@ $("#busExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-
+      // formData.append("carDate", myDate);
+      formData.append("carDate", myDate);
       formData.append("carnetAmt", myDOMs.busExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.busExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.busExp.PSTAmt.value);
@@ -1098,11 +1232,9 @@ $("#busExpBtn").click(function () {
       formData.append("vendorSelect", myDOMs.busExp.Vendor.value);
       formData.append("carExpCatSelect", myDOMs.busExp.Category.value);
       formData.append("expReceipt", true);
-      formData.append("auth", myToken);
+      formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
       formData.append("carNumber", "Bus");
-      formData.append("dateYear", myStartYear);
-      formData.append("dateMonth", myStartMonth);
-      formData.append("dateDay", myStartDay);
+
 
       $.ajax({
         method: "POST",
@@ -1166,6 +1298,7 @@ $("#busExpBtn").click(function () {
       // );
 
       mydata = {
+        carDate: myDate,
         carnetAmt: myDOMs.busExp.NetAmt.value,
         carhstAmt: myDOMs.busExp.HSTAmt.value,
         carpstAmt: myDOMs.busExp.PSTAmt.value,
@@ -1174,10 +1307,7 @@ $("#busExpBtn").click(function () {
         vendorSelect: myDOMs.busExp.Vendor.value,
         carExpCatSelect: myDOMs.busExp.Category.value,
         expReceipt: false,
-        dateYear: myStartYear,
-        dateMonth: myStartMonth,
-        dateDay: myStartDay,
-        auth: myToken,
+        auth: window.sessionStorage.getItem('myRandomVar'),
         carNumber: "Bus"
       };
 

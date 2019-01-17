@@ -103,8 +103,17 @@ function buildVehicleLogTable(
 
       let vLogcell = document.createElement("td");
       myvLogDate = new Date(arrTableJan[i].logDate);
-      tempvLogDate = myvLogDate.toLocaleDateString();
-      let vLogcellTxt = document.createTextNode(tempvLogDate);
+      let myDay = myvLogDate.getUTCDate();
+      let myMonth = myvLogDate.getUTCMonth() + 1;
+      let myYear = myvLogDate.getUTCFullYear();
+      if (myDay < 10) {
+        myDay = `0${myDay}`;
+      }
+      if (myMonth < 10) {
+        myMonth = `0${myMonth}`;
+      }
+      let tempStringDate = `${myMonth}-${myDay}-${myYear}`;
+      let vLogcellTxt = document.createTextNode(tempStringDate);
       vLogcell.appendChild(vLogcellTxt);
       vLogcell.setAttribute("class", "text-center");
       vLogcell.setAttribute("id", `cellDate-${i}`);
@@ -454,8 +463,6 @@ function goToNext() {
 };
 
 
-
-
 function fillTableArrays() {
   arrTableJan = filterVlogMonth(0);
   arrTableFeb = filterVlogMonth(1);
@@ -475,7 +482,7 @@ function fillTableArrays() {
 function filterVlogMonth(myMonth) {
   let myArray = VlogcurTableArray.filter((vLog, index) => {
     var date = new Date(vLog.logDate);
-    return (date.getMonth() === myMonth);
+    return (date.getUTCMonth() === myMonth);
   })
   return myArray;
 }
@@ -506,11 +513,11 @@ function addPercentandOdometertoArray() {
   let continuousRunningBusAmtV2 = 0;
   let continuousRunningPersAmtV2 = 0;
   let mytempLogDate = new Date(vLogArray[0].logDate);
-  let previousLoggedMonth = mytempLogDate.getMonth();
+  let previousLoggedMonth = mytempLogDate.getUTCMonth();
   vLogArray.forEach((vLog, index) => {
     let myrunningDate = new Date(vLog.logDate);
     //alert(`${myrunningDate.getMonth()}`);
-    let myLoggedMonth = myrunningDate.getMonth();
+    let myLoggedMonth = myrunningDate.getUTCMonth();
 
     if (previousLoggedMonth !== myLoggedMonth) {
 
@@ -523,7 +530,7 @@ function addPercentandOdometertoArray() {
     continuousRunningPersAmtV1 += vLog.PersKMV1;
     continuousRunningBusAmtV2 += vLog.BusKMV2;
     continuousRunningPersAmtV2 += vLog.PersKMV2;
-    previousLoggedMonth = myrunningDate.getMonth();
+    previousLoggedMonth = myrunningDate.getUTCMonth();
     runningBusAmtV1 += vLog.BusKMV1;
     runningPersAmtV1 += vLog.PersKMV1;
     runningBusAmtV2 += vLog.BusKMV2;
@@ -671,8 +678,17 @@ function goToVlogPage(myMonth) {
   myTempArray.forEach(function (el, index) {
 
     myDate = new Date(el.logDate);
-    tempDate = myDate.toLocaleDateString();
-    document.getElementById(`cellDate-${index}`).innerHTML = tempDate;
+    let myDay = myDate.getUTCDate();
+    let myMonth = myDate.getUTCMonth() + 1;
+    let myYear = myDate.getUTCFullYear();
+    if (myDay < 10) {
+      myDay = `0${myDay}`;
+    }
+    if (myMonth < 10) {
+      myMonth = `0${myMonth}`;
+    }
+    let tempStringDate = `${myMonth}-${myDay}-${myYear}`;
+    document.getElementById(`cellDate-${index}`).innerHTML = tempStringDate;
     document.getElementById(`cellV1BusKM-${index}`).innerHTML = `${formatNumber(el.BusKMV1.toFixed(1))}`;
     document.getElementById(`cellV1PersKM-${index}`).innerHTML = `${formatNumber(el.PersKMV1.toFixed(1))}`;
     document.getElementById(`cellV1Odometer-${index}`).innerHTML = `${formatNumber(el.V1Odometer.toFixed(1))}`;

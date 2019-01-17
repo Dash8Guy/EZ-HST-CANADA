@@ -41,22 +41,14 @@ function addHSTPayment() {
   }
 
   let myDate = new Date(myDOMs.HSTPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  let mydata;
-
-  mydata = {
+  let mydata = {
+    paymentDate: myDate,
     hstAmt: myDOMs.HSTPayment.PaymentAmtInput.value,
     pstAmt: 0,
     taxAmt: 0,
     description: myDOMs.HSTPayment.PaymentDescription.value,
-    dateYear: myStartYear,
-    dateMonth: myStartMonth,
-    dateDay: myStartDay,
-    auth: myToken,
+    auth: window.sessionStorage.getItem('myRandomVar'),
   };
 
   $.ajax({
@@ -136,23 +128,17 @@ function updateHSTPayment() {
 
   let expID = myDOMs.HSTPayment.BlindID.value;
 
-  formData = new FormData();
+  let formData = new FormData();
 
-  let myDate;
 
-  myDate = new Date(myDOMs.HSTPayment.DateInput.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
+  let myDate = new Date(myDOMs.HSTPayment.DateInput.value);
 
-  formData.append("paymentDate", myTempDate);
+  formData.append("paymentDate", myDate);
   formData.append("hstAmt", myDOMs.HSTPayment.PaymentAmtInput.value);
   formData.append("pstAmt", 0);
   formData.append("taxAmt", 0);
   formData.append("description", myDOMs.HSTPayment.PaymentDescription.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
   $.ajax({
     method: "PATCH",
@@ -187,18 +173,20 @@ function updateHSTPayment() {
       };
       updatePaymentArray(selectedRowNum, PaymentData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       originalHSTPayment.ID = data.NewPayment._id;
-      originalHSTPayment.Date = myYear + "-" + myMonth + "-" + myDay;
+      originalHSTPayment.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       originalHSTPayment.Description = myDOMs.HSTPayment.PaymentDescription.value;
       originalHSTPayment.Payment = parseFloat(myDOMs.HSTPayment.PaymentAmtInput.value);
       originalHSTPayment.Status = 'SAVED';
@@ -250,7 +238,7 @@ function deleteHSTPayment() {
   if (confirm("Are you sure you want to Delete this Payment?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
     };
     $.ajax({
       url: `${serverURL}payments/${paymentID}`,
@@ -331,13 +319,13 @@ function getAllPayments() {
   let tempData;
 
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   $.ajax({
@@ -364,7 +352,7 @@ function getAllPayments() {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -381,13 +369,13 @@ function getHSTPayments() {
   let tempData;
 
   tempData = {
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate()
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate()
   };
 
   $.ajax({
@@ -414,7 +402,7 @@ function getHSTPayments() {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -563,16 +551,23 @@ function setHSTPaymentStatusColor() {
 
 function updatePaymentArray(row, data) {
   let myDate = new Date(data.paymentDate);
-  let myDay = myDate.getDate();
-  let myMonth = myDate.getMonth() + 1;
-  let myYear = myDate.getFullYear();
+  let myDay = myDate.getUTCDate();
+  let myMonth = myDate.getUTCMonth() + 1;
+  let myYear = myDate.getUTCFullYear();
+
+  if (myDay < 10) {
+    myDay = `0${myDay}`;
+  }
+  if (myMonth < 10) {
+    myMonth = `0${myMonth}`;
+  }
 
   let varNumOne = 1;
   let arrRow = row;
   row = +row + +varNumOne;
 
   var myTable = document.getElementById("paymentReportTable");
-  myTable.rows[row].cells[1].innerHTML = myMonth + "/" + myDay + "/" + myYear;
+  myTable.rows[row].cells[1].innerHTML = `${myYear}-${myMonth + 1}-${myDay}`;
   myTable.rows[row].cells[2].innerHTML = `$${data.paymentAmt.toFixed(2)}`;
   myTable.rows[row].cells[5].innerHTML = data.paymentDescription;
 

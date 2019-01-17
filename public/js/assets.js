@@ -192,18 +192,8 @@ function addFixedAsset() {
    if (!validateAssetEntryForm()) {
       return;
    }
-   let startDate = new Date(myDOMs.FixedAssets.Purchase_Date.value);
-   startDate.setHours(startDate.getHours() + (startDate.getTimezoneOffset() / 60));
+   let purchaseDate = new Date(myDOMs.FixedAssets.Purchase_Date.value);
    let claimDate = new Date(myDOMs.FixedAssets.Claim_Date.value);
-   claimDate.setHours(claimDate.getHours() + (claimDate.getTimezoneOffset() / 60));
-
-   let myClaimStartMonth = claimDate.getMonth();
-   let myClaimStartYear = claimDate.getFullYear();
-   let myClaimStartDay = claimDate.getDate();
-
-   let myStartMonth = startDate.getMonth();
-   let myStartYear = startDate.getFullYear();
-   let myStartDay = startDate.getDate();
 
    let tempAmt = myDOMs.FixedAssets.Start_Value.value.split(',');
    let myStartAmt = '';
@@ -225,20 +215,14 @@ function addFixedAsset() {
    });
 
    mydata = {
-      purchaseDate: startDate,
       claimDate: claimDate,
+      purchaseDate: purchaseDate,
       description: myDOMs.FixedAssets.Description.value,
       startValue: myStartAmt,
       busPercent: myDOMs.FixedAssets.Business_Percent.value,
       claimAmt: myDepreciationtAmt,
       itcClaimAmt: myITCClaimAmt,
-      dateYearClaim: myClaimStartYear,
-      dateMonthClaim: myClaimStartMonth,
-      dateDayClaim: myClaimStartDay,
-      dateYearBuy: myStartYear,
-      dateMonthBuy: myStartMonth,
-      dateDayBuy: myStartDay,
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
    };
 
    $.ajax({
@@ -314,29 +298,15 @@ function updateFixedAsset() {
       return;
    }
 
-   let myTempDate;
-   let myTempClaimDate
    let assetID = myDOMs.FixedAssets.Blind_ID.value;
-   formData = new FormData();
-   let myClaimDate;
-   myClaimDate = new Date(myDOMs.FixedAssets.Claim_Date.value);
-   myClaimDate.setHours(myClaimDate.getHours() + (myClaimDate.getTimezoneOffset() / 60));
-   let myClaimStartMonth = claimDate.getMonth();
-   let myClaimStartYear = claimDate.getFullYear();
-   let myClaimStartDay = claimDate.getDate();
-   myTempClaimDate = new Date(myClaimStartYear, myClaimStartMonth, myClaimStartDay).toISOString();
+   let formData = new FormData();
 
-   formData.append("claimDate", myTempClaimDate);
 
-   let myPurchaseDate;
-   myPurchaseDate = new Date(myDOMs.FixedAssets.Purchase_Date.value);
-   myPurchaseDate.setHours(myPurchaseDate.getHours() + (myPurchaseDate.getTimezoneOffset() / 60));
-   let myStartMonth = myPurchaseDate.getMonth();
-   let myStartYear = myPurchaseDate.getFullYear();
-   let myStartDay = myPurchaseDate.getDate();
-   myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
+   let myClaimDate = new Date(myDOMs.FixedAssets.Claim_Date.value);
+   formData.append("claimDate", myClaimDate);
 
-   formData.append("purchaseDate", myTempDate);
+   let myPurchaseDate = new Date(myDOMs.FixedAssets.Purchase_Date.value);
+   formData.append("purchaseDate", myPurchaseDate);
 
    let myCorrectedStartValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Start_Value.value);
    let myCorrectedClaimValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Depreciation_Claim.value);
@@ -347,7 +317,7 @@ function updateFixedAsset() {
    formData.append("busPercent", myDOMs.FixedAssets.Business_Percent.value);
    formData.append("claimAmt", myCorrectedClaimValue);
    formData.append("itcClaimAmt", myCorrectedITCClaimValue);
-   formData.append("auth", myToken);
+   formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
    $.ajax({
       method: "PATCH",
@@ -390,27 +360,31 @@ function updateFixedAsset() {
          };
          updateAssetTable(selectedRowNum, AssetData);
 
-         let myDay = myPurchaseDate.getDate();
-         let myMonth = myPurchaseDate.getMonth() + 1;
-         let myYear = myPurchaseDate.getFullYear();
-         if (myDay < 10) {
-            myDay = `0${myDay}`;
-         }
-         if (myMonth < 10) {
-            myMonth = `0${myMonth}`;
-         }
-         originalAsset.PurchaseDate = myYear + "-" + myMonth + "-" + myDay;
+         let myStartMonth = myPurchaseDate.getUTCMonth();
+         let myStartYear = myPurchaseDate.getUTCFullYear();
+         let myStartDay = myPurchaseDate.getUTCDate();
 
-         myDay = myClaimDate.getDate();
-         myMonth = myClaimDate.getMonth() + 1;
-         myYear = myClaimDate.getFullYear();
-         if (myDay < 10) {
-            myDay = `0${myDay}`;
+         if (myStartDay < 10) {
+            myStartDay = `0${myStartDay}`;
          }
-         if (myMonth < 10) {
-            myMonth = `0${myMonth}`;
+         myStartMonth = myStartMonth + 1;
+         if (myStartMonth < 10) {
+            myStartMonth = `0${myStartMonth}`;
          }
-         originalAsset.ClaimDate = myYear + "-" + myMonth + "-" + myDay;
+         originalAsset.PurchaseDate = `${myStartYear}-${myStartMonth}-${myStartDay}`;
+
+         let myClaimStartMonth = claimDate.getUTCMonth();
+         let myClaimStartYear = claimDate.getUTCFullYear();
+         let myClaimStartDay = claimDate.getUTCDate();
+
+         if (myClaimStartDay < 10) {
+            myClaimStartDay = `0${myClaimStartDay}`;
+         }
+         myClaimStartMonth = myClaimStartMonth + 1;
+         if (myClaimStartMonth < 10) {
+            myClaimStartMonth = `0${myClaimStartMonth}`;
+         }
+         originalAsset.ClaimDate = `${myClaimStartYear}-${myClaimStartMonth}-${myClaimStartDay}`;
 
          originalAsset.ID = assetID;
          originalAsset.Description = myDOMs.FixedAssets.Description.value;
@@ -470,7 +444,7 @@ function deleteFixedAsset() {
    if (confirm("Are you sure you want to Delete this Fixed Asset?")) {
       let tempData;
       tempData = {
-         auth: myToken,
+         auth: window.sessionStorage.getItem('myRandomVar'),
       };
       $.ajax({
          url: `${serverURL}fixedAssets/${AssetID}`,
@@ -546,13 +520,13 @@ function getFixedAssets() {
    let tempData;
 
    tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
    $.ajax({
@@ -579,7 +553,7 @@ function getFixedAssets() {
          ToggleMenuBar();
       })
       .fail(function (e) {
-         if (e.readyState === 0 || myToken === '') {
+         if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
             alert('You Must be logged in before using EZ-HST-CANADA>')
          } else {
             alert(JSON.stringify(e.statusText, undefined, 2));
@@ -638,16 +612,16 @@ function addAssetOriginalValues() {
 function updateAssetTable(row, data) {
    var myTable = document.getElementById("assetReportTable");
    let myDate = new Date(data.purchaseDate);
-   let myDay = myDate.getDate();
-   let myMonth = myDate.getMonth() + 1;
-   let myYear = myDate.getFullYear();
+   let myDay = myDate.getUTCDate();
+   let myMonth = myDate.getUTCMonth() + 1;
+   let myYear = myDate.getUTCFullYear();
 
    myTable.rows[row].cells[1].innerHTML = myMonth + "/" + myDay + "/" + myYear;
 
    myDate = new Date(data.claimDate);
-   myDay = myDate.getDate();
-   myMonth = myDate.getMonth() + 1;
-   myYear = myDate.getFullYear();
+   myDay = myDate.getUTCDate();
+   myMonth = myDate.getUTCMonth() + 1;
+   myYear = myDate.getUTCFullYear();
 
    myTable.rows[row].cells[2].innerHTML = myMonth + "/" + myDay + "/" + myYear;
 

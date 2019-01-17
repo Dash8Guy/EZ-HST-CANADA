@@ -1,5 +1,5 @@
 //Random Function
-populateVehicleCategories();
+// populateVehicleCategories();
 disableEnableFullSizeVehicleImgBtn();
 
 
@@ -233,7 +233,7 @@ function base64ArrayBuffer(arrayBuffer) {
 function postmyVendor(myNewVendor) {
   const mydata = {
     text: myNewVendor,
-    auth: myToken
+    auth: window.sessionStorage.getItem('myRandomVar')
   };
 
   $.ajax({
@@ -257,13 +257,11 @@ function postmyVendor(myNewVendor) {
       );
     })
     .fail(function (err) {
-      let myObjMsg = [err.responseJSON.body, err.responseJSON.fix];
-
       displayAlert(
         myDOMs.carExp.AlertContainer,
         "carExpAlert",
         "closeBtnAlert",
-        `${err.responseJSON.title} `,
+        `${err} `,
         myObjMsg,
         ` `,
         "RED",
@@ -294,7 +292,7 @@ function deleteSelectedVehicleVendor() {
       url: `${serverURL}vehicleVendors`,
       data: {
         text: selectedVendor,
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       },
       enctype: "multipart/form-data"
     })
@@ -337,7 +335,7 @@ function populateVehicleVendors() {
     url: `${serverURL}vehicleVendors`,
     method: "GET",
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (data) {
@@ -412,70 +410,70 @@ function addVehicleCategory() {
       alert("Vehicle Expense Category was NOT Saved Successfully!");
     });
 }
-function getVehicleExpenseByID(expID) {
-  $.ajax({
-    url: `${serverURL}carExpense/${expID}`,
-    method: "GET",
-    data: {
-      auth: myToken
-    }
-  })
-    .done(function (data) {
-      myDate = new Date(data.carexpense.carDate);
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
-      }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
-      }
-      myDOMs.carExp.EntryDate.value = myYear + "-" + myMonth + "-" + myDay;
-      myDOMs.carExp.NetAmt.value = data.carexpense.carnetAmt.toFixed(2);
-      myDOMs.carExp.HSTAmt.value = data.carexpense.carhstAmt.toFixed(2);
-      myDOMs.carExp.PSTAmt.value = data.carexpense.carpstAmt.toFixed(2);
-      myDOMs.carExp.TotalAmt.value = data.carexpense.carTotalAmt.toFixed(2);
-      myDOMs.carExp.Description.value = data.carexpense.carDescription;
-      myDOMs.carExp.Vendor.value = data.carexpense.vendorSelect;
-      myDOMs.carExp.Category.value = data.carexpense.carExpCatSelect;
-      myDOMs.carExp.BlindExpID.value = data.carexpense._id;
-      myDOMs.carExp.ExpID.value = "SAVED";
+// function getVehicleExpenseByID(expID) {
+//   $.ajax({
+//     url: `${serverURL}carExpense/${expID}`,
+//     method: "GET",
+//     data: {
+//       auth: window.sessionStorage.getItem('myRandomVar')
+//     }
+//   })
+//     .done(function (data) {
+//       myDate = new Date(data.carexpense.carDate);
+//       let myDay = myDate.getDate();
+//       let myMonth = myDate.getMonth() + 1;
+//       let myYear = myDate.getFullYear();
+//       if (myDay < 10) {
+//         myDay = `0${myDay}`;
+//       }
+//       if (myMonth < 10) {
+//         myMonth = `0${myMonth}`;
+//       }
+//       myDOMs.carExp.EntryDate.value = myYear + "-" + myMonth + "-" + myDay;
+//       myDOMs.carExp.NetAmt.value = data.carexpense.carnetAmt.toFixed(2);
+//       myDOMs.carExp.HSTAmt.value = data.carexpense.carhstAmt.toFixed(2);
+//       myDOMs.carExp.PSTAmt.value = data.carexpense.carpstAmt.toFixed(2);
+//       myDOMs.carExp.TotalAmt.value = data.carexpense.carTotalAmt.toFixed(2);
+//       myDOMs.carExp.Description.value = data.carexpense.carDescription;
+//       myDOMs.carExp.Vendor.value = data.carexpense.vendorSelect;
+//       myDOMs.carExp.Category.value = data.carexpense.carExpCatSelect;
+//       myDOMs.carExp.BlindExpID.value = data.carexpense._id;
+//       myDOMs.carExp.ExpID.value = "SAVED";
 
-      if (data.data.data) {
-        let myImgData = data.data.data;
-        let b64Response = base64ArrayBuffer(myImgData);
-        let img = new Image();
-        let container = document.getElementById("myImg");
-        img.src = "data:image/jpeg;base64," + b64Response;
-        container.setAttribute("src", img.src);
-      }
+//       if (data.data.data) {
+//         let myImgData = data.data.data;
+//         let b64Response = base64ArrayBuffer(myImgData);
+//         let img = new Image();
+//         let container = document.getElementById("myImg");
+//         img.src = "data:image/jpeg;base64," + b64Response;
+//         container.setAttribute("src", img.src);
+//       }
 
-      displayAlert(
-        myDOMs.carExp.AlertContainer,
-        "carExpAlert",
-        "closeBtnAlert",
-        "Expense Successfully found! ",
-        "",
-        `Exp ID: ${data.carexpense._id}`,
-        "GREEN",
-        6000
-      );
-    })
-    .fail(function (e) {
-      let myMsg = [e.responseText];
-      displayAlert(
-        myDOMs.carExp.AlertContainer,
-        "carExpAlert",
-        "closeBtnAlert",
-        `${e.statusText} `,
-        myMsg,
-        " ",
-        "RED",
-        6000
-      );
-    });
-}
+//       displayAlert(
+//         myDOMs.carExp.AlertContainer,
+//         "carExpAlert",
+//         "closeBtnAlert",
+//         "Expense Successfully found! ",
+//         "",
+//         `Exp ID: ${data.carexpense._id}`,
+//         "GREEN",
+//         6000
+//       );
+//     })
+//     .fail(function (e) {
+//       let myMsg = [e.responseText];
+//       displayAlert(
+//         myDOMs.carExp.AlertContainer,
+//         "carExpAlert",
+//         "closeBtnAlert",
+//         `${e.statusText} `,
+//         myMsg,
+//         " ",
+//         "RED",
+//         6000
+//       );
+//     });
+// }
 function updateVehicleExpense() {
   if (savedTransactionLocked) {
     alert(`Because the Purchase Date is before or the same as the Lock Date \n The Entry Form will not allow you to Save any changes to this expense! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.`);
@@ -513,7 +511,6 @@ function updateVehicleExpense() {
   formData = new FormData();
   let file;
   let myDate;
-  let myTempDate;
   let myTempArr;
   let receiptPath = false;
   //Receipt to be saved in this if statement
@@ -578,14 +575,8 @@ function updateVehicleExpense() {
   }
 
   myDate = new Date(myDOMs.carExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
-
-  formData.append("carDate", myTempDate);
+  formData.append("carDate", myDate);
   formData.append("carnetAmt", myDOMs.carExp.NetAmt.value);
   formData.append("carhstAmt", myDOMs.carExp.HSTAmt.value);
   formData.append("carpstAmt", myDOMs.carExp.PSTAmt.value);
@@ -593,7 +584,7 @@ function updateVehicleExpense() {
   formData.append("carDescription", myDOMs.carExp.Description.value);
   formData.append("vendorSelect", myDOMs.carExp.Vendor.value);
   formData.append("carExpCatSelect", myDOMs.carExp.Category.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
   if (myDOMs.carExp.Selector.value === "Vehicle 1") {
     formData.append("carNumber", "1");
@@ -623,7 +614,7 @@ function updateVehicleExpense() {
         6000
       );
       //Code to update report array
-      let carDate = myTempDate;
+      let carDate = myDate;
       let carNetAmt = parseFloat(myDOMs.carExp.NetAmt.value);
       let carHSTAmt = parseFloat(myDOMs.carExp.HSTAmt.value);
       let carPSTAmt = parseFloat(myDOMs.carExp.PSTAmt.value);
@@ -645,19 +636,21 @@ function updateVehicleExpense() {
       };
       updateRequestedArray(selectedArrayNum, selectedRowNum, CarData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       myOriginalData.BlindID = data.NewExpense._id;
       myOriginalData.Category = myDOMs.carExp.Category.value;
-      myOriginalData.Date = myYear + "-" + myMonth + "-" + myDay;
+      myOriginalData.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       //myOriginalData.Date = myTempDate;
       myOriginalData.Description = myDOMs.carExp.Description.value;
       myOriginalData.Hst = parseFloat(myDOMs.carExp.HSTAmt.value);
@@ -910,7 +903,7 @@ function deleteVehicleExpense() {
       carNumValue = "2";
     }
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: carNumValue
     };
     $.ajax({
@@ -1062,24 +1055,24 @@ function getVehicleExpenses(vehicleNum, myFilter) {
   if (vehicleNum === 1) {
     tempData = {
       carNumber: "1",
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
-      auth: myToken
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate(),
+      auth: window.sessionStorage.getItem('myRandomVar')
     };
   } else if (vehicleNum === 2) {
     tempData = {
       carNumber: "2",
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
-      auth: myToken
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate(),
+      auth: window.sessionStorage.getItem('myRandomVar')
     };
   }
   $.ajax({
@@ -1143,7 +1136,7 @@ function getVehicleExpenses(vehicleNum, myFilter) {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -1163,10 +1156,7 @@ $("#carExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.carExp.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
+
   //Send message when trying to add receipt image with multiple monthly payments
   if (
     myDOMs.carExp.ReoccurYES.checked === true &&
@@ -1218,6 +1208,7 @@ $("#carExpBtn").click(function () {
   if (myDOMs.carExp.ReoccurYES.checked === true) {
     if (myDOMs.carExp.Selector.value === "Vehicle 1") {
       mydata = {
+        carDate: myDate,
         carnetAmt: myDOMs.carExp.NetAmt.value,
         carhstAmt: myDOMs.carExp.HSTAmt.value,
         carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1226,10 +1217,7 @@ $("#carExpBtn").click(function () {
         vendorSelect: myDOMs.carExp.Vendor.value,
         carExpCatSelect: myDOMs.carExp.Category.value,
         carExpReoccuring: 1,
-        dateYear: myStartYear,
-        dateMonth: myStartMonth,
-        dateDay: myStartDay,
-        auth: myToken,
+        auth: window.sessionStorage.getItem('myRandomVar'),
         carNumber: "1"
       };
     } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
@@ -1245,7 +1233,7 @@ $("#carExpBtn").click(function () {
         dateYear: myStartYear,
         dateMonth: myStartMonth,
         dateDay: myStartDay,
-        auth: myToken,
+        auth: window.sessionStorage.getItem('myRandomVar'),
         carNumber: "2"
       };
     }
@@ -1382,6 +1370,7 @@ $("#carExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
+      formData.append("carDate", myDate);
       formData.append("carnetAmt", myDOMs.carExp.NetAmt.value);
       formData.append("carhstAmt", myDOMs.carExp.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.carExp.PSTAmt.value);
@@ -1390,10 +1379,8 @@ $("#carExpBtn").click(function () {
       formData.append("vendorSelect", myDOMs.carExp.Vendor.value);
       formData.append("carExpCatSelect", myDOMs.carExp.Category.value);
       formData.append("expReceipt", true);
-      formData.append("auth", myToken);
-      formData.append("dateYear", myStartYear);
-      formData.append("dateMonth", myStartMonth);
-      formData.append("dateDay", myStartDay);
+      formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
+
       if (myDOMs.carExp.Selector.value === "Vehicle 1") {
         formData.append("carNumber", "1");
       } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
@@ -1464,6 +1451,7 @@ $("#carExpBtn").click(function () {
 
       if (myDOMs.carExp.Selector.value === "Vehicle 1") {
         mydata = {
+          carDate: myDate,
           carnetAmt: myDOMs.carExp.NetAmt.value,
           carhstAmt: myDOMs.carExp.HSTAmt.value,
           carpstAmt: myDOMs.carExp.PSTAmt.value,
@@ -1472,10 +1460,7 @@ $("#carExpBtn").click(function () {
           vendorSelect: myDOMs.carExp.Vendor.value,
           carExpCatSelect: myDOMs.carExp.Category.value,
           expReceipt: false,
-          dateYear: myStartYear,
-          dateMonth: myStartMonth,
-          dateDay: myStartDay,
-          auth: myToken,
+          auth: window.sessionStorage.getItem('myRandomVar'),
           carNumber: "1"
         };
       } else if (myDOMs.carExp.Selector.value === "Vehicle 2") {
@@ -1491,7 +1476,7 @@ $("#carExpBtn").click(function () {
           dateYear: myStartYear,
           dateMonth: myStartMonth,
           dateDay: myStartDay,
-          auth: myToken,
+          auth: window.sessionStorage.getItem('myRandomVar'),
           carNumber: "2"
         };
       }

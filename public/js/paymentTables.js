@@ -283,8 +283,17 @@ function buildPaymentReportTable(
 
     paymentCell = document.createElement("td");
     myDate = new Date(arrTablePage1[i].paymentDate);
-    tempDate = myDate.toLocaleDateString();
-    cellPaymentTxt = document.createTextNode(tempDate);
+    let myPayDay = myDate.getUTCDate();
+    let myPayMonth = myDate.getUTCMonth() + 1;
+    let myPayYear = myDate.getUTCFullYear();
+    if (myPayDay < 10) {
+      myPayDay = `0${myPayDay}`;
+    }
+    if (myPayMonth < 10) {
+      myPayMonth = `0${myPayMonth}`;
+    }
+    let tempPayStringDate = `${myPayMonth}-${myPayDay}-${myPayYear}`;
+    cellPaymentTxt = document.createTextNode(tempPayStringDate);
     paymentCell.appendChild(cellPaymentTxt);
     paymentCell.setAttribute("class", "text-center");
     paymentCell.setAttribute("style", "color: rgb(170, 3, 3);");
@@ -433,7 +442,7 @@ function buildPaymentReportTable(
 }
 
 function resetPaymentText(myText) {
-  document.getElementById("titlePayNode").textContent = `${myText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+  document.getElementById("titlePayNode").textContent = `${myText} (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
 }
 
 function addPaymentTitleText(myTablePayAlert, boldText) {
@@ -441,7 +450,7 @@ function addPaymentTitleText(myTablePayAlert, boldText) {
 
   myStrongTagPay.setAttribute("id", "titlePayNode");
   myStrongTagPay.setAttribute("class", "font-weight-bold");
-  myStrongTagPay.textContent = `${boldText} (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
+  myStrongTagPay.textContent = `${boldText} (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
   myTablePayAlert.appendChild(myStrongTagPay);
 }
 
@@ -595,20 +604,20 @@ function generatePaymentTablePDF(expGroup) {
 
   switch (expGroup) {
     case 'HST':
-      headText = `${paymentArray.length} HST Payments. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `HST Payments(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      headText = `${paymentArray.length} HST Payments. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+      fileSaveText = `HST Payments(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       break;
     case 'PST':
-      headText = `${paymentArray.length} PST Payments. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `PST Payments(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      headText = `${paymentArray.length} PST Payments. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+      fileSaveText = `PST Payments(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       break;
     case 'TAX':
-      headText = `${paymentArray.length} Tax Payments. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Tax Payments(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      headText = `${paymentArray.length} Tax Payments. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+      fileSaveText = `Tax Payments(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       break;
     case 'ALL':
-      headText = `${paymentArray.length} Total Payments. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-      fileSaveText = `Total Payments(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+      headText = `${paymentArray.length} Total Payments. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+      fileSaveText = `Total Payments(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
       break;
   }
 
@@ -696,9 +705,9 @@ function getPaymentToEdit(lnk) {
 
   let myTempID = paymentArray[selectRow]._id;
   let myDate = new Date(paymentArray[selectRow].paymentDate);
-  let myDay = myDate.getDate();
-  let myMonth = myDate.getMonth() + 1;
-  let myYear = myDate.getFullYear();
+  let myDay = myDate.getUTCDate();
+  let myMonth = myDate.getUTCMonth() + 1;
+  let myYear = myDate.getUTCFullYear();
   if (myDay < 10) {
     myDay = `0${myDay}`;
   }

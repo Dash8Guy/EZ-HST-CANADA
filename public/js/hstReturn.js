@@ -128,87 +128,87 @@ function updateReturnData(LineNumber) {
       case 'YearAmt':
          formData.append('YearAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q1Amt':
          formData.append('Q1Amt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q2Amt':
          formData.append('Q2Amt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q3Amt':
          formData.append('Q3Amt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q4Amt':
          formData.append('Q4Amt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JanAmt':
          formData.append('JanAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'FebAmt':
          formData.append('FebAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'MarAmt':
          formData.append('MarAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'AprAmt':
          formData.append('AprAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'MayAmt':
          formData.append('MayAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JunAmt':
          formData.append('JunAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JulAmt':
          formData.append('JulAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'AugAmt':
          formData.append('AugAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'SepAmt':
          formData.append('SepAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'OctAmt':
          formData.append('OctAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'NovAmt':
          formData.append('NovAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'DecAmt':
          formData.append('DecAmt', myLineValue);
          formData.append('LineNumber', LineNumber);
-         formData.append("auth", myToken);
+         formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
    }
 
    return new Promise((resolve, reject) => {
@@ -256,10 +256,8 @@ function updateReturnData(LineNumber) {
 
 function getReturnData() {
 
-   let tempData;
-
-   tempData = {
-      auth: myToken
+   let tempData = {
+      auth: window.sessionStorage.getItem('myRandomVar')
    };
 
    return new Promise((resolve, reject) => {
@@ -277,7 +275,7 @@ function getReturnData() {
             }
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
@@ -324,119 +322,119 @@ function postReturnData(LineNumber) {
          mydata = {
             YearAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'Q1Amt':
          mydata = {
             Q1Amt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'Q2Amt':
          mydata = {
             Q2Amt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'Q3Amt':
          mydata = {
             Q3Amt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'Q4Amt':
          mydata = {
             Q4Amt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'JanAmt':
          mydata = {
             JanAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'FebAmt':
          mydata = {
             FebAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'MarAmt':
          mydata = {
             MarAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'AprAmt':
          mydata = {
             AprAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'MayAmt':
          mydata = {
             MayAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'JunAmt':
          mydata = {
             JunAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'JulAmt':
          mydata = {
             JulAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'AugAmt':
          mydata = {
             AugAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'SepAmt':
          mydata = {
             SepAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'OctAmt':
          mydata = {
             OctAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'NovAmt':
          mydata = {
             NovAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          break;
       case 'DecAmt':
          mydata = {
             DecAmt: myLineValue,
             LineNumber: LineNumber,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
    }
 
@@ -491,13 +489,11 @@ function postReturnData(LineNumber) {
 
 function getTimePeriod() {
    let myStartDate = new Date(myDOMs.main_page.StartDate.value);
-   myStartDate.setHours(myStartDate.getHours() + (myStartDate.getTimezoneOffset() / 60));
    let myEndDate = new Date(myDOMs.main_page.EndDate.value);
-   myEndDate.setHours(myEndDate.getHours() + (myEndDate.getTimezoneOffset() / 60));
 
-   switch (myStartDate.getMonth()) {
+   switch (myStartDate.getUTCMonth()) {
       case 0:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 0:
                return 'JanAmt';
             case 2:
@@ -507,19 +503,19 @@ function getTimePeriod() {
          }
          break;
       case 1:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 1:
                return 'FebAmt';
          }
          break;
       case 2:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 2:
                return 'MarAmt';
          }
          break;
       case 3:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 3:
                return 'AprAmt';
             case 5:
@@ -527,19 +523,19 @@ function getTimePeriod() {
          }
          break;
       case 4:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 4:
                return 'MayAmt';
          }
          break;
       case 5:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 5:
                return 'JunAmt';
          }
          break;
       case 6:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 6:
                return 'JulAmt';
             case 8:
@@ -547,19 +543,19 @@ function getTimePeriod() {
          }
          break;
       case 7:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 7:
                return 'AugAmt';
          }
          break;
       case 8:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 8:
                return 'SepAmt';
          }
          break;
       case 9:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 9:
                return 'OctAmt';
             case 11:
@@ -567,13 +563,13 @@ function getTimePeriod() {
          }
          break;
       case 10:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 10:
                return 'NovAmt';
          }
          break;
       case 11:
-         switch (myEndDate.getMonth()) {
+         switch (myEndDate.getUTCMonth()) {
             case 11:
                return 'DecAmt';
          }
@@ -597,16 +593,15 @@ async function FillAllArrays() {
 };
 
 function GatherBusIncomeData() {
-   let tempData;
 
-   tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+   let tempData = {
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
    return new Promise((resolve, reject) => {
@@ -622,7 +617,7 @@ function GatherBusIncomeData() {
             BusinessIncDataArray = data.busIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
@@ -729,16 +724,15 @@ function updateLineVariablesForPeriod(myReturnArray) {
 };
 
 function GatherRentalIncomeData() {
-   let tempData;
 
-   tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+   let tempData = {
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
 
@@ -755,7 +749,7 @@ function GatherRentalIncomeData() {
             RentalIncDataArray = data.rentalIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -770,16 +764,15 @@ function GatherRentalIncomeData() {
 };
 
 function GatherAssetData() {
-   let tempData;
 
-   tempData = {
-      auth: myToken,
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate()
+   let tempData = {
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
    return new Promise((resolve, reject) => {
@@ -795,7 +788,7 @@ function GatherAssetData() {
          })
          .fail(function (e) {
             reject(JSON.stringify(e.statusText, undefined, 2));
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
                alert(JSON.stringify(e.statusText, undefined, 2));
@@ -807,15 +800,15 @@ function GatherAssetData() {
 function GatherRequestedExpenseData(carNumber) {
 
    //carNumber = Income, 1, 2, Bus, Home, Other, Rental
-   tempData = {
+   let tempData = {
       carNumber: carNumber,
-      auth: myToken,
-      startYear: startDate.getFullYear(),
-      startMonth: startDate.getMonth(),
-      startDay: startDate.getDate(),
-      endYear: endDate.getFullYear(),
-      endMonth: endDate.getMonth(),
-      endDay: endDate.getDate(),
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: startDate.getUTCFullYear(),
+      startMonth: startDate.getUTCMonth(),
+      startDay: startDate.getUTCDate(),
+      endYear: endDate.getUTCFullYear(),
+      endMonth: endDate.getUTCMonth(),
+      endDay: endDate.getUTCDate()
    };
 
    return new Promise((resolve, reject) => {
@@ -849,7 +842,7 @@ function GatherRequestedExpenseData(carNumber) {
          })
          .fail(function (e) {
             reject(JSON.stringify(e.statusText, undefined, 2));
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
                alert(JSON.stringify(e.statusText, undefined, 2));
@@ -909,7 +902,7 @@ function LoopBusinessITCs() {
 function LoopVehicle1ITCs() {
    Vehicle1ExpDataArray.forEach((el, index) => {
       let loopDate = new Date(el.carDate);
-      let loopMonth = loopDate.getMonth();
+      let loopMonth = loopDate.getUTCMonth();
       switch (loopMonth) {
          case 0:
             if (el.carExpCatSelect === 'Business Parking Fees' || el.carExpCatSelect === 'Supplementary Business Insurance') {
@@ -1026,7 +1019,7 @@ function LoopVehicle1ITCs() {
 function LoopVehicle2ITCs() {
    Vehicle2ExpDataArray.forEach((el, index) => {
       let loopDate = new Date(el.carDate);
-      let loopMonth = loopDate.getMonth();
+      let loopMonth = loopDate.getUTCMonth();
 
       switch (loopMonth) {
          case 0:
@@ -1144,7 +1137,7 @@ function LoopVehicle2ITCs() {
 function LoopHomeITCs() {
    HomeExpDataArray.forEach((el, index) => {
       let loopDate = new Date(el.carDate);
-      let loopMonth = loopDate.getMonth();
+      let loopMonth = loopDate.getUTCMonth();
       switch (loopMonth) {
          case 0:
             HomehstITCs += Number(el.carhstAmt) * (dbMiscData.homePercJan / 100);;

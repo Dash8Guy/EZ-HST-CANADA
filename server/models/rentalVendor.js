@@ -8,7 +8,7 @@ const RentalVendor = mongoose.model("RentalVendor", {
    text: {
       type: String,
       required: true,
-      unique: true
+      unique: false
    }
 });
 

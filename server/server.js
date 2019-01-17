@@ -84,11 +84,12 @@ app.post("/carExpense", authenticate, async (req, res) => {
   let sampleFile;
   let myCarExpense;
 
-  let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay).toISOString();
+  // let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay);
+  // myNewDate.setUTCHours(0);
 
   let myCarExpObject = {
     _user: req.user._id,
-    carDate: myNewDate,
+    carDate: req.body.carDate,
     carnetAmt: req.body.carnetAmt,
     carhstAmt: req.body.carhstAmt,
     carpstAmt: req.body.carpstAmt,
@@ -126,7 +127,7 @@ app.post("/carExpense", authenticate, async (req, res) => {
 
     let myCarExpObjectImg = {
       _user: req.user._id,
-      carDate: myNewDate,
+      carDate: req.body.carDate,
       carnetAmt: req.body.carnetAmt,
       carhstAmt: req.body.carhstAmt,
       carpstAmt: req.body.carpstAmt,
@@ -213,16 +214,16 @@ async function deleteTheImage(userID, tempID) {
 };
 
 app.post("/carExpenseRecur", authenticate, (req, res) => {
-  let myStartMonth = req.body.dateMonth;
-  let myStartYear = req.body.dateYear;
-  let myStartDay = req.body.dateDay;
+  let myStartMonth = req.body.carDate.getUTCMonth();
+  let myStartYear = req.body.carDate.getUTCFullYear();
+  let myStartDay = req.body.carDate.getUTCDate();
   let myCarExpObject;
   let myCarColletion = [];
   let i = 0;
 
   for (i = myStartMonth; i <= 11; i++) {
     myTempMonth = i;
-    let myTempDate = new Date(myStartYear, i, myStartDay).toISOString();
+    let myTempDate = new Date(myStartYear, i, myStartDay);
     // console.log(`Day is ${myTempDay} and Month is ${myTempMonth}`);
     if (myStartDay > 30 && myTempMonth !== 1) {
       if (
@@ -231,7 +232,7 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
         myTempMonth === 8 ||
         myTempMonth === 10
       ) {
-        myTempDate = new Date(myStartYear, i, 30).toISOString();
+        myTempDate = new Date(myStartYear, i, 30);
       }
     }
 
@@ -242,11 +243,13 @@ app.post("/carExpenseRecur", authenticate, (req, res) => {
         myStartYear === 2028 ||
         myStartYear === 2032
       ) {
-        myTempDate = new Date(myStartYear, i, 29).toISOString();
+        myTempDate = new Date(myStartYear, i, 29);
       } else {
-        myTempDate = new Date(myStartYear, i, 28).toISOString();
+        myTempDate = new Date(myStartYear, i, 28);
       }
     }
+
+    myTempDate.setUTCHours(0);
 
     myCarExpObject = {
       _user: req.user._id,
@@ -331,15 +334,19 @@ app.get("/carExpense", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
 
   let tempExpenseModel;
@@ -390,16 +397,19 @@ app.get("/busIncome", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
 
   IncomeEntry.find({
@@ -427,16 +437,19 @@ app.get("/rentalIncome", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
 
   RentalIncomeEntry.find({
@@ -522,6 +535,8 @@ app.patch("/carExpense/:_id", authenticate, async (req, res) => {
   let userID = req.user._id;
   let tempVehicleModel;
   let msgSuccess = "Expense Updated Successfully";
+  // let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay);
+  // myNewDate.setUTCHours(0);
   if (req.body.carNumber === "1") {
     tempVehicleModel = CarExpense;
   } else if (req.body.carNumber === "2") {
@@ -912,27 +927,40 @@ app.delete("/incomeParty", authenticate, (req, res) => {
 });
 
 app.post("/vehicleVendors", authenticate, (req, res) => {
-  const vendor = new VehicleVendor({
-    _user: req.user._id,
-    text: req.body.text
-  });
-  vendor.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      if (e.code === 11000) {
-        let tempObj = {
-          title: "Duplicate Error",
-          body: "The Vendor you provided is already in use.",
-          fix: "Enter a different Vendor to continue"
-        };
-        return res.status(400).send(tempObj);
+  const userID = req.user._id;
+  const vendorTxt = req.body.text;
+
+  VehicleVendor.find({
+    _user: userID,
+    vendorSelect: vendorTxt
+  })
+    .then(carVendor => {
+      if (carVendor.length > 0) {
+        res
+          .status(409)
+          .send(
+            `Can't Add Vendor/Supplier ${vendorTxt} because it is already being used!`
+          );
       } else {
-        res.send(e);
+
+        const vendor = new VehicleVendor({
+          _user: userID,
+          text: vendorTxt
+        });
+        vendor.save().then(
+          doc => {
+            res.send(doc);
+          },
+          e => {
+            throw (error);
+          }
+        );
+
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    });
 });
 
 app.get("/vehicleVendors", authenticate, (req, res) => {
@@ -987,53 +1015,41 @@ app.delete("/vehicleVendors", authenticate, (req, res) => {
     });
 });
 
-app.patch("/vehicleVendors/:_id", authenticate, (req, res) => {
-  let tempID = req.params._id;
-  let userID = req.user._id;
-
-  VehicleVendor.findOneAndUpdate(
-    {
-      _id: tempID,
-      _user: userID
-    },
-    {
-      $set: {
-        _user: req.user._id,
-        text: req.body.text
-      }
-    }
-  ).then(
-    doc => {
-      res.status(200).send('Vendor Updated Successfully"');
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
 app.post("/businessVendors", authenticate, (req, res) => {
-  const vendor = new BusinessVendor({
-    _user: req.user._id,
-    text: req.body.text
-  });
-  vendor.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      if (e.code === 11000) {
-        let tempObj = {
-          title: "Duplicate Error",
-          body: "The Vendor you provided is already in use.",
-          fix: "Enter a different Vendor to continue"
-        };
-        return res.status(400).send(tempObj);
+  const userID = req.user._id;
+  const vendorTxt = req.body.text;
+
+  BusinessVendor.find({
+    _user: userID,
+    vendorSelect: vendorTxt
+  })
+    .then(busVendor => {
+      if (busVendor.length > 0) {
+        res
+          .status(409)
+          .send(
+            `Can't Add Vendor/Supplier ${vendorTxt} because it is already being used!`
+          );
       } else {
-        res.send(e);
+
+        const vendor = new BusinessVendor({
+          _user: userID,
+          text: vendorTxt
+        });
+        vendor.save().then(
+          doc => {
+            res.send(doc);
+          },
+          e => {
+            throw (error);
+          }
+        );
+
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    });
 });
 
 app.get("/businessVendors", authenticate, (req, res) => {
@@ -1089,27 +1105,40 @@ app.delete("/businessVendors", authenticate, (req, res) => {
 });
 
 app.post("/homeVendors", authenticate, (req, res) => {
-  const vendor = new HomeVendor({
-    _user: req.user._id,
-    text: req.body.text
-  });
-  vendor.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      if (e.code === 11000) {
-        let tempObj = {
-          title: "Duplicate Error",
-          body: "The Vendor you provided is already in use.",
-          fix: "Enter a different Vendor to continue"
-        };
-        return res.status(400).send(tempObj);
+  const userID = req.user._id;
+  const vendorTxt = req.body.text;
+
+  HomeVendor.find({
+    _user: userID,
+    vendorSelect: vendorTxt
+  })
+    .then(homeVendor => {
+      if (homeVendor.length > 0) {
+        res
+          .status(409)
+          .send(
+            `Can't Add Vendor/Supplier ${vendorTxt} because it is already being used!`
+          );
       } else {
-        res.send(e);
+
+        const vendor = new HomeVendor({
+          _user: userID,
+          text: vendorTxt
+        });
+        vendor.save().then(
+          doc => {
+            res.send(doc);
+          },
+          e => {
+            throw (error);
+          }
+        );
+
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    });
 });
 
 app.get("/homeVendors", authenticate, (req, res) => {
@@ -1165,27 +1194,40 @@ app.delete("/homeVendors", authenticate, (req, res) => {
 });
 
 app.post("/otherVendors", authenticate, (req, res) => {
-  const vendor = new OtherVendor({
-    _user: req.user._id,
-    text: req.body.text
-  });
-  vendor.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      if (e.code === 11000) {
-        let tempObj = {
-          title: "Duplicate Error",
-          body: "The Vendor you provided is already in use.",
-          fix: "Enter a different Vendor to continue"
-        };
-        return res.status(400).send(tempObj);
+  const userID = req.user._id;
+  const vendorTxt = req.body.text;
+
+  OtherVendor.find({
+    _user: userID,
+    vendorSelect: vendorTxt
+  })
+    .then(otherVendor => {
+      if (otherVendor.length > 0) {
+        res
+          .status(409)
+          .send(
+            `Can't Add Vendor/Supplier ${vendorTxt} because it is already being used!`
+          );
       } else {
-        res.send(e);
+
+        const vendor = new OtherVendor({
+          _user: userID,
+          text: vendorTxt
+        });
+        vendor.save().then(
+          doc => {
+            res.send(doc);
+          },
+          e => {
+            throw (error);
+          }
+        );
+
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    });
 });
 
 app.get("/otherVendors", authenticate, (req, res) => {
@@ -1241,27 +1283,40 @@ app.delete("/otherVendors", authenticate, (req, res) => {
 });
 
 app.post("/rentalVendors", authenticate, (req, res) => {
-  const vendor = new RentalVendor({
-    _user: req.user._id,
-    text: req.body.text
-  });
-  vendor.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      if (e.code === 11000) {
-        let tempObj = {
-          title: "Duplicate Error",
-          body: "The Vendor you provided is already in use.",
-          fix: "Enter a different Vendor to continue"
-        };
-        return res.status(400).send(tempObj);
+  const userID = req.user._id;
+  const vendorTxt = req.body.text;
+
+  RentalVendor.find({
+    _user: userID,
+    vendorSelect: vendorTxt
+  })
+    .then(rentalVendor => {
+      if (rentalVendor.length > 0) {
+        res
+          .status(409)
+          .send(
+            `Can't Add Vendor/Supplier ${vendorTxt} because it is already being used!`
+          );
       } else {
-        res.send(e);
+
+        const vendor = new RentalVendor({
+          _user: userID,
+          text: vendorTxt
+        });
+        vendor.save().then(
+          doc => {
+            res.send(doc);
+          },
+          e => {
+            throw (error);
+          }
+        );
+
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    });
 });
 
 app.get("/rentalVendors", authenticate, (req, res) => {
@@ -1395,9 +1450,13 @@ app.delete("/incomeClients", authenticate, (req, res) => {
 //Vehicle Log
 //new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay),
 app.post("/vehicleLog", authenticate, (req, res) => {
+
+  tempVLogDate = new Date(req.body.startYear, req.body.startMonth, req.body.startDay);
+  tempVLogDate.setUTCHours(0);
+
   VehicleLog.find({
     _user: req.user._id,
-    logDate: req.body.logDate
+    logDate: tempVLogDate
   }).then((doc) => {
     if (doc.length > 0) {
       let foundID = doc[0]._id;
@@ -1470,7 +1529,7 @@ app.post("/vehicleLog", authenticate, (req, res) => {
       if (req.body.carNum === '1') {
         vehicleLog = new VehicleLog({
           _user: req.user._id,
-          logDate: req.body.logDate,
+          logDate: tempVLogDate,
           PersKMV1: req.body.PersKMV1,
           BusKMV1: req.body.BusKMV1,
           PersKMV2: 0,
@@ -1487,7 +1546,7 @@ app.post("/vehicleLog", authenticate, (req, res) => {
       } else if (req.body.carNum === '2') {
         vehicleLog = new VehicleLog({
           _user: req.user._id,
-          logDate: req.body.logDate,
+          logDate: tempVLogDate,
           PersKMV1: 0,
           BusKMV1: 0,
           PersKMV2: req.body.PersKMV2,
@@ -1518,7 +1577,7 @@ app.get("/vehicleLog", authenticate, (req, res) => {
     }
   );
 });
-
+//This code will find all Users Vehicle log and set to 0 both Pers and Bus logs for specified Vehicle.
 app.post("/vehicleLogmulti", authenticate, (req, res) => {
   if (req.body.carNum === '1') {
     VehicleLog.updateMany({
@@ -1552,9 +1611,8 @@ app.post("/vehicleLogmulti", authenticate, (req, res) => {
 
 
 });
-
+//This code deletes all vehicle logs for user
 app.delete("/vehicleLog", authenticate, (req, res) => {
-  console.log(req.body);
   VehicleLog.remove({
     _user: req.user._id
   }).then(
@@ -1566,6 +1624,7 @@ app.delete("/vehicleLog", authenticate, (req, res) => {
     }
   );
 });
+//Misc Data
 
 app.post("/miscData", authenticate, (req, res) => {
   const miscData = new MiscData({
@@ -1753,11 +1812,9 @@ app.delete("/users/me/token", authenticate, async (req, res) => {
 //Payments
 app.post("/payments", authenticate, async (req, res) => {
 
-  let myNewDate = new Date(req.body.dateYear, req.body.dateMonth, req.body.dateDay).toISOString();
-
   const payment = new PaymentEntry({
     _user: req.user._id,
-    paymentDate: myNewDate,
+    paymentDate: req.body.paymentDate,
     taxAmt: req.body.taxAmt,
     hstAmt: req.body.hstAmt,
     pstAmt: req.body.pstAmt,
@@ -1780,16 +1837,19 @@ app.get("/hstPayments", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
   PaymentEntry.find({
     _user: req.user._id,
@@ -1839,6 +1899,8 @@ app.delete("/payments/:_id", authenticate, (req, res) => {
 app.patch("/payments/:_id", authenticate, (req, res) => {
   let tempID = req.params._id;
   let userID = req.user._id;
+
+
   PaymentEntry.findOneAndUpdate(
     {
       _id: tempID,
@@ -1876,16 +1938,19 @@ app.get("/payments", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
 
   PaymentEntry.find({
@@ -1911,16 +1976,20 @@ app.get("/pstPayments", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
 
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
   PaymentEntry.find({
     _user: req.user._id,
@@ -1947,16 +2016,19 @@ app.get("/taxPayments", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
   PaymentEntry.find({
     _user: req.user._id,
@@ -1980,13 +2052,10 @@ app.get("/taxPayments", authenticate, (req, res) => {
 //Fixed Asstes
 app.post("/fixedAssets", authenticate, async (req, res) => {
 
-  let myNewDateClaim = new Date(req.body.dateYearClaim, req.body.dateMonthClaim, req.body.dateDayClaim).toISOString();
-  let myNewDateBuy = new Date(req.body.dateYearBuy, req.body.dateMonthBuy, req.body.dateDayBuy).toISOString();
-
   const asset = new FixedAsset({
     _user: req.user._id,
-    purchaseDate: myNewDateBuy,
-    claimDate: myNewDateClaim,
+    purchaseDate: req.body.purchaseDate,
+    claimDate: req.body.claimDate,
     description: req.body.description,
     startValue: req.body.startValue,
     busPercent: req.body.busPercent,
@@ -2033,6 +2102,7 @@ app.delete("/fixedAssets/:_id", authenticate, (req, res) => {
 app.patch("/fixedAssets/:_id", authenticate, (req, res) => {
   let tempID = req.params._id;
   let userID = req.user._id;
+
   FixedAsset.findOneAndUpdate(
     {
       _id: tempID,
@@ -2071,16 +2141,19 @@ app.get("/fixedAssets", authenticate, (req, res) => {
   let tempEndDate;
 
   if (req.query.startYear) {
-    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay).toISOString();
+    tempStartDate = new Date(req.query.startYear, req.query.startMonth, req.query.startDay);
+    tempStartDate.setUTCHours(0);
   } else {
-    tempStartDate = new Date(2018, 0, 1).toISOString();
-
+    tempStartDate = new Date(2018, 0, 1);
+    tempStartDate.setUTCHours(0);
   }
 
   if (req.query.endYear) {
-    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay).toISOString();
+    tempEndDate = new Date(req.query.endYear, req.query.endMonth, req.query.endDay);
+    tempEndDate.setUTCHours(0);
   } else {
-    tempEndDate = new Date(2018, 11, 31).toISOString();
+    tempEndDate = new Date(2018, 11, 31);
+    tempEndDate.setUTCHours(0);
   }
   FixedAsset.find({
     _user: req.user._id,

@@ -6,8 +6,12 @@ async function displayAccountSummaryModal() {
    $("#AccountSummaryModal").modal("show");
    await getDataRequired();
    myDOMs.AccountSummary.TimePeriodSeletor.value = 'Year';
-   ASStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
-   ASEndDate = new Date(myDOMs.randomData.appYear, 11, 31);
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   ASStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+   ASEndDate = new Date(myDateTemp.getUTCFullYear(), 11, 31);
+   ASStartDate.setUTCHours(0);
+   ASEndDate.setUTCHours(0);
+
    updatedViewDynamicData(ASStartDate, ASEndDate, false);
 
    let myMainNav = document.getElementById("main-nav");
@@ -42,13 +46,14 @@ async function getDataRequired() {
 
 function getASBusIncomeData() {
    let tempData;
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
 
    tempData = {
-      auth: myToken,
-      startYear: myDOMs.randomData.appYear,
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: myDateTemp.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: myDOMs.randomData.appYear,
+      endYear: myDateTemp.getUTCFullYear(),
       endMonth: 11,
       endDay: 31
    };
@@ -66,7 +71,7 @@ function getASBusIncomeData() {
             BusAcctArray = data.busIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA>')
             } else {
@@ -81,13 +86,14 @@ function getASBusIncomeData() {
 
 function getASRentalIncomeData() {
    let tempData;
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
 
    tempData = {
-      auth: myToken,
-      startYear: myDOMs.randomData.appYear,
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: myDateTemp.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: myDOMs.randomData.appYear,
+      endYear: myDateTemp.getUTCFullYear(),
       endMonth: 11,
       endDay: 31
    };
@@ -106,7 +112,7 @@ function getASRentalIncomeData() {
             RentalAcctArray = data.rentalIncome;
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -122,13 +128,14 @@ function getASRentalIncomeData() {
 
 function getASAllPaymentData() {
    let tempData;
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
 
    tempData = {
-      auth: myToken,
-      startYear: myDOMs.randomData.appYear,
+      auth: window.sessionStorage.getItem('myRandomVar'),
+      startYear: myDateTemp.getUTCFullYear(),
       startMonth: 0,
       startDay: 1,
-      endYear: myDOMs.randomData.appYear,
+      endYear: myDateTemp.getUTCFullYear(),
       endMonth: 11,
       endDay: 31
    };
@@ -145,7 +152,7 @@ function getASAllPaymentData() {
             AddCarDateToArray();
          })
          .fail(function (e) {
-            if (e.readyState === 0 || myToken === '') {
+            if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
                reject("You Must be logged in before using EZ-HST-CANADA!");
                alert('You Must be logged in before using EZ-HST-CANADA')
             } else {
@@ -166,113 +173,151 @@ myDOMs.AccountSummary.IncludeCheckBox.addEventListener('click', function (event)
 });
 
 function runTimePeriodChangeMethod() {
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
    switch (myDOMs.AccountSummary.TimePeriodSeletor.value) {
       case 'Year':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 11, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 11, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Year Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Q1':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 2, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 2, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = '1st-¼ Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Q2':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 3, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 5, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 3, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 5, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = '2nd-¼ Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Q3':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 6, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 8, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 6, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 8, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = '3rd-¼ Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Q4':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 9, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 11, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 9, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 11, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = '4th-¼ Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Jan':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 0, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 0, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 0, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Jan Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Feb':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 1, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 1, 28);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 1, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 1, 28);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Feb Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Mar':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 2, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 2, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 2, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 2, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Mar Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Apr':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 3, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 3, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 3, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 3, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Apr Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'May':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 4, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 4, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 4, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 4, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'May Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Jun':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 5, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 5, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 5, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 5, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Jun Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Jul':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 6, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 6, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 6, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 6, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Jul Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Aug':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 7, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 7, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 7, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 7, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Aug Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Sep':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 8, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 8, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 8, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 8, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Sep Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Oct':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 9, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 9, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 9, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 9, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Oct Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Nov':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 10, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 10, 30);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 10, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 10, 30);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Nov Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
          break;
       case 'Dec':
-         ASStartDate = new Date(myDOMs.randomData.appYear, 11, 1);
-         ASEndDate = new Date(myDOMs.randomData.appYear, 11, 31);
+         ASStartDate = new Date(myDateTemp.getUTCFullYear(), 11, 1);
+         ASEndDate = new Date(myDateTemp.getUTCFullYear(), 11, 31);
+         ASStartDate.setUTCHours(0);
+         ASEndDate.setUTCHours(0);
          myDOMs.AccountSummary.AmountandTimeTitle.innerText = 'Dec Amt';
          updatedViewDynamicData(ASStartDate, ASEndDate, false);
    }
 };
 
 function updatedViewDynamicData(StartDate, EndDate, ForMainPage) {
-   let DateOne = new Date(myDOMs.randomData.appYear, 0, 1);
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let DateOne = new Date(myDateTemp.getUTCFullYear(), 0, 1);
+   DateOne.setUTCHours(0);
+
    let IncludeStart = myDOMs.AccountSummary.IncludeCheckBox.checked;
    let runningGrossRevBus = 0;
    let runningGrossIncBus = 0;

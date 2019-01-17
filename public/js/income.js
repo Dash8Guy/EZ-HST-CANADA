@@ -101,7 +101,7 @@ function addIncomeParty() {
 function postmyIncomeVendor(myNewVendor) {
   const mydata = {
     text: myNewVendor,
-    auth: myToken
+    auth: window.sessionStorage.getItem('myRandomVar')
   };
 
   $.ajax({
@@ -162,7 +162,7 @@ function deleteSelectedIncomeVendor() {
       url: `${serverURL}incomeClients`,
       data: {
         text: selectedVendor,
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       },
       enctype: "multipart/form-data"
     })
@@ -203,7 +203,7 @@ function populateIncomeVendors() {
     url: `${serverURL}incomeClients`,
     method: "GET",
     data: {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
     }
   })
     .done(function (data) {
@@ -249,7 +249,7 @@ function postmyIncomeParty(tempParty) {
     method: "POST",
     data: {
       text: tempParty,
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
     }
   })
     .done(function (data) {
@@ -304,7 +304,7 @@ function deleteSelectedIncomeParty() {
       url: `${serverURL}incomeParty`,
       data: {
         text: selectedParty,
-        auth: myToken
+        auth: window.sessionStorage.getItem('myRandomVar')
       },
       enctype: "multipart/form-data"
     })
@@ -376,7 +376,6 @@ function updateIncome(source) {
   formData = new FormData();
   let file;
   let myDate;
-  let myTempDate;
   let myTempArr;
   let receiptPath = false;
   //Receipt to be saved in this if statement
@@ -440,14 +439,8 @@ function updateIncome(source) {
   }
 
   myDate = new Date(myDOMs.income.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
 
-  myTempDate = new Date(myStartYear, myStartMonth, myStartDay).toISOString();
-
-  formData.append("carDate", myTempDate);
+  formData.append("carDate", myDate);
   formData.append("carnetAmt", myDOMs.income.NetAmt.value);
   formData.append("carhstAmt", myDOMs.income.HSTAmt.value);
   formData.append("carpstAmt", myDOMs.income.PSTAmt.value);
@@ -455,7 +448,7 @@ function updateIncome(source) {
   formData.append("carDescription", myDOMs.income.Description.value);
   formData.append("vendorSelect", myDOMs.income.Vendor.value);
   formData.append("carExpCatSelect", myDOMs.income.Party.value);
-  formData.append("auth", myToken);
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
   formData.append("carNumber", "Income");
   formData.append("source", source);
 
@@ -482,7 +475,7 @@ function updateIncome(source) {
         6000
       );
       //Code to update report array
-      let carDate = myTempDate;
+      let carDate = myDate;
       let carNetAmt = parseFloat(myDOMs.income.NetAmt.value);
       let carHSTAmt = parseFloat(myDOMs.income.HSTAmt.value);
       let carPSTAmt = parseFloat(myDOMs.income.PSTAmt.value);
@@ -504,19 +497,21 @@ function updateIncome(source) {
       };
       updateRequestedArray(selectedArrayNum, selectedRowNum, IncomeData);
 
-      let myDay = myDate.getDate();
-      let myMonth = myDate.getMonth() + 1;
-      let myYear = myDate.getFullYear();
-      if (myDay < 10) {
-        myDay = `0${myDay}`;
+      let myStartMonth = myDate.getUTCMonth();
+      let myStartYear = myDate.getUTCFullYear();
+      let myStartDay = myDate.getUTCDate();
+
+      if (myStartDay < 10) {
+        myStartDay = `0${myStartDay}`;
       }
-      if (myMonth < 10) {
-        myMonth = `0${myMonth}`;
+      myStartMonth = myStartMonth + 1;
+      if (myStartMonth < 10) {
+        myStartMonth = `0${myStartMonth}`;
       }
 
       myOriginalData.BlindID = data.NewExpense._id;
       myOriginalData.Category = myDOMs.income.Party.value;
-      myOriginalData.Date = myYear + "-" + myMonth + "-" + myDay;
+      myOriginalData.Date = `${myStartYear}-${myStartMonth}-${myStartDay}`;
       //myOriginalData.Date = myTempDate;
       myOriginalData.Description = myDOMs.income.Description.value;
       myOriginalData.Hst = parseFloat(myDOMs.income.HSTAmt.value);
@@ -590,7 +585,7 @@ function deleteIncomeExpense() {
   if (confirm("Are you sure you want to Delete this Revenue Entry?")) {
     let tempData;
     tempData = {
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: 'Income',
       source: source
     };
@@ -719,13 +714,13 @@ function getIncomeExpenses(source) {
 
   tempData = {
     carNumber: "Income",
-    auth: myToken,
-    startYear: startDate.getFullYear(),
-    startMonth: startDate.getMonth(),
-    startDay: startDate.getDate(),
-    endYear: endDate.getFullYear(),
-    endMonth: endDate.getMonth(),
-    endDay: endDate.getDate(),
+    auth: window.sessionStorage.getItem('myRandomVar'),
+    startYear: startDate.getUTCFullYear(),
+    startMonth: startDate.getUTCMonth(),
+    startDay: startDate.getUTCDate(),
+    endYear: endDate.getUTCFullYear(),
+    endMonth: endDate.getUTCMonth(),
+    endDay: endDate.getUTCDate(),
     source: source
   };
 
@@ -773,7 +768,7 @@ function getIncomeExpenses(source) {
       ToggleMenuBar();
     })
     .fail(function (e) {
-      if (e.readyState === 0 || myToken === '') {
+      if (e.readyState === 0 || window.sessionStorage.getItem('myRandomVar') === '' || window.sessionStorage.getItem('myRandomVar') === null) {
         alert('You Must be logged in before using EZ-HST-CANADA>')
       } else {
         alert(JSON.stringify(e.statusText, undefined, 2));
@@ -824,10 +819,7 @@ $("#incomeExpBtn").click(function () {
     return;
   }
   let myDate = new Date(myDOMs.income.EntryDate.value);
-  myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
-  let myStartMonth = myDate.getMonth();
-  let myStartYear = myDate.getFullYear();
-  let myStartDay = myDate.getDate();
+
   //Send message when trying to add receipt image with multiple monthly payments
   if (
     myDOMs.income.ReoccurYES.checked === true &&
@@ -888,10 +880,7 @@ $("#incomeExpBtn").click(function () {
       vendorSelect: myDOMs.income.Vendor.value,
       carExpCatSelect: myDOMs.income.Party.value,
       carExpReoccuring: 1,
-      dateYear: myStartYear,
-      dateMonth: myStartMonth,
-      dateDay: myStartDay,
-      auth: myToken,
+      auth: window.sessionStorage.getItem('myRandomVar'),
       carNumber: "Income",
       source: source
     };
@@ -1019,7 +1008,7 @@ $("#incomeExpBtn").click(function () {
         formData.append("imgload", blob, 'NewReceiptImg');
       }
 
-
+      formData.append("carDate", myDate);
       formData.append("carnetAmt", myDOMs.income.NetAmt.value);
       formData.append("carhstAmt", myDOMs.income.HSTAmt.value);
       formData.append("carpstAmt", myDOMs.income.PSTAmt.value);
@@ -1028,12 +1017,9 @@ $("#incomeExpBtn").click(function () {
       formData.append("vendorSelect", myDOMs.income.Vendor.value);
       formData.append("carExpCatSelect", myDOMs.income.Party.value);
       formData.append("expReceipt", true);
-      formData.append("auth", myToken);
+      formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
       formData.append("carNumber", "Income");
       formData.append("source", source);
-      formData.append("dateYear", myStartYear);
-      formData.append("dateMonth", myStartMonth);
-      formData.append("dateDay", myStartDay);
 
       $.ajax({
         method: "POST",
@@ -1089,6 +1075,7 @@ $("#incomeExpBtn").click(function () {
       let mydata;
 
       mydata = {
+        carDate: myDate,
         carnetAmt: myDOMs.income.NetAmt.value,
         carhstAmt: myDOMs.income.HSTAmt.value,
         carpstAmt: myDOMs.income.PSTAmt.value,
@@ -1097,10 +1084,7 @@ $("#incomeExpBtn").click(function () {
         vendorSelect: myDOMs.income.Vendor.value,
         carExpCatSelect: myDOMs.income.Party.value,
         expReceipt: false,
-        dateYear: myStartYear,
-        dateMonth: myStartMonth,
-        dateDay: myStartDay,
-        auth: myToken,
+        auth: window.sessionStorage.getItem('myRandomVar'),
         carNumber: "Income",
         source: source
       };

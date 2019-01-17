@@ -106,9 +106,8 @@ async function displayVehicleLogModal() {
    let tempZero = 0;
    $("#vehicleLogModal").modal("show");
    ToggleMenuBar();
-   myDOMs.vehicleLog.DateLog.value = myDOMs.main_page.StartDate.value;
    await getAllVehicleLogs();
-   // myDOMs.vehicleLog.Selector.value = "Vehicle 2";
+   myDOMs.vehicleLog.DateLog.value = myDOMs.main_page.StartDate.value;
    myDOMs.vehicleLog.Selector.value = "Vehicle 1";
    if (vLogArray[0] === undefined) {
       myDOMs.vehicleLog.PerKMInput.value = tempZero.toFixed(1);
@@ -128,7 +127,6 @@ async function displayVehicleLogModal() {
    }
 
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-   PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
    calculateBusinessPercentage(PercentsendDate);
 };
 
@@ -142,13 +140,11 @@ myDOMs.vehicleLog.DateLog.addEventListener('change', function (e) {
 });
 
 function updateDisplayAfterDateChange() {
-
    let tempDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   tempDate.setHours(tempDate.getHours() + (tempDate.getTimezoneOffset() / 60));
 
    updateLogData(tempDate);
    let tempDay = getDayofYear(tempDate);
-   let tempMonth = tempDate.getMonth() + 1;
+   let tempMonth = tempDate.getUTCMonth() + 1;
    myDOMs.vehicleLog.DisplayDay.innerText = `Day - ${tempDay}`;
    myDOMs.vehicleLog.DisplayMonth.innerText = `Month - ${tempMonth}`;
    switch (tempMonth) {
@@ -174,7 +170,7 @@ function updateDisplayAfterDateChange() {
          break;
    }
 
-   myDOMs.vehicleLog.DisplayYear.innerText = `Year - ${tempDate.getFullYear()}`;
+   myDOMs.vehicleLog.DisplayYear.innerText = `Year - ${tempDate.getUTCFullYear()}`;
 }
 
 myDOMs.vehicleLog.FirstBtn.addEventListener('click', function (e) {
@@ -182,31 +178,23 @@ myDOMs.vehicleLog.FirstBtn.addEventListener('click', function (e) {
 });
 
 function gotoFirstDay() {
-   let tempDate = new Date(2018, 1, 1);
-   let myDay = tempDate.getDate();
-   let myMonth = tempDate.getMonth();
-   let myYear = tempDate.getFullYear();
-   if (myDay < 10) {
-      myDay = `0${myDay}`;
-   }
-   if (myMonth < 10) {
-      myMonth = `0${myMonth}`;
-   }
-   myDOMs.vehicleLog.DateLog.value = myYear + "-" + myMonth + "-" + myDay;
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let myYearTemp = myDateTemp.getUTCFullYear();
+
+   myDOMs.vehicleLog.DateLog.value = `${myYearTemp}-01-01`;
    updateDisplayAfterDateChange();
-}
+};
 
 myDOMs.vehicleLog.PreviousBtn.addEventListener('click', function (e) {
    let tempDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   tempDate.setHours(tempDate.getHours() + (tempDate.getTimezoneOffset() / 60));
-   if (tempDate.getMonth() === 0 && tempDate.getDate() === 1) {
-      return
+   if (tempDate.getUTCMonth() === 0 && tempDate.getUTCDate() === 1) {
+      return;
    }
 
-   tempDate.setDate(tempDate.getDate() - 1);
-   let myDay = tempDate.getDate();
-   let myMonth = tempDate.getMonth() + 1;
-   let myYear = tempDate.getFullYear();
+   tempDate.setUTCDate(tempDate.getUTCDate() - 1);
+   let myDay = tempDate.getUTCDate();
+   let myMonth = tempDate.getUTCMonth() + 1;
+   let myYear = tempDate.getUTCFullYear();
    if (myDay < 10) {
       myDay = `0${myDay}`;
    }
@@ -219,15 +207,14 @@ myDOMs.vehicleLog.PreviousBtn.addEventListener('click', function (e) {
 
 myDOMs.vehicleLog.NextBtn.addEventListener('click', function (e) {
    let tempDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   tempDate.setHours(tempDate.getHours() + (tempDate.getTimezoneOffset() / 60));
-   if (tempDate.getMonth() === 11 && tempDate.getDate() === 31) {
+   if (tempDate.getUTCMonth() === 11 && tempDate.getUTCDate() === 31) {
       return
    }
 
-   tempDate.setDate(tempDate.getDate() + 1);
-   let myDay = tempDate.getDate();
-   let myMonth = tempDate.getMonth() + 1;
-   let myYear = tempDate.getFullYear();
+   tempDate.setUTCDate(tempDate.getUTCDate() + 1);
+   let myDay = tempDate.getUTCDate();
+   let myMonth = tempDate.getUTCMonth() + 1;
+   let myYear = tempDate.getUTCFullYear();
    if (myDay < 10) {
       myDay = `0${myDay}`;
    }
@@ -239,17 +226,9 @@ myDOMs.vehicleLog.NextBtn.addEventListener('click', function (e) {
 });
 
 myDOMs.vehicleLog.LastBtn.addEventListener('click', function (e) {
-   let tempDate = new Date(2018, 11, 31);
-   let myDay = tempDate.getDate();
-   let myMonth = tempDate.getMonth() + 1;
-   let myYear = tempDate.getFullYear();
-   if (myDay < 10) {
-      myDay = `0${myDay}`;
-   }
-   if (myMonth < 10) {
-      myMonth = `0${myMonth}`;
-   }
-   myDOMs.vehicleLog.DateLog.value = myYear + "-" + myMonth + "-" + myDay;
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let myYearTemp = myDateTemp.getUTCFullYear();
+   myDOMs.vehicleLog.DateLog.value = `${myYearTemp}-12-31`;
    updateDisplayAfterDateChange();
 });
 
@@ -260,13 +239,20 @@ function updateCarLogHeader() {
       myDOMs.vehicleLog.Title.textContent = "Vehicle 2 Log Entry Form";
    }
    let tempDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   tempDate.setHours(tempDate.getHours() + (tempDate.getTimezoneOffset() / 60));
    updateLogData(tempDate);
 };
 
 function postVehicleLog() {
    let myDate = new Date(myDOMs.vehicleLog.DateLog.value);
-   myDate.setHours(myDate.getHours() + (myDate.getTimezoneOffset() / 60));
+   let myDayLogTemp = myDate.getUTCDate();
+   let myMonthLogTemp = myDate.getUTCMonth();
+   let myYearLogTemp = myDate.getUTCFullYear();
+
+   if (new Date(dbMiscData.lockDate) >= myDate) {
+      alert('Because the Vehicle Log Date is before or the same as the Lock Date \n The Vehicle Log Entry Form will not allow you to Save or Add any changes to this Date! \n This is likely because the Lock Date was Set to Prevent any changes during the time period in which the HST/GST return as been filed.');
+      return;
+   }
+
    // let myStartMonth = myDate.getMonth();
    // let myStartYear = myDate.getFullYear();
    // let myStartDay = myDate.getDate();
@@ -281,20 +267,24 @@ function postVehicleLog() {
    if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
       changedVehicle = '1';
       mydata = {
-         logDate: myDate,
+         startYear: myYearLogTemp,
+         startMonth: myMonthLogTemp,
+         startDay: myDayLogTemp,
          PersKMV1: myDOMs.vehicleLog.PerKMInput.value,
          BusKMV1: myDOMs.vehicleLog.BusKMInput.value,
          carNum: 1,
-         auth: myToken
+         auth: window.sessionStorage.getItem('myRandomVar')
       };
    } else if (myDOMs.vehicleLog.Selector.value === "Vehicle 2") {
       changedVehicle = '2';
       mydata = {
-         logDate: myDate,
+         startYear: myYearLogTemp,
+         startMonth: myMonthLogTemp,
+         startDay: myDayLogTemp,
          PersKMV2: myDOMs.vehicleLog.PerKMInput.value,
          BusKMV2: myDOMs.vehicleLog.BusKMInput.value,
          carNum: 2,
-         auth: myToken
+         auth: window.sessionStorage.getItem('myRandomVar')
       };
    }
 
@@ -337,9 +327,9 @@ function postVehicleLog() {
 }
 
 function updateLogArrayAfterPost(editedDate, PersAmt, BusAmt, changedVehicle) {
-   let editedYear = editedDate.getFullYear();
-   let editedMonth = editedDate.getMonth();
-   let editedDay = editedDate.getDate();
+   let editedYear = editedDate.getUTCFullYear();
+   let editedMonth = editedDate.getUTCMonth();
+   let editedDay = editedDate.getUTCDate();
    let myTempIndex;
 
    let myDateArray = vLogArray
@@ -348,13 +338,11 @@ function updateLogArrayAfterPost(editedDate, PersAmt, BusAmt, changedVehicle) {
       })
 
    for (i = 0; i < myDateArray.length; i++) {
-      let myMonth = new Date(myDateArray[i]);
-      let myYear = new Date(myDateArray[i]);
-      let myDay = new Date(myDateArray[i]);
+      let myDateLogTemp = new Date(myDateArray[i]);
 
-      myMonth = myMonth.getMonth();
-      myYear = myYear.getFullYear();
-      myDay = myDay.getDate();
+      let myMonth = myDateLogTemp.getUTCMonth();
+      let myYear = myDateLogTemp.getUTCFullYear();
+      let myDay = myDateLogTemp.getUTCDate();
 
       if (myMonth === editedMonth && myYear === editedYear && myDay === editedDay) {
          myTempIndex = i;
@@ -401,7 +389,7 @@ function getAllVehicleLogs() {
          url: `${serverURL}vehicleLog`,
          method: "GET",
          data: {
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          }
       })
          .done(function (data) {
@@ -426,17 +414,15 @@ function sortArrayByDate() {
 
 function updateLogData(searchDate) {
    let tempZero = 0;
-   let searchMonth = searchDate.getMonth();
-   let searchYear = searchDate.getFullYear();
-   let searchDay = searchDate.getDate();
-   // alert(searchMonth);
-   // alert(searchYear);
-   // alert(searchDay);
+   let searchMonth = searchDate.getUTCMonth();
+   let searchYear = searchDate.getUTCFullYear();
+   let searchDay = searchDate.getUTCDate();
+
    let tempobj = vLogArray.filter(obj => {
       let myDate = new Date(obj.logDate);
-      let myDateMonth = myDate.getMonth();
-      let myDateYear = myDate.getFullYear();
-      let myDateDay = myDate.getDate();
+      let myDateMonth = myDate.getUTCMonth();
+      let myDateYear = myDate.getUTCFullYear();
+      let myDateDay = myDate.getUTCDate();
 
       return (searchMonth === myDateMonth && searchYear === myDateYear && searchDay === myDateDay);
    });
@@ -479,7 +465,6 @@ function updateLogData(searchDate) {
    }
 
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-   PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
    calculateBusinessPercentage(PercentsendDate);
 };
 
@@ -488,7 +473,7 @@ function calculateBusinessPercentage(selectDate, myReturn) {
    let tempDayOfYear = getDayofYear(selectDate);
 
    vLogArray.forEach((el, index) => {
-      let loopMonth = new Date(el.logDate).getMonth();
+      let loopMonth = new Date(el.logDate).getUTCMonth();
       if (getDayofYear(el.logDate) <= tempDayOfYear) {
          switch (loopMonth) {
             case 0:
@@ -792,7 +777,7 @@ function calculateBusinessPercentage(selectDate, myReturn) {
 }
 
 function applyPercentCalculationsToDOM(selectDate) {
-   let currentMonth = selectDate.getMonth();
+   let currentMonth = selectDate.getUTCMonth();
 
    if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
       switch (currentMonth) {
@@ -1037,16 +1022,14 @@ async function saveOdometerInput() {
    }
    await updateMiscData();
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-   PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
    calculateBusinessPercentage(PercentsendDate);
-
 };
 
 function getDayofYear(myDate) {
 
-   let myDateMonth = new Date(myDate).getMonth();
-   let myDateDay = new Date(myDate).getDate();
-   let myDateYear = new Date(myDate).getFullYear();
+   let myDateMonth = new Date(myDate).getUTCMonth();
+   let myDateDay = new Date(myDate).getUTCDate();
+   let myDateYear = new Date(myDate).getUTCFullYear();
    let leapYear = false;
    if (myDateYear === 2020 || myDateYear === 2024 || myDateYear === 2028 || myDateYear === 2032 || myDateYear === 2036 || myDateYear === 2040 || myDateYear === 2044) {
       leapYear = true;
@@ -1129,13 +1112,13 @@ function zeroAllLogs(noMsg) {
       if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
          carNum = '1';
          mydata = {
-            auth: myToken,
+            auth: window.sessionStorage.getItem('myRandomVar'),
             carNum: '1'
          }
       } else if (myDOMs.vehicleLog.Selector.value === "Vehicle 2") {
          carNum = '2';
          mydata = {
-            auth: myToken,
+            auth: window.sessionStorage.getItem('myRandomVar'),
             carNum: '2'
          }
       }
@@ -1144,7 +1127,7 @@ function zeroAllLogs(noMsg) {
          if (confirm('Are you Sure you want to Zero all the Log entries for Vehicle 1?')) {
             carNum = '1';
             mydata = {
-               auth: myToken,
+               auth: window.sessionStorage.getItem('myRandomVar'),
                carNum: '1'
             }
          } else {
@@ -1154,7 +1137,7 @@ function zeroAllLogs(noMsg) {
          if (confirm('Are you Sure you want to Zero all the Log entries for Vehicle 2?')) {
             carNum = '2';
             mydata = {
-               auth: myToken,
+               auth: window.sessionStorage.getItem('myRandomVar'),
                carNum: '2'
             }
          } else {
@@ -1189,7 +1172,6 @@ function zeroAllLogs(noMsg) {
             await getVehiclePercentage();
             fillMainDataFromArrays();
             let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-            PercentsendDate.setHours(24);
             calculateBusinessPercentage(PercentsendDate);
 
          })
@@ -1241,7 +1223,7 @@ function deleteAllVehicleLog() {
       return;
    }
    let mydata = {
-      auth: myToken
+      auth: window.sessionStorage.getItem('myRandomVar')
    }
    $.ajax({
       method: "DELETE",
@@ -1265,7 +1247,6 @@ function deleteAllVehicleLog() {
          await getVehiclePercentage();
          fillMainDataFromArrays();
          let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-         PercentsendDate.setHours(24);
          updateLogData(PercentsendDate);
       })
       .fail(function (err) {
@@ -1345,8 +1326,8 @@ async function quickLogInput() {
    if (vLogArray.length > 0) {
       vLogArray.forEach((vLog, index) => {
          let VehicleLogDate = new Date(vLog.logDate);
-         let LogMonth = VehicleLogDate.getMonth();
-         let LogDay = VehicleLogDate.getDate();
+         let LogMonth = VehicleLogDate.getUTCMonth();
+         let LogDay = VehicleLogDate.getUTCDate();
 
          if (LogMonth === 0 && LogDay === 1
             || LogMonth === 1 && LogDay === 1
@@ -1376,38 +1357,41 @@ async function quickLogInput() {
    await getVehiclePercentage();
    fillMainDataFromArrays();
    let PercentsendDate = new Date(myDOMs.vehicleLog.DateLog.value)
-   PercentsendDate.setHours(PercentsendDate.getHours() + (PercentsendDate.getTimezoneOffset() / 60));
 
    updateLogData(PercentsendDate);
-
-
-}
+};
 
 async function quickPostLogs(PersAmt, BusAmt) {
    PersAmt = PersAmt.toFixed(1);
    BusAmt = BusAmt.toFixed(1);
 
+   let myTempYear = startDate.getUTCFullYear();
+
+
    for (i = 0; i < 12; i++) {
-      let myDate = new Date(myDOMs.randomData.appYear, i, 1);
 
       if (myDOMs.vehicleLog.Selector.value === "Vehicle 1") {
          changedVehicle = '1';
          let tempData = {
-            logDate: myDate,
+            startYear: myTempYear,
+            startMonth: i,
+            startDay: 1,
             PersKMV1: PersAmt,
             BusKMV1: BusAmt,
             carNum: 1,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          await PostmyQuickLogs(tempData);
       } else if (myDOMs.vehicleLog.Selector.value === "Vehicle 2") {
          changedVehicle = '2';
          let tempData = {
-            logDate: myDate,
+            startYear: myTempYear,
+            startMonth: i,
+            startDay: 1,
             PersKMV2: PersAmt,
             BusKMV2: BusAmt,
             carNum: 2,
-            auth: myToken
+            auth: window.sessionStorage.getItem('myRandomVar')
          };
          await PostmyQuickLogs(tempData);
       }
@@ -1429,11 +1413,5 @@ function PostmyQuickLogs(tempData) {
          return false;
       });
    });
-
-}
-
-async function displayVLogArray() {
-   //console.dir(JSON.stringify(vLogArray, undefined, 2));
-
 
 }

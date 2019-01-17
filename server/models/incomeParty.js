@@ -7,7 +7,7 @@ let IncomeParty = mongoose.model("IncomeParty", {
    },
    text: {
       type: String,
-      required: true
+      required: false
    }
 });
 
