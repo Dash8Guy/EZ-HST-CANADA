@@ -44,8 +44,6 @@ const { IncomeClient } = require("./models/incomeClient");
 const { Return_Data } = require("./models/return_data");
 const { authenticate } = require("./middleware/authenticate");
 
-//let { EZ_ENV } = require("./config/config");
-
 var app = express();
 app.use(fileUpload());
 //app.use(busboy());
@@ -214,9 +212,10 @@ async function deleteTheImage(userID, tempID) {
 };
 
 app.post("/carExpenseRecur", authenticate, (req, res) => {
-  let myStartMonth = req.body.carDate.getUTCMonth();
-  let myStartYear = req.body.carDate.getUTCFullYear();
-  let myStartDay = req.body.carDate.getUTCDate();
+
+  let myStartMonth = new Date(req.body.carDate).getUTCMonth();
+  let myStartYear = new Date(req.body.carDate).getUTCFullYear();
+  let myStartDay = new Date(req.body.carDate).getUTCDate();
   let myCarExpObject;
   let myCarColletion = [];
   let i = 0;
@@ -2060,7 +2059,8 @@ app.post("/fixedAssets", authenticate, async (req, res) => {
     startValue: req.body.startValue,
     busPercent: req.body.busPercent,
     claimAmt: req.body.claimAmt,
-    itcClaimAmt: req.body.itcClaimAmt
+    itcClaimAmt: req.body.itcClaimAmt,
+    itc_pstClaimAmt: req.body.itc_pstClaimAmt
   });
   asset.save().then(
     doc => {
@@ -2117,7 +2117,8 @@ app.patch("/fixedAssets/:_id", authenticate, (req, res) => {
         startValue: req.body.startValue,
         busPercent: req.body.busPercent,
         claimAmt: req.body.claimAmt,
-        itcClaimAmt: req.body.itcClaimAmt
+        itcClaimAmt: req.body.itcClaimAmt,
+        itc_pstClaimAmt: req.body.itc_pstClaimAmt
       }
     },
     { returnOriginal: false }
@@ -2175,7 +2176,6 @@ app.get("/fixedAssets", authenticate, (req, res) => {
 // GST/HST Return
 
 app.post("/return_data", authenticate, async (req, res) => {
-
   const return_data = new Return_Data({
     _user: req.user._id,
     LineNumber: req.body.LineNumber,
@@ -2195,7 +2195,24 @@ app.post("/return_data", authenticate, async (req, res) => {
     Q2Amt: req.body.Q2Amt,
     Q3Amt: req.body.Q3Amt,
     Q4Amt: req.body.Q4Amt,
-    YearAmt: req.body.YearAmt
+    YearAmt: req.body.YearAmt,
+    JanPSTAmt: req.body.JanPSTAmt,
+    FebPSTAmt: req.body.FebPSTAmt,
+    MarPSTAmt: req.body.MarPSTAmt,
+    AprPSTAmt: req.body.AprPSTAmt,
+    MayPSTAmt: req.body.MayPSTAmt,
+    JunPSTAmt: req.body.JunPSTAmt,
+    JulPSTAmt: req.body.JulPSTAmt,
+    AugPSTAmt: req.body.AugPSTAmt,
+    SepPSTAmt: req.body.SepPSTAmt,
+    OctPSTAmt: req.body.OctPSTAmt,
+    NovPSTAmt: req.body.NovPSTAmt,
+    DecPSTAmt: req.body.DecPSTAmt,
+    Q1PSTAmt: req.body.Q1PSTAmt,
+    Q2PSTAmt: req.body.Q2PSTAmt,
+    Q3PSTAmt: req.body.Q3PSTAmt,
+    Q4PSTAmt: req.body.Q4PSTAmt,
+    YearPSTAmt: req.body.YearPSTAmt
   });
   return_data.save().then(
     doc => {
@@ -2347,6 +2364,142 @@ app.patch("/return_data/:_id", authenticate, (req, res) => {
       _user: userID,
       LineNumber: req.body.LineNumber,
       DecAmt: req.body.DecAmt
+    }
+  }
+
+  if (req.body.YearPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      YearPSTAmt: req.body.YearPSTAmt
+    }
+  }
+
+  if (req.body.Q1PSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q1PSTAmt: req.body.Q1PSTAmt
+    }
+  }
+
+  if (req.body.Q2PSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q2PSTAmt: req.body.Q2PSTAmt
+    }
+  }
+
+  if (req.body.Q3PSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q3PSTAmt: req.body.Q3PSTAmt
+    }
+  }
+
+  if (req.body.Q4PSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      Q4PSTAmt: req.body.Q4PSTAmt
+    }
+  }
+
+  if (req.body.JanPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JanPSTAmt: req.body.JanPSTAmt
+    }
+  }
+
+  if (req.body.FebPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      FebPSTAmt: req.body.FebPSTAmt
+    }
+  }
+
+  if (req.body.MarPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      MarPSTAmt: req.body.MarPSTAmt
+    }
+  }
+
+  if (req.body.AprPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      AprPSTAmt: req.body.AprPSTAmt
+    }
+  }
+
+  if (req.body.MayPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      MayPSTAmt: req.body.MayPSTAmt
+    }
+  }
+
+  if (req.body.JunPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JunPSTAmt: req.body.JunPSTAmt
+    }
+  }
+
+  if (req.body.JulPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      JulPSTAmt: req.body.JulPSTAmt
+    }
+  }
+
+  if (req.body.AugPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      AugPSTAmt: req.body.AugPSTAmt
+    }
+  }
+
+  if (req.body.SepPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      SepPSTAmt: req.body.SepPSTAmt
+    }
+  }
+
+  if (req.body.OctPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      OctPSTAmt: req.body.OctPSTAmt
+    }
+  }
+
+  if (req.body.NovPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      NovPSTAmt: req.body.NovPSTAmt
+    }
+  }
+
+  if (req.body.DecPSTAmt !== undefined) {
+    mySetObj = {
+      _user: userID,
+      LineNumber: req.body.LineNumber,
+      DecPSTAmt: req.body.DecPSTAmt
     }
   }
 

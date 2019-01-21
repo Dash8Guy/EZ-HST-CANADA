@@ -495,7 +495,7 @@ function updatePSTPaymentArray(row, data) {
   row = +row + +varNumOne;
 
   var myTable = document.getElementById("paymentReportTable");
-  myTable.rows[row].cells[1].innerHTML = myMonth + "/" + myDay + "/" + myYear;
+  myTable.rows[row].cells[1].innerHTML = myMonth + "-" + myDay + "-" + myYear;
   myTable.rows[row].cells[3].innerHTML = `$${data.paymentAmt.toFixed(2)}`;
   myTable.rows[row].cells[5].innerHTML = data.paymentDescription;
 

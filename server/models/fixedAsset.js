@@ -38,6 +38,11 @@ let FixedAsset = mongoose.model("FixedAsset", {
     type: Number,
     required: true,
     min: 0
+  },
+  itc_pstClaimAmt: {
+    type: Number,
+    required: true,
+    min: 0
   }
 });
 

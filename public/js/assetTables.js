@@ -4,6 +4,7 @@ let AssetTableOpen = false;
 
 let AssetSortStringVariable = 'Sorted: As entered.';
 let assetArray = [];
+let myHomeProvince = localStorage.getItem(`${userEmail}_Selected_Province`);
 
 //This next string variable will hold the last sort order applied on the table. (ascDate-descDate-asc#-desc#)
 let lastAssetTableSortOrder = 'none';
@@ -162,14 +163,22 @@ function SortAssetTable(el) {
         return amtA - amtB;
       });
       lastAssetTableSortOrder = 'ascITCClaimAmt';
-      AssetSortStringVariable = `Sorted: Ascending by ITC Claim.`;
+      if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+        AssetSortStringVariable = `Sorted: Ascending by HST ITC.`;
+      } else {
+        AssetSortStringVariable = `Sorted: Ascending by GST ITC.`;
+      }
     } else if (lastAssetTableSortOrder === 'ascITCClaimAmt') {
       assetArray.sort(function (b, a) {
         var amtA = a.itcClaimAmt, amtB = b.itcClaimAmt;
         return amtA - amtB;
       });
       lastAssetTableSortOrder = 'descITCClaimAmt';
-      AssetSortStringVariable = `Sorted: Descending by ITC Claim.`;
+      if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+        AssetSortStringVariable = `Sorted: Descending by HST ITC.`;
+      } else {
+        AssetSortStringVariable = `Sorted: Descending by GST ITC.`;
+      }
     }
   } else if (el.id === 'HeadAssetSort-9') {
     if (lastAssetTableSortOrder !== 'ascActualITCClaimAmt') {
@@ -178,14 +187,54 @@ function SortAssetTable(el) {
         return amtA - amtB;
       });
       lastAssetTableSortOrder = 'ascActualITCClaimAmt';
-      AssetSortStringVariable = `Sorted: Ascending by Actual ITC Claim.`;
+      if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+        AssetSortStringVariable = `Sorted: Ascending by Actual HST ITC.`;
+      } else {
+        AssetSortStringVariable = `Sorted: Ascending by Actual GST ITC.`;
+      }
     } else if (lastAssetTableSortOrder === 'ascActualITCClaimAmt') {
       assetArray.sort(function (b, a) {
         var amtA = a.itcClaimAmt * a.busPercent, amtB = b.itcClaimAmt * b.busPercent;
         return amtA - amtB;
       });
       lastAssetTableSortOrder = 'descActualITCClaimAmt';
-      AssetSortStringVariable = `Sorted: Descending by Actual ITC Claim.`;
+      if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+        AssetSortStringVariable = `Sorted: Descending by Actual HST ITC Claim.`;
+      } else {
+        AssetSortStringVariable = `Sorted: Descending by Actual GST ITC Claim.`;
+      }
+    }
+  } else if (el.id === 'HeadAssetSort-10') {
+    if (lastAssetTableSortOrder !== 'ascITC_PST_ClaimAmt') {
+      assetArray.sort(function (a, b) {
+        var amtA = a.itc_pstClaimAmt, amtB = b.itc_pstClaimAmt;
+        return amtA - amtB;
+      });
+      lastAssetTableSortOrder = 'ascITC_PST_ClaimAmt';
+      AssetSortStringVariable = `Sorted: Ascending by PST ITC.`;
+    } else if (lastAssetTableSortOrder === 'ascITC_PST_ClaimAmt') {
+      assetArray.sort(function (b, a) {
+        var amtA = a.itc_pstClaimAmt, amtB = b.itc_pstClaimAmt;
+        return amtA - amtB;
+      });
+      lastAssetTableSortOrder = 'descITC_PST_ClaimAmt';
+      AssetSortStringVariable = `Sorted: Descending by PST ITC.`;
+    }
+  } else if (el.id === 'HeadAssetSort-11') {
+    if (lastAssetTableSortOrder !== 'ascActualITC_PST_ClaimAmt') {
+      assetArray.sort(function (a, b) {
+        var amtA = a.itc_pstClaimAmt * a.busPercent, amtB = b.itc_pstClaimAmt * b.busPercent;
+        return amtA - amtB;
+      });
+      lastAssetTableSortOrder = 'ascActualITC_PST_ClaimAmt';
+      AssetSortStringVariable = `Sorted: Ascending by Actual PST ITC.`;
+    } else if (lastAssetTableSortOrder === 'ascActualITC_PST_ClaimAmt') {
+      assetArray.sort(function (b, a) {
+        var amtA = a.itc_pstClaimAmt * a.busPercent, amtB = b.itc_pstClaimAmt * b.busPercent;
+        return amtA - amtB;
+      });
+      lastAssetTableSortOrder = 'descActualITC_PST_ClaimAmt';
+      AssetSortStringVariable = `Sorted: Descending by Actual PST ITC.`;
     }
   }
 
@@ -231,18 +280,40 @@ function buildAssetReportTable(
   );
   myTableAssetAlert.setAttribute("id", curAlertID);
   //Create the Table Header Row
-  let myAssetHeaders = [
-    "#",
-    "Date Added",
-    "Claim Date",
-    "Description",
-    "Asset Value",
-    "Business %",
-    "Depreciation Claim",
-    "Actual Depreciation Claim",
-    "ITC Claim",
-    "Actual ITC Claim"
-  ];
+  let myAssetHeaders = [];
+
+  if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+    myAssetHeaders = [
+      "#",
+      "Date Added",
+      "Claim Date",
+      "Description",
+      "Asset Value",
+      "Business %",
+      "Depreciation Claim",
+      "Actual Depreciation Claim",
+      "HST ITC",
+      "Actual HST ITC",
+      "PST ITC",
+      "Actual PST ITC"
+    ];
+  } else {
+    myAssetHeaders = [
+      "#",
+      "Date Added",
+      "Claim Date",
+      "Description",
+      "Asset Value",
+      "Business %",
+      "Depreciation Claim",
+      "Actual Depreciation Claim",
+      "GST ITC",
+      "Actual GST ITC",
+      "PST ITC",
+      "Actual PST ITC"
+    ];
+  }
+
   // creates a <table> element and a <tbody> element
 
   tblAsset.setAttribute("class", "table table-secondary table-lg table-hover table-striped");
@@ -386,7 +457,7 @@ function buildAssetReportTable(
     AssetCell.setAttribute("id", `cellActualClaimAmt${i}`);
     Assetrow.appendChild(AssetCell);
 
-    //ITC Claim Amount
+    //HST ITC Claim Amount
     AssetCell = document.createElement("td");
     cellAssetTxt = document.createTextNode(`$${formatNumber(arrTablePage1[i].itcClaimAmt.toFixed(2))}`);
     AssetCell.appendChild(cellAssetTxt);
@@ -395,13 +466,31 @@ function buildAssetReportTable(
     AssetCell.setAttribute("id", `cellITCClaimAmt${i}`);
     Assetrow.appendChild(AssetCell);
 
-    //Actual ITC Claim Amount
+    //Actual HST ITC Claim Amount
     AssetCell = document.createElement("td");
     cellAssetTxt = document.createTextNode(`$${formatNumber((arrTablePage1[i].busPercent * arrTablePage1[i].itcClaimAmt / 100).toFixed(2))}`);
     AssetCell.appendChild(cellAssetTxt);
     AssetCell.setAttribute("class", "text-right");
     AssetCell.setAttribute("style", "color: rgb(0, 0, 0);");
     AssetCell.setAttribute("id", `cellActualITCClaimAmt${i}`);
+    Assetrow.appendChild(AssetCell);
+
+    //PST ITC Claim Amount
+    AssetCell = document.createElement("td");
+    cellAssetTxt = document.createTextNode(`$${formatNumber(arrTablePage1[i].itc_pstClaimAmt.toFixed(2))}`);
+    AssetCell.appendChild(cellAssetTxt);
+    AssetCell.setAttribute("class", "text-right");
+    AssetCell.setAttribute("style", "color: rgb(0, 0, 0);");
+    AssetCell.setAttribute("id", `cellITC_PST_ClaimAmt${i}`);
+    Assetrow.appendChild(AssetCell);
+
+    //Actual PST ITC Claim Amount
+    AssetCell = document.createElement("td");
+    cellAssetTxt = document.createTextNode(`$${formatNumber((arrTablePage1[i].busPercent * arrTablePage1[i].itc_pstClaimAmt / 100).toFixed(2))}`);
+    AssetCell.appendChild(cellAssetTxt);
+    AssetCell.setAttribute("class", "text-right");
+    AssetCell.setAttribute("style", "color: rgb(0, 0, 0);");
+    AssetCell.setAttribute("id", `cellActualITC_PST_ClaimAmt${i}`);
     Assetrow.appendChild(AssetCell);
 
     // add the row to the end of the table body
@@ -493,6 +582,25 @@ function buildAssetReportTable(
     AssetCell.setAttribute("class", "text-right font-weight-bold");
     AssetCell.setAttribute("id", `cellAssetActualITCClaimAmtTotal`);
     Assetrow.appendChild(AssetCell);
+
+
+    //SUM of all PST ITC Claim
+    AssetCell = document.createElement("td");
+    cellAssetTxt = document.createTextNode(`$${formatNumber(Number(myAssetReportTotal.ITC_PST_ClaimAmt).toFixed(2))}`);
+    AssetCell.appendChild(cellAssetTxt);
+    AssetCell.setAttribute("class", "text-right font-weight-bold");
+    AssetCell.setAttribute("id", `cellAssetITC_PST_ClaimAmtTotal`);
+    Assetrow.appendChild(AssetCell);
+
+    //SUM of all Actual PST ITC Claim
+    AssetCell = document.createElement("td");
+    cellAssetTxt = document.createTextNode(`$${formatNumber(Number(myAssetReportTotal.Actual_ITC_PST_ClaimAmt).toFixed(2))}`);
+    AssetCell.appendChild(cellAssetTxt);
+    AssetCell.setAttribute("class", "text-right font-weight-bold");
+    AssetCell.setAttribute("id", `cellAssetActualITC_PST_ClaimAmtTotal`);
+    Assetrow.appendChild(AssetCell);
+
+
 
     tblAssetBody.appendChild(Assetrow);
   }
@@ -644,20 +752,27 @@ function removeAssetTblNavAlertChildNodes() {
 function totalUpAllAsset() {
   let myRunningClaimAmt = 0;
   let myRunningITCClaimAmt = 0;
+  let myRunningITC_PST_ClaimAmt = 0;
   let myRunningActualClaimAmt = 0;
   let myRunningActualITCClaimAmt = 0;
+  let myRunningActualITC_PST_ClaimAmt = 0;
+
 
   assetArray.forEach((el, index) => {
     myRunningClaimAmt += el.claimAmt;
     myRunningITCClaimAmt += el.itcClaimAmt;
+    myRunningITC_PST_ClaimAmt += el.itc_pstClaimAmt;
     myRunningActualClaimAmt += el.claimAmt * (el.busPercent / 100);
     myRunningActualITCClaimAmt += el.itcClaimAmt * (el.busPercent / 100);
+    myRunningActualITC_PST_ClaimAmt += el.itc_pstClaimAmt * (el.busPercent / 100);
 
   });
   myAssetReportTotal.claimAmt = myRunningClaimAmt;
   myAssetReportTotal.ITCClaimAmt = myRunningITCClaimAmt;
+  myAssetReportTotal.ITC_PST_ClaimAmt = myRunningITC_PST_ClaimAmt;
   myAssetReportTotal.ActualclaimAmt = myRunningActualClaimAmt;
   myAssetReportTotal.ActualITCClaimAmt = myRunningActualITCClaimAmt;
+  myAssetReportTotal.Actual_ITC_PST_ClaimAmt = myRunningActualITC_PST_ClaimAmt;
 }
 
 function arrOfAssetObjectToArrOfArrays() {
@@ -665,6 +780,8 @@ function arrOfAssetObjectToArrOfArrays() {
   let ActualClaimAmtSUM = 0;
   let ITCClaimSUM = 0;
   let ActualITCClaimSUM = 0;
+  let ITC_PST_ClaimSUM = 0;
+  let ActualITC_PST_ClaimSUM = 0;
   let myTempData = [];
   let myTemp2Arr = [];
   assetArray.forEach((el, index) => {
@@ -681,11 +798,15 @@ function arrOfAssetObjectToArrOfArrays() {
     myTempArr.push(formatNumber((el.claimAmt * el.busPercent / 100).toFixed(2)));
     myTempArr.push(formatNumber(el.itcClaimAmt.toFixed(2)));
     myTempArr.push(formatNumber((el.itcClaimAmt * el.busPercent / 100).toFixed(2)));
+    myTempArr.push(formatNumber(el.itc_pstClaimAmt.toFixed(2)));
+    myTempArr.push(formatNumber((el.itc_pstClaimAmt * el.busPercent / 100).toFixed(2)));
 
     ClaimAmtSUM += el.claimAmt;
     ActualClaimAmtSUM += el.claimAmt * el.busPercent / 100;
     ITCClaimSUM += el.itcClaimAmt;
     ActualITCClaimSUM += el.itcClaimAmt * el.busPercent / 100;
+    ITC_PST_ClaimSUM += el.itc_pstClaimAmt;
+    ActualITC_PST_ClaimSUM += el.itc_pstClaimAmt * el.busPercent / 100;
 
     myTempData.push(myTempArr);
 
@@ -700,6 +821,8 @@ function arrOfAssetObjectToArrOfArrays() {
   myTemp2Arr.push(formatNumber(ActualClaimAmtSUM.toFixed(2)));
   myTemp2Arr.push(formatNumber(ITCClaimSUM.toFixed(2)));
   myTemp2Arr.push(formatNumber(ActualITCClaimSUM.toFixed(2)));
+  myTemp2Arr.push(formatNumber(ITC_PST_ClaimSUM.toFixed(2)));
+  myTemp2Arr.push(formatNumber(ActualITC_PST_ClaimSUM.toFixed(2)));
 
   myTempData.push(myTemp2Arr);
 
@@ -710,16 +833,21 @@ function arrOfAssetObjectToArrOfArrays() {
 function generateAssetTablePDF(expGroup) {
   let headText;
   let fileSaveText;
-  let myTempDate = getTodaysDate();
   let data = arrOfAssetObjectToArrOfArrays();
-  let columns = ["  #  ", "Date Added", "Claim Date", "Description", "Asset Value", "Business %", "Depreciation Claim", "Actual Depreciation Claim", "ITC Claim", "Actual ITC Claim"];
+  let columns = [];
+  if (myHomeProvince === "4" || myHomeProvince === "5" || myHomeProvince === "7" || myHomeProvince === "9" || myHomeProvince === "10") {
+    columns = ["  #  ", "Date Added", "Claim Date", "Description", "Asset Value", "Business %", "Depreciation", "Actual Depreciation", "HST ITC", "Actual HST ITC", "PST ITC", "Actual PST ITC"];
+  } else {
+    columns = ["  #  ", "Date Added", "Claim Date", "Description", "Asset Value", "Business %", "Depreciation", "Actual Depreciation", "GST ITC", "Actual GST ITC", "PST ITC", "Actual PST ITC"];
+  }
+
   let doc = new jsPDF('l', 'px', 'letter', true);
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(9);
 
 
-  headText = `${assetArray.length} Fixed Assets. (${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()})`;
-  fileSaveText = `Fixed Assets(${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} to ${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}).pdf`;
+  headText = `${assetArray.length} Fixed Assets. (${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()})`;
+  fileSaveText = `Fixed Assets(${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()} to ${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}).pdf`;
 
 
 
@@ -765,7 +893,6 @@ function getAssetToEdit(lnk) {
   let selectRowArr = myID.split("-");
   let selectRow = selectRowArr[1];
   selectedRowNum = selectRow;
-  let myPaymentAmt = 0;
 
   displayAssetModal();
 
@@ -786,7 +913,7 @@ function getAssetToEdit(lnk) {
     alert('Because the Claim Date is on or before the Lock Date, you will not be allowed to save any changes to it!');
   };
 
-  myDOMs.FixedAssets.Claim_Date.value = myYear + "-" + myMonth + "-" + myDay;
+  myDOMs.FixedAssets.Claim_Date.value = `${myYear}-${myMonth}-${myDay}`;
 
   myClaimDate = new Date(assetArray[selectRow].purchaseDate);
   myDay = myClaimDate.getUTCDate();
@@ -805,6 +932,7 @@ function getAssetToEdit(lnk) {
   myDOMs.FixedAssets.Business_Percent.value = assetArray[selectRow].busPercent.toFixed(2);
   myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(assetArray[selectRow].claimAmt.toFixed(2));
   myDOMs.FixedAssets.ITC_Claim.value = formatNumber(assetArray[selectRow].itcClaimAmt.toFixed(2));
+  myDOMs.FixedAssets.ITC_PST_Claim.value = formatNumber(assetArray[selectRow].itc_pstClaimAmt.toFixed(2));
   myDOMs.FixedAssets.Blind_ID.value = myTempID;
   myDOMs.FixedAssets.Status.value = 'SAVED';
 
@@ -815,6 +943,7 @@ function getAssetToEdit(lnk) {
   originalAsset.BusPercent = assetArray[selectRow].busPercent.toFixed(2);
   originalAsset.ClaimAmt = formatNumber(assetArray[selectRow].claimAmt.toFixed(2));
   originalAsset.ITCClaimAmt = formatNumber(assetArray[selectRow].itcClaimAmt.toFixed(2));
+  originalAsset.ITC_PST_ClaimAmt = formatNumber(assetArray[selectRow].itc_pstClaimAmt.toFixed(2));
   originalAsset.Status = 'SAVED';
   originalAsset.ID = myTempID;
 

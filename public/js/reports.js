@@ -53,8 +53,10 @@ let myPaymentReportTotal = {
 let myAssetReportTotal = {
   claimAmt: 0,
   ITCClaimAmt: 0,
+  ITC_PST_ClaimAmt: 0,
   ActualclaimAmt: 0,
-  ActualITCClaimAmt: 0
+  ActualITCClaimAmt: 0,
+  Actual_ITC_PST_ClaimAmt: 0
 }
 //This Variable is set to true when Table is opened and false when close and is used to stop the UpdateTableTotals from running when adding expenses or income.
 let TableOpen = false;

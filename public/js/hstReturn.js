@@ -47,17 +47,44 @@ let ID_Line111 = '';
 let ID_Line205 = '';
 let ID_Line405 = '';
 
+
+let Return_PST_Line103 = 0;
+let Return_PST_Line104 = 0;
+let Return_PST_Line106 = 0;
+let Return_PST_Line107 = 0;
+let Return_PST_Line110 = 0;
+let Return_PST_Line111 = 0;
+let Return_PST_Line205 = 0;
+let Return_PST_Line405 = 0;
+
+
+
+let myReturnType = 'HST';
+
 //The next 2 variable are booleans to check if Payment Modal is open
 let HSTPaymentModalOpen = false;
 let PSTPaymentModalOpen = false;
 
 function displayHSTReturnModal() {
+   myReturnType = 'HST';
    myDOMs.HST_Return.StartDate.value = myDOMs.main_page.StartDate.value;
    myDOMs.HST_Return.EndDate.value = myDOMs.main_page.EndDate.value;
    $("#HSTReturnModal").modal("show");
+   myDOMs.HST_Return.Type_Selector.value = 'HST';
    Return_Time_Period = getTimePeriod();
    getReturnData();
    StartReturnFunctions();
+   if (PST_Claim_Value === 'EXP') {
+      if (myDOMs.HST_Return.Type_Selector.classList.contains('d-none')) {
+      } else {
+         myDOMs.HST_Return.Type_Selector.classList.add('d-none');
+      }
+   } else {
+      if (myDOMs.HST_Return.Type_Selector.classList.contains('d-none')) {
+         myDOMs.HST_Return.Type_Selector.classList.remove('d-none');
+      }
+   }
+
    ToggleMenuBar();
 };
 
@@ -81,6 +108,7 @@ function hideHSTReturnModal() {
    myDOMs.HST_Return.Line115.value = '';
    myDOMs.HST_Return.Line205.value = '';
    myDOMs.HST_Return.Line405.value = '';
+   ZeroTheReturnData();
    ToggleMenuBar();
 };
 
@@ -126,87 +154,155 @@ function updateReturnData(LineNumber) {
    }
    switch (myTimePeriod) {
       case 'YearAmt':
-         formData.append('YearAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('YearAmt', myLineValue);
+         } else {
+            formData.append('YearPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q1Amt':
-         formData.append('Q1Amt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('Q1Amt', myLineValue);
+         } else {
+            formData.append('Q1PSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q2Amt':
-         formData.append('Q2Amt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('Q2Amt', myLineValue);
+         } else {
+            formData.append('Q2PSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q3Amt':
-         formData.append('Q3Amt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('Q3Amt', myLineValue);
+         } else {
+            formData.append('Q3PSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'Q4Amt':
-         formData.append('Q4Amt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('Q4Amt', myLineValue);
+         } else {
+            formData.append('Q4PSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JanAmt':
-         formData.append('JanAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('JanAmt', myLineValue);
+         } else {
+            formData.append('JanPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'FebAmt':
-         formData.append('FebAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('FebAmt', myLineValue);
+         } else {
+            formData.append('FebPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'MarAmt':
-         formData.append('MarAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('MarAmt', myLineValue);
+         } else {
+            formData.append('MarPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'AprAmt':
-         formData.append('AprAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('AprAmt', myLineValue);
+         } else {
+            formData.append('AprPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'MayAmt':
-         formData.append('MayAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('MayAmt', myLineValue);
+         } else {
+            formData.append('MayPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JunAmt':
-         formData.append('JunAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('JunAmt', myLineValue);
+         } else {
+            formData.append('JunPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'JulAmt':
-         formData.append('JulAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('JulAmt', myLineValue);
+         } else {
+            formData.append('JulPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'AugAmt':
-         formData.append('AugAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('AugAmt', myLineValue);
+         } else {
+            formData.append('AugPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'SepAmt':
-         formData.append('SepAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('SepAmt', myLineValue);
+         } else {
+            formData.append('SepPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'OctAmt':
-         formData.append('OctAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('OctAmt', myLineValue);
+         } else {
+            formData.append('OctPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'NovAmt':
-         formData.append('NovAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('NovAmt', myLineValue);
+         } else {
+            formData.append('NovPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
          break;
       case 'DecAmt':
-         formData.append('DecAmt', myLineValue);
+         if (myReturnType === 'HST') {
+            formData.append('DecAmt', myLineValue);
+         } else {
+            formData.append('DecPSTAmt', myLineValue);
+         }
          formData.append('LineNumber', LineNumber);
          formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
    }
@@ -224,28 +320,60 @@ function updateReturnData(LineNumber) {
             resolve(data);
             switch (LineNumber) {
                case 103:
-                  Return_Line103 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line103 = myLineValue;
+                  } else {
+                     Return_PST_Line103 = myLineValue;
+                  }
                   break;
                case 104:
-                  Return_Line104 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line104 = myLineValue;
+                  } else {
+                     Return_PST_Line104 = myLineValue;
+                  }
                   break;
                case 106:
-                  Return_Line106 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line106 = myLineValue;
+                  } else {
+                     Return_PST_Line106 = myLineValue;
+                  }
                   break;
                case 107:
-                  Return_Line107 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line107 = myLineValue;
+                  } else {
+                     Return_PST_Line107 = myLineValue;
+                  }
                   break;
                case 110:
-                  Return_Line110 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line110 = myLineValue;
+                  } else {
+                     Return_PST_Line110 = myLineValue;
+                  }
                   break;
                case 111:
-                  Return_Line111 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line111 = myLineValue;
+                  } else {
+                     Return_PST_Line111 = myLineValue;
+                  }
                   break;
                case 205:
-                  Return_Line205 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line205 = myLineValue;
+                  } else {
+                     Return_PST_Line205 = myLineValue;
+                  }
                   break;
                case 405:
-                  Return_Line405 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line405 = myLineValue;
+                  } else {
+                     Return_PST_Line405 = myLineValue;
+                  }
             }
          })
          .fail(function (err) {
@@ -319,123 +447,260 @@ function postReturnData(LineNumber) {
 
    switch (myTimePeriod) {
       case 'YearAmt':
-         mydata = {
-            YearAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               YearAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               YearPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
+
          break;
       case 'Q1Amt':
-         mydata = {
-            Q1Amt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               Q1Amt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               Q1PSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'Q2Amt':
-         mydata = {
-            Q2Amt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               Q2Amt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               Q2PSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'Q3Amt':
-         mydata = {
-            Q3Amt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               Q3Amt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               Q3PSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'Q4Amt':
-         mydata = {
-            Q4Amt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               Q4Amt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               Q4PSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'JanAmt':
-         mydata = {
-            JanAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               JanAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               JanPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'FebAmt':
-         mydata = {
-            FebAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               FebAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               FebPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'MarAmt':
-         mydata = {
-            MarAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               MarAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               MarPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'AprAmt':
-         mydata = {
-            AprAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               AprAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               AprPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'MayAmt':
-         mydata = {
-            MayAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               MayAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               MayPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'JunAmt':
-         mydata = {
-            JunAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               JunAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               JunPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'JulAmt':
-         mydata = {
-            JulAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               JulAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               JulPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'AugAmt':
-         mydata = {
-            AugAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               AugAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               AugPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'SepAmt':
-         mydata = {
-            SepAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               SepAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               SepPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'OctAmt':
-         mydata = {
-            OctAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               OctAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               OctPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'NovAmt':
-         mydata = {
-            NovAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               NovAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               NovPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
          break;
       case 'DecAmt':
-         mydata = {
-            DecAmt: myLineValue,
-            LineNumber: LineNumber,
-            auth: window.sessionStorage.getItem('myRandomVar')
-         };
+         if (myReturnType === 'HST') {
+            mydata = {
+               DecAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         } else {
+            mydata = {
+               DecPSTAmt: myLineValue,
+               LineNumber: LineNumber,
+               auth: window.sessionStorage.getItem('myRandomVar')
+            };
+         }
    }
 
    return new Promise((resolve, reject) => {
@@ -449,35 +714,67 @@ function postReturnData(LineNumber) {
             resolve(data);
             switch (LineNumber) {
                case 103:
-                  Return_Line103 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line103 = myLineValue;
+                  } else {
+                     Return_PST_Line103 = myLineValue;
+                  }
                   ID_Line103 = data._id;
                   break;
                case 104:
-                  Return_Line104 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line104 = myLineValue;
+                  } else {
+                     Return_PST_Line104 = myLineValue;
+                  }
                   ID_Line104 = data._id;
                   break;
                case 106:
-                  Return_Line106 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line106 = myLineValue;
+                  } else {
+                     Return_PST_Line106 = myLineValue;
+                  }
                   ID_Line106 = data._id;
                   break;
                case 107:
-                  Return_Line107 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line107 = myLineValue;
+                  } else {
+                     Return_PST_Line107 = myLineValue;
+                  }
                   ID_Line107 = data._id;
                   break;
                case 110:
-                  Return_Line110 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line110 = myLineValue;
+                  } else {
+                     Return_PST_Line110 = myLineValue;
+                  }
                   ID_Line110 = data._id;
                   break;
                case 111:
-                  Return_Line111 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line111 = myLineValue;
+                  } else {
+                     Return_PST_Line111 = myLineValue;
+                  }
                   ID_Line111 = data._id;
                   break;
                case 205:
-                  Return_Line205 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line205 = myLineValue;
+                  } else {
+                     Return_PST_Line205 = myLineValue;
+                  }
                   ID_Line205 = data._id;
                   break;
                case 405:
-                  Return_Line405 = myLineValue;
+                  if (myReturnType === 'HST') {
+                     Return_Line405 = myLineValue;
+                  } else {
+                     Return_PST_Line405 = myLineValue;
+                  }
                   ID_Line405 = data._id;
             }
          })
@@ -632,93 +929,119 @@ function GatherBusIncomeData() {
 
 function updateLineVariablesForPeriod(myReturnArray) {
    let TempLineValue = 0;
+   let TempLinePSTValue = 0;
    myReturnArray.forEach((el, index) => {
 
       switch (Return_Time_Period) {
          case 'YearAmt':
             TempLineValue = el.YearAmt;
+            TempLinePSTValue = el.YearPSTAmt;
             break;
          case 'JanAmt':
             TempLineValue = el.JanAmt;
+            TempLinePSTValue = el.JanPSTAmt;
             break;
          case 'FebAmt':
             TempLineValue = el.FebAmt;
+            TempLinePSTValue = el.FebPSTAmt;
             break;
          case 'MarAmt':
             TempLineValue = el.MarAmt;
+            TempLinePSTValue = el.MarPSTAmt;
             break;
          case 'AprAmt':
             TempLineValue = el.AprAmt;
+            TempLinePSTValue = el.AprPSTAmt;
             break;
          case 'MayAmt':
             TempLineValue = el.MayAmt;
+            TempLinePSTValue = el.MayPSTAmt;
             break;
          case 'JunAmt':
             TempLineValue = el.JunAmt;
+            TempLinePSTValue = el.JunPSTAmt;
             break;
          case 'JulAmt':
             TempLineValue = el.JulAmt;
+            TempLinePSTValue = el.JulPSTAmt;
             break;
          case 'AugAmt':
             TempLineValue = el.AugAmt;
+            TempLinePSTValue = el.AugPSTAmt;
             break;
          case 'SepAmt':
             TempLineValue = el.SepAmt;
+            TempLinePSTValue = el.SepPSTAmt;
             break;
          case 'OctAmt':
             TempLineValue = el.OctAmt;
+            TempLinePSTValue = el.OctPSTAmt;
             break;
          case 'NovAmt':
             TempLineValue = el.NovAmt;
+            TempLinePSTValue = el.NovPSTAmt;
             break;
          case 'DecAmt':
             TempLineValue = el.DecAmt;
+            TempLinePSTValue = el.DecPSTAmt;
             break;
          case 'Q1Amt':
             TempLineValue = el.Q1Amt;
+            TempLinePSTValue = el.Q1PSTAmt;
             break;
          case 'Q2Amt':
             TempLineValue = el.Q2Amt;
+            TempLinePSTValue = el.Q2PSTAmt;
             break;
          case 'Q3Amt':
             TempLineValue = el.Q3Amt;
+            TempLinePSTValue = el.Q3PSTAmt;
             break;
          case 'Q4Amt':
             TempLineValue = el.Q4Amt;
+            TempLinePSTValue = el.Q4PSTAmt;
       }
 
       switch (el.LineNumber) {
          case '103':
             ID_Line103 = el._id;
             Return_Line103 = TempLineValue;
+            Return_PST_Line103 = TempLinePSTValue;
             break;
          case '104':
             ID_Line104 = el._id;
             Return_Line104 = TempLineValue;
+            Return_PST_Line104 = TempLinePSTValue;
             break;
          case '106':
             ID_Line106 = el._id;
             Return_Line106 = TempLineValue;
+            Return_PST_Line106 = TempLinePSTValue;
             break;
          case '107':
             ID_Line107 = el._id;
             Return_Line107 = TempLineValue;
+            Return_PST_Line107 = TempLinePSTValue;
             break;
          case '110':
             ID_Line110 = el._id;
             Return_Line110 = TempLineValue;
+            Return_PST_Line110 = TempLinePSTValue;
             break;
          case '111':
             ID_Line111 = el._id;
             Return_Line111 = TempLineValue;
+            Return_PST_Line111 = TempLinePSTValue;
             break;
          case '205':
             ID_Line205 = el._id;
             Return_Line205 = TempLineValue;
+            Return_PST_Line205 = TempLinePSTValue;
             break;
          case '405':
             ID_Line405 = el._id;
             Return_Line405 = TempLineValue;
+            Return_PST_Line405 = TempLinePSTValue;
       }
    });
 };
@@ -869,7 +1192,6 @@ async function StartReturnFunctions() {
    await LoopRentalITCs();
    await LoopAssetITCs();
    DoTheMathonLoopedData();
-   // call function to calculate totals
 
 };
 
@@ -1208,6 +1530,7 @@ function LoopRentalITCs() {
 function LoopAssetITCs() {
    FixedAssetArray.forEach((el, index) => {
       FixedAssethstITCs += Number(el.itcClaimAmt * el.busPercent / 100);
+      FixedAssetpstITCs += Number(el.itc_pstClaimAmt * el.busPercent / 100);
    });
 };
 
@@ -1241,6 +1564,7 @@ function ZeroTheReturnData(fromLine) {
       RentalhstITCs = 0;
       RentalpstITCs = 0;
       FixedAssethstITCs = 0;
+      FixedAssetpstITCs = 0;
    }
 };
 
@@ -1262,30 +1586,63 @@ function DoTheMathonLoopedData() {
    let myLine405 = 0;
 
    myDOMs.HST_Return.Line101.value = `$${formatNumber((NetBusinessRevenue + NetRentalRevenue).toFixed(2))}`;
+
    if (ID_Line103 !== '') {
-      if (Return_Line103 !== null && Return_Line103 !== undefined && Return_Line103 !== '' && Return_Line103 !== 0) {
-         myDOMs.HST_Return.Line103.value = `$${formatNumber((Return_Line103).toFixed(2))}`;
-         myLine103 = Return_Line103;
+      //If there is saved data in database for line one (Could be another Time Period and not current one so we need to check line value)
+      if (myReturnType === 'HST') {
+         if (Return_Line103 !== null && Return_Line103 !== undefined && Return_Line103 !== '' && Return_Line103 !== 0) {
+            myDOMs.HST_Return.Line103.value = `$${formatNumber((Return_Line103).toFixed(2))}`;
+            myLine103 = Return_Line103;
+         } else {
+            myDOMs.HST_Return.Line103.value = `$${formatNumber((CollectedHST).toFixed(2))}`;
+            myLine103 = CollectedHST;
+         }
       } else {
+         if (Return_PST_Line103 !== null && Return_PST_Line103 !== undefined && Return_PST_Line103 !== '' && Return_PST_Line103 !== 0) {
+            myDOMs.HST_Return.Line103.value = `$${formatNumber((Return_PST_Line103).toFixed(2))}`;
+            myLine103 = Return_PST_Line103;
+         } else {
+            myDOMs.HST_Return.Line103.value = `$${formatNumber((CollectedPST).toFixed(2))}`;
+            myLine103 = CollectedPST;
+         }
+      }
+
+   } else {
+      if (myReturnType === 'HST') {
          myDOMs.HST_Return.Line103.value = `$${formatNumber((CollectedHST).toFixed(2))}`;
          myLine103 = CollectedHST;
+      } else {
+         myDOMs.HST_Return.Line103.value = `$${formatNumber((CollectedPST).toFixed(2))}`;
+         myLine103 = CollectedPST;
       }
-   } else {
-      myDOMs.HST_Return.Line103.value = `$${formatNumber((CollectedHST).toFixed(2))}`;
-      myLine103 = CollectedHST;
+
    }
 
    if (ID_Line104 !== '') {
-      if (Return_Line104 !== null && Return_Line104 !== undefined && Return_Line104 !== '' && Return_Line104 !== 0) {
-         myDOMs.HST_Return.Line104.value = `$${formatNumber((Return_Line104).toFixed(2))}`;
-         myLine104 = Return_Line104;
+      if (myReturnType === 'HST') {
+         if (Return_Line104 !== null && Return_Line104 !== undefined && Return_Line104 !== '' && Return_Line104 !== 0) {
+            myDOMs.HST_Return.Line104.value = `$${formatNumber((Return_Line104).toFixed(2))}`;
+            myLine104 = Return_Line104;
+         } else {
+            myDOMs.HST_Return.Line104.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine104 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line104.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine104 = 0;
+         if (Return_PST_Line104 !== null && Return_PST_Line104 !== undefined && Return_PST_Line104 !== '' && Return_PST_Line104 !== 0) {
+            myDOMs.HST_Return.Line104.value = `$${formatNumber((Return_PST_Line104).toFixed(2))}`;
+            myLine104 = Return_PST_Line104;
+         } else {
+            myDOMs.HST_Return.Line104.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine104 = 0;
+         }
       }
+
+
    } else {
+
       myDOMs.HST_Return.Line104.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine104 = 0;
+
    }
 
    myLine105 = myLine103 + myLine104;
@@ -1293,27 +1650,56 @@ function DoTheMathonLoopedData() {
 
 
    if (ID_Line106 !== '') {
-      if (Return_Line106 !== null && Return_Line106 !== undefined && Return_Line106 !== '' && Return_Line106 !== 0) {
-         myDOMs.HST_Return.Line106.value = `$${formatNumber((Return_Line106).toFixed(2))}`;
-         myLine106 = Return_Line106;
+
+      if (myReturnType === 'HST') {
+         if (Return_Line106 !== null && Return_Line106 !== undefined && Return_Line106 !== '' && Return_Line106 !== 0) {
+            myDOMs.HST_Return.Line106.value = `$${formatNumber((Return_Line106).toFixed(2))}`;
+            myLine106 = Return_Line106;
+         } else {
+            myDOMs.HST_Return.Line106.value = `$${formatNumber((BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs).toFixed(2))}`;
+            myLine106 = (BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs);
+         }
       } else {
+         if (Return_PST_Line106 !== null && Return_PST_Line106 !== undefined && Return_PST_Line106 !== '' && Return_PST_Line106 !== 0) {
+            myDOMs.HST_Return.Line106.value = `$${formatNumber((Return_PST_Line106).toFixed(2))}`;
+            myLine106 = Return_PST_Line106;
+         } else {
+            myLine106 = (BuspstITCs + Vehicle1pstITCs + Vehicle2pstITCs + HomepstITCs + OtherpstITCs + RentalpstITCs + FixedAssetpstITCs);
+            myDOMs.HST_Return.Line106.value = `$${formatNumber((myLine106).toFixed(2))}`;
+         }
+      }
+
+   } else {
+      if (myReturnType === 'HST') {
          myDOMs.HST_Return.Line106.value = `$${formatNumber((BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs).toFixed(2))}`;
          myLine106 = (BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs);
+      } else {
+         myLine106 = (BuspstITCs + Vehicle1pstITCs + Vehicle2pstITCs + HomepstITCs + OtherpstITCs + RentalpstITCs + FixedAssetpstITCs);
+         myDOMs.HST_Return.Line106.value = `$${formatNumber((myLine106).toFixed(2))}`;
       }
-   } else {
-      myDOMs.HST_Return.Line106.value = `$${formatNumber((BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs).toFixed(2))}`;
-      myLine106 = (BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs);
+
    }
 
 
    if (ID_Line107 !== '') {
-      if (Return_Line107 !== null && Return_Line107 !== undefined && Return_Line107 !== '' && Return_Line107 !== 0) {
-         myDOMs.HST_Return.Line107.value = `$${formatNumber((Return_Line107).toFixed(2))}`;
-         myLine107 = Return_Line107;
+      if (myReturnType === 'HST') {
+         if (Return_Line107 !== null && Return_Line107 !== undefined && Return_Line107 !== '' && Return_Line107 !== 0) {
+            myDOMs.HST_Return.Line107.value = `$${formatNumber((Return_Line107).toFixed(2))}`;
+            myLine107 = Return_Line107;
+         } else {
+            myDOMs.HST_Return.Line107.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine107 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line107.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine107 = 0;
+         if (Return_PST_Line107 !== null && Return_PST_Line107 !== undefined && Return_PST_Line107 !== '' && Return_PST_Line107 !== 0) {
+            myDOMs.HST_Return.Line107.value = `$${formatNumber((Return_PST_Line107).toFixed(2))}`;
+            myLine107 = Return_PST_Line107;
+         } else {
+            myDOMs.HST_Return.Line107.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine107 = 0;
+         }
       }
+
    } else {
       myDOMs.HST_Return.Line107.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine107 = 0;
@@ -1325,26 +1711,48 @@ function DoTheMathonLoopedData() {
    myLine109 = myLine105 - myLine108;
 
    if (ID_Line110 !== '') {
-      if (Return_Line110 !== null && Return_Line110 !== undefined && Return_Line110 !== '' && Return_Line110 !== 0) {
-         myDOMs.HST_Return.Line110.value = `$${formatNumber((Return_Line110).toFixed(2))}`;
-         myLine110 = Return_Line110;
+      if (myReturnType === 'HST') {
+         if (Return_Line110 !== null && Return_Line110 !== undefined && Return_Line110 !== '' && Return_Line110 !== 0) {
+            myDOMs.HST_Return.Line110.value = `$${formatNumber((Return_Line110).toFixed(2))}`;
+            myLine110 = Return_Line110;
+         } else {
+            myDOMs.HST_Return.Line110.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine110 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line110.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine110 = 0;
+         if (Return_PST_Line110 !== null && Return_PST_Line110 !== undefined && Return_PST_Line110 !== '' && Return_PST_Line110 !== 0) {
+            myDOMs.HST_Return.Line110.value = `$${formatNumber((Return_PST_Line110).toFixed(2))}`;
+            myLine110 = Return_PST_Line110;
+         } else {
+            myDOMs.HST_Return.Line110.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine110 = 0;
+         }
       }
+
    } else {
       myDOMs.HST_Return.Line110.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine110 = 0;
    }
 
    if (ID_Line111 !== '') {
-      if (Return_Line111 !== null && Return_Line111 !== undefined && Return_Line111 !== '' && Return_Line111 !== 0) {
-         myDOMs.HST_Return.Line111.value = `$${formatNumber((Return_Line111).toFixed(2))}`;
-         myLine111 = Return_Line111;
+      if (myReturnType === 'HST') {
+         if (Return_Line111 !== null && Return_Line111 !== undefined && Return_Line111 !== '' && Return_Line111 !== 0) {
+            myDOMs.HST_Return.Line111.value = `$${formatNumber((Return_Line111).toFixed(2))}`;
+            myLine111 = Return_Line111;
+         } else {
+            myDOMs.HST_Return.Line111.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine111 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line111.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine111 = 0;
+         if (Return_PST_Line111 !== null && Return_PST_Line111 !== undefined && Return_PST_Line111 !== '' && Return_PST_Line111 !== 0) {
+            myDOMs.HST_Return.Line111.value = `$${formatNumber((Return_PST_Line111).toFixed(2))}`;
+            myLine111 = Return_PST_Line111;
+         } else {
+            myDOMs.HST_Return.Line111.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine111 = 0;
+         }
       }
+
    } else {
       myDOMs.HST_Return.Line111.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine111 = 0;
@@ -1360,26 +1768,48 @@ function DoTheMathonLoopedData() {
 
 
    if (ID_Line205 !== '') {
-      if (Return_Line205 !== null && Return_Line205 !== undefined && Return_Line205 !== '' && Return_Line205 !== 0) {
-         myDOMs.HST_Return.Line205.value = `$${formatNumber((Return_Line205).toFixed(2))}`;
-         myLine205 = Return_Line205;
+      if (myReturnType === 'HST') {
+         if (Return_Line205 !== null && Return_Line205 !== undefined && Return_Line205 !== '' && Return_Line205 !== 0) {
+            myDOMs.HST_Return.Line205.value = `$${formatNumber((Return_Line205).toFixed(2))}`;
+            myLine205 = Return_Line205;
+         } else {
+            myDOMs.HST_Return.Line205.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine205 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line205.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine205 = 0;
+         if (Return_PST_Line205 !== null && Return_PST_Line205 !== undefined && Return_PST_Line205 !== '' && Return_PST_Line205 !== 0) {
+            myDOMs.HST_Return.Line205.value = `$${formatNumber((Return_PST_Line205).toFixed(2))}`;
+            myLine205 = Return_PST_Line205;
+         } else {
+            myDOMs.HST_Return.Line205.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine205 = 0;
+         }
       }
+
    } else {
       myDOMs.HST_Return.Line205.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine205 = 0;
    }
 
    if (ID_Line405 !== '') {
-      if (Return_Line405 !== null && Return_Line405 !== undefined && Return_Line405 !== '' && Return_Line405 !== 0) {
-         myDOMs.HST_Return.Line405.value = `$${formatNumber((Return_Line405).toFixed(2))}`;
-         myLine405 = Return_Line405;
+      if (myReturnType === 'HST') {
+         if (Return_Line405 !== null && Return_Line405 !== undefined && Return_Line405 !== '' && Return_Line405 !== 0) {
+            myDOMs.HST_Return.Line405.value = `$${formatNumber((Return_Line405).toFixed(2))}`;
+            myLine405 = Return_Line405;
+         } else {
+            myDOMs.HST_Return.Line405.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine405 = 0;
+         }
       } else {
-         myDOMs.HST_Return.Line405.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
-         myLine405 = 0;
+         if (Return_PST_Line405 !== null && Return_PST_Line405 !== undefined && Return_PST_Line405 !== '' && Return_PST_Line405 !== 0) {
+            myDOMs.HST_Return.Line405.value = `$${formatNumber((Return_PST_Line405).toFixed(2))}`;
+            myLine405 = Return_PST_Line405;
+         } else {
+            myDOMs.HST_Return.Line405.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
+            myLine405 = 0;
+         }
       }
+
    } else {
       myDOMs.HST_Return.Line405.value = `$${formatNumber((myZeroVal).toFixed(2))}`;
       myLine405 = 0;
@@ -1402,70 +1832,19 @@ function DoTheMathonLoopedData() {
       myDOMs.HST_Return.Line115.value = `$${myZeroVal}`;
    }
 
-   if (HSTPaymentModalOpen) {
-      let myTextTimePeriod = '';
-      switch (Return_Time_Period) {
-         case 'YearAmt':
-            myTextTimePeriod = 'Full Year';
-            break;
-         case 'Q1Amt':
-            myTextTimePeriod = '1st ¼';
-            break;
-         case 'Q2Amt':
-            myTextTimePeriod = '2nd ¼';
-            break;
-         case 'Q3Amt':
-            myTextTimePeriod = '3rd ¼';
-            break;
-         case 'Q4Amt':
-            myTextTimePeriod = '4th ¼';
-            break;
-         case 'JanAmt':
-            myTextTimePeriod = 'January';
-            break;
-         case 'FebAmt':
-            myTextTimePeriod = 'February';
-            break;
-         case 'MarAmt':
-            myTextTimePeriod = 'March';
-            break;
-         case 'AprAmt':
-            myTextTimePeriod = 'April';
-            break;
-         case 'MayAmt':
-            myTextTimePeriod = 'May';
-            break;
-         case 'JunAmt':
-            myTextTimePeriod = 'June';
-            break;
-         case 'JulAmt':
-            myTextTimePeriod = 'July';
-            break;
-         case 'AugAmt':
-            myTextTimePeriod = 'August';
-            break;
-         case 'SepAmt':
-            myTextTimePeriod = 'September';
-            break;
-         case 'OctAmt':
-            myTextTimePeriod = 'October';
-            break;
-         case 'NovAmt':
-            myTextTimePeriod = 'November';
-            break;
-         case 'DecAmt':
-            myTextTimePeriod = 'December';
-            break;
-
-      }
-      if (myLine113C < 0) {
-         alert(`You have a refund claim of $${(Math.abs(myLine113C)).toFixed(2)} for ${myTextTimePeriod} Time Period`);
-      } else {
-         myDOMs.HSTPayment.PaymentAmtInput.value = myLine113C.toFixed(2);
-         alert(`The amount of $${(Math.abs(myLine113C)).toFixed(2)} which corresponds to ${myTextTimePeriod} Time Period, will be entered`);
-      }
-   }
 };
+
+function updateAfterTypeSelectionChange() {
+
+   if (myDOMs.HST_Return.Type_Selector.value === 'HST') {
+      myReturnType = 'HST';
+   } else if (myDOMs.HST_Return.Type_Selector.value === 'PST') {
+      myReturnType = 'PST';
+   }
+   DoTheMathonLoopedData();
+};
+
+
 
 function generateReturnPDF() {
 
@@ -1522,11 +1901,13 @@ function printElement() {
 
 myDOMs.HST_Return.Line103.addEventListener('change', async function (event) {
    if (myDOMs.HST_Return.Line103.value !== null && !isNaN(myDOMs.HST_Return.Line103.value) && myDOMs.HST_Return.Line103.value !== undefined) {
+
       if (ID_Line103 !== '' && ID_Line103 !== null & ID_Line103 !== undefined) {
          await updateReturnData(103);
       } else {
          await postReturnData(103);
       }
+
       ZeroTheReturnData(true);
       DoTheMathonLoopedData();
    } else {
@@ -1767,14 +2148,85 @@ async function findHSTDataForPayment() {
    Return_Time_Period = getTimePeriod();
    await getReturnData();
    await StartReturnFunctions();
+
+   let myHSTBalance = Number(CollectedHST - (BushstITCs + Vehicle1hstITCs + Vehicle2hstITCs + HomehstITCs + OtherhstITCs + RentalhstITCs + FixedAssethstITCs));
+
+   if (HSTPaymentModalOpen) {
+      let myTextTimePeriod = '';
+      switch (Return_Time_Period) {
+         case 'YearAmt':
+            myTextTimePeriod = 'Full Year';
+            break;
+         case 'Q1Amt':
+            myTextTimePeriod = '1st ¼';
+            break;
+         case 'Q2Amt':
+            myTextTimePeriod = '2nd ¼';
+            break;
+         case 'Q3Amt':
+            myTextTimePeriod = '3rd ¼';
+            break;
+         case 'Q4Amt':
+            myTextTimePeriod = '4th ¼';
+            break;
+         case 'JanAmt':
+            myTextTimePeriod = 'January';
+            break;
+         case 'FebAmt':
+            myTextTimePeriod = 'February';
+            break;
+         case 'MarAmt':
+            myTextTimePeriod = 'March';
+            break;
+         case 'AprAmt':
+            myTextTimePeriod = 'April';
+            break;
+         case 'MayAmt':
+            myTextTimePeriod = 'May';
+            break;
+         case 'JunAmt':
+            myTextTimePeriod = 'June';
+            break;
+         case 'JulAmt':
+            myTextTimePeriod = 'July';
+            break;
+         case 'AugAmt':
+            myTextTimePeriod = 'August';
+            break;
+         case 'SepAmt':
+            myTextTimePeriod = 'September';
+            break;
+         case 'OctAmt':
+            myTextTimePeriod = 'October';
+            break;
+         case 'NovAmt':
+            myTextTimePeriod = 'November';
+            break;
+         case 'DecAmt':
+            myTextTimePeriod = 'December';
+            break;
+
+      }
+      if (myHSTBalance < 0) {
+         alert(`You have a refund claim of $${(Math.abs(myHSTBalance)).toFixed(2)} for ${myTextTimePeriod} Time Period`);
+      } else {
+         myDOMs.HSTPayment.PaymentAmtInput.value = myHSTBalance.toFixed(2);
+         alert(`The amount of $${(Math.abs(myHSTBalance)).toFixed(2)} which corresponds to ${myTextTimePeriod} Time Period, will be entered`);
+      }
+   }
+
 };
 
 async function findPSTDataForPayment() {
+   if (PST_Claim_Value === 'EXP') {
+      alert('Because the Setting (PST Claim) is set to AS EXPENSE,\nAll PST on expenses are claimed by adding to expenses net amount\nPST Payments should not be required unless your home province\nis Saskatchewan or Quebec.\nIf so, change the PST Claim setting to AS ITC.');
+      return;
+   }
    Return_Time_Period = getTimePeriod();
    await getReturnData();
    await StartReturnFunctions();
 
-   let myPSTBalance = Number(CollectedPST - (BuspstITCs + Vehicle1pstITCs + Vehicle2pstITCs + HomepstITCs + OtherpstITCs + RentalpstITCs));
+   let myPSTBalance = Number(CollectedPST - (BuspstITCs + Vehicle1pstITCs + Vehicle2pstITCs + HomepstITCs + OtherpstITCs + RentalpstITCs + FixedAssetpstITCs));
 
    if (PSTPaymentModalOpen) {
       let myTextTimePeriod = '';

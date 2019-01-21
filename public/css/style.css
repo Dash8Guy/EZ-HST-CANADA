@@ -582,7 +582,8 @@ option {
 #settingsSelectLbl,
 #settingsTooltipLbl,
 #settingsProvinceSelectLbl,
-#provinceTaxRatesettings {
+#provinceTaxRatesettings,
+#settingsChoosePSTLbl {
   font-size: 14px;
 }
 
@@ -603,7 +604,9 @@ option {
 }
 
 #tooltipOnLbl,
-#tooltipOFFLbl {
+#tooltipOFFLbl,
+#PSTasExpenseLbl,
+#PSTasITCLbl {
   font-size: 9px;
 }
 
@@ -731,6 +734,15 @@ option {
 }
 
 /* FIXED ASSET ENTRY FORM */
+
+#alertReportAsset {
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+}
+
+
 #AssetModal label,
 #AssettopRowInputDiv input,
 #Asset_id {
@@ -744,6 +756,7 @@ option {
 #AssetStartValue,
 #AssetClaimAmt,
 #ITCClaimAmt,
+#ITCPSTClaimAmt,
 #AssetBusinessPercent,
 #AssetAutoClaimRate,
 #AssetStatus {
@@ -758,21 +771,16 @@ option {
   height: 25px;
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
     #AssetPurchaseDate,
     #AssetClaimDate {
     width: 100px;
-  }
+  } */
 
-  #AssetStartValue,
-  #AssetClaimAmt,
-  #ITCClaimAmt{
-    width: 100px;
+  #AssetPurchaseDate,
+  #AssetClaimDate {
+    font-size: 12px;
   }
-  #AssetBusinessPercent  {
-    width: 86%;
-  }
-}
 
 #AssetmodalHead {
   height: 56px;
@@ -803,9 +811,6 @@ option {
   font-size: 12px;
 }
 
-#AssetBtnCol9Div {
-  margin-left: -20px!important;
-}
 
 #AssetAutoClaimText {
   font-size: 12px;
@@ -926,6 +931,23 @@ option {
 }
 
 /* HST RETURN */
+
+#Line103Lbl,
+#Line104Lbl,
+#Line106Lbl,
+#Line107Lbl,
+#Line110Lbl,
+#Line111Lbl,
+#Line205Lbl,
+#Line405Lbl {
+  cursor: pointer;
+}
+
+#HSTReturnSelect {
+  font-size: 10px;
+  width: 120px;
+  height: 28px;
+}
 
 #HSTReturnModalHeader {
   height: 54px;

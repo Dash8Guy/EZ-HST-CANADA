@@ -1,8 +1,8 @@
 function displayAssetModal() {
-   if (userEmail === null || userEmail === '') {
-      alert('You must be looged in to use any controls!');
-      return;
-   }
+   // if (userEmail === null || userEmail === '') {
+   //    alert('You must be looged in to use any controls!');
+   //    return;
+   // }
    $("#AssetModal").modal("show");
    let myMainNav = document.getElementById("main-nav");
    let myTopVal = myMainNav.offsetTop;
@@ -61,6 +61,11 @@ myDOMs.FixedAssets.Depreciation_Claim.addEventListener('change', function (event
 
 myDOMs.FixedAssets.ITC_Claim.addEventListener('change', function (event) {
    myDOMs.FixedAssets.ITC_Claim.value = formatNumber(Number(myDOMs.FixedAssets.ITC_Claim.value).toFixed(2));
+   updateAssetStatus();
+});
+
+myDOMs.FixedAssets.ITC_PST_Claim.addEventListener('change', function (event) {
+   myDOMs.FixedAssets.ITC_PST_Claim.value = formatNumber(Number(myDOMs.FixedAssets.ITC_PST_Claim.value).toFixed(2));
    updateAssetStatus();
 });
 
@@ -127,10 +132,12 @@ myDOMs.FixedAssets.Claim_Date.addEventListener('change', function (event) {
 });
 
 
+
 function generateClaims() {
    let NetAlgoAll = (100 / (1 + Number(provinceTaxSettings.Current.HST) + Number(provinceTaxSettings.Current.PST))) / 100;
    let myCCAClaim = 0;
    let myITCClaim = 0;
+   let myITC_PST_Claim = 0;
    let DepreciationRate = 0;
    let ZeroVariable = 0;
    let myHSTPortion = 0;
@@ -163,10 +170,12 @@ function generateClaims() {
          myITCClaim = myHSTPortion * DepreciationRate;
          myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
          myDOMs.FixedAssets.ITC_Claim.value = formatNumber(myITCClaim.toFixed(2));
+         myDOMs.FixedAssets.ITC_PST_Claim.value = ZeroVariable.toFixed(2);
       } else {
          myCCAClaim = Number(newAmt) * DepreciationRate;
          myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
          myDOMs.FixedAssets.ITC_Claim.value = ZeroVariable.toFixed(2);
+         myDOMs.FixedAssets.ITC_PST_Claim.value = ZeroVariable.toFixed(2);
       }
    } else {
 
@@ -174,15 +183,27 @@ function generateClaims() {
          myNetPortion = Number(newAmt) * NetAlgoAll;
          myHSTPortion = myNetPortion * provinceTaxSettings.Current.HST
          myPSTPortion = myNetPortion * provinceTaxSettings.Current.PST
+         if (PST_Claim_Value === 'ITC') {
+            myCCAClaim = (myNetPortion) * DepreciationRate;
+            myITCClaim = myHSTPortion * DepreciationRate;
+            myITC_PST_Claim = myPSTPortion * DepreciationRate;
+            myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
+            myDOMs.FixedAssets.ITC_Claim.value = formatNumber(myITCClaim.toFixed(2));
+            myDOMs.FixedAssets.ITC_PST_Claim.value = formatNumber(myITC_PST_Claim.toFixed(2));
+         } else if (PST_Claim_Value === 'EXP') {
+            myCCAClaim = (myNetPortion + myPSTPortion) * DepreciationRate;
+            myITCClaim = myHSTPortion * DepreciationRate;
+            myITC_PST_Claim = 0;
+            myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
+            myDOMs.FixedAssets.ITC_Claim.value = formatNumber(myITCClaim.toFixed(2));
+            myDOMs.FixedAssets.ITC_PST_Claim.value = ZeroVariable.toFixed(2);
+         }
 
-         myCCAClaim = (myNetPortion + myPSTPortion) * DepreciationRate;
-         myITCClaim = myHSTPortion * DepreciationRate;
-         myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
-         myDOMs.FixedAssets.ITC_Claim.value = formatNumber(myITCClaim.toFixed(2));
       } else {
          myCCAClaim = Number(newAmt) * DepreciationRate;
          myDOMs.FixedAssets.Depreciation_Claim.value = formatNumber(myCCAClaim.toFixed(2));
          myDOMs.FixedAssets.ITC_Claim.value = ZeroVariable.toFixed(2);
+         myDOMs.FixedAssets.ITC_PST_Claim.value = ZeroVariable.toFixed(2);
       }
    }
    updateAssetStatus();
@@ -214,6 +235,12 @@ function addFixedAsset() {
       myITCClaimAmt += `${el}`
    });
 
+   tempAmt = myDOMs.FixedAssets.ITC_PST_Claim.value.split(',');
+   let myITC_PST_ClaimAmt = '';
+   tempAmt.forEach((el, index) => {
+      myITC_PST_ClaimAmt += `${el}`
+   });
+
    mydata = {
       claimDate: claimDate,
       purchaseDate: purchaseDate,
@@ -222,6 +249,7 @@ function addFixedAsset() {
       busPercent: myDOMs.FixedAssets.Business_Percent.value,
       claimAmt: myDepreciationtAmt,
       itcClaimAmt: myITCClaimAmt,
+      itc_pstClaimAmt: myITC_PST_ClaimAmt,
       auth: window.sessionStorage.getItem('myRandomVar')
    };
 
@@ -311,12 +339,14 @@ function updateFixedAsset() {
    let myCorrectedStartValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Start_Value.value);
    let myCorrectedClaimValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.Depreciation_Claim.value);
    let myCorrectedITCClaimValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.ITC_Claim.value);
+   let myCorrectedITC_PST_ClaimValue = formatedNumberToSimpleNumber(myDOMs.FixedAssets.ITC_PST_Claim.value);
 
    formData.append("description", myDOMs.FixedAssets.Description.value);
    formData.append("startValue", myCorrectedStartValue);
    formData.append("busPercent", myDOMs.FixedAssets.Business_Percent.value);
    formData.append("claimAmt", myCorrectedClaimValue);
    formData.append("itcClaimAmt", myCorrectedITCClaimValue);
+   formData.append("itc_pstClaimAmt", myCorrectedITC_PST_ClaimValue);
    formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
    $.ajax({
@@ -348,6 +378,7 @@ function updateFixedAsset() {
          let BusPercent = parseFloat(myDOMs.FixedAssets.Business_Percent.value);
          let claimAmt = parseFloat(myCorrectedClaimValue);
          let itcClaimAmt = parseFloat(myCorrectedITCClaimValue);
+         let itc_PST_ClaimAmt = parseFloat(myCorrectedITC_PST_ClaimValue);
 
          let AssetData = {
             purchaseDate,
@@ -357,6 +388,7 @@ function updateFixedAsset() {
             BusPercent,
             claimAmt,
             itcClaimAmt,
+            itc_PST_ClaimAmt
          };
          updateAssetTable(selectedRowNum, AssetData);
 
@@ -392,6 +424,7 @@ function updateFixedAsset() {
          originalAsset.BusPercent = myDOMs.FixedAssets.Business_Percent.value;
          originalAsset.ClaimAmt = myDOMs.FixedAssets.Depreciation_Claim.value;
          originalAsset.ITCClaimAmt = myDOMs.FixedAssets.ITC_Claim.value;
+         originalAsset.ITC_PST_ClaimAmt = myDOMs.FixedAssets.ITC_PST_Claim.value;
          originalAsset.Status = 'SAVED';
          myDOMs.FixedAssets.Status.value = 'SAVED';
 
@@ -566,8 +599,9 @@ function updateAssetTableTotals() {
    document.getElementById('cellAssetActualClaimAmtTotal').innerText = `$${(formatNumber(Number(myAssetReportTotal.ActualclaimAmt).toFixed(2)))}`;
    document.getElementById('cellAssetITCClaimAmtTotal').innerText = `$${(formatNumber(Number(myAssetReportTotal.ITCClaimAmt).toFixed(2)))}`;
    document.getElementById('cellAssetActualITCClaimAmtTotal').innerText = `$${(formatNumber(Number(myAssetReportTotal.ActualITCClaimAmt).toFixed(2)))}`;
+   document.getElementById('cellAssetITC_PST_ClaimAmtTotal').innerText = `$${(formatNumber(Number(myAssetReportTotal.ITC_PST_ClaimAmt).toFixed(2)))}`;
+   document.getElementById('cellAssetActualITC_PST_ClaimAmtTotal').innerText = `$${(formatNumber(Number(myAssetReportTotal.Actual_ITC_PST_ClaimAmt).toFixed(2)))}`;
 };
-
 
 
 let originalAsset = {
@@ -577,6 +611,7 @@ let originalAsset = {
    StartValue: 0,
    ClaimAmt: 0,
    ITCClaimAmt: 0,
+   ITC_PST_ClaimAmt: 0,
    BusPercent: 0,
    ID: '',
    Status: 'NEW'
@@ -601,6 +636,7 @@ function addAssetOriginalValues() {
    myDOMs.FixedAssets.Start_Value.value = originalAsset.StartValue;
    myDOMs.FixedAssets.Depreciation_Claim.value = originalAsset.ClaimAmt;
    myDOMs.FixedAssets.ITC_Claim.value = originalAsset.ITCClaimAmt;
+   myDOMs.FixedAssets.ITC_PST_Claim.value = originalAsset.ITC_PST_ClaimAmt;
    myDOMs.FixedAssets.Business_Percent.value = originalAsset.BusPercent;
    myDOMs.FixedAssets.Blind_ID.value = originalAsset.ID;
    myDOMs.FixedAssets.Status.value = 'SAVED';
@@ -616,14 +652,14 @@ function updateAssetTable(row, data) {
    let myMonth = myDate.getUTCMonth() + 1;
    let myYear = myDate.getUTCFullYear();
 
-   myTable.rows[row].cells[1].innerHTML = myMonth + "/" + myDay + "/" + myYear;
+   myTable.rows[row].cells[1].innerHTML = myMonth + "-" + myDay + "-" + myYear;
 
    myDate = new Date(data.claimDate);
    myDay = myDate.getUTCDate();
    myMonth = myDate.getUTCMonth() + 1;
    myYear = myDate.getUTCFullYear();
 
-   myTable.rows[row].cells[2].innerHTML = myMonth + "/" + myDay + "/" + myYear;
+   myTable.rows[row].cells[2].innerHTML = myMonth + "-" + myDay + "-" + myYear;
 
    let varNumOne = 1;
    let arrRow = row;
@@ -636,6 +672,8 @@ function updateAssetTable(row, data) {
    myTable.rows[row].cells[7].innerHTML = `$${(data.claimAmt * data.BusPercent / 100).toFixed(2)}`;
    myTable.rows[row].cells[8].innerHTML = `$${data.itcClaimAmt.toFixed(2)}`;
    myTable.rows[row].cells[9].innerHTML = `$${(data.itcClaimAmt * data.BusPercent / 100).toFixed(2)}`;
+   myTable.rows[row].cells[10].innerHTML = `$${data.itc_PST_ClaimAmt.toFixed(2)}`;
+   myTable.rows[row].cells[11].innerHTML = `$${(data.itc_PST_ClaimAmt * data.BusPercent / 100).toFixed(2)}`;
 
    assetArray[arrRow].purchaseDate = data.purchaseDate;
    assetArray[arrRow].claimDate = data.claimDate;
@@ -644,7 +682,7 @@ function updateAssetTable(row, data) {
    assetArray[arrRow].busPercent = data.BusPercent;
    assetArray[arrRow].claimAmt = data.claimAmt;
    assetArray[arrRow].itcClaimAmt = data.itcClaimAmt;
-
+   assetArray[arrRow].itc_pstClaimAmt = data.itc_PST_ClaimAmt;
 };
 
 function formatedNumberToSimpleNumber(numVar) {
@@ -663,11 +701,13 @@ function validateAssetEntryForm() {
    let StartAmt = document.forms["AssetEntryForm"]["AssetStartValue"];
    let ClaimAmt = document.forms["AssetEntryForm"]["AssetClaimAmt"];
    let ITCClaimAmt = document.forms["AssetEntryForm"]["ITCClaimAmt"];
+   let ITC_PST_ClaimAmt = document.forms["AssetEntryForm"]["ITCPSTClaimAmt"];
    const BusinessPercent = document.forms["AssetEntryForm"]["AssetBusinessPercent"];
 
    StartAmt.value = formatedNumberToSimpleNumber(StartAmt.value);
    ClaimAmt.value = formatedNumberToSimpleNumber(ClaimAmt.value);
    ITCClaimAmt.value = formatedNumberToSimpleNumber(ITCClaimAmt.value);
+   ITC_PST_ClaimAmt.value = formatedNumberToSimpleNumber(ITC_PST_ClaimAmt.value);
 
    if (PurchaseDate.value == "") {
       window.alert("Please Select a Date Added.");
@@ -735,6 +775,18 @@ function validateAssetEntryForm() {
       return false;
    }
 
+   if (isNaN(ITC_PST_ClaimAmt.value)) {
+      window.alert("Please enter a Number in ITC Claim.\nEnter 0 for no value!");
+      ITC_PST_ClaimAmt.focus();
+      return false;
+   }
+
+   if (ITC_PST_ClaimAmt.value == "") {
+      window.alert("Please enter an PST ITC Claim.\nEnter 0 for no value!");
+      ITC_PST_ClaimAmt.focus();
+      return false;
+   }
+
    if (isNaN(BusinessPercent.value)) {
       window.alert("Please enter a Number in Business %.");
       BusinessPercent.focus();
@@ -780,6 +832,10 @@ function updateAssetStatus() {
       dataMatch = false;
    }
    if (originalAsset.ITCClaimAmt === myDOMs.FixedAssets.ITC_Claim.value) {
+   } else {
+      dataMatch = false;
+   }
+   if (originalAsset.ITC_PST_ClaimAmt === myDOMs.FixedAssets.ITC_PST_Claim.value) {
    } else {
       dataMatch = false;
    }

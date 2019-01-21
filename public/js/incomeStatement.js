@@ -34,6 +34,7 @@ function hideIncomeStatementModal() {
   ToggleMenuBar();
 }
 
+//This Part is code for all the Tabs function
 function displayRevenueIncStat() {
   updateTabandBodyClass('Revenue');
 }
@@ -485,9 +486,13 @@ let mainData = {
     Depreciation_Claim_Total: 0,
     Actual_Depreciation_Claim_Total: 0,
     ITC_Claim: 0,
-    Actual_ITC_Claim: 0
+    Actual_ITC_Claim: 0,
+    ITC_PST_Claim: 0,
+    Actual_ITC_PST_Claim: 0
   }
 }
+
+//Getting data from database
 
 async function getAllMainData(myExpIncType) {
 
@@ -541,106 +546,210 @@ async function getAllMainData(myExpIncType) {
 };
 
 function populateIncomeStatement() {
-  // Business Expenses
-  myDOMs.incomeStatement.BusBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.busExp.Admin).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.busExp.Advertising).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.CCASpan.innerText = `$${formatNumber((mainData.busExp.CCA).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.CellSpan.innerText = `$${formatNumber((mainData.busExp.Cell).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.DuesSpan.innerText = `$${formatNumber((mainData.busExp.Dues).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.FreightSpan.innerText = `$${formatNumber((mainData.busExp.Freight).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.FuelSpan.innerText = `$${formatNumber((mainData.busExp.Fuel).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.busExp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.busExp.Interest).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.busExp.Legal).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.busExp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.MealsSpan.innerText = `$${formatNumber((mainData.busExp.Meals).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.busExp.Office).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.busExp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Property_TaxSpan.innerText = `$${formatNumber((mainData.busExp.Property_Tax).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.RentSpan.innerText = `$${formatNumber((mainData.busExp.Rent).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.SuppliesSpan.innerText = `$${formatNumber((mainData.busExp.Supplies).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.busExp.Travel).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.busExp.Wages).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.busExp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.busExp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.busExp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Variable4Span.innerText = `$${formatNumber((mainData.busExp.Variable4).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.Variable5Span.innerText = `$${formatNumber((mainData.busExp.Variable5).toFixed(2))}`
-  myDOMs.incomeStatement.BusBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
-  //Assets
-  myDOMs.incomeStatement.BusBodyElement.CCASpan.innerText = `$${formatNumber((mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
+  if (PST_Claim_Value === 'ITC') {
+    // Business Expenses
+    myDOMs.incomeStatement.BusBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.busExp.Admin).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.busExp.Advertising).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.CellSpan.innerText = `$${formatNumber((mainData.busExp.Cell).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.DuesSpan.innerText = `$${formatNumber((mainData.busExp.Dues).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.FreightSpan.innerText = `$${formatNumber((mainData.busExp.Freight).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.FuelSpan.innerText = `$${formatNumber((mainData.busExp.Fuel).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.busExp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.busExp.Interest).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.busExp.Legal).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.busExp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.MealsSpan.innerText = `$${formatNumber((mainData.busExp.Meals).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.busExp.Office).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.busExp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Property_TaxSpan.innerText = `$${formatNumber((mainData.busExp.Property_Tax).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.RentSpan.innerText = `$${formatNumber((mainData.busExp.Rent).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.SuppliesSpan.innerText = `$${formatNumber((mainData.busExp.Supplies).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.busExp.Travel).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.busExp.Wages).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.busExp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.busExp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.busExp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable4Span.innerText = `$${formatNumber((mainData.busExp.Variable4).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable5Span.innerText = `$${formatNumber((mainData.busExp.Variable5).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
+    //Assets
+    myDOMs.incomeStatement.BusBodyElement.CCASpan.innerText = `$${formatNumber((mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
 
 
-  // Vehicle 1 Expenses
-  myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net).toFixed(2))}`
+    // Vehicle 1 Expenses
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net).toFixed(2))}`
 
-  // Vehicle 2 Expenses
-  myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net).toFixed(2))}`
+    // Vehicle 2 Expenses
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net).toFixed(2))}`
 
-  // Home Expenses
-  myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net).toFixed(2))}`
+    // Home Expenses
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net).toFixed(2))}`
 
-  // Rental Expenses
-  myDOMs.incomeStatement.RentalBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.rentalExp.Admin).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.rentalExp.Advertising).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.rentalExp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.rentalExp.Interest).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.rentalExp.Legal).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.rentalExp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.MotorVehicleSpan.innerText = `$${formatNumber((mainData.rentalExp.MotorVehicle).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.rentalExp.Office).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.rentalExp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.rentalExp.PropertyTax).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.rentalExp.Travel).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.UtilitiesSpan.innerText = `$${formatNumber((mainData.rentalExp.Utilities).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.rentalExp.Wages).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.rentalExp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.rentalExp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.RentalBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.rentalExp.net).toFixed(2))}`
+    // Rental Expenses
+    myDOMs.incomeStatement.RentalBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.rentalExp.Admin).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.rentalExp.Advertising).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.rentalExp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.rentalExp.Interest).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.rentalExp.Legal).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.rentalExp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.MotorVehicleSpan.innerText = `$${formatNumber((mainData.rentalExp.MotorVehicle).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.rentalExp.Office).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.rentalExp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.rentalExp.PropertyTax).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.rentalExp.Travel).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.UtilitiesSpan.innerText = `$${formatNumber((mainData.rentalExp.Utilities).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.rentalExp.Wages).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.rentalExp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.rentalExp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.rentalExp.net).toFixed(2))}`
 
-  // Other Costs Expenses
-  myDOMs.incomeStatement.OtherCostsBodyElement.Direct_WageSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Direct_Wage).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.GoodsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Goods).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.Other_CostsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Other_Costs).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.SubcontractsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Subcontracts).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.OtherCostsBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.otherCostsExp.net).toFixed(2))}`
+    // Other Costs Expenses
+    myDOMs.incomeStatement.OtherCostsBodyElement.Direct_WageSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Direct_Wage).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.GoodsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Goods).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Other_CostsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Other_Costs).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.SubcontractsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Subcontracts).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.otherCostsExp.net).toFixed(2))}`
+
+  } else if (PST_Claim_Value === 'EXP') {
+
+    // Business Expenses
+    myDOMs.incomeStatement.BusBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.busExp.Admin + mainData.busExp.AdminPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.busExp.Advertising + mainData.busExp.AdvertisingPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.CellSpan.innerText = `$${formatNumber((mainData.busExp.Cell + mainData.busExp.CellPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.DuesSpan.innerText = `$${formatNumber((mainData.busExp.Dues + mainData.busExp.DuesPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.FreightSpan.innerText = `$${formatNumber((mainData.busExp.Freight + mainData.busExp.FreightPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.FuelSpan.innerText = `$${formatNumber((mainData.busExp.Fuel + mainData.busExp.FuelPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.busExp.Insurance + mainData.busExp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.busExp.Interest + mainData.busExp.InterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.busExp.Legal + mainData.busExp.LegalPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.busExp.Maintenance + mainData.busExp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.MealsSpan.innerText = `$${formatNumber((mainData.busExp.Meals + mainData.busExp.MealsPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.busExp.Office + mainData.busExp.OfficePST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.busExp.Other + mainData.busExp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Property_TaxSpan.innerText = `$${formatNumber((mainData.busExp.Property_Tax + mainData.busExp.Property_TaxPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.RentSpan.innerText = `$${formatNumber((mainData.busExp.Rent + mainData.busExp.RentPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.SuppliesSpan.innerText = `$${formatNumber((mainData.busExp.Supplies + mainData.busExp.SuppliesPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.busExp.Travel + mainData.busExp.TravelPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.busExp.Wages + mainData.busExp.WagesPST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.busExp.Variable1 + mainData.busExp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.busExp.Variable2 + mainData.busExp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.busExp.Variable3 + mainData.busExp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable4Span.innerText = `$${formatNumber((mainData.busExp.Variable4 + mainData.busExp.Variable4PST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.Variable5Span.innerText = `$${formatNumber((mainData.busExp.Variable5 + mainData.busExp.Variable5PST).toFixed(2))}`
+    myDOMs.incomeStatement.BusBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim).toFixed(2))}`
+    //Assets
+    myDOMs.incomeStatement.BusBodyElement.CCASpan.innerText = `$${formatNumber((mainData.Assets.Actual_Depreciation_Claim_Total + mainData.Assets.Actual_ITC_PST_Claim).toFixed(2))}`
+
+
+    // Vehicle 1 Expenses
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.FuelPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LeasingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.LoanInterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other + mainData.vehicle1Exp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.RegistrationPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance + mainData.vehicle1Exp.SuppInsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3 + mainData.vehicle1Exp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net + mainData.vehicle1Exp.pst).toFixed(2))}`
+
+    // Vehicle 2 Expenses
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.FuelPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LeasingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.LoanInterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other + mainData.vehicle2Exp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.RegistrationPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance + mainData.vehicle2Exp.SuppInsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3 + mainData.vehicle2Exp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net + mainData.vehicle2Exp.pst).toFixed(2))}`
+
+    // Home Expenses
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity + mainData.homeExp.ElectricityPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat + mainData.homeExp.HeatPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance + mainData.homeExp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance + mainData.homeExp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage + mainData.homeExp.MortgagePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other + mainData.homeExp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax + mainData.homeExp.PropertyTaxPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water + mainData.homeExp.WaterPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1 + mainData.homeExp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2 + mainData.homeExp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3 + mainData.homeExp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net + mainData.homeExp.pst).toFixed(2))}`
+
+    // Rental Expenses
+    myDOMs.incomeStatement.RentalBodyElement.AdminSpan.innerText = `$${formatNumber((mainData.rentalExp.Admin + mainData.rentalExp.AdminPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.AdvertisingSpan.innerText = `$${formatNumber((mainData.rentalExp.Advertising + mainData.rentalExp.AdvertisingPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.rentalExp.Insurance + mainData.rentalExp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.InterestSpan.innerText = `$${formatNumber((mainData.rentalExp.Interest + mainData.rentalExp.InterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.LegalSpan.innerText = `$${formatNumber((mainData.rentalExp.Legal + mainData.rentalExp.LegalPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.rentalExp.Maintenance + mainData.rentalExp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.MotorVehicleSpan.innerText = `$${formatNumber((mainData.rentalExp.MotorVehicle + mainData.rentalExp.MotorVehiclePST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.OfficeSpan.innerText = `$${formatNumber((mainData.rentalExp.Office + mainData.rentalExp.OfficePST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.rentalExp.Other + mainData.rentalExp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.rentalExp.PropertyTax + mainData.rentalExp.PropertyTaxPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.TravelSpan.innerText = `$${formatNumber((mainData.rentalExp.Travel + mainData.rentalExp.TravelPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.UtilitiesSpan.innerText = `$${formatNumber((mainData.rentalExp.Utilities + mainData.rentalExp.UtilitiesPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.WagesSpan.innerText = `$${formatNumber((mainData.rentalExp.Wages + mainData.rentalExp.WagesPST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.rentalExp.Variable1 + mainData.rentalExp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.rentalExp.Variable2 + mainData.rentalExp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.RentalBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.rentalExp.net + mainData.rentalExp.pst).toFixed(2))}`
+
+    // Other Costs Expenses
+    myDOMs.incomeStatement.OtherCostsBodyElement.Direct_WageSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Direct_Wage + mainData.otherCostsExp.Direct_WagePST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.GoodsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Goods + mainData.otherCostsExp.GoodsPST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Other_CostsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Other_Costs + mainData.otherCostsExp.Other_CostsPST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.SubcontractsSpan.innerText = `$${formatNumber((mainData.otherCostsExp.Subcontracts + mainData.otherCostsExp.SubcontractsPST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable1 + mainData.otherCostsExp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.otherCostsExp.Variable2 + mainData.otherCostsExp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.OtherCostsBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.otherCostsExp.pst).toFixed(2))}`
+  }
+
 
   // Business Revenue
   myDOMs.incomeStatement.RevenueBodyElement.BusinessRevenueSpan.innerText = `$${formatNumber((mainData.RevenueBus.net).toFixed(2))}`
@@ -653,18 +762,44 @@ function populateIncomeStatement() {
   let V1Reduction = V1BusPercent / 100;
   let V2Reduction = V2BusPercent / 100;
 
-  reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
-  reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance
+  if (PST_Claim_Value === 'ITC') {
+    reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+    reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance
 
-  reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
-  reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
+    reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+    reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
+  } else if (PST_Claim_Value === 'EXP') {
+    reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+    reducedV1Total += (mainData.vehicle1Exp.FuelPST + mainData.vehicle1Exp.InsurancePST + mainData.vehicle1Exp.LeasingPST + mainData.vehicle1Exp.LoanInterestPST + mainData.vehicle1Exp.MaintenancePST + mainData.vehicle1Exp.OtherPST + mainData.vehicle1Exp.RegistrationPST + mainData.vehicle1Exp.Variable1PST + mainData.vehicle1Exp.Variable2PST + mainData.vehicle1Exp.Variable3PST) * V1Reduction;
+    reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance;
+    reducedV1Total += mainData.vehicle1Exp.ParkingPST + mainData.vehicle1Exp.SuppInsurancePST;
 
-  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalRevenue.innerText = `$${formatNumber((mainData.RevenueRental.net + mainData.RevenueBus.net).toFixed(2))}`
-  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalExpenses.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`
-  myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.innerText = `$${formatNumber(((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total)).toFixed(2))}`
+    reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+    reducedV2Total = (mainData.vehicle2Exp.FuelPST + mainData.vehicle2Exp.InsurancePST + mainData.vehicle2Exp.LeasingPST + mainData.vehicle2Exp.LoanInterestPST + mainData.vehicle2Exp.MaintenancePST + mainData.vehicle2Exp.OtherPST + mainData.vehicle2Exp.RegistrationPST + mainData.vehicle2Exp.Variable1PST + mainData.vehicle2Exp.Variable2PST + mainData.vehicle2Exp.Variable3PST) * V2Reduction;
+    reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance;
+    reducedV2Total += mainData.vehicle2Exp.ParkingPST + mainData.vehicle2Exp.SuppInsurancePST;
+  }
+
+  let TotalRevenueTemp = 0;
+  let TotalExpensesTemp = 0;
+
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalRevenue.innerText = `$${formatNumber((mainData.RevenueRental.net + mainData.RevenueBus.net).toFixed(2))}`;
+    TotalRevenueTemp = mainData.RevenueRental.net + mainData.RevenueBus.net;
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalExpenses.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.rentalExp.net + homeExpReducedData.totalNet + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2))}`;
+    TotalExpensesTemp = mainData.otherCostsExp.net + mainData.rentalExp.net + homeExpReducedData.totalNet + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total;
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.innerText = `$${formatNumber((Number(TotalRevenueTemp) - Number(TotalExpensesTemp)).toFixed(2))}`
+
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalRevenue.innerText = `$${formatNumber((mainData.RevenueRental.net + mainData.RevenueBus.net).toFixed(2))}`;
+    TotalRevenueTemp = mainData.RevenueRental.net + mainData.RevenueBus.net;
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmTotalExpenses.innerText = `$${formatNumber((mainData.otherCostsExp.net + mainData.rentalExp.net + homeExpReducedData.totalNet + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.otherCostsExp.pst + mainData.rentalExp.pst + homeExpReducedData.totalPST + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim).toFixed(2))}`;
+    TotalExpensesTemp = mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.otherCostsExp.pst + mainData.rentalExp.pst + homeExpReducedData.totalPST + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim;
+    myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.innerText = `$${formatNumber(((TotalRevenueTemp) - (TotalExpensesTemp)).toFixed(2))}`
+  }
 
 
-  if ((mainData.RevenueRental.net + mainData.RevenueBus.net) - (mainData.otherCostsExp.net + mainData.rentalExp.net + (homeExpReducedData.totalNet) + reducedV2Total + reducedV1Total + mainData.busExp.net + mainData.Assets.Actual_Depreciation_Claim_Total) < 0) {
+  if (TotalRevenueTemp - TotalExpensesTemp < 0) {
     if (myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.contains('badge-success')) {
       myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.remove('badge-success');
       myDOMs.incomeStatement.bottomIncomeStatementTotals.btmNetIncome.classList.add('badge-danger');
@@ -676,7 +811,7 @@ function populateIncomeStatement() {
     }
   }
 
-}
+};
 
 function fillMainDataFromArrays() {
   let myCallData = [];
@@ -980,6 +1115,8 @@ function fillMainDataFromArrays() {
   mainData.Assets.Actual_Depreciation_Claim_Total = myCallData.myActualClaim;
   mainData.Assets.ITC_Claim = myCallData.myITC_Claim;
   mainData.Assets.Actual_ITC_Claim = myCallData.myActual_ITC_Claim;
+  mainData.Assets.ITC_PST_Claim = myCallData.myITC_PST_Claim;
+  mainData.Assets.Actual_ITC_PST_Claim = myCallData.myActual_ITC_PST_Claim;
 
   updateMainPageDisplayAmounts();
 }
@@ -989,16 +1126,43 @@ function updateMainPageDisplayAmounts() {
   let reducedV2Total = 0;
   let V1Reduction = V1BusPercent / 100;
   let V2Reduction = V2BusPercent / 100;
-  reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
-  reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance
+  let TotalNetIncomeTemp = 0;
 
-  reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
-  reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
 
-  myDOMs.main_page.NetExpense.value = `$${(formatNumber(Number(mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2)))}`;
-  myDOMs.main_page.NetRevenue.value = `$${(formatNumber(Number(mainData.RevenueBus.net + mainData.RevenueRental.net).toFixed(2)))}`;
-  myDOMs.main_page.NetIncome.value = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total)).toFixed(2)))}`;
-  if ((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total) < 0) {
+  if (PST_Claim_Value === 'ITC') {
+    reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+    reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance
+
+    reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+    reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
+  } else if (PST_Claim_Value === 'EXP') {
+    reducedV1Total = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+    reducedV1Total += (mainData.vehicle1Exp.FuelPST + mainData.vehicle1Exp.InsurancePST + mainData.vehicle1Exp.LeasingPST + mainData.vehicle1Exp.LoanInterestPST + mainData.vehicle1Exp.MaintenancePST + mainData.vehicle1Exp.OtherPST + mainData.vehicle1Exp.RegistrationPST + mainData.vehicle1Exp.Variable1PST + mainData.vehicle1Exp.Variable2PST + mainData.vehicle1Exp.Variable3PST) * V1Reduction;
+    reducedV1Total += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance;
+    reducedV1Total += mainData.vehicle1Exp.ParkingPST + mainData.vehicle1Exp.SuppInsurancePST;
+
+    reducedV2Total = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+    reducedV2Total = (mainData.vehicle2Exp.FuelPST + mainData.vehicle2Exp.InsurancePST + mainData.vehicle2Exp.LeasingPST + mainData.vehicle2Exp.LoanInterestPST + mainData.vehicle2Exp.MaintenancePST + mainData.vehicle2Exp.OtherPST + mainData.vehicle2Exp.RegistrationPST + mainData.vehicle2Exp.Variable1PST + mainData.vehicle2Exp.Variable2PST + mainData.vehicle2Exp.Variable3PST) * V2Reduction;
+    reducedV2Total += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance;
+    reducedV2Total += mainData.vehicle2Exp.ParkingPST + mainData.vehicle2Exp.SuppInsurancePST;
+  }
+
+
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.main_page.NetExpense.value = `$${(formatNumber(Number(mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total).toFixed(2)))}`;
+    myDOMs.main_page.NetRevenue.value = `$${(formatNumber(Number(mainData.RevenueBus.net + mainData.RevenueRental.net).toFixed(2)))}`;
+    myDOMs.main_page.NetIncome.value = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total)).toFixed(2)))}`;
+
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.main_page.NetExpense.value = `$${(formatNumber(Number(mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.otherCostsExp.pst + mainData.rentalExp.pst + homeExpReducedData.totalPST + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim).toFixed(2)))}`;
+    myDOMs.main_page.NetRevenue.value = `$${(formatNumber(Number(mainData.RevenueBus.net + mainData.RevenueRental.net).toFixed(2)))}`;
+    myDOMs.main_page.NetIncome.value = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.otherCostsExp.pst + mainData.rentalExp.pst + homeExpReducedData.totalPST + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim)).toFixed(2)))}`;
+    TotalNetIncomeTemp = `$${(formatNumber(Number((mainData.RevenueBus.net + mainData.RevenueRental.net) - (mainData.busExp.net + homeExpReducedData.totalNet + mainData.otherCostsExp.net + mainData.rentalExp.net + reducedV1Total + reducedV2Total + mainData.Assets.Actual_Depreciation_Claim_Total + mainData.otherCostsExp.pst + mainData.rentalExp.pst + homeExpReducedData.totalPST + mainData.busExp.pst + mainData.Assets.Actual_ITC_PST_Claim)).toFixed(2)))}`;
+
+  }
+
+
+  if (TotalNetIncomeTemp < 0) {
     if (myDOMs.main_page.NetIncome.classList.contains('text-success')) {
       myDOMs.main_page.NetIncome.classList.remove('text-success');
       myDOMs.main_page.NetIncome.classList.add('text-danger');
@@ -1151,18 +1315,26 @@ function loopAssetData() {
   let Actual_Claim = 0;
   let ITC_Claim = 0;
   let Actual_ITC_Claim = 0;
+  let ITC_PST_Claim = 0;
+  let Actual_ITC_PST_Claim = 0;
 
   AssetDataArray.forEach((el, index) => {
     Claim += el.claimAmt;
     Actual_Claim += (el.claimAmt * el.busPercent / 100);
     ITC_Claim += el.itcClaimAmt;
     Actual_ITC_Claim += (el.itcClaimAmt * el.busPercent / 100);
+    ITC_PST_Claim += el.itc_pstClaimAmt;
+    Actual_ITC_PST_Claim += (el.itc_pstClaimAmt * el.busPercent / 100);
+
+
   });
   return {
     myClaim: Claim,
     myActualClaim: Actual_Claim,
     myITC_Claim: ITC_Claim,
-    myActual_ITC_Claim: Actual_ITC_Claim
+    myActual_ITC_Claim: Actual_ITC_Claim,
+    myITC_PST_Claim: ITC_PST_Claim,
+    myActual_ITC_PST_Claim: Actual_ITC_PST_Claim
   }
 };
 
@@ -1610,7 +1782,7 @@ function loopForHomePercentReduction(data) {
   }
   data.forEach((el, index) => {
     let myElementDate = new Date(el.carDate);
-    let myElementMonth = myElementDate.getMonth();
+    let myElementMonth = myElementDate.getUTCMonth();
     let myCurrentReduction = 0;
 
     switch (myElementMonth) {
@@ -2058,35 +2230,72 @@ function toggleHomePercentButton() {
 };
 
 function reduceHomeAmountPercentage() {
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((homeExpReducedData.Electricity).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((homeExpReducedData.Heat).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((homeExpReducedData.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((homeExpReducedData.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((homeExpReducedData.Mortgage).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((homeExpReducedData.Other).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((homeExpReducedData.PropertyTax).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((homeExpReducedData.Water).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((homeExpReducedData.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((homeExpReducedData.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((homeExpReducedData.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((homeExpReducedData.totalNet).toFixed(2))}`
 
-  myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((homeExpReducedData.Electricity).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((homeExpReducedData.Heat).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((homeExpReducedData.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((homeExpReducedData.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((homeExpReducedData.Mortgage).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((homeExpReducedData.Other).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((homeExpReducedData.PropertyTax).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((homeExpReducedData.Water).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((homeExpReducedData.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((homeExpReducedData.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((homeExpReducedData.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((homeExpReducedData.totalNet).toFixed(2))}`
+  } else if (PST_Claim_Value === 'EXP') {
+
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((homeExpReducedData.Electricity + homeExpReducedData.ElectricityPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((homeExpReducedData.Heat + homeExpReducedData.HeatPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((homeExpReducedData.Insurance + homeExpReducedData.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((homeExpReducedData.Maintenance + homeExpReducedData.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((homeExpReducedData.Mortgage + homeExpReducedData.MortgagePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((homeExpReducedData.Other + homeExpReducedData.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((homeExpReducedData.PropertyTax + homeExpReducedData.PropertyTaxPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((homeExpReducedData.Water + homeExpReducedData.WaterPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((homeExpReducedData.Variable1 + homeExpReducedData.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((homeExpReducedData.Variable2 + homeExpReducedData.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((homeExpReducedData.Variable3 + homeExpReducedData.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((homeExpReducedData.totalNet + homeExpReducedData.totalPST).toFixed(2))}`
+  }
 };
+
 
 function increaseHomeAmountPercentage() {
 
-  myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net).toFixed(2))}`
+  if (PST_Claim_Value === 'ITC') {
+
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net).toFixed(2))}`
+
+  } else if (PST_Claim_Value === 'EXP') {
+
+    myDOMs.incomeStatement.HomeBodyElement.ElectricitySpan.innerText = `$${formatNumber((mainData.homeExp.Electricity + mainData.homeExp.ElectricityPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.HeatSpan.innerText = `$${formatNumber((mainData.homeExp.Heat + mainData.homeExp.HeatPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.homeExp.Insurance + mainData.homeExp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.homeExp.Maintenance + mainData.homeExp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.MortgageSpan.innerText = `$${formatNumber((mainData.homeExp.Mortgage + mainData.homeExp.MortgagePST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.OtherSpan.innerText = `$${formatNumber((mainData.homeExp.Other + mainData.homeExp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.PropertyTaxSpan.innerText = `$${formatNumber((mainData.homeExp.PropertyTax + mainData.homeExp.PropertyTaxPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.WaterSpan.innerText = `$${formatNumber((mainData.homeExp.Water + mainData.homeExp.WaterPST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable1Span.innerText = `$${formatNumber((mainData.homeExp.Variable1 + mainData.homeExp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable2Span.innerText = `$${formatNumber((mainData.homeExp.Variable2 + mainData.homeExp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.Variable3Span.innerText = `$${formatNumber((mainData.homeExp.Variable3 + mainData.homeExp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.HomeBodyElement.TotalSpan.innerText = `$${formatNumber((mainData.homeExp.net + mainData.homeExp.pst).toFixed(2))}`
+
+  };
+
 };
 
 function toggleVehicle1PercentButton() {
@@ -2259,43 +2468,78 @@ async function getVehiclePercentage() {
 function reduceVehicle1AmountPercentage() {
   let V1Reduction = V1BusPercent / 100;
   let reducedTotal = 0;
-  // Vehicle 1 Expenses
-  myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1 * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2 * V1Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3 * V1Reduction).toFixed(2))}`
 
-  reducedTotal = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1 * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2 * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3 * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
+    reducedTotal = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.FuelPST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.InsurancePST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LeasingPST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.LoanInterestPST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.MaintenancePST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Other + mainData.vehicle1Exp.OtherPST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber(((mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.RegistrationPST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber(((mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable1PST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber(((mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable2PST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber(((mainData.vehicle1Exp.Variable3 + mainData.vehicle1Exp.Variable3PST) * V1Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance + mainData.vehicle1Exp.SuppInsurancePST).toFixed(2))}`
+    reducedTotal = (mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.Other + mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable3) * V1Reduction;
+    reducedTotal += (mainData.vehicle1Exp.FuelPST + mainData.vehicle1Exp.InsurancePST + mainData.vehicle1Exp.LeasingPST + mainData.vehicle1Exp.LoanInterestPST + mainData.vehicle1Exp.MaintenancePST + mainData.vehicle1Exp.OtherPST + mainData.vehicle1Exp.RegistrationPST + mainData.vehicle1Exp.Variable1PST + mainData.vehicle1Exp.Variable2PST + mainData.vehicle1Exp.Variable3PST) * V1Reduction;
+  }
+
   reducedTotal += mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.SuppInsurance
   myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((reducedTotal).toFixed(2))}`
 
-  myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
 };
 
 function reduceVehicle2AmountPercentage() {
   let V2Reduction = V2BusPercent / 100;
   let reducedTotal = 0;
-  // Vehicle 2 Expenses
-  myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1 * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2 * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3 * V2Reduction).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
-  reducedTotal = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1 * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2 * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3 * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
+    reducedTotal = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.FuelPST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.InsurancePST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LeasingPST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.LoanInterestPST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.MaintenancePST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Other + mainData.vehicle2Exp.OtherPST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber(((mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.RegistrationPST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber(((mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable1PST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber(((mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable2PST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber(((mainData.vehicle2Exp.Variable3 + mainData.vehicle2Exp.Variable3PST) * V2Reduction).toFixed(2))}`;
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance + mainData.vehicle2Exp.SuppInsurancePST).toFixed(2))}`
+    reducedTotal = (mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.Other + mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable3) * V2Reduction;
+    reducedTotal += (mainData.vehicle2Exp.FuelPST + mainData.vehicle2Exp.InsurancePST + mainData.vehicle2Exp.LeasingPST + mainData.vehicle2Exp.LoanInterestPST + mainData.vehicle2Exp.MaintenancePST + mainData.vehicle2Exp.OtherPST + mainData.vehicle2Exp.RegistrationPST + mainData.vehicle2Exp.Variable1PST + mainData.vehicle2Exp.Variable2PST + mainData.vehicle2Exp.Variable3PST) * V2Reduction;
+  }
+
   reducedTotal += mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.SuppInsurance
   myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((reducedTotal).toFixed(2))}`
 
@@ -2303,38 +2547,68 @@ function reduceVehicle2AmountPercentage() {
 };
 
 function increaseVehicle1AmountPercentage() {
-  // Vehicle 1 Expenses
-  myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net).toFixed(2))}`
-}
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net).toFixed(2))}`
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.incomeStatement.Vehicle1BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Fuel + mainData.vehicle1Exp.FuelPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Insurance + mainData.vehicle1Exp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Leasing + mainData.vehicle1Exp.LeasingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.LoanInterest + mainData.vehicle1Exp.LoanInterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Maintenance + mainData.vehicle1Exp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Other + mainData.vehicle1Exp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Parking + mainData.vehicle1Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.Registration + mainData.vehicle1Exp.RegistrationPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.SuppInsurance + mainData.vehicle1Exp.SuppInsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable1 + mainData.vehicle1Exp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable2 + mainData.vehicle1Exp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle1Exp.Variable3 + mainData.vehicle1Exp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle1BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle1Exp.net + mainData.vehicle1Exp.pst).toFixed(2))}`
+  }
+};
 
 function increaseVehicle2AmountPercentage() {
-  // Vehicle 2 Expenses
-  myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3).toFixed(2))}`
-  myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net).toFixed(2))}`
-}
+  if (PST_Claim_Value === 'ITC') {
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net).toFixed(2))}`
+  } else if (PST_Claim_Value === 'EXP') {
+    myDOMs.incomeStatement.Vehicle2BodyElement.FuelSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Fuel + mainData.vehicle2Exp.FuelPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.InsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Insurance + mainData.vehicle2Exp.InsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LeasingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Leasing + mainData.vehicle2Exp.LeasingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.LoanInterestSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.LoanInterest + mainData.vehicle2Exp.LoanInterestPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.MaintenanceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Maintenance + mainData.vehicle2Exp.MaintenancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.OtherSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Other + mainData.vehicle2Exp.OtherPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.ParkingSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Parking + mainData.vehicle2Exp.ParkingPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.RegistrationSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.Registration + mainData.vehicle2Exp.RegistrationPST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.SuppInsuranceSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.SuppInsurance + mainData.vehicle2Exp.SuppInsurancePST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable1Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable1 + mainData.vehicle2Exp.Variable1PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable2Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable2 + mainData.vehicle2Exp.Variable2PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.Variable3Span.innerText = `$${formatNumber((mainData.vehicle2Exp.Variable3 + mainData.vehicle2Exp.Variable3PST).toFixed(2))}`
+    myDOMs.incomeStatement.Vehicle2BodyElement.TotalSpan.innerText = `$${formatNumber((mainData.vehicle2Exp.net + mainData.vehicle2Exp.pst).toFixed(2))}`
+  }
+};
 
 
 //Business

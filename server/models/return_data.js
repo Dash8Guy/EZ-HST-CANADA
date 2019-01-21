@@ -78,6 +78,74 @@ let Return_Data = mongoose.model("Return_Data", {
    YearAmt: {
       type: Number,
       required: false
+   },
+   JanPSTAmt: {
+      type: Number,
+      required: false
+   },
+   FebPSTAmt: {
+      type: Number,
+      required: false
+   },
+   MarPSTAmt: {
+      type: Number,
+      required: false
+   },
+   AprPSTAmt: {
+      type: Number,
+      required: false
+   },
+   MayPSTAmt: {
+      type: Number,
+      required: false
+   },
+   JunPSTAmt: {
+      type: Number,
+      required: false
+   },
+   JulPSTAmt: {
+      type: Number,
+      required: false
+   },
+   AugPSTAmt: {
+      type: Number,
+      required: false
+   },
+   SepPSTAmt: {
+      type: Number,
+      required: false
+   },
+   OctPSTAmt: {
+      type: Number,
+      required: false
+   },
+   NovPSTAmt: {
+      type: Number,
+      required: false
+   },
+   DecPSTAmt: {
+      type: Number,
+      required: false
+   },
+   Q1PSTAmt: {
+      type: Number,
+      required: false
+   },
+   Q2PSTAmt: {
+      type: Number,
+      required: false
+   },
+   Q3PSTAmt: {
+      type: Number,
+      required: false
+   },
+   Q4PSTAmt: {
+      type: Number,
+      required: false
+   },
+   YearPSTAmt: {
+      type: Number,
+      required: false
    }
 });
 

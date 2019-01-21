@@ -2055,7 +2055,7 @@
   <!-- Modal for Viewing Asset Report Table -->
   <div class="modal fade text-dark mx-auto" id="AssetReportModal" data-backdrop="static" keyboard="false" role="dialog"
     tabindex="-1">
-    <div id="AssetModalDialog" class="modal-lg modal-dialog" role="document">
+    <div id="AssetModalDialog" class="modal-lg modal-dialog px-0" role="document">
       <div class="modal-content">
         <div class="modal-header bg-secondary" id="assetModalHeader">
           <h5 class="modal-title text-white" id="AssetReportTitle">Fixed Asset Report</h5>
@@ -2063,7 +2063,7 @@
           <span class="text-white">&times;</span>
         </div>
         <div class="modal-body text-center">
-          <div class="container align-middle text-center mt-0 pt-0" id="alertReportAsset">
+          <div class="container align-middle text-center" id="alertReportAsset">
 
           </div>
         </div>
@@ -2961,6 +2961,21 @@
                 <label class="form-check-label" id="tooltipOFFLbl" for="tooltipOFF">DISABLED</label>
               </div>
             </li>
+            <li id="settingsChoosePSTLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">PST
+              Claim
+              <div class="form-check form-check-inline">
+                <input class="form-check-input radiobtn mr-1" id="PSTasITC" type="radio" name="PSTasITC" value="ITC"
+                  data-toggle="tooltip" title="When selected, any PST on expenses will be claimed as Input Tax Credit. (This should be the default selection for the province SK and QC)"
+                  onclick="updatePSTClaimSelection('ITC')">
+                <label class="form-check-label" id="PSTasITCLbl" for="PSTasITC">AS ITC</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input radiobtn ml-1 mr-1" id="PSTasExpense" type="radio" name="PSTasExpense"
+                  value="Expense" data-toggle="tooltip" title="When selected, any PST on expenses will be claimed to reduce your income. (This should be the default selection for all provinces except SK and QC)"
+                  onclick="updatePSTClaimSelection('EXP')" checked>
+                <label class="form-check-label" id="PSTasExpenseLbl" for="PSTasExpense">AS EXPENSE</label>
+              </div>
+            </li>
             <li id="settingsProvinceSelectLbl" class="list-group-item d-flex justify-content-between align-items-center text-primary font-weight-bold">Select
               Work Province
               <select class="form-control form-control-sm text-center" id="settingsProvinceSelect" name="settingsProvinceSelect"
@@ -3416,37 +3431,52 @@
           </div>
           <form id="AssetEntryForm" name="AssetEntryForm" action="" target="#" oninput="updateAssetStatus()">
 
-            <div class="container">
-              <div id="AssettopRowInputDiv" role="form" class="row text-center">
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label id="AssetPurchaseDateLbl" for="AssetPurchaseDate">Date Added</label>
-                    <input id="AssetPurchaseDate" form="AssetEntryForm" name="AssetPurchaseDate" type="date" class="form-control p-0 mx-0 text-right"
-                      data-toggle="tooltip" title="Use Calendar or Up/Down arrows to Select Date Asset was added to the company">
+            <div class="row text-center ml-auto mt-0 mb-0">
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label id="AssetPurchaseDateLbl" for="AssetPurchaseDate">Date Added</label>
+                  <input id="AssetPurchaseDate" form="AssetEntryForm" name="AssetPurchaseDate" type="date" class="form-control text-center"
+                    data-toggle="tooltip" title="Use Calendar or Up/Down arrows to Select Date Asset was added to the company">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label id="AssetClaimDateLbl" for="AssetClaimDate">ITC Claim Date</label>
+                  <input id="AssetClaimDate" form="AssetEntryForm" name="AssetClaimDate" type="date" min="2018-01-01"
+                    max="2018-12-31" class="form-control text-center" data-toggle="tooltip" title="Date you wish to claim your Asset. (For Vehicles, claim on last day of the year unless you know it will be used 100% for business)">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row text-center mt-0">
+              <div class="col-lg-9">
+                <div class="form-group">
+                  <label id="AssetDescriptionLbl" for="AssetDescription">Description</label>
+                  <input id="AssetDescription" form="AssetEntryForm" name="AssetDescription" type="text" class="form-control p-0 mx-0 text-center"
+                    data-toggle="tooltip" title="Enter a short Description of the Asset to help you remember the correct asset.">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label id="AssetBusinessPercentLbl" for="AssetBusinessPercent">Business %</label>
+                  <div class="input-group p-0">
+                    <input id="AssetBusinessPercent" form="AssetEntryForm" name="AssetBusinessPercent" type="text"
+                      class="form-control py-0 px-1 mx-0 text-center" data-toggle="tooltip" title="Enter Business usage of the Asset or, if the asset is a Vehicle, use the Apply Vehicle % button after choosing the appropriate vehicle.">
+                    <div class="input-group-append text-center input-group-addon">
+                      <span class="input-group-text p-0 mt-0 mr-0" style="font-size: 10px; width: 10px; height: 25px;">%</span>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label id="AssetDescriptionLbl" for="AssetDescription">Description</label>
-                    <input id="AssetDescription" form="AssetEntryForm" name="AssetDescription" type="text" class="form-control p-0 mx-0 text-center"
-                      data-toggle="tooltip" title="Enter a short Description of the Asset to help you remember the correct asset.">
-                  </div>
-                </div>
-
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label id="AssetClaimDateLbl" for="AssetClaimDate">ITC Claim Date</label>
-                    <input id="AssetClaimDate" form="AssetEntryForm" name="AssetClaimDate" type="date" min="2018-01-01"
-                      max="2018-12-31" class="form-control p-0 mx-0 text-right" data-toggle="tooltip" title="Date you wish to claim your Asset. (For Vehicles, claim on last day of the year unless you know it will be used 100% for business)">
-                  </div>
-                </div>
-
               </div>
             </div>
 
-            <div class="container">
-              <div role="form" class="row text-center">
+
+            <div class="container mx-0 px-0">
+              <div role="form" class="row text-center m-0 p-0">
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label id="AssetStartValueLbl" for="AssetStartValue">Asset Value</label>
@@ -3464,8 +3494,9 @@
                 </div>
 
                 <div class="col-lg-3">
-                  <div class="form-group">
-                    <label id="ITCClaimAmtLbl" for="ITCClaimAmt">ITC Claim</label>
+                  <div class="form-group mx-auto">
+                    <label id="ITCClaimAmtLbl" for="ITCClaimAmt" data-toggle="tooltip" title="When your Province includes PST on your service, Click to view the GST and PST portions of the total ITC Claim."
+                      onclick="view_HST_PST_Split()">HST ITC Claim</label>
                     <input id="ITCClaimAmt" form="AssetEntryForm" name="ITCClaimAmt" type="text" class="form-control py-0 px-1 mx-0 text-center"
                       data-toggle="tooltip" title="Use the Generate Claim button to Automatically fill this box or, you can enter the Input Tax Credit manually.">
                   </div>
@@ -3473,14 +3504,9 @@
 
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <label id="AssetBusinessPercentLbl" for="AssetBusinessPercent">Business %</label>
-                    <div class="input-group p-0">
-                      <input id="AssetBusinessPercent" form="AssetEntryForm" name="AssetBusinessPercent" type="text"
-                        class="form-control py-0 px-1 mx-0 text-center" data-toggle="tooltip" title="Enter Business usage of the Asset or, if the asset is a Vehicle, use the Apply Vehicle % button after choosing the appropriate vehicle.">
-                      <div class="input-group-append text-center input-group-addon">
-                        <span class="input-group-text p-0 mt-0 mr-0" style="font-size: 10px; width: 10px; height: 25px;">%</span>
-                      </div>
-                    </div>
+                    <label id="ITCPSTClaimAmtLbl" for="ITCPSTClaimAmt">PST ITC Claim</label>
+                    <input id="ITCPSTClaimAmt" form="AssetEntryForm" name="ITCPSTClaimAmt" type="text" class="form-control py-0 px-1 mx-0 text-center"
+                      data-toggle="tooltip" title="Use the Generate Claim button to Automatically fill this box or, you can enter the PST Input Tax Credit manually.">
                   </div>
                 </div>
 
@@ -3527,7 +3553,7 @@
                       readonly>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                   <div>
                     <button type="button" id="AssetReset" form="AssetEntryForm" class="btn btn-sm btn-outline-primary ml-1 mt-2"
                       data-toggle="tooltip" title="When Status is NEW or SAVED, empties all inputs - When status is ALTERED, fills form with Saved values."><i
@@ -3796,6 +3822,14 @@
             onclick="printElement()">
             PRINT
           </button>
+
+          <select class="form-control form-control-sm text-center ml-3 mb-1" form="someRandomForm" id="HSTReturnSelect"
+            name="HSTReturnSelect" data-toggle="tooltip" title="Click down arrow to select Return Type(GST/HST or PST)"
+            value="HST" onchange="updateAfterTypeSelectionChange()">
+            <option value="HST" selected>GST/HST</option>
+            <option value="PST">PST</option>
+          </select>
+
           <button type="button" class="close" id="topCloseHSTReturnModal" onclick="hideHSTReturnModal()"></button>
           <span class="text-white">&times;</span>
         </div>
@@ -3827,13 +3861,15 @@
             </li>
             <li id="ReturnLine2To3Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label id="Line103Lbl" class="form-control-label px-1 py-1" for="Line103" style="border: 1px solid rgb(18, 19, 194);">103</label>
+                <label id="Line103Lbl" class="form-control-label px-1 py-1" for="Line103" data-toggle="tooltip" title="Click to reset to the calculated amount."
+                  style="border: 1px solid rgb(18, 19, 194);">103</label>
                 <input class="text-right d-inline pr-1" id="Line103" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 103.">
                 <p class="d-none d-sm-inline ml-2" id="Line103Txt">GST/HST amounts that you collected or became
                   collectible.</p>
               </div>
               <div>
-                <label id="Line104Lbl" class="form-control-label px-1 py-1" for="Line104" style="border: 1px solid rgb(18, 19, 194);">104</label>
+                <label id="Line104Lbl" class="form-control-label px-1 py-1" for="Line104" data-toggle="tooltip" title="Click to reset to the calculated amount."
+                  style="border: 1px solid rgb(18, 19, 194);">104</label>
                 <input class="text-right d-inline pr-1" id="Line104" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 104.">
                 <p class="d-none d-sm-inline ml-2" id="Line104Txt">Adjustments.</p>
               </div>
@@ -3850,12 +3886,14 @@
 
             <li id="ReturnLine106To107Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label id="Line106Lbl" class="form-control-label px-1 py-1" for="Line106" style="border: 1px solid rgb(18, 19, 194);">106</label>
+                <label id="Line106Lbl" class="form-control-label px-1 py-1" for="Line106" data-toggle="tooltip" title="Click to reset to the calculated amount."
+                  style="border: 1px solid rgb(18, 19, 194);">106</label>
                 <input class="text-right d-inline pr-1" id="Line106" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 106.">
                 <p class="d-none d-sm-inline ml-2" id="Line106Txt">Input Tax Credits-ITCs</p>
               </div>
               <div>
-                <label id="Line107Lbl" class="form-control-label px-1 py-1" for="Line107" style="border: 1px solid rgb(18, 19, 194);">107</label>
+                <label id="Line107Lbl" class="form-control-label px-1 py-1" for="Line107" data-toggle="tooltip" title="Click to reset to the calculated amount."
+                  style="border: 1px solid rgb(18, 19, 194);">107</label>
                 <input class="text-right d-inline pr-1" id="Line107" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 107.">
                 <p class="d-none d-sm-inline ml-2" id="Line107Txt">Adjustments.</p>
               </div>
@@ -3878,12 +3916,14 @@
 
             <li id="ReturnLine110To111Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label id="Line110Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line110" style="border: 1px solid rgb(18, 19, 194);">110</label>
+                <label id="Line110Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line110"
+                  data-toggle="tooltip" title="Click to reset to the calculated amount." style="border: 1px solid rgb(18, 19, 194);">110</label>
                 <input class="text-right d-inline pr-1" id="Line110" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 110.">
                 <p class="d-none d-sm-inline ml-2" id="Line110Txt">Installment and other annual filer payments</p>
               </div>
               <div>
-                <label id="Line111Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line111" style="border: 1px solid rgb(18, 19, 194);">111</label>
+                <label id="Line111Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line111"
+                  data-toggle="tooltip" title="Click to reset to the calculated amount." style="border: 1px solid rgb(18, 19, 194);">111</label>
                 <input class="text-right d-inline pr-1" id="Line111" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 111.">
                 <p class="d-none d-sm-inline ml-2" id="Line107Txt">GST/HST Rebates</p>
               </div>
@@ -3906,13 +3946,15 @@
 
             <li id="ReturnLine205To405Li" class="list-group-item justify-content-between align-items-center text-primary">
               <div>
-                <label id="Line205Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line205" style="border: 1px solid rgb(18, 19, 194);">205</label>
+                <label id="Line205Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line205"
+                  data-toggle="tooltip" title="Click to reset to the calculated amount." style="border: 1px solid rgb(18, 19, 194);">205</label>
                 <input class="text-right d-inline pr-1" id="Line205" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 205.">
                 <p class="d-none d-sm-inline ml-2" id="Line205Txt">GST/HST due on the aquisition of taxable real
                   property</p>
               </div>
               <div>
-                <label id="Line405Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line405" style="border: 1px solid rgb(18, 19, 194);">405</label>
+                <label id="Line405Lbl" class="form-control-label bg-primary text-white px-1 py-1" for="Line405"
+                  data-toggle="tooltip" title="Click to reset to the calculated amount." style="border: 1px solid rgb(18, 19, 194);">405</label>
                 <input class="text-right d-inline pr-1" id="Line405" type="text" data-toggle="tooltip" title="To overide this amout, simply enter a new Amount. To reset to the calculated amount, click the Number 405.">
                 <p class="d-none d-sm-inline ml-2" id="Line405Txt">Other GST/HST to be self assessed</p>
               </div>
@@ -3971,6 +4013,7 @@
   <script type="text/javascript" src="./js/thirdpartyjs/jspdf.debug.js"></script>
   <script type="text/javascript" src="./js/thirdpartyjs/jspdf.plugin.autotable.js"></script>
   <script type="text/javascript" src="./js/thirdpartyjs/html2canvas.min.js"></script>
+  <script type="text/javascript" src="./js/settings.js"></script>
   <script type="text/javascript" src="./js/index.js"></script>
   <script type="text/javascript" src="./js/vehicleExpenses.js"></script>
   <script type="text/javascript" src="./js/businessExpenses.js"></script>
@@ -3986,7 +4029,6 @@
   <script type="text/javascript" src="./js/miscHardCoded.js"></script>
   <script type="text/javascript" src="./js/vehicleLogReport.js"></script>
   <script type="text/javascript" src="./js/incomeStatement.js"></script>
-  <script type="text/javascript" src="./js/settings.js"></script>
   <script type="text/javascript" src="./js/homePercent.js"></script>
   <script type="text/javascript" src="./js/hstPayments.js"></script>
   <script type="text/javascript" src="./js/pstPayments.js"></script>
@@ -4019,10 +4061,10 @@
 
     // This code enables the drop-down submenu
     $('.dropdown-submenu > a').on("click", function (e) {
-      if (userEmail === null || userEmail === '') {
-        alert('You must be looged in to use any controls!');
-        return;
-      }
+      //if (userEmail === null || userEmail === '') {
+      // alert('You must be looged in to use any controls!');
+      // return;
+      //}
       var submenu = $(this);
       $('.dropdown-submenu .dropdown-menu').removeClass('show');
       submenu.next('.dropdown-menu').addClass('show');
