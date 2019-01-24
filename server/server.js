@@ -6,7 +6,7 @@ const fs = require("fs");
 const hbs = require('hbs');
 const paypal = require('paypal-rest-sdk');
 const path = require("path");
-const fileUpload = require("express-fileupload");
+// const fileUpload = require("express-fileupload");
 const busboyCnct = require('connect-busboy');
 const busboyBodyParser = require('busboy-body-parser');
 const AWS = require('aws-sdk');
@@ -49,7 +49,7 @@ paypal.configure({
 });
 
 var app = express();
-app.use(fileUpload());
+// app.use(fileUpload());
 //app.use(busboy());
 
 //Set the KEY SECRET
