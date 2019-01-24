@@ -249,7 +249,10 @@
             </a>
             <div class="dropdown-menu">
               <a href="#" class="dropdown-item  text-primary my-1" id="navRegister" onclick="displayUserSetupModal()">
-                <i class="fas fa-user-cog"> Registration</i>
+                <i class="fas fa-user-plus"> Registration</i>
+              </a>
+              <a href="#" class="dropdown-item text-primary my-1" onclick="startPaymentMethod()">
+                <i class="fas fa-credit-card"> Payments</i>
               </a>
               <a href="#" class="dropdown-item  text-primary my-1" id="navLogin" onclick="displayLoginUser()">
                 <i class="fas fa-user-check"> User Login</i>
@@ -257,8 +260,8 @@
               <a href="#" class="dropdown-item  text-primary disabled my-1" id="navLogout" onclick="userLogout(false)">
                 <i class="fas fa-user-times"> User Logout</i>
               </a>
-              <a href="#" class="dropdown-item text-primary my-1" onclick="getUserMe()">
-                <i class="fas fa-user-times"> TEST</i>
+              <a href="#" class="dropdown-item text-primary my-1" onclick="">
+                <i class="fas fa-user-cog"> User Profile</i>
               </a>
             </div>
           </li>
@@ -701,6 +704,29 @@
                     <select class="form-control mySelect" form="formBusExpEntry" id="busExpCatSelect" name="busExpCatSelect"
                       data-toggle="tooltip" title="Click down arrow to select category" required>
                       <option value="">Select Expense Category</option>
+                      <option value="Advertising">Advertising</option>
+                      <option value="Fees">Fees, licences, dues, memberships</option>
+                      <option value="Meals">Meals and Entertainment</option>
+                      <option value="Office">Office Expenses</option>
+                      <option value="Supplies">Supplies</option>
+                      <option value="Cell">Cell Phone</option>
+                      <option value="Other">Other Expenses</option>
+                      <option value="Freight">Delivery, freight, and express</option>
+                      <option value="Fuel">Fuel costs (except vehicles)</option>
+                      <option value="Insurance">Insurance</option>
+                      <option value="Interest">Interest</option>
+                      <option value="Maintenance">Maintenance and Repairs</option>
+                      <option value="Admin">Management and administration fees</option>
+                      <option value="Legal">Legal, accounting, and other Prof. Fees</option>
+                      <option value="Property">Property Taxes</option>
+                      <option value="Rent">Rent</option>
+                      <option value="Wages">Salaries, wages, and benefits</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Variable 1">Variable 1</option>
+                      <option value="Variable 2">Variable 2</option>
+                      <option value="Variable 3">Variable 3</option>
+                      <option value="Variable 4">Variable 4</option>
+                      <option value="Variable 5">Variable 5</option>
                     </select>
                   </div>
 
@@ -921,6 +947,17 @@
                     <select class="form-control mySelect" form="formHomeExpEntry" id="homeExpCatSelect" name="homeExpCatSelect"
                       data-toggle="tooltip" title="Click down arrow to select category" required>
                       <option value="">Select Expense Category</option>
+                      <option value="Heat">Heat</option>
+                      <option value="Electricity">Electricity</option>
+                      <option value="Insurance">Insurance</option>
+                      <option value="Maintenance">Maintenance</option>
+                      <option value="Mortgage">Mortgage Interest</option>
+                      <option value="Water">Water and Sewage</option>
+                      <option value="Property">Property Taxes</option>
+                      <option value="Other">Other Expenses</option>
+                      <option value="Variable 1">Variable 1</option>
+                      <option value="Variable 2">Variable 2</option>
+                      <option value="Variable 3">Variable 3</option>
                     </select>
                   </div>
 
@@ -1144,6 +1181,12 @@
                     <select class="form-control mySelect" form="formOtherExpEntry" id="otherExpCatSelect" name="otherExpCatSelect"
                       data-toggle="tooltip" title="Click down arrow to select category" required>
                       <option value="">Select Expense Category</option>
+                      <option value="Goods">Goods Purchased during the year</option>
+                      <option value="Subcontracts">Subcontracts</option>
+                      <option value="Wage">Direct wage costs</option>
+                      <option value="Other">Other costs</option>
+                      <option value="Variable 1">Variable 1</option>
+                      <option value="Variable 2">Variable 2</option>
                     </select>
                   </div>
 
@@ -1368,6 +1411,21 @@
                     <select class="form-control mySelect" form="formRentalExpEntry" id="rentalExpCatSelect" name="rentalExpCatSelect"
                       data-toggle="tooltip" title="Click down arrow to select category" required>
                       <option value="">Select Expense Category</option>
+                      <option value="Advertising">Advertising</option>
+                      <option value="Insurance">Insurance</option>
+                      <option value="Interest">Interest</option>
+                      <option value="Maintenance">Maintenance and repairs</option>
+                      <option value="Admin">Management and administration fees</option>
+                      <option value="Vehicle">Motor vehicle expenses (Not including CCA)</option>
+                      <option value="Office">Office expenses</option>
+                      <option value="Legal">Legal, accounting, and other Prof. Fees</option>
+                      <option value="Property">Property taxes</option>
+                      <option value="Wages">Salaries, wages and benefits (incl employer's contributions)</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Utilities">Utilities</option>
+                      <option value="Other">Other expenses</option>
+                      <option value="Variable 1">Variable 1</option>
+                      <option value="Variable 2">Variable 2</option>
                     </select>
                   </div>
 
@@ -1599,8 +1657,19 @@
                     <label id="carExpCatSelectLbl" for="carExpCatSelect">Choose Expense Category</label>
                     <select class="form-control mySelect" form="formCarExpEntry" id="carExpCatSelect" name="carExpCatSelect"
                       data-toggle="tooltip" title="Click down arrow to select category" required>
-                      <option value="">Select
-                        Expense Category</option>
+                      <option value="">Select Expense Category</option>
+                      <option value="Fuel">Fuel and Oil</option>
+                      <option value="Insurance">Insurance</option>
+                      <option value="Registration">Licence and Registration</option>
+                      <option value="Maintenance">Maintenance and Repairs</option>
+                      <option value="Other">Other Expenses</option>
+                      <option value="Parking">Business Parking Fees</option>
+                      <option value="Supp Ins">Supplementary Business Insurance</option>
+                      <option value="Leasing">Leasing</option>
+                      <option value="Loan">Interest on Loan</option>
+                      <option value="Variable 1">Variable 1</option>
+                      <option value="Variable 2">Variable 2</option>
+                      <option value="Variable 3">Variable 3</option>
                     </select>
                   </div>
 
@@ -3997,6 +4066,106 @@
 
       </div>
     </div>
+  </div>
+
+  <!-- USER PROFILE MODAL -->
+
+  <div class="modal fade text-dark mx-auto" id="userProfileModal" data-backdrop="static" keyboard="false" role="dialog">
+    <div class="modal-dialog  modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white">User Profile</h5>
+          <button type="button" class="close" id="topCloseUserProfileModal" onclick="hideUserProfile()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerUserProfile">
+
+          </div>
+          <div class="container">
+            <form class="form" ref='userProfileForm' id='userProfileForm' name="userProfileForm" method='post'>
+
+              <div class="row">
+                <div class="col-md-6 mb-1">
+                  <input type="text" name="userProfilefirstName" id="userProfilefirstName" class="form-control"
+                    placeholder="First name">
+                </div>
+                <div class="col-md-6 mb-1">
+                  <input type="text" name="userProfilelastName" id="userProfilelastName" class="form-control"
+                    placeholder="Last name">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-1">
+                  <input type="email" name="userProfileemail" id="userProfileemail" class="form-control" placeholder="email">
+                </div>
+                <div class="col-md-6 mb-1">
+                  <button type="button" id="userProfileChangePasswordBtn" form="someOtherFormLogin" class="btn btn-outline-success w-100"
+                    onclick="runChangePasswordBtn()">Change Password</button>
+                </div>
+              </div>
+
+
+
+              <div class="form-group text-right mt-3">
+                <button type="button" id="userProfileSaveBtn" form="someOtherFormLogin" class="btn btn-sm btn-outline-danger w-100"
+                  onclick=""><i class="fas fa-user-check"></i>
+                  Save Changes</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- USER Change Password MODAL -->
+
+  <div class="modal fade text-dark mx-auto" id="userChangePasswordModal" data-backdrop="static" keyboard="false" role="dialog"
+    tabindex="-1">
+    <div class="modal-dialog  modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white">Change Password</h5>
+          <button type="button" class="close" id="topCloseChangePasswordUserModal" onclick="hideyUserChangePasswordModal()"></button>
+          <span class="text-white">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="container align-middle mt-0 pt-0" id="alertContainerChangePassword">
+          </div>
+          <div class="container">
+            <form class="form" ref='userChangePasswordForm' id='userChangePasswordForm' name="userChangePasswordForm">
+
+              <div class="col-md-6 mb-1">
+                <div class="form-group mb-1">
+                  <input type="password" name="ChangePassword" id="ChangePassword" class="form-control" placeholder="password"
+                    oninput="setChangePasswordValidClass('first')">
+                  <div class="invalid-feedback" id="ChangePasswordValidMessage">
+                    Password not strong enough
+                  </div>
+                </div>
+
+                <div class="form-group mb-1">
+                  <input type="password" name="ChangePasswordconfirm" id="ChangePasswordconfirm" class="form-control"
+                    placeholder="confirm password" oninput="setChangePasswordValidClass('confirm')">
+                  <div class="invalid-feedback" id="confirmChangePasswordValidMessage">
+                    Password not strong enough
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="form-group text-right">
+            <button type="button" id="ChangePasswordSaveBtn" form="someOtherForm" class="btn btn-sm btn-outline-success"
+              onclick=""><i class="fas fa-key"></i> Save New Password</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 
 

@@ -7,9 +7,15 @@ disableEnableFullSizeBusinessImgBtn();
 
 
 function TestDateFormat() {
-  startDate = new Date(myDOMs.main_page.StartDate.value);
+  let myNewDateTemp = new Date();
+  let myNewDate = new Date(myNewDateTemp.getUTCFullYear(), myNewDateTemp.getUTCMonth(), myNewDateTemp.getUTCDate());
+  myNewDate.setUTCHours(0);
+  alert(myNewDate);
+  myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
+  alert(myNewDate);
+  // startDate = new Date(myDOMs.main_page.StartDate.value);
 
-  var myDate = new Date(2019, 0, 16);
+  // var myDate = new Date(2019, 0, 16);
   // var myDateFormat = myDate.toDateString(); //Wed Jan 16 2019
   // alert(myDateFormat);
   // var myDateFormat = myDate.toLocaleDateString(); //1/16/2019
@@ -18,9 +24,9 @@ function TestDateFormat() {
   // alert(myDateFormat);
   // var myDateFormat = myDate.toUTCString(); //Wed, 16 Jan 2019 04:00:00 GMT
   // alert(myDateFormat);
-  var myDateFormat = myDate.toISOString(); //2019-01-16T04:00:00.000Z
-  let myDateOnly = myDateFormat.substring(0, 10);
-  alert(myDateOnly);
+  // var myDateFormat = myDate.toISOString(); //2019-01-16T04:00:00.000Z
+  // let myDateOnly = myDateFormat.substring(0, 10);
+  // alert(myDateOnly);
   // var myDateFormat = myDate.toString(); //Wed Jan 16 2019 00:00:00 GMT-0400 (Atlantic Standard Time)
   // alert(myDateFormat);
 
@@ -243,11 +249,11 @@ function addBusVehicleVendor() {
   vendorBus.appendChild(txtBus);
   myDOMs.busExp.Vendor.add(vendorBus);
 }
-function emptyBusCategorySelect() {
-  for (i = myDOMs.busExp.Category.length - 1; i > 0; i--) {
-    myDOMs.busExp.Category.remove(i);
-  }
-}
+// function emptyBusCategorySelect() {
+//   for (i = myDOMs.busExp.Category.length - 1; i > 0; i--) {
+//     myDOMs.busExp.Category.remove(i);
+//   }
+// }
 // //AJAX REQUESTS
 
 function postmyBusVendor(myNewVendor) {
@@ -374,61 +380,61 @@ function populateBusinessVendors() {
     });
 }
 
-function populateBusinessCategories() {
-  //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
-  //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
-  $.ajax({
-    url: `${serverURL}businessCategorie`,
-    method: "GET"
-  })
-    .done(function (data) {
-      for (i = 0; i < data.businessCategories.length; i++) {
-        let optionBus = document.createElement("OPTION");
-        txtBus = document.createTextNode(data.businessCategories[i].text);
-        optionBus.appendChild(txtBus);
-        myDOMs.busExp.Category.insertBefore(
-          optionBus,
-          myDOMs.busExp.Category.lastChild
-        );
-      }
-    })
-    .fail(function (e) {
-      alert("Business Expense Category List was NOT retrieved Successfully!");
-    });
-}
+// function populateBusinessCategories() {
+//   //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
+//   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
+//   $.ajax({
+//     url: `${serverURL}businessCategorie`,
+//     method: "GET"
+//   })
+//     .done(function (data) {
+//       for (i = 0; i < data.businessCategories.length; i++) {
+//         let optionBus = document.createElement("OPTION");
+//         txtBus = document.createTextNode(data.businessCategories[i].text);
+//         optionBus.appendChild(txtBus);
+//         myDOMs.busExp.Category.insertBefore(
+//           optionBus,
+//           myDOMs.busExp.Category.lastChild
+//         );
+//       }
+//     })
+//     .fail(function (e) {
+//       alert("Business Expense Category List was NOT retrieved Successfully!");
+//     });
+// }
 
-function addBusinessCategory() {
-  let tempCat = prompt("Please enter the Category Name.");
+// function addBusinessCategory() {
+//   let tempCat = prompt("Please enter the Category Name.");
 
-  if (tempCat === "") {
-    alert("Invalid Entry!");
-    return;
-  } else if (tempCat === null) {
-    return;
-  }
-  let catIsTaxed = false;
-  let tempTaxed = prompt("Please Add true or False if Taxed");
-  if (tempTaxed === "Yes") {
-    catIsTaxed = true;
-  } else {
-    catIsTaxed = false;
-  }
+//   if (tempCat === "") {
+//     alert("Invalid Entry!");
+//     return;
+//   } else if (tempCat === null) {
+//     return;
+//   }
+//   let catIsTaxed = false;
+//   let tempTaxed = prompt("Please Add true or False if Taxed");
+//   if (tempTaxed === "Yes") {
+//     catIsTaxed = true;
+//   } else {
+//     catIsTaxed = false;
+//   }
 
-  $.ajax({
-    url: `${serverURL}businessCategorie`,
-    method: "POST",
-    data: {
-      text: tempCat,
-      taxed: catIsTaxed
-    }
-  })
-    .done(function (data) {
-      alert(JSON.stringify(data, undefined, 2));
-    })
-    .fail(function (e) {
-      alert("Business Expense Category was NOT Saved Successfully!");
-    });
-}
+//   $.ajax({
+//     url: `${serverURL}businessCategorie`,
+//     method: "POST",
+//     data: {
+//       text: tempCat,
+//       taxed: catIsTaxed
+//     }
+//   })
+//     .done(function (data) {
+//       alert(JSON.stringify(data, undefined, 2));
+//     })
+//     .fail(function (e) {
+//       alert("Business Expense Category was NOT Saved Successfully!");
+//     });
+// }
 
 function updateBusinessExpense() {
   if (savedTransactionLocked) {

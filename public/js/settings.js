@@ -16,6 +16,17 @@ let rowCountPerPage = 10;
 let rowCountPerPageDefault = 10;
 
 const myDOMs = {
+   Change_Password: {
+      Modal: document.getElementById('userChangePasswordModal'),
+      Top_Close_Btn: document.getElementById('topCloseChangePasswordUserModal'),
+      Alert_Container: document.getElementById('alertContainerChangePassword'),
+      Form: document.getElementById('userChangePasswordForm'),
+      Password_Input: document.getElementById('ChangePassword'),
+      Confirm_Password_Input: document.getElementById('ChangePasswordconfirm'),
+      Save_New_Password: document.getElementById('ChangePasswordSaveBtn'),
+      Invalid_Msg: document.getElementById('ChangePasswordValidMessage'),
+      Invalid_Confirm_Msg: document.getElementById('confirmChangePasswordValidMessage')
+   },
    HST_Return: {
       StartDate: document.getElementById('PeriodStartDate'),
       EndDate: document.getElementById('PeriodEndDate'),

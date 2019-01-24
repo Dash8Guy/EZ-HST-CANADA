@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const hbs = require('hbs');
+const paypal = require('paypal-rest-sdk');
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const busboyCnct = require('connect-busboy');
@@ -29,11 +30,6 @@ const { VehicleLog } = require("./models/vehicleLog");
 const { FixedAsset } = require("./models/fixedAsset");
 const { MiscData } = require("./models/miscData");
 const { User } = require("./models/user");
-const { VehicleCategorie } = require("./models/vehicleCategorie");
-const { BusinessCategorie } = require("./models/businessCategorie");
-const { HomeCategorie } = require("./models/homeCategorie");
-const { OtherCategorie } = require("./models/otherCategorie");
-const { RentalCategorie } = require("./models/rentalCategorie");
 const { IncomeParty } = require("./models/incomeParty");
 const { VehicleVendor } = require("./models/vehicleVendor");
 const { BusinessVendor } = require("./models/businessVendor");
@@ -42,7 +38,15 @@ const { OtherVendor } = require("./models/otherVendor");
 const { RentalVendor } = require("./models/rentalVendor");
 const { IncomeClient } = require("./models/incomeClient");
 const { Return_Data } = require("./models/return_data");
+const { UserPayment } = require("./models/userPayment");
 const { authenticate } = require("./middleware/authenticate");
+
+
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': process.env.PayPal_Client_ID,
+  'client_secret': process.env.PayPal_Client_Secret
+});
 
 var app = express();
 app.use(fileUpload());
@@ -61,6 +65,18 @@ app.set("views", path.join("views"));
 app.use(express.static(path.join('public')));
 app.set("view engine", "hbs");
 
+
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   if (req.method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', '*');
+//     return res.status(200).json({});
+//   }
+//   next();
+// });
+
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -77,6 +93,120 @@ app.use((req, res, next) => {
 app.get("/", function (req, res) {
   res.render("index.hbs");
 });
+
+//PayPal
+app.post("/payPal", authenticate, (req, res) => {
+
+  if (!req.user._id) {
+    return res.status(404).send("Unable to Find/Authenticate User!");
+  } else {
+    process.env.TempVarUser = req.user._id;
+  }
+
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+      "payment_method": "paypal"
+    },
+    "redirect_urls": {
+      "return_url": process.env.Local_PayPal_Return_URL,
+      "cancel_url": process.env.Local_PayPal_Cancel_URL
+    },
+    "transactions": [{
+      "item_list": {
+        "items": [{
+          "name": "EZ-HST-CANADA Subscription",
+          "sku": req.user._id,
+          "price": "5.00",
+          "currency": "CAD",
+          "quantity": 1
+        }]
+      },
+      "amount": {
+        "currency": "CAD",
+        "total": "5.00"
+      },
+      "description": "EZ-HST-CANADA Subscrition for 1 Month."
+    }]
+  };
+
+  paypal.payment.create(create_payment_json, async function (error, payment) {
+    if (error) {
+      console.log(`Trowing error: ${error}`);
+      throw error;
+    } else {
+      //console.dir(payment);
+      payerID = payment.id;
+
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === 'approval_url') {
+          return res.redirect(payment.links[i].href);
+          //res.send(payment.links[i].href);
+        }
+      }
+    }
+  });
+
+});
+
+app.get("/success", function (req, res) {
+
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+      "amount": {
+        "currency": "CAD",
+        "total": "5.00"
+      }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+      console.log(error.response);
+      throw error;
+    } else {
+
+      let userPay = new UserPayment({
+        _user: process.env.TempVarUser,
+        payID: payment.id,
+        payCart: payment.cart,
+        payDate: payment.create_time,
+        payAmt: payment.transactions[0].amount.total,
+        payTotalAmt: payment.transactions[0].amount.total,
+        payerID: payment.payer.payer_info.payer_id,
+        payerEmail: payment.payer.payer_info.email,
+        payerAddress: payment.payer.payer_info.shipping_address.line1,
+        payerCity: payment.payer.payer_info.shipping_address.city,
+        payerProvince: payment.payer.payer_info.shipping_address.state,
+        payerPostalCode: payment.payer.payer_info.shipping_address.postal_code,
+        payerCountry: payment.payer.payer_info.country_code,
+      });
+
+
+      userPay.save().then(
+        doc => {
+          res.send('Payment Successfully Completed!')
+        },
+        e => {
+          res.send(`Unable to Save Payment Information!: ${e}`);
+        }
+      );
+
+      process.env.TempVarUser = '';
+    }
+  });
+
+});
+
+app.get('/cancel', function (req, res) {
+  res.send("Cancelled!");
+});
+
+
 
 app.post("/carExpense", authenticate, async (req, res) => {
   let sampleFile;
@@ -728,136 +858,6 @@ app.delete("/carExpense/:_id", authenticate, (req, res) => {
     .catch(e => {
       res.status(400).send(e);
     });
-});
-
-app.get("/vehicleCategorie", (req, res) => {
-  VehicleCategorie.find({}).then(
-    vehicleCategories => {
-      res.send({ vehicleCategories });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-app.post("/vehicleCategories", (req, res) => {
-  const vehicleCategorie = new VehicleCategorie({
-    text: req.body.text,
-    taxed: req.body.taxed
-  });
-  vehicleCategorie.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.send(e);
-    }
-  );
-});
-
-app.get("/businessCategorie", (req, res) => {
-  BusinessCategorie.find({}).then(
-    businessCategories => {
-      res.send({ businessCategories });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-app.post("/businessCategorie", (req, res) => {
-  const businessCategorie = new BusinessCategorie({
-    text: req.body.text,
-    taxed: req.body.taxed
-  });
-  businessCategorie.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.send(e);
-    }
-  );
-});
-
-app.get("/homeCategorie", (req, res) => {
-  HomeCategorie.find({}).then(
-    homeCategories => {
-      res.send({ homeCategories });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-app.post("/homeCategorie", (req, res) => {
-  const homeCategories = new HomeCategorie({
-    text: req.body.text,
-    taxed: req.body.taxed
-  });
-  homeCategories.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.send(e);
-    }
-  );
-});
-
-app.get("/otherCategorie", (req, res) => {
-  OtherCategorie.find({}).then(
-    otherCategories => {
-      res.send({ otherCategories });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-app.post("/otherCategorie", (req, res) => {
-  const otherCategories = new OtherCategorie({
-    text: req.body.text,
-    taxed: req.body.taxed
-  });
-  otherCategories.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.send(e);
-    }
-  );
-});
-
-app.get("/rentalCategorie", (req, res) => {
-  RentalCategorie.find({}).then(
-    rentalCategories => {
-      res.send({ rentalCategories });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-app.post("/rentalCategorie", (req, res) => {
-  const rentalCategories = new RentalCategorie({
-    text: req.body.text,
-    taxed: req.body.taxed
-  });
-  rentalCategories.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.send(e);
-    }
-  );
 });
 
 app.get("/incomeParty", (req, res) => {
@@ -1764,7 +1764,7 @@ app.post("/users/login", (req, res) => {
 
 app.post("/users", (req, res) => {
   //console.log(JSON.stringify(req.body, undefined, 2));
-  var body = _.pick(req.body, ["firstName", "lastName", "email", "password"]);
+  var body = _.pick(req.body, ["firstName", "lastName", "email", "password", "ExpireDate"]);
   const user = new User(body);
 
   user
@@ -2685,6 +2685,137 @@ app.listen(port, () => {
 //     }
 //   });
 // }
+
+
+// app.get("/vehicleCategorie", (req, res) => {
+//   VehicleCategorie.find({}).then(
+//     vehicleCategories => {
+//       res.send({ vehicleCategories });
+//     },
+//     e => {
+//       res.status(400).send(e);
+//     }
+//   );
+// });
+
+// app.post("/vehicleCategories", (req, res) => {
+//   const vehicleCategorie = new VehicleCategorie({
+//     text: req.body.text,
+//     taxed: req.body.taxed
+//   });
+//   vehicleCategorie.save().then(
+//     doc => {
+//       res.send(doc);
+//     },
+//     e => {
+//       res.send(e);
+//     }
+//   );
+// });
+
+// app.get("/businessCategorie", (req, res) => {
+//   BusinessCategorie.find({}).then(
+//     businessCategories => {
+//       res.send({ businessCategories });
+//     },
+//     e => {
+//       res.status(400).send(e);
+//     }
+//   );
+// });
+
+// app.post("/businessCategorie", (req, res) => {
+//   const businessCategorie = new BusinessCategorie({
+//     text: req.body.text,
+//     taxed: req.body.taxed
+//   });
+//   businessCategorie.save().then(
+//     doc => {
+//       res.send(doc);
+//     },
+//     e => {
+//       res.send(e);
+//     }
+//   );
+// });
+
+// app.get("/homeCategorie", (req, res) => {
+//   HomeCategorie.find({}).then(
+//     homeCategories => {
+//       res.send({ homeCategories });
+//     },
+//     e => {
+//       res.status(400).send(e);
+//     }
+//   );
+// });
+
+// app.post("/homeCategorie", (req, res) => {
+//   const homeCategories = new HomeCategorie({
+//     text: req.body.text,
+//     taxed: req.body.taxed
+//   });
+//   homeCategories.save().then(
+//     doc => {
+//       res.send(doc);
+//     },
+//     e => {
+//       res.send(e);
+//     }
+//   );
+// });
+
+// app.get("/otherCategorie", (req, res) => {
+//   OtherCategorie.find({}).then(
+//     otherCategories => {
+//       res.send({ otherCategories });
+//     },
+//     e => {
+//       res.status(400).send(e);
+//     }
+//   );
+// });
+
+// app.post("/otherCategorie", (req, res) => {
+//   const otherCategories = new OtherCategorie({
+//     text: req.body.text,
+//     taxed: req.body.taxed
+//   });
+//   otherCategories.save().then(
+//     doc => {
+//       res.send(doc);
+//     },
+//     e => {
+//       res.send(e);
+//     }
+//   );
+// });
+
+// app.get("/rentalCategorie", (req, res) => {
+//   RentalCategorie.find({}).then(
+//     rentalCategories => {
+//       res.send({ rentalCategories });
+//     },
+//     e => {
+//       res.status(400).send(e);
+//     }
+//   );
+// });
+
+// app.post("/rentalCategorie", (req, res) => {
+//   const rentalCategories = new RentalCategorie({
+//     text: req.body.text,
+//     taxed: req.body.taxed
+//   });
+//   rentalCategories.save().then(
+//     doc => {
+//       res.send(doc);
+//     },
+//     e => {
+//       res.send(e);
+//     }
+//   );
+// });
 
 
 

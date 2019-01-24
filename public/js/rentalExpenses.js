@@ -57,11 +57,11 @@ function addRentalVendor() {
   vendorRental.appendChild(txtRental);
   myDOMs.rentalExp.Vendor.add(vendorRental);
 }
-function emptyRentalCategorySelect() {
-  for (i = myDOMs.rentalExp.Category.length - 1; i > 0; i--) {
-    myDOMs.rentalExp.Category.remove(i);
-  }
-}
+// function emptyRentalCategorySelect() {
+//   for (i = myDOMs.rentalExp.Category.length - 1; i > 0; i--) {
+//     myDOMs.rentalExp.Category.remove(i);
+//   }
+// }
 // //AJAX REQUESTS
 
 function postmyRentalVendor(myNewVendor) {
@@ -183,61 +183,61 @@ function populateRentalVendors() {
     });
 }
 
-function populateRentalCategories() {
-  //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
-  //alert('inside populate rental categories');
-  $.ajax({
-    url: `${serverURL}rentalCategorie`,
-    method: "GET"
-  })
-    .done(function (data) {
-      for (i = 0; i < data.rentalCategories.length; i++) {
-        let optionRental = document.createElement("OPTION");
-        txtRental = document.createTextNode(data.rentalCategories[i].text);
-        optionRental.appendChild(txtRental);
-        myDOMs.rentalExp.Category.insertBefore(
-          optionRental,
-          myDOMs.rentalExp.Category.lastChild
-        );
-      }
-    })
-    .fail(function (e) {
-      alert("Rental Expense Category List was NOT retrieved Successfully!");
-    });
-}
+// function populateRentalCategories() {
+//   //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
+//   //alert('inside populate rental categories');
+//   $.ajax({
+//     url: `${serverURL}rentalCategorie`,
+//     method: "GET"
+//   })
+//     .done(function (data) {
+//       for (i = 0; i < data.rentalCategories.length; i++) {
+//         let optionRental = document.createElement("OPTION");
+//         txtRental = document.createTextNode(data.rentalCategories[i].text);
+//         optionRental.appendChild(txtRental);
+//         myDOMs.rentalExp.Category.insertBefore(
+//           optionRental,
+//           myDOMs.rentalExp.Category.lastChild
+//         );
+//       }
+//     })
+//     .fail(function (e) {
+//       alert("Rental Expense Category List was NOT retrieved Successfully!");
+//     });
+// }
 
-function addRentalCategory() {
-  let tempCat = prompt("Please enter the Category Name.");
+// function addRentalCategory() {
+//   let tempCat = prompt("Please enter the Category Name.");
 
-  if (tempCat === "") {
-    alert("Invalid Entry!");
-    return;
-  } else if (tempCat === null) {
-    return;
-  }
-  let catIsTaxed = false;
-  let tempTaxed = prompt("Please Add true or False if Taxed");
-  if (tempTaxed === "Yes") {
-    catIsTaxed = true;
-  } else {
-    catIsTaxed = false;
-  }
+//   if (tempCat === "") {
+//     alert("Invalid Entry!");
+//     return;
+//   } else if (tempCat === null) {
+//     return;
+//   }
+//   let catIsTaxed = false;
+//   let tempTaxed = prompt("Please Add true or False if Taxed");
+//   if (tempTaxed === "Yes") {
+//     catIsTaxed = true;
+//   } else {
+//     catIsTaxed = false;
+//   }
 
-  $.ajax({
-    url: `${serverURL}rentalCategorie`,
-    method: "POST",
-    data: {
-      text: tempCat,
-      taxed: catIsTaxed
-    }
-  })
-    .done(function (data) {
-      alert(JSON.stringify(data, undefined, 2));
-    })
-    .fail(function (e) {
-      alert("Rental Expense Category was NOT Saved Successfully!");
-    });
-}
+//   $.ajax({
+//     url: `${serverURL}rentalCategorie`,
+//     method: "POST",
+//     data: {
+//       text: tempCat,
+//       taxed: catIsTaxed
+//     }
+//   })
+//     .done(function (data) {
+//       alert(JSON.stringify(data, undefined, 2));
+//     })
+//     .fail(function (e) {
+//       alert("Rental Expense Category was NOT Saved Successfully!");
+//     });
+// }
 
 function updateRentalExpense() {
   if (savedTransactionLocked) {

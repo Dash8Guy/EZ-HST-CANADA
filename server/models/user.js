@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
       message: "{VALUE} is not a valid email"
     }
   },
+  ExpireDate: {
+    type: Date,
+    required: true
+  },
   password: {
     type: String,
     require: true,
@@ -61,6 +65,7 @@ UserSchema.methods.generateAuthToken = function () {
   let token = jwt
     .sign({ _id: user._id.toHexString(), access }, process.env.secret_key)
     .toString();
+  //The below line of code is just like pushing to an array but works better with all versions of mongodb
   user.tokens = user.tokens.concat([{ access, token }]);
   return user.save().then(() => {
     return token;
@@ -117,6 +122,7 @@ UserSchema.methods.removeToken = function (token) {
     }
   });
 };
+
 
 //This is mongoose middleware and is run just before a user is saved in order to hash the password
 UserSchema.pre("save", function (next) {

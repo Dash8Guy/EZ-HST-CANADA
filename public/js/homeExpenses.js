@@ -59,11 +59,11 @@ function addHomeVendor() {
   vendorHome.appendChild(txtHome);
   myDOMs.homeExp.Vendor.add(vendorHome);
 }
-function emptyHomeCategorySelect() {
-  for (i = myDOMs.homeExp.Category.length - 1; i > 0; i--) {
-    myDOMs.homeExp.Category.remove(i);
-  }
-}
+// function emptyHomeCategorySelect() {
+//   for (i = myDOMs.homeExp.Category.length - 1; i > 0; i--) {
+//     myDOMs.homeExp.Category.remove(i);
+//   }
+// }
 // //AJAX REQUESTS
 
 function postmyHomeVendor(myNewVendor) {
@@ -185,61 +185,61 @@ function populateHomeVendors() {
     });
 }
 
-function populateHomeCategories() {
-  //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
-  //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
-  $.ajax({
-    url: `${serverURL}homeCategorie`,
-    method: "GET"
-  })
-    .done(function (data) {
-      for (i = 0; i < data.homeCategories.length; i++) {
-        let optionHome = document.createElement("OPTION");
-        txtHome = document.createTextNode(data.homeCategories[i].text);
-        optionHome.appendChild(txtHome);
-        myDOMs.homeExp.Category.insertBefore(
-          optionHome,
-          myDOMs.homeExp.Category.lastChild
-        );
-      }
-    })
-    .fail(function (e) {
-      alert("Home Expense Category List was NOT retrieved Successfully!");
-    });
-}
+// function populateHomeCategories() {
+//   //This code retrieves the Business expense Categories from the Database and inserts them into the forms Category dropdown list.
+//   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
+//   $.ajax({
+//     url: `${serverURL}homeCategorie`,
+//     method: "GET"
+//   })
+//     .done(function (data) {
+//       for (i = 0; i < data.homeCategories.length; i++) {
+//         let optionHome = document.createElement("OPTION");
+//         txtHome = document.createTextNode(data.homeCategories[i].text);
+//         optionHome.appendChild(txtHome);
+//         myDOMs.homeExp.Category.insertBefore(
+//           optionHome,
+//           myDOMs.homeExp.Category.lastChild
+//         );
+//       }
+//     })
+//     .fail(function (e) {
+//       alert("Home Expense Category List was NOT retrieved Successfully!");
+//     });
+// }
 
-function addHomeCategory() {
-  let tempCat = prompt("Please enter the Category Name.");
+// function addHomeCategory() {
+//   let tempCat = prompt("Please enter the Category Name.");
 
-  if (tempCat === "") {
-    alert("Invalid Entry!");
-    return;
-  } else if (tempCat === null) {
-    return;
-  }
-  let catIsTaxed = false;
-  let tempTaxed = prompt("Please Add true or False if Taxed");
-  if (tempTaxed === "Yes") {
-    catIsTaxed = true;
-  } else {
-    catIsTaxed = false;
-  }
+//   if (tempCat === "") {
+//     alert("Invalid Entry!");
+//     return;
+//   } else if (tempCat === null) {
+//     return;
+//   }
+//   let catIsTaxed = false;
+//   let tempTaxed = prompt("Please Add true or False if Taxed");
+//   if (tempTaxed === "Yes") {
+//     catIsTaxed = true;
+//   } else {
+//     catIsTaxed = false;
+//   }
 
-  $.ajax({
-    url: `${serverURL}homeCategorie`,
-    method: "POST",
-    data: {
-      text: tempCat,
-      taxed: catIsTaxed
-    }
-  })
-    .done(function (data) {
-      alert(JSON.stringify(data, undefined, 2));
-    })
-    .fail(function (e) {
-      alert("Home Expense Category was NOT Saved Successfully!");
-    });
-}
+//   $.ajax({
+//     url: `${serverURL}homeCategorie`,
+//     method: "POST",
+//     data: {
+//       text: tempCat,
+//       taxed: catIsTaxed
+//     }
+//   })
+//     .done(function (data) {
+//       alert(JSON.stringify(data, undefined, 2));
+//     })
+//     .fail(function (e) {
+//       alert("Home Expense Category was NOT Saved Successfully!");
+//     });
+// }
 
 function updateHomeExpense() {
   if (savedTransactionLocked) {

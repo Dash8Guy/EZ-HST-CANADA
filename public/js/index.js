@@ -574,11 +574,11 @@ function afterLogout() {
   emptyHomeVendorSelect();
   emptyOtherVendorSelect();
   emptyRentalVendorSelect();
-  emptyCategorySelect();
-  emptyBusCategorySelect();
-  emptyHomeCategorySelect();
-  emptyOtherCategorySelect();
-  emptyRentalCategorySelect();
+  // emptyCategorySelect();
+  // emptyBusCategorySelect();
+  // emptyHomeCategorySelect();
+  // emptyOtherCategorySelect();
+  // emptyRentalCategorySelect();
   emptyIncomeVendorSelect();
   var isDisabledLogin = $("#navLogin").hasClass("disabled");
   if (isDisabledLogin) {
@@ -616,11 +616,11 @@ async function afterLogin(userName) {
   }
   verifyAllLocalStorageForSettings();
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
-  await populateBusinessCategories();
-  await populateHomeCategories();
-  await populateOtherCategories();
-  await populateRentalCategories();
-  await populateVehicleCategories();
+  // await populateBusinessCategories();
+  // await populateHomeCategories();
+  // await populateOtherCategories();
+  // await populateRentalCategories();
+  // await populateVehicleCategories();
   await populateVehicleVendors();
   await populateBusinessVendors();
   await populateHomeVendors();
@@ -696,7 +696,6 @@ function loginUser() {
     .done(function (data) {
       let myMsg = [
         `Welcome ${data.firstName} ${data.lastName}`,
-        `Your ID: ${data._id}`,
         `Your Email: ${data.email}`
       ];
 
@@ -1016,11 +1015,16 @@ function removeTblNavAlertChildNodes() {
 };
 
 function registerUser() {
+  let myNewDateTemp = new Date();
+  let myNewDate = new Date(myNewDateTemp.getUTCFullYear(), myNewDateTemp.getUTCMonth(), myNewDateTemp.getUTCDate());
+  myNewDate.setUTCHours(0);
+  myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
   mydata = {
     firstName: myDOMs.userSetupModal.FirstName.value,
     lastName: myDOMs.userSetupModal.LastName.value,
     email: myDOMs.userSetupModal.Email.value,
-    password: myDOMs.userSetupModal.Password.value
+    password: myDOMs.userSetupModal.Password.value,
+    ExpireDate: myNewDate
   };
 
   $.ajax({
@@ -1038,7 +1042,7 @@ function registerUser() {
         "New User added Successfully! ",
         myObjMsg,
         `User ID: ${data._id}`,
-        "RED",
+        "GREEN",
         6000
       );
       window.sessionStorage.setItem('myRandomVar', data.token);
@@ -1201,6 +1205,76 @@ function setPasswordValidClass(myPassInput) {
       if (!myDOMs.userSetupModal.Password.classList.contains("is-invalid")) {
         myDOMs.userSetupModal.Password.classList.add("is-invalid");
         myDOMs.userSetupModal.PasswordValidMessage.innerText =
+          "Your Passwords do not match!";
+      }
+    }
+  }
+};
+
+function setChangePasswordValidClass(myPassInput) {
+  if (myPassInput === "first") {
+    if (myDOMs.Change_Password.Password_Input.value.length >= 8) {
+      if (myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.remove("is-invalid");
+      }
+      if (
+        myDOMs.Change_Password.Confirm_Password_Input.classList.contains("is-invalid")
+      ) {
+        myDOMs.Change_Password.Confirm_Password_Input.classList.remove("is-invalid");
+      }
+    } else {
+      if (!myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.add("is-invalid");
+        myDOMs.Change_Password.Invalid_Msg.innerText =
+          "Your Password is not strong enough! (Min 8 character)";
+      }
+    }
+
+    if (
+      myDOMs.Change_Password.Password_Input.value ===
+      myDOMs.Change_Password.Confirm_Password_Input.value
+    ) {
+      if (myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.remove("is-invalid");
+      }
+      if (
+        myDOMs.Change_Password.Confirm_Password_Input.classList.contains("is-invalid")
+      ) {
+        myDOMs.Change_Password.Confirm_Password_Input.classList.remove("is-invalid");
+      }
+    } else {
+      if (!myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.add("is-invalid");
+        myDOMs.Change_Password.Invalid_Msg.innerText =
+          "Your Passwords do not match!";
+      }
+    }
+  } else if (myPassInput === "confirm") {
+    if (
+      myDOMs.Change_Password.Password_Input.value ===
+      myDOMs.Change_Password.Confirm_Password_Input.value &&
+      myDOMs.Change_Password.Confirm_Password_Input.value.length >= 8
+    ) {
+      if (
+        myDOMs.Change_Password.Confirm_Password_Input.classList.contains("is-invalid")
+      ) {
+        myDOMs.Change_Password.Confirm_Password_Input.classList.remove("is-invalid");
+      }
+
+      if (myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.remove("is-invalid");
+      }
+    } else {
+      if (
+        !myDOMs.Change_Password.Confirm_Password_Input.classList.contains("is-invalid")
+      ) {
+        myDOMs.Change_Password.Confirm_Password_Input.classList.add("is-invalid");
+        myDOMs.Change_Password.Invalid_Confirm_Msg.innerText =
+          "Your Passwords do not match!";
+      }
+      if (!myDOMs.Change_Password.Password_Input.classList.contains("is-invalid")) {
+        myDOMs.Change_Password.Password_Input.classList.add("is-invalid");
+        myDOMs.Change_Password.Invalid_Msg.innerText =
           "Your Passwords do not match!";
       }
     }
@@ -1672,7 +1746,6 @@ function processFile(dataURL, fileType, mySource) {
 }
 
 
-
 function readFile(file, mySource) {
   var reader = new FileReader();
 
@@ -1686,3 +1759,48 @@ function readFile(file, mySource) {
 
   reader.readAsDataURL(file);
 }
+
+function startPaymentMethod() {
+
+  let formData = new FormData();
+  formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
+
+  $.ajax({
+    method: "POST",
+    url: `${serverURL}payPal`,
+    data: formData,
+    enctype: "multipart/form-data",
+    processData: false,
+    contentType: false
+  })
+    .done(async function (data) {
+      window.open(data);
+
+    })
+    .fail(function (err) {
+      alert(JSON.stringify(err, undefined, 2));
+      alert("Payment was NOT completed Successfully!");
+    });
+
+
+};
+
+
+function displayUserProfile() {
+  $("#userProfileModal").modal("show");
+};
+
+function hideUserProfile() {
+  $("#userProfileModal").modal("hide");
+};
+
+
+function hideyUserChangePasswordModal() {
+  $('#userChangePasswordModal').modal("hide");
+};
+
+function runChangePasswordBtn() {
+  $('#userChangePasswordModal').modal("show");
+  hideUserProfile();
+
+};

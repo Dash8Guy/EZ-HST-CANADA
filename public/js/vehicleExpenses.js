@@ -66,11 +66,11 @@ function addVehicleVendor() {
   tempVendorCar.appendChild(txtCar);
   myDOMs.carExp.Vendor.add(tempVendorCar);
 }
-function emptyCategorySelect() {
-  for (i = myDOMs.carExp.Category.length - 1; i > 0; i--) {
-    myDOMs.carExp.Category.remove(i);
-  }
-}
+// function emptyCategorySelect() {
+//   for (i = myDOMs.carExp.Category.length - 1; i > 0; i--) {
+//     myDOMs.carExp.Category.remove(i);
+//   }
+// }
 
 function removePagination() {
   let myTempNav = document.getElementById('navID');
@@ -356,60 +356,60 @@ function populateVehicleVendors() {
     });
 }
 
-function populateVehicleCategories() {
-  //This code retrieves the vehicle expense Categories from the Database and inserts them into the forms Category dropdown list.
-  //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
-  $.ajax({
-    url: `${serverURL}vehicleCategorie`,
-    method: "GET"
-  })
-    .done(function (data) {
-      for (i = 0; i < data.vehicleCategories.length; i++) {
-        let optionCar = document.createElement("OPTION");
-        txtCar = document.createTextNode(data.vehicleCategories[i].text);
-        optionCar.appendChild(txtCar);
-        myDOMs.carExp.Category.insertBefore(
-          optionCar,
-          myDOMs.carExp.Category.lastChild
-        );
-      }
-    })
-    .fail(function (e) {
-      alert("Vehicle Expense Category List was NOT retrieved Successfully!");
-    });
-}
-function addVehicleCategory() {
-  let tempCat = prompt("Please enter the Category Name.");
+// function populateVehicleCategories() {
+//   //This code retrieves the vehicle expense Categories from the Database and inserts them into the forms Category dropdown list.
+//   //This will allow me to add functions to allow end-user to make changes to the list or add/remove items.
+//   $.ajax({
+//     url: `${serverURL}vehicleCategorie`,
+//     method: "GET"
+//   })
+//     .done(function (data) {
+//       for (i = 0; i < data.vehicleCategories.length; i++) {
+//         let optionCar = document.createElement("OPTION");
+//         txtCar = document.createTextNode(data.vehicleCategories[i].text);
+//         optionCar.appendChild(txtCar);
+//         myDOMs.carExp.Category.insertBefore(
+//           optionCar,
+//           myDOMs.carExp.Category.lastChild
+//         );
+//       }
+//     })
+//     .fail(function (e) {
+//       alert("Vehicle Expense Category List was NOT retrieved Successfully!");
+//     });
+// }
+// function addVehicleCategory() {
+//   let tempCat = prompt("Please enter the Category Name.");
 
-  if (tempCat === "") {
-    alert("Invalid Entry!");
-    return;
-  } else if (tempCat === null) {
-    return;
-  }
-  let catIsTaxed = false;
-  let tempTaxed = prompt("Please Add true or False if Taxed");
-  if (tempTaxed === "Yes") {
-    catIsTaxed = true;
-  } else {
-    catIsTaxed = false;
-  }
+//   if (tempCat === "") {
+//     alert("Invalid Entry!");
+//     return;
+//   } else if (tempCat === null) {
+//     return;
+//   }
+//   let catIsTaxed = false;
+//   let tempTaxed = prompt("Please Add true or False if Taxed");
+//   if (tempTaxed === "Yes") {
+//     catIsTaxed = true;
+//   } else {
+//     catIsTaxed = false;
+//   }
 
-  $.ajax({
-    url: `${serverURL}vehicleCategories`,
-    method: "POST",
-    data: {
-      text: tempCat,
-      taxed: catIsTaxed
-    }
-  })
-    .done(function (data) {
-      alert(JSON.stringify(data, undefined, 2));
-    })
-    .fail(function (e) {
-      alert("Vehicle Expense Category was NOT Saved Successfully!");
-    });
-}
+//   $.ajax({
+//     url: `${serverURL}vehicleCategories`,
+//     method: "POST",
+//     data: {
+//       text: tempCat,
+//       taxed: catIsTaxed
+//     }
+//   })
+//     .done(function (data) {
+//       alert(JSON.stringify(data, undefined, 2));
+//     })
+//     .fail(function (e) {
+//       alert("Vehicle Expense Category was NOT Saved Successfully!");
+//     });
+// }
 // function getVehicleExpenseByID(expID) {
 //   $.ajax({
 //     url: `${serverURL}carExpense/${expID}`,
