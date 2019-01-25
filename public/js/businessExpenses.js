@@ -10,9 +10,9 @@ function TestDateFormat() {
   let myNewDateTemp = new Date();
   let myNewDate = new Date(myNewDateTemp.getUTCFullYear(), myNewDateTemp.getUTCMonth(), myNewDateTemp.getUTCDate());
   myNewDate.setUTCHours(0);
-  alert(myNewDate);
-  myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
-  alert(myNewDate);
+  alert(myNewDate.toDateString());
+  // myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
+  // alert(myNewDate);
   // startDate = new Date(myDOMs.main_page.StartDate.value);
 
   // var myDate = new Date(2019, 0, 16);

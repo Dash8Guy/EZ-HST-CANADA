@@ -1,8 +1,8 @@
 const { User } = require("./../models/user");
 
 let authenticate = (req, res, next) => {
-  console.log(`Body: ${req.body.auth}`);
-  console.log(`Query: ${req.query.auth}`);
+  // console.log(`Body: ${req.body.auth}`);
+  // console.log(`Query: ${req.query.auth}`);
   if (req.body.auth === undefined || req.body.auth === null) {
     token = req.query.auth;
     // console.log(`Query: ${req.query.auth}`);
@@ -22,6 +22,7 @@ let authenticate = (req, res, next) => {
       next(); //Next lets the originating function complete its code
     })
     .catch(e => {
+      // console.log('Catch Fail');
       res.status(401).send();
     });
 };

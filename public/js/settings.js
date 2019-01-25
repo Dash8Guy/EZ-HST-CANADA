@@ -16,6 +16,18 @@ let rowCountPerPage = 10;
 let rowCountPerPageDefault = 10;
 
 const myDOMs = {
+   User_Profile: {
+      First_Name: document.getElementById('userProfilefirstName'),
+      Last_Name: document.getElementById('userProfilelastName'),
+      Email: document.getElementById('userProfileemail'),
+      Save_Changes_Btn: document.getElementById('userProfileSaveBtn'),
+      Change_Password_Btn: document.getElementById('userProfileChangePasswordBtn'),
+      Close_Btn: document.getElementById('topCloseUserProfileModal'),
+      Modal: document.getElementById('userProfileModal'),
+      Form: document.getElementById('userProfileForm'),
+      Alert_Container: document.getElementById('alertContainerUserProfile'),
+
+   },
    Change_Password: {
       Modal: document.getElementById('userChangePasswordModal'),
       Top_Close_Btn: document.getElementById('topCloseChangePasswordUserModal'),

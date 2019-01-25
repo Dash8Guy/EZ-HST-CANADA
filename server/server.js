@@ -6,7 +6,7 @@ const fs = require("fs");
 const hbs = require('hbs');
 const paypal = require('paypal-rest-sdk');
 const path = require("path");
-// const fileUpload = require("express-fileupload");
+const fileUpload = require("express-fileupload");
 const busboyCnct = require('connect-busboy');
 const busboyBodyParser = require('busboy-body-parser');
 const AWS = require('aws-sdk');
@@ -49,7 +49,7 @@ paypal.configure({
 });
 
 var app = express();
-// app.use(fileUpload());
+app.use(fileUpload());
 //app.use(busboy());
 
 //Set the KEY SECRET
@@ -66,25 +66,17 @@ app.use(express.static(path.join('public')));
 app.set("view engine", "hbs");
 
 
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', '*');
-//   if (req.method === 'OPTIONS') {
-//     res.header('Access-Control-Allow-Methods', '*');
-//     return res.status(200).json({});
-//   }
-//   next();
-// });
-
-
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin: *");
+  //res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+    console.log('Req methos is equal to options');
+    // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH, REDIRECT");
+    res.header('Access-Control-Allow-Methods', '*');
     return res.status(200).json({});
   }
   next();
@@ -140,8 +132,8 @@ app.post("/payPal", authenticate, (req, res) => {
 
       for (let i = 0; i < payment.links.length; i++) {
         if (payment.links[i].rel === 'approval_url') {
-          return res.redirect(payment.links[i].href);
-          //res.send(payment.links[i].href);
+          // return res.redirect(payment.links[i].href);
+          res.send(payment.links[i].href);
         }
       }
     }
@@ -150,7 +142,7 @@ app.post("/payPal", authenticate, (req, res) => {
 });
 
 app.get("/success", function (req, res) {
-
+  console.dir(`Query:${JSON.stringify(req.query)}`);
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 
@@ -170,7 +162,7 @@ app.get("/success", function (req, res) {
       throw error;
     } else {
 
-      let userPay = new UserPayment({
+      let userPay = {
         _user: process.env.TempVarUser,
         payID: payment.id,
         payCart: payment.cart,
@@ -184,12 +176,15 @@ app.get("/success", function (req, res) {
         payerProvince: payment.payer.payer_info.shipping_address.state,
         payerPostalCode: payment.payer.payer_info.shipping_address.postal_code,
         payerCountry: payment.payer.payer_info.country_code,
-      });
+      };
+
+      let myPaymentData = new UserPayment(userPay);
 
 
-      userPay.save().then(
+      myPaymentData.save().then(
         doc => {
-          res.send('Payment Successfully Completed!')
+          res.send(JSON.stringify(userPay, undefined, 2));
+          //res.send(`Payment Successfully Completed!\r\nPayment ID: ${userPay.payID}\r\nCart: ${userPay.payCart}\r\nPayment Date: ${userPay.payDate}\r\nPayment Amt: ${userPay.payTotalAmt}\r\nPayer ID: ${userPay.payerID}\r\nPayer email: ${userPay.payerEmail}`);
         },
         e => {
           res.send(`Unable to Save Payment Information!: ${e}`);
@@ -205,7 +200,6 @@ app.get("/success", function (req, res) {
 app.get('/cancel', function (req, res) {
   res.send("Cancelled!");
 });
-
 
 
 app.post("/carExpense", authenticate, async (req, res) => {
@@ -1752,6 +1746,7 @@ app.post("/users/login", (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          ExpireDate: user.ExpireDate,
           token: token
         };
         res.send(tempObj);
@@ -1761,6 +1756,41 @@ app.post("/users/login", (req, res) => {
       res.status(400).send(e);
     });
 });
+
+app.patch("/users/login", authenticate, (req, res) => {
+  let userID = req.user._id;
+
+  User.findOneAndUpdate(
+    {
+      _id: userID,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    },
+    {
+      $set: {
+        _id: userID,
+        firstName: req.body.new_FirstName,
+        lastName: req.body.new_LastName,
+        email: req.body.new_Email
+      }
+    },
+    { returnOriginal: false }
+  )
+    .then(
+      doc => {
+        let mypackage = {
+          message: 'User Changes Updated Successfully!',
+          data: doc
+        };
+        res.status(200).send(mypackage);
+      },
+      e => {
+        res.status(400).send(e);
+      }
+    );
+});
+
 
 app.post("/users", (req, res) => {
   //console.log(JSON.stringify(req.body, undefined, 2));

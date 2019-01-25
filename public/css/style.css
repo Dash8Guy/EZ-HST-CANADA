@@ -26,7 +26,27 @@ input[type="number"] {
   overflow-y:auto;
 }
 
+#alertContainerUserLogin,
+#alertContainerUser,
+#alertContainerUserProfile,
+#alertContainerChangePassword,
+#alertContainerBusiness,
+#alertContainerHome,
+#alertContainerOther,
+#alertContainerRental,
+#alertContainer,
+#alertVehicleLogContainer,
+#alertContainerHSTPayment,
+#alertContainerPSTPayment,
+#alertContainerTAXPayment,
+#AssetContainer {
+  font-size: 12px;
+  font-weight: bold;
+}
 
+#alertContainerMain {
+  font-size: 12px;
+}
 
 /* Table with links */
 

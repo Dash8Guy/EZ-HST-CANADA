@@ -1,5 +1,7 @@
 //User Email
 let userEmail = '';
+let user_FirstName = '';
+let user_LastName = '';
 
 //URL Variable
 let serverURL = window.location.pathname;
@@ -616,11 +618,6 @@ async function afterLogin(userName) {
   }
   verifyAllLocalStorageForSettings();
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
-  // await populateBusinessCategories();
-  // await populateHomeCategories();
-  // await populateOtherCategories();
-  // await populateRentalCategories();
-  // await populateVehicleCategories();
   await populateVehicleVendors();
   await populateBusinessVendors();
   await populateHomeVendors();
@@ -694,9 +691,11 @@ function loginUser() {
     data: tempdata
   })
     .done(function (data) {
+      let displayDate = new Date(data.ExpireDate);
       let myMsg = [
         `Welcome ${data.firstName} ${data.lastName}`,
-        `Your Email: ${data.email}`
+        `Your Email: ${data.email}`,
+        `Subscription Expires: ${displayDate.toDateString()}`
       ];
 
       displayAlert(
@@ -707,10 +706,12 @@ function loginUser() {
         myMsg,
         " ",
         "GREEN",
-        6000
+        0
       );
       window.sessionStorage.setItem('myRandomVar', data.token);
       userEmail = tempdata.email;
+      user_FirstName = tempdata.firstName;
+      user_LastName = tempdata.lastName;
       afterLogin(tempdata.firstName);
       myDOMs.userLoginModal.Form.reset();
     })
@@ -799,6 +800,8 @@ function displayAlert(
     myBtn.setAttribute("onclick", "hideAlert('TAXPaymentExpAlert')");
   } else if (curAlertID === "FixedAssetAlert") {
     myBtn.setAttribute("onclick", "hideAlert('FixedAssetAlert')");
+  } else if (curAlertID === "AlertUserProfile") {
+    myBtn.setAttribute("onclick", "hideAlert('AlertUserProfile')");
   }
 
 
@@ -1137,6 +1140,7 @@ function displayLoginUser() {
 function hideLoginUser() {
 
   $("#userLoginModal").modal('hide');
+  hideAlert("AlertUserLogin");
   ToggleMenuBar();
 
 };
@@ -1765,6 +1769,10 @@ function startPaymentMethod() {
   let formData = new FormData();
   formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
 
+  // let myData = {
+  //   auth: window.sessionStorage.getItem('myRandomVar')
+  // }
+
   $.ajax({
     method: "POST",
     url: `${serverURL}payPal`,
@@ -1772,6 +1780,10 @@ function startPaymentMethod() {
     enctype: "multipart/form-data",
     processData: false,
     contentType: false
+    // enctype: "multipart/form-data",
+    // enctype: "form-data",
+    // processData: false,
+    // contentType: "text/json"
   })
     .done(async function (data) {
       window.open(data);
@@ -1788,6 +1800,9 @@ function startPaymentMethod() {
 
 function displayUserProfile() {
   $("#userProfileModal").modal("show");
+  myDOMs.User_Profile.First_Name.value = user_FirstName;
+  myDOMs.User_Profile.Last_Name.value = user_LastName;
+  myDOMs.User_Profile.Email.value = userEmail;
 };
 
 function hideUserProfile() {
@@ -1797,6 +1812,7 @@ function hideUserProfile() {
 
 function hideyUserChangePasswordModal() {
   $('#userChangePasswordModal').modal("hide");
+  myDOMs.Change_Password.Form.reset();
 };
 
 function runChangePasswordBtn() {
@@ -1804,3 +1820,72 @@ function runChangePasswordBtn() {
   hideUserProfile();
 
 };
+
+function save_User_Changes() {
+
+  if (user_FirstName === myDOMs.User_Profile.First_Name.value && user_LastName === myDOMs.User_Profile.Last_Name.value && userEmail === myDOMs.User_Profile.Email.value) {
+    displayAlert(
+      myDOMs.User_Profile.Alert_Container,
+      "AlertUserProfile",
+      "closeBtnAlertUserProfile",
+      'No Changes Detected!',
+      '',
+      " ",
+      "RED",
+      6000
+    );
+    return;
+  }
+
+  let tempdata = {
+    firstName: user_FirstName,
+    lastName: user_LastName,
+    email: userEmail,
+    new_FirstName: myDOMs.User_Profile.First_Name.value,
+    new_LastName: myDOMs.User_Profile.Last_Name.value,
+    new_Email: myDOMs.User_Profile.Email.value,
+    auth: window.sessionStorage.getItem('myRandomVar')
+  };
+
+  $.ajax({
+    method: "PATCH",
+    url: `${serverURL}users/login`,
+    dataType: "json",
+    data: tempdata
+  })
+    .done(function (data) {
+      let myMsg = [
+        `First Name: ${tempdata.new_FirstName}`,
+        `Last Name: ${tempdata.new_LastName}`,
+        `Email: ${tempdata.new_Email}`
+      ];
+
+      displayAlert(
+        myDOMs.User_Profile.Alert_Container,
+        "AlertUserProfile",
+        "closeBtnAlertUserProfile",
+        data.message,
+        myMsg,
+        " ",
+        "GREEN",
+        6000
+      );
+      userEmail = tempdata.new_Email;
+      user_FirstName = tempdata.new_FirstName;
+      user_LastName = tempdata.new_LastName;
+      myDOMs.nav.UserLogName.innerText = `${tempdata.new_FirstName} - Logged In`;
+    })
+    .fail(function (e) {
+      let myMsg = [e.responseText];
+      displayAlert(
+        myDOMs.userLoginModal.AlertContainer,
+        "AlertUserLogin",
+        "closeBtnAlertUserLogin",
+        "Login Error! ",
+        myMsg,
+        " ",
+        "RED",
+        6000
+      );
+    });
+}

@@ -260,7 +260,7 @@
               <a href="#" class="dropdown-item  text-primary disabled my-1" id="navLogout" onclick="userLogout(false)">
                 <i class="fas fa-user-times"> User Logout</i>
               </a>
-              <a href="#" class="dropdown-item text-primary my-1" onclick="">
+              <a href="#" class="dropdown-item text-primary my-1" onclick="displayUserProfile()">
                 <i class="fas fa-user-cog"> User Profile</i>
               </a>
             </div>
@@ -4110,7 +4110,7 @@
 
               <div class="form-group text-right mt-3">
                 <button type="button" id="userProfileSaveBtn" form="someOtherFormLogin" class="btn btn-sm btn-outline-danger w-100"
-                  onclick=""><i class="fas fa-user-check"></i>
+                  onclick="save_User_Changes()"><i class="fas fa-user-check"></i>
                   Save Changes</button>
               </div>
             </form>
