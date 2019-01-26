@@ -16,6 +16,26 @@ let rowCountPerPage = 10;
 let rowCountPerPageDefault = 10;
 
 const myDOMs = {
+   Contact_Email: {
+      Modal: document.getElementById('emailContactModal'),
+      Form: document.getElementById('emailContactForm'),
+      First_Name: document.getElementById('emailContactfirstName'),
+      Last_Name: document.getElementById('emailContactlastName'),
+      Email: document.getElementById('emailContactEmail'),
+      Email_Msg: document.getElementById('emailContactMessage'),
+      Send_Btn: document.getElementById('emailContactSendBtn'),
+      Alert_Container: document.getElementById('alertContainerEmailContact')
+   },
+   Payments: {
+      Modal: document.getElementById('paymentModal'),
+      Close_Btn: document.getElementById('topClosePaymentModal'),
+      Payment_Plan_Select: document.getElementById('paymentPlanSelect'),
+      Subscription_Radio: document.getElementById('paymentSubscription'),
+      Single_Payment_Radio: document.getElementById('paymentOnly'),
+      Buy_Now_Btn: document.getElementById('payNowBtn'),
+      Subscribe_Btn: document.getElementById('payMonthlyBtn'),
+      Refund_Btn: document.getElementById('RefundPaymentBtn')
+   },
    User_Profile: {
       First_Name: document.getElementById('userProfilefirstName'),
       Last_Name: document.getElementById('userProfilelastName'),

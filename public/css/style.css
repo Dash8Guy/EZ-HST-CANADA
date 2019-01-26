@@ -39,7 +39,8 @@ input[type="number"] {
 #alertContainerHSTPayment,
 #alertContainerPSTPayment,
 #alertContainerTAXPayment,
-#AssetContainer {
+#AssetContainer,
+#contact_EmailAlert {
   font-size: 12px;
   font-weight: bold;
 }
@@ -595,7 +596,8 @@ option {
 }
 
 #settingModalHeader,
-#homePercentModalHeader {
+#homePercentModalHeader,
+#paymentModalHeader {
   height: 50px;
 }
 
@@ -1113,4 +1115,48 @@ option {
     width: 75px!important;
     font-size: 9px!important;
   }
+}
+
+/* Payments */
+
+#settingsSelectLbl,
+#paymentChooseTypeLbl {
+  font-size: 14px;
+}
+
+#paymentPlanSelect,
+#paymentSubscriptionLbl,
+#paymentOnlyLbl {
+  font-size: 11px!important;
+}
+
+#RefundPaymentBtn,
+#payMonthlyBtn,
+#payNowBtn {
+  height: 26px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 8px;
+  padding-top: 2px;
+  background-color: rgb(255, 196, 57);
+}
+
+
+/* EMAIL CONTACT */
+
+#emailContactHeader {
+  height: 50px!important;
+}
+
+#emailContactfirstName,
+#emailContactlastName,
+#emailContactEmail {
+  font-size: 12px;
+  height: 28px;
+}
+
+#emailContactMessage {
+  font-size: 10px;
+  height: 100px;
 }

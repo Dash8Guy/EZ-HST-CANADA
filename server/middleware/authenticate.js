@@ -14,7 +14,7 @@ let authenticate = (req, res, next) => {
   User.findByToken(token)
     .then(user => {
       if (!user) {
-        console.log('Authenticate failed!');
+        // console.log('Authenticate failed!');
         return Promise.reject("User was not found. Authentication Failed!");
       }
       req.user = user; //this goes to the originating function and can be use in the response

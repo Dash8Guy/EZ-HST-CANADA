@@ -11,8 +11,10 @@ const busboyCnct = require('connect-busboy');
 const busboyBodyParser = require('busboy-body-parser');
 const AWS = require('aws-sdk');
 const Busboy = require('busboy');
+const request = require('request');
 const { ObjectID } = require("mongodb");
 const _ = require("lodash");
+const nodemailer = require("nodemailer");
 
 
 const port = process.env.PORT || 3000;
@@ -85,6 +87,57 @@ app.use((req, res, next) => {
 app.get("/", function (req, res) {
   res.render("index.hbs");
 });
+
+//Email Route
+app.post('/contact', authenticate, function (req, res) {
+
+  if (
+    req.body.captcha === undefined ||
+    req.body.captcha === '' ||
+    req.body.captcha === null
+  ) {
+    return res.send('Do not forget to check i am Not a Robot!');
+  }
+
+  const CaptchaSecret = process.env.Captch_Secret_Key;
+  const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${CaptchaSecret}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`
+
+  request(verifyURL, (error, response, body) => {
+    body = JSON.parse(body);
+    //If not successful
+    if (body.success !== undefined && !body.success) {
+      return res.send('I am Not a Robot verification Failed!');
+    }
+    //Successful
+
+  });
+
+  let mailOpts, smtpTrans;
+  smtpTrans = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.Email_User,
+      pass: process.env.Email_Log
+    }
+  });
+  mailOpts = {
+    from: req.body.firstName + ' ' + req.body.lastName + ' &lt;' + req.body.email + '&gt;',
+    to: process.env.Email_User,
+    subject: `Refund Request from User:(${req.user._id})`,
+    text: `${req.body.firstName} ${req.body.lastName} (${req.body.email}) says:\n ${req.body.message}`
+  };
+  smtpTrans.sendMail(mailOpts, function (error, respond) {
+    if (error) {
+      return res.send('Email Could Not be Sent!');
+    }
+    else {
+      return res.send('Email was Sent Successfully!');
+    }
+  });
+});
+
 
 //PayPal
 app.post("/payPal", authenticate, (req, res) => {
@@ -2664,6 +2717,44 @@ function deleteImageFromS3(fileName) {
     });
   })
 
+}
+
+
+
+// async..await is not allowed in global scope, must use a wrapper
+async function main() {
+
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  let account = await nodemailer.createTestAccount();
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.Email_User, // generated ethereal user
+      pass: process.env.Email_Log // generated ethereal password
+    }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: `"Guy Levesque" <${process.env.Email_User}>`, // sender address
+    to: `${process.env.Email_User}`, // list of receivers
+    subject: "Testing Email", // Subject line
+    text: "Hope this works!", // plain text body
+    html: "<h3>Please Work</h3>" // html body
+  };
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail(mailOptions)
+
+  console.log("Message sent: %s", info.messageId);
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 
