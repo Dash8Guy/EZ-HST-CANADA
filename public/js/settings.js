@@ -15,6 +15,39 @@ let rowCountPerPage = 10;
 //This variable is the Default to the one above and is used to keep track of the setting the user adjusted in settings
 let rowCountPerPageDefault = 10;
 
+function setDateInputTolerences() {
+   let displayStartDate = new Date(date_Input_Min);
+   let myStartTempDay = displayStartDate.getUTCDate();
+   let myStartTempMonth = displayStartDate.getUTCMonth() + 1;
+   let myStartTempYear = displayStartDate.getUTCFullYear();
+   let displayEndDate = new Date(date_Input_Max);
+   let myEndTempDay = displayEndDate.getUTCDate();
+   let myEndTempMonth = displayEndDate.getUTCMonth() + 1;
+   let myEndTempYear = displayEndDate.getUTCFullYear();
+
+   if (myStartTempDay < 10) {
+      myStartTempDay = `0${myStartTempDay}`;
+   }
+   if (myStartTempMonth < 10) {
+      myStartTempMonth = `0${myStartTempMonth}`;
+   }
+
+   if (myEndTempDay < 10) {
+      myEndTempDay = `0${myEndTempDay}`;
+   }
+   if (myEndTempMonth < 10) {
+      myEndTempMonth = `0${myEndTempMonth}`;
+   }
+
+
+
+   document.getElementById("busDate").min = `${myStartTempYear}-${myStartTempMonth}-${myStartTempDay}`;
+   document.getElementById("busDate").max = `${myEndTempYear}-${myEndTempMonth}-${myEndTempDay}`;
+
+
+
+}
+
 const myDOMs = {
    Contact_Email: {
       Modal: document.getElementById('emailContactModal'),
@@ -34,7 +67,8 @@ const myDOMs = {
       Single_Payment_Radio: document.getElementById('paymentOnly'),
       Buy_Now_Btn: document.getElementById('payNowBtn'),
       Subscribe_Btn: document.getElementById('payMonthlyBtn'),
-      Refund_Btn: document.getElementById('RefundPaymentBtn')
+      Refund_Btn: document.getElementById('RefundPaymentBtn'),
+      Start_Date: document.getElementById('PaymentStartDate')
    },
    User_Profile: {
       First_Name: document.getElementById('userProfilefirstName'),
@@ -444,7 +478,7 @@ const myDOMs = {
       BodyRentalExp: document.getElementById('IncStatRentalExpenses'),
    },
    randomData: {
-      appYear: 2018,
+      appYear: 2019,
       lockDate: document.getElementById('hiddenLockDate')
    },
    vehicleLog: {
@@ -1637,6 +1671,10 @@ function setTooltips() {
    $('#Line115').tooltip(myDisable);
    $('#Line205').tooltip(myDisable);
    $('#Line405').tooltip(myDisable);
+
+   //User Login
+   $('#user_Forgot_Password').tooltip(myDisable);
+
    //Home Business Percentage
    $('#hoursPerDay').tooltip(myDisable);
    $('#daysPerWeek').tooltip(myDisable);

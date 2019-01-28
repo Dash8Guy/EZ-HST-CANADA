@@ -1,8 +1,8 @@
 function displayAssetModal() {
-   // if (userEmail === null || userEmail === '') {
-   //    alert('You must be looged in to use any controls!');
-   //    return;
-   // }
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      return;
+   }
    $("#AssetModal").modal("show");
    let myMainNav = document.getElementById("main-nav");
    let myTopVal = myMainNav.offsetTop;

@@ -26,6 +26,11 @@ input[type="number"] {
   overflow-y:auto;
 }
 
+#user_Forgot_Password {
+  font-size: 14px;
+  color: black;
+}
+
 #alertContainerUserLogin,
 #alertContainerUser,
 #alertContainerUserProfile,
@@ -48,6 +53,8 @@ input[type="number"] {
 #alertContainerMain {
   font-size: 12px;
 }
+
+
 
 /* Table with links */
 
@@ -1122,6 +1129,11 @@ option {
 #settingsSelectLbl,
 #paymentChooseTypeLbl {
   font-size: 14px;
+}
+
+#PaymentStartDate {
+  font-size: 12px;
+  width: 220px;
 }
 
 #paymentPlanSelect,

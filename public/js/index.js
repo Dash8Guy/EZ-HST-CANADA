@@ -2,7 +2,11 @@
 let userEmail = '';
 let user_FirstName = '';
 let user_LastName = '';
-let designatedUserLocate = '';
+
+
+//below 2 variables are all input dates Max and Min
+let date_Input_Max;
+let date_Input_Min;
 
 //URL Variable
 let serverURL = window.location.pathname;
@@ -36,6 +40,12 @@ let IncomeStatementModalOpen = false;
 let HomePercentModalOpen = false;
 let AccountSummaryModalOpen = false;
 let HSTReturnModalOpen = false;
+
+if (localStorage.length < 20) {
+  if (!myDOMs.nav.Login.classList.contains("disabled")) {
+    myDOMs.nav.Login.classList.add("disabled");
+  }
+}
 
 
 function closeFullViewImage() {
@@ -622,6 +632,7 @@ async function afterLogin(userName) {
   }
   verifyAllLocalStorageForSettings();
   myDOMs.nav.UserLogName.innerText = `${userName} - Logged In`;
+  setDateInputTolerences();
   await populateVehicleVendors();
   await populateBusinessVendors();
   await populateHomeVendors();
@@ -649,6 +660,7 @@ function getUserMe() {
       let myLast = myUser.lastName;
       let myEmail = myUser.email;
       let myID = myUser._id;
+
       let myMsg = [
         `Welcome ${myFirst} ${myLast}`,
         `Your ID: ${myID}`,
@@ -681,6 +693,9 @@ function getUserMe() {
 }
 
 function loginUser() {
+  if (!validateUserLoginEntryForm()) {
+    return;
+  }
   let tempdata = {
     firstName: myDOMs.userLoginModal.FirstName.value,
     lastName: myDOMs.userLoginModal.LastName.value,
@@ -695,11 +710,34 @@ function loginUser() {
     data: tempdata
   })
     .done(function (data) {
-      let displayDate = new Date(data.ExpireDate);
+      let displayStartDate = new Date(data.paid_Start_Date);
+      let myStartTempDay = displayStartDate.getUTCDate();
+      let myStartTempMonth = displayStartDate.getUTCMonth() + 1;
+      let myStartTempYear = displayStartDate.getUTCFullYear();
+      let displayEndDate = new Date(data.paid_End_Date);
+      let myEndTempDay = displayEndDate.getUTCDate();
+      let myEndTempMonth = displayEndDate.getUTCMonth() + 1;
+      let myEndTempYear = displayEndDate.getUTCFullYear();
+
+      if (myStartTempDay < 10) {
+        myStartTempDay = `0${myStartTempDay}`;
+      }
+      if (myStartTempMonth < 10) {
+        myStartTempMonth = `0${myStartTempMonth}`;
+      }
+
+      if (myEndTempDay < 10) {
+        myEndTempDay = `0${myEndTempDay}`;
+      }
+      if (myEndTempMonth < 10) {
+        myEndTempMonth = `0${myEndTempMonth}`;
+      }
+
       let myMsg = [
         `Welcome ${data.firstName} ${data.lastName}`,
         `Your Email: ${data.email}`,
-        `Subscription Expires: ${displayDate.toDateString()}`
+        `Subscription Starts: ${myStartTempYear}-${myStartTempMonth}-${myStartTempDay}`,
+        `Subscription Expires: ${myEndTempYear}-${myEndTempMonth}-${myEndTempDay}`
       ];
 
       displayAlert(
@@ -716,7 +754,9 @@ function loginUser() {
       userEmail = tempdata.email;
       user_FirstName = tempdata.firstName;
       user_LastName = tempdata.lastName;
-      designatedUserLocate = data._id;
+      date_Input_Max = data.paid_End_Date;
+      date_Input_Min = data.paid_Start_Date;
+
       afterLogin(tempdata.firstName);
       myDOMs.userLoginModal.Form.reset();
     })
@@ -734,6 +774,47 @@ function loginUser() {
       );
     });
 }
+
+function validateUserLoginEntryForm() {
+  const First_Name = document.forms["userLoginForm"]["userLoginfirstName"];
+  const Last_Name = document.forms["userLoginForm"]["userLoginlastName"];
+  const Contact_Email = document.forms["userLoginForm"]["userLoginemail"];
+  const Password = document.forms["userLoginForm"]["userLoginPassword"];
+
+
+
+  if (First_Name.value == "") {
+    window.alert("Please Enter Your First Name.");
+    First_Name.focus();
+    return false;
+  }
+
+
+  if (Last_Name.value == "") {
+    window.alert("Please Enter Your Last Name.");
+    Last_Name.focus();
+    return false;
+  }
+
+  if (Contact_Email.value == "") {
+    window.alert("Please Enter Your Email.");
+    Contact_Email.focus();
+    return false;
+  }
+
+  if (Password.value == "") {
+    window.alert("Please Enter Your Password.");
+    Password.focus();
+    return false;
+  }
+
+  return true;
+}
+
+
+
+
+
 let myAlert;
 
 function displayAlert(
@@ -1025,16 +1106,107 @@ function removeTblNavAlertChildNodes() {
 };
 
 function registerUser() {
+  if (myDOMs.userSetupModal.FirstName.value === "" || myDOMs.userSetupModal.FirstName.value === null) {
+    displayAlert(
+      myDOMs.userSetupModal.AlertContainer,
+      "carExpAlertUser",
+      "closeBtnAlertUser",
+      "First Name is Required!",
+      '',
+      ' ',
+      "RED",
+      6000
+    );
+    return;
+  }
+  if (myDOMs.userSetupModal.LastName.value === "" || myDOMs.userSetupModal.LastName.value === null) {
+    displayAlert(
+      myDOMs.userSetupModal.AlertContainer,
+      "carExpAlertUser",
+      "closeBtnAlertUser",
+      "Last Name is Required!",
+      '',
+      ' ',
+      "RED",
+      6000
+    );
+    return;
+  }
+  if (myDOMs.userSetupModal.Email.value === "" || myDOMs.userSetupModal.Email.value === null) {
+    displayAlert(
+      myDOMs.userSetupModal.AlertContainer,
+      "carExpAlertUser",
+      "closeBtnAlertUser",
+      "Email is Required!",
+      '',
+      ' ',
+      "RED",
+      6000
+    );
+    return;
+  }
+  if (myDOMs.userSetupModal.Password.value === "" || myDOMs.userSetupModal.Password.value === null) {
+    displayAlert(
+      myDOMs.userSetupModal.AlertContainer,
+      "carExpAlertUser",
+      "closeBtnAlertUser",
+      "Password is Required!",
+      '',
+      ' ',
+      "RED",
+      6000
+    );
+    return;
+  }
+
+
   let myNewDateTemp = new Date();
-  let myNewDate = new Date(myNewDateTemp.getUTCFullYear(), myNewDateTemp.getUTCMonth(), myNewDateTemp.getUTCDate());
-  myNewDate.setUTCHours(0);
-  myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
+  let myDayTemp = myNewDateTemp.getUTCDay();
+  let myMonthTemp = myNewDateTemp.getUTCMonth();
+  let myYearTemp = myNewDateTemp.getUTCFullYear();
+  alert(`Month: ${myMonthTemp}`);
+  let myStartDate = new Date(myYearTemp, myMonthTemp, myDayTemp);
+  myStartDate.setUTCHours(0);
+  if (myMonthTemp === 11) {
+  } else {
+    myMonthTemp += 5;
+  }
+  alert(`Month for End Date: ${myMonthTemp}`);
+
+  switch (myMonthTemp) {
+    case 0:
+    case 2:
+    case 4:
+    case 6:
+    case 7:
+    case 9:
+    case 11:
+      myDayTemp = 31;
+      break;
+    case 3:
+    case 5:
+    case 8:
+    case 10:
+      myDayTemp = 30
+      break;
+    case 1:
+      myDayTemp = 28
+  }
+
+  alert(`Day for End Date: ${myDayTemp}`);
+
+  let myEndDate = new Date(myYearTemp, myMonthTemp, myDayTemp);
+  myEndDate.setUTCHours(0);
+  // let myNewDate = new Date(myNewDateTemp.getUTCFullYear(), myNewDateTemp.getUTCMonth(), myNewDateTemp.getUTCDate());
+  // myNewDate.setUTCHours(0);
+  // myNewDate.setUTCDate(myNewDate.getUTCDate() - 1);
   mydata = {
     firstName: myDOMs.userSetupModal.FirstName.value,
     lastName: myDOMs.userSetupModal.LastName.value,
     email: myDOMs.userSetupModal.Email.value,
     password: myDOMs.userSetupModal.Password.value,
-    ExpireDate: myNewDate
+    paid_Start_Date: myStartDate,
+    paid_End_Date: myEndDate
   };
 
   $.ajax({
@@ -1043,7 +1215,39 @@ function registerUser() {
     dataType: "json",
     data: mydata,
     success: function (data, textStatus, request) {
-      let myObjMsg = [`${data.firstName} ${data.lastName}`, `${data.email}`];
+
+
+      let displayStartDate = new Date(data.paid_Start_Date);
+      let myStartTempDay = displayStartDate.getUTCDate();
+      let myStartTempMonth = displayStartDate.getUTCMonth() + 1;
+      let myStartTempYear = displayStartDate.getUTCFullYear();
+      let displayEndDate = new Date(data.paid_End_Date);
+      let myEndTempDay = displayEndDate.getUTCDate();
+      let myEndTempMonth = displayEndDate.getUTCMonth() + 1;
+      let myEndTempYear = displayEndDate.getUTCFullYear();
+
+      if (myStartTempDay < 10) {
+        myStartTempDay = `0${myStartTempDay}`;
+      }
+      if (myStartTempMonth < 10) {
+        myStartTempMonth = `0${myStartTempMonth}`;
+      }
+
+      if (myEndTempDay < 10) {
+        myEndTempDay = `0${myEndTempDay}`;
+      }
+      if (myEndTempMonth < 10) {
+        myEndTempMonth = `0${myEndTempMonth}`;
+      }
+
+      let myObjMsg = [
+        `Welcome ${data.firstName} ${data.lastName}`,
+        `Your Email: ${data.email}`,
+        `Subscription Starts: ${myStartTempYear}-${myStartTempMonth}-${myStartTempDay}`,
+        `Subscription Expires: ${myEndTempYear}-${myEndTempMonth}-${myEndTempDay}`,
+        `To Increase your Subscription Period beyond the Free Period Given,`,
+        `Select Payments/Pricing, under the User Register/Login Menu.`
+      ];
 
       displayAlert(
         myDOMs.userSetupModal.AlertContainer,
@@ -1051,12 +1255,17 @@ function registerUser() {
         "closeBtnAlertUser",
         "New User added Successfully! ",
         myObjMsg,
-        `User ID: ${data._id}`,
+        ` `,
         "GREEN",
-        6000
+        0
       );
       window.sessionStorage.setItem('myRandomVar', data.token);
       afterLogin(mydata.firstName);
+      userEmail = data.email;
+      user_FirstName = data.firstName;
+      user_LastName = data.lastName;
+      date_Input_Max = data.paid_End_Date;
+      date_Input_Min = data.paid_Start_Date;
       myDOMs.userSetupModal.Form.reset();
     },
     error: function (error) {

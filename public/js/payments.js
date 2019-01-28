@@ -39,29 +39,45 @@ function updatePaymentType(source) {
 
 };
 
+function updatePaymentPlanSelect() {
 
-async function setupRefundEmail() {
-   RefundEmailIsOn = true;
-   var email = 'admin@ez-hst-canada.com';
-   var subject = `Refund Request from User:(${designatedUserLocate})`;
-   var emailBody = 'Please write reason(s) here!';
-   //var attach = 'path';
-   document.getElementById('hrefRefundLink').href = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
-   //document.getElementById('hrefRefundLink').href = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody + "?attach=" + attach;
-   await document.getElementById('hrefRefundLink').click();
-   //window.location.href = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody + "?attach=" + attach;
-
-   RefundEmailIsOn = false;
-
+   let myDateTemp = new Date(myDOMs.main_page.StartDate.value);
+   let myYearTemp = myDateTemp.getUTCFullYear();
+   if (myDOMs.Payments.Payment_Plan_Select.value === '5') {
+      myDOMs.Payments.Start_Date.value = `${myYearTemp}-01-01`;
+   } else {
+      myDOMs.Payments.Start_Date.value = '';
+   }
 
 };
 
-
-
 function startPaymentMethod() {
+
+   let PaymentAmt = 0;
+   let StartDate = new Date(myDOMs.Payments.Start_Date.value);
+
+   switch (myDOMs.Payments.Payment_Plan_Select.value) {
+      case '1':
+         PaymentAmt = 1.99;
+         break;
+      case '2':
+         PaymentAmt = 5.22;
+         break;
+      case '3':
+         PaymentAmt = 8.94;
+         break;
+      case '4':
+         PaymentAmt = 11.16;
+         break;
+      case '5':
+         PaymentAmt = 11.88;
+         break;
+   }
 
    let formData = new FormData();
    formData.append("auth", window.sessionStorage.getItem('myRandomVar'));
+   formData.append("PaymentAmt", PaymentAmt);
+   formData.append("StartDate", StartDate);
 
    // let myData = {
    //   auth: window.sessionStorage.getItem('myRandomVar')
@@ -109,6 +125,10 @@ let resetRecaptcha = function () {
 
 
 function displayEmailContactModal(fromPayment) {
+   if (userEmail === null || userEmail === '') {
+      alert('You must be looged in to use any controls!');
+      return;
+   }
    if (fromPayment) {
       hidePaymentModal();
    }
@@ -190,10 +210,6 @@ function SendContactEmail() {
       });
 
 };
-
-
-
-
 
 function validateContactEmailEntryForm() {
    const First_Name = document.forms["emailContactForm"]["emailContactfirstName"];

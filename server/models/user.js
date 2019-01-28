@@ -29,7 +29,11 @@ const UserSchema = new mongoose.Schema({
       message: "{VALUE} is not a valid email"
     }
   },
-  ExpireDate: {
+  paid_Start_Date: {
+    type: Date,
+    required: true
+  },
+  paid_End_Date: {
     type: Date,
     required: true
   },
